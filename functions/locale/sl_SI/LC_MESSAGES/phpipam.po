@@ -3957,3 +3957,7 @@ msgstr "Nazadnje aktivna"
 #: site/ipaddr/ipAddressPrintTable.php
 msgid "Never"
 msgstr "Nikoli"
+
+#: site/tools/ipCalcResult.php:40
+msgid "Number of hosts"
+msgstr "Število naslovov"

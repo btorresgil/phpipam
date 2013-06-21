@@ -272,3 +272,11 @@ msgstr ""
 #: site/ipaddr/ipAddressPrintTable.php
 msgid "Never"
 msgstr ""
+
+#
+# Added 21/06/13
+#
+
+#: site/tools/ipCalcResult.php
+msgid "Numbet of hosts"
+msgstr ""

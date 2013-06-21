@@ -3921,3 +3921,7 @@ msgstr ""
 #: site/ipaddr/ipAddressPrintTable.php
 msgid "Never"
 msgstr ""
+
+#: site/tools/ipCalcResult.php:40
+msgid "Numbet of hosts"
+msgstr ""
