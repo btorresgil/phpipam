@@ -127,6 +127,15 @@ if($permission == "0")	{ die("<div class='alert alert-error'>"._('You do not hav
 		else 										{ print "	<td>"._('disabled')."</td>";}		# no
 		print "</tr>";
 	}
+
+	/* ping-check hosts inside subnet */
+	if ($SubnetDetails['pingSubnet'] == 1) {
+		print "<tr>";
+		print "	<th>"._('Hosts check')."</th>";
+		if($SubnetDetails['pingSubnet'] == 1) 		{ print "	<td>"._('enabled')."</td>"; }		# yes
+		else 										{ print "	<td>"._('disabled')."</td>";}		# no
+		print "</tr>";
+	}
 	
 	/* print custom subnet fields if any */
 	if(sizeof($customSubnetFieldsSize) > 0) {
