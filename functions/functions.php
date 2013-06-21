@@ -6,7 +6,7 @@ require_once( dirname(__FILE__) . '/dbfunctions.php' );
 
 
 //set ping path
-$pingPath = "/sbin/ping/";
+$pingPath = "/sbin/ping";
 
 
 /* @debugging functions ------------------- */
@@ -45,7 +45,7 @@ if(isset($_SESSION['ipamlanguage'])) {
 /* set latest version */
 define("VERSION", "0.82");									//version changes if database structure changes
 /* set latest revision */
-define("REVISION", "003");									//revision always changes, verision only if database structure changes
+define("REVISION", "004");									//revision always changes, verision only if database structure changes
 /* set last possible upgrade */
 define("LAST_POSSIBLE", "0.8");								//minimum required version to be able to upgrade
 

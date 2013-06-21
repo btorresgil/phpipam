@@ -2283,8 +2283,9 @@ function getIPaddressesBySwitchName ( $name )
  */
 function pingHost ($ip, $wait=1000, $count="1", $exit=false)
 {
+	global $pingPath;
 	//set and execute
-	$cmd = "$ping -c $count -W $wait -n $ip 1>/dev/null 2>&1";
+	$cmd = "$pingPath -c $count -W $wait -n $ip 1>/dev/null 2>&1";
     exec($cmd, $output, $retval);
     
     //exit codes
