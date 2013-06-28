@@ -47,7 +47,7 @@ if(!$threads) {
 		if($tDiff < $statuses[1])	{ $addresses[$m]['oldStatus'] = "0"; }	//old online
 		else						{ $addresses[$m]['oldStatus'] = "2"; }	//old offline
 		//get status
-		$code = pingHost (transform2long($ip['ip_addr']), $wait, $count, false);
+		$code = pingHost (transform2long($ip['ip_addr']), $count, false);
 		//Online
 		if($code == "0") {
 			//update IP status
@@ -91,7 +91,7 @@ else {
 
 				//start new thread
 	            $threads[$z] = new Thread( 'pingHost' );
-	            $threads[$z]->start( Transform2long($addresses[$z]['ip_addr']), $wait, $count, true );
+	            $threads[$z]->start( Transform2long($addresses[$z]['ip_addr']), $count, true );
 	            $z++;				//next index
 			}
         }

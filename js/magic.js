@@ -323,6 +323,33 @@ $(document).on("click", "table.ipaddresses th a.sort", function() {
 });
 
 
+/*    scan subnet
+*************************/
+//open popup
+$('a.scan_subnet').click(function() {
+	showSpinner();
+	var subnetId = $(this).attr('data-subnetId');
+	$.post('site/ipaddr/subnetScan.php', {subnetId:subnetId}, function(data) {
+        $('div.popup_w700').html(data);
+        showPopup('popup_w700');
+		hideSpinner();
+	});
+	return false;
+});
+//start scanning
+$(document).on('click','#subnetScanSubmit', function() {
+	showSpinner();
+	var subnetId = $(this).attr('data-subnetId');
+	var pingType = $('select[name=scanType]').find(":selected").val();
+	$('#alert-scan').slideUp('fast');
+	$.post('site/ipaddr/subnetScan'+pingType+".php", {subnetId:subnetId, pingType:pingType}, function(data) {
+        $('#subnetScanResult').html(data);
+		hideSpinner();
+	});
+	return false;
+})
+
+
 /*    import IP addresses
 *************************/
 //load CSV import form

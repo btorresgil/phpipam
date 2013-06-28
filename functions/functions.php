@@ -1,13 +1,13 @@
 <?php
 
-/* @database functions ------------------- */
+/* @config file ------------------- */
 require_once( dirname(__FILE__) . '/../config.php' );
+
+/* @database functions ------------------- */
 require_once( dirname(__FILE__) . '/dbfunctions.php' );
 
-
-//set ping path
-$pingPath = "/sbin/ping";
-
+/* @scan configs ------------------- */
+require_once( dirname(__FILE__) . '/config-scan.php' );
 
 /* @debugging functions ------------------- */
 ini_set('display_errors', 1);
@@ -45,7 +45,7 @@ if(isset($_SESSION['ipamlanguage'])) {
 /* set latest version */
 define("VERSION", "0.82");									//version changes if database structure changes
 /* set latest revision */
-define("REVISION", "004");									//revision always changes, verision only if database structure changes
+define("REVISION", "005");									//revision always changes, verision only if database structure changes
 /* set last possible upgrade */
 define("LAST_POSSIBLE", "0.8");								//minimum required version to be able to upgrade
 

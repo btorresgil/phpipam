@@ -3961,3 +3961,40 @@ msgstr "Nikoli"
 #: site/tools/ipCalcResult.php:40
 msgid "Number of hosts"
 msgstr "Število naslovov"
+
+#: site/ipaddr/subnetDetails.php
+msgid "Scan subnet for new hosts"
+msgstr "Skeniranje omrežja za nove naprave"
+
+#: site/ipaddr/subnetScan.php
+msgid "You do not have permissions to modify hosts in this subnet"
+msgstr "Nimate pravic za urejanje naprav v tem omrežju"
+
+#: site/ipaddr/subnetScan.php
+msgid "Scan subnet"
+msgstr "Skeniraj omrežje"
+
+#: site/ipaddr/subnetScan.php
+msgid "Select Scan type"
+msgstr "Izberite tip skeniranje"
+
+#: site/ipaddr/subnetScan.php
+msgid "scan"
+msgstr "skeniranje"
+
+#: site/ipaddr/subnetScan.php
+msgid "You can set parameters for scan under functions/config-scan.php"
+msgstr "Parametre skeniranja lahko spreminjate v functions/config-scan.php"
+
+#: site/ipaddr/subnetScan.php
+msgid "Discovery scans"
+msgstr "Odkrivanje novih naprav"
+
+#: site/ipaddr/subnetScan.php
+msgid "Status update scans"
+msgstr "Posodobitve statusev"
+
+#: site/ipaddr/subnetScanUpdatePing.php
+msgid "Scan results"
+msgstr "Rezultati skeniranja"
+
