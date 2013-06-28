@@ -1479,10 +1479,26 @@ div.jqueryError {
     color: white;
     
     display: none;
+    font-weight: bold;
 }
 div.jqueryError.dieIE {
 
 	background-color: #ccc;
 	color: white;
 	z-index: 110;
+}
+div.jqueryErrorText {
+	width: 400px;
+	padding: 10px;
+	margin: auto;
+	margin-top: 10px;
+	font-weight: 300;
+	display: none;
+	
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+}
+div.jqueryError a {
+	clear: both;
+	margin-top: 10px;
 }

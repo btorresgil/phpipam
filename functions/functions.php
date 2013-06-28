@@ -18,7 +18,8 @@ else			 { error_reporting(E_ALL ^ E_NOTICE); }
 /**
  * Translations
  *
- * recode .po to .mo > msgfmt env_cp.po -o env_cp.mo
+ * 	recode .po to .mo > msgfmt env_cp.po -o env_cp.mo
+ *	lang codes locale -a
  */
 
 if(!isset($_SESSION)) { 								//fix for ajax-loaded windows
@@ -41,14 +42,12 @@ if(isset($_SESSION['ipamlanguage'])) {
 }
 
 
-
 /* set latest version */
 define("VERSION", "0.82");									//version changes if database structure changes
 /* set latest revision */
-define("REVISION", "005");									//revision always changes, verision only if database structure changes
+define("REVISION", "006");									//revision always changes, verision only if database structure changes
 /* set last possible upgrade */
 define("LAST_POSSIBLE", "0.8");								//minimum required version to be able to upgrade
-
 
 
 /* @general functions ------------------- */
