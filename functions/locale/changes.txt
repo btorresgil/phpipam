@@ -321,3 +321,17 @@ msgstr ""
 msgid "Scan results"
 msgstr ""
 
+
+####### 0.82.006 #######
+
+#: site/admin/settings.php
+msgid "Default language"
+msgstr ""
+
+#: site/admin/settings.php
+msgid "Select default language"
+msgstr ""
+
+#: site/admin/languages.php
+msgid "Version"
+msgstr ""

@@ -622,7 +622,7 @@ $(document).on("click", "#randomPassSelf", function() {
 
 /* @administration ---------- */
 
-/*    save server settings */
+/* save server settings */
 $('#settings').submit(function() {
     showSpinner();
     var settings = $(this).serialize();
@@ -630,7 +630,7 @@ $('#settings').submit(function() {
     $.post('site/admin/settingsEdit.php', settings, function(data) {
         $('div.settingsEdit').html(data).slideDown('fast');
         //reload after 1 second if all is ok!
-        if(data.search("error") == -1)     { setTimeout(function (){window.location.reload();}, 1000); }
+        if(data.search("error") == -1)   { setTimeout(function (){window.location.reload();}, 1000); }
         else                             { hideSpinner(); }
     }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});
     return false;

@@ -162,6 +162,7 @@ CREATE TABLE `settings` (
   `visualLimit` int(2) NOT NULL DEFAULT '0',
   `htmlMail` binary(1) NOT NULL DEFAULT '1',
   `pingStatus` VARCHAR(12)  NOT NULL  DEFAULT '1800;3600',
+  `defaultLang` INT(3)  NULL  DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -347,7 +348,8 @@ CREATE TABLE `lang` (
 INSERT INTO `lang` (`l_id`, `l_code`, `l_name`)
 VALUES
 	(1, 'en', 'English'),
-	(2, 'sl_SI', 'Slovenščina');
+	(2, 'sl_SI', 'Slovenščina'),
+	(3, 'fr_FR', 'Français');
 
 
 

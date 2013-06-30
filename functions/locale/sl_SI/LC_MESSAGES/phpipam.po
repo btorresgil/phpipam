@@ -4,10 +4,10 @@
 # miha petkovsek <miha.petkovsek@gmail.com>, 2013.
 #
 
-# "Project-Id-Version: 0.8\n"
+# "Project-Id-Version: 0.83.007\n"
 # "Report-Msgid-Bugs-To: Miha Petkovsek <miha.petkovsek@gmail.com>\n"
 # "POT-Creation-Date: 2013-04-02 14:33+0200\n"
-# "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+# "PO-Revision-Date: 2013-06-28 14:33+0200\n"
 # "Last-Translator: Miha Petkovsek <miha.petkovsek@gmail.com>\n"
 # "Language: Slovenian (sl_SI)\n"
 # "MIME-Version: 1.0\n"
@@ -3998,3 +3998,10 @@ msgstr "Posodobitve statusev"
 msgid "Scan results"
 msgstr "Rezultati skeniranja"
 
+#: site/admin/settings.php
+msgid "Default language"
+msgstr "Privzet jezik"
+
+#: site/admin/settings.php
+msgid "Select default language"
+msgstr "Izberite privzet jezik"
