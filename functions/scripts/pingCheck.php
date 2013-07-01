@@ -14,7 +14,7 @@ set cronjob:
 $MAX_THREADS = 128;						//set max concurrent threads
 $email = true;							//set mail with status diff to admins
 $emailText = false;						//format to send mail via text or html
-$wait = 500;							//time to wait for response in ms
+//$wait = 500;							//time to wait for response in ms
 $count = 1;								//number of pings to send
 //response
 $stateDiff = array();					//Array with differences, can be used to email to admins
@@ -44,8 +44,8 @@ if(!$threads) {
 		//calculate diff since last alive
 		$tDiff = time() - strtotime($ip['lastSeen']);
 		//set Old status
-		if($tDiff < $statuses[1])	{ $addresses[$m]['oldStatus'] = "0"; }	//old online
-		else						{ $addresses[$m]['oldStatus'] = "2"; }	//old offline
+		if($tDiff < $statuses[1])	{ $addresses[$m]['oldStatus'] = 0; }	//old online
+		else						{ $addresses[$m]['oldStatus'] = 2; }	//old offline
 		//get status
 		$code = pingHost (transform2long($ip['ip_addr']), $count, false);
 		//Online
@@ -54,6 +54,8 @@ if(!$threads) {
 			@updateLastSeen($ip['id']);
 			//set new seen
 			$addresses[$m]['newSeen'] = date("Y-m-d H:i:s");
+		} else {
+			$code = 2;
 		}
 		//save new status
 		$addresses[$m]['newStatus'] = $code;
@@ -86,8 +88,8 @@ else {
         		//calculate diff since last alive
 				$tDiff = time() - strtotime($addresses[$z]['lastSeen']);
 				//set Old status
-				if($tDiff < $statuses[1])	{ $addresses[$z]['oldStatus'] = "0"; }	//old online
-				else						{ $addresses[$z]['oldStatus'] = "2"; }	//old offline        	
+				if($tDiff < $statuses[1])	{ $addresses[$z]['oldStatus'] = 0; }	//old online
+				else						{ $addresses[$z]['oldStatus'] = 2; }	//old offline        	
 
 				//start new thread
 	            $threads[$z] = new Thread( 'pingHost' );
@@ -108,7 +110,9 @@ else {
 						@updateLastSeen($addresses[$index]['id']);
 						//set new seen
 						$addresses[$index]['newSeen'] = date("Y-m-d H:i:s");	
-                	}
+                	} else {
+						$exitCode = 2;
+					}
 					//check for status change
 					if($addresses[$index]['oldStatus'] != $exitCode) {
 						$stateDiff[] = $addresses[$index];					//save to change array

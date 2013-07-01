@@ -4,7 +4,7 @@
 # miha petkovsek <miha.petkovsek@gmail.com>, 2013.
 #
 
-# "Project-Id-Version: 0.8\n"
+# "Project-Id-Version: 0.82.005\n"
 # "Report-Msgid-Bugs-To: Miha Petkovsek <miha.petkovsek@gmail.com>\n"
 # "POT-Creation-Date: 2013-04-02 14:33+0200\n"
 # "PO-Revision-Date: 2013-26-28 14:31+0200\n"
@@ -3888,11 +3888,6 @@ msgstr "modifier utilisateur"
 msgid "delete user"
 msgstr "supprimer utilisateur"
 
-
-#
-# Added 20/06/13
-#
-
 #: site/admin/manageSubnetEdit.php
 msgid "Check hosts status"
 msgstr "Verifier l'état des hôtes"
@@ -3965,17 +3960,9 @@ msgstr "Dernière activité"
 msgid "Never"
 msgstr "Jamais"
 
-#
-# Added 21/06/13
-#
-
 #: site/tools/ipCalcResult.php
 msgid "Number of hosts"
 msgstr "Nombre d'hôtes"
-
-#
-# Added 26/06/13
-#
 
 #: site/ipaddr/subnetDetails.php
 msgid "Scan subnet for new hosts"
