@@ -475,58 +475,17 @@ $(document).on("click", "button#requestIPAddressSubmit", function() {
 });
 
 
-/*    IP address next/prev page
-*********************************************************/
-//prev
-$(document).on("click", "a#prevItem", function() {
-    $('div.loading').fadeIn('fast');
-    var active = $('table.ipaddresses').find("tbody.ipPart:visible");
-    //not first!
-    var index = active.index();
-    var dolzina = ($('table.ipaddresses tbody').length) - 1;
-    if(index != 1) {
-        $(active).prev('tbody:hidden').css({'display':'table-row-group'});
-        $(active).css({'display':'none'});    
-        $('span.stran').html("Page " + (index-1) + '/' + dolzina);    //change text
-        //change select
-        $("select.jumptoPage").val('page-'+(index-2));
-    }
-    $('div.loading').fadeOut('fast');
-    return false;
-});
-//next
-$(document).on("click", "a#nextItem", function() {
-    $('div.loading').fadeIn('fast');
-    var active = $('table.ipaddresses').find("tbody.ipPart:visible");
-    //not last!
-    var index = active.index();
-    var dolzina = ($('table.ipaddresses tbody').length) - 1;
-    
-    if(index != dolzina) {
-        $(active).next('tbody:hidden').css({'display':'table-row-group'});
-        $(active).css({'display':'none'});    
-        $('span.stran').html("Page " + (index+1) + '/' + dolzina);    //change text
-        //change select
-        $("select.jumptoPage").val('page-'+index);
-    }
-    $('div.loading').fadeOut('fast');
-    return false;
-});
+
+
 //jump to page
 $('select.jumptoPage').change(function() {
-    $('div.loading').fadeIn('fast');
-    var page = $(this).val();        //get page id
-    var pageTemp = page.replace("page-","");
-    var active = $('table.ipaddresses').find("tbody.ipPart:visible");
-    
-    $('table.ipaddresses tbody.'+page).css({'display':'table-row-group'});    //show new
-    $(active).css({'display':'none'});
-    
-    pageTemp++;
-    var dolzina = ($('table.ipaddresses tbody').length) - 1;
-    $('span.stran').html("Page " + pageTemp + '/' + dolzina);        //change text
-    $('div.loading').fadeOut('fast');
+	var active    = $(this).find(":selected");
+	var sectionId = active.attr('data-sectionId');
+	var subnetId  = active.attr('data-subnetId');
+    var page 	  = active.val(); 
+    window.location.href = "subnets/"+sectionId+"/"+subnetId+"/"+page+"/";
 });
+
 
 
 

@@ -10,6 +10,7 @@
 	+ Added French translation (Denis Darré);
 	+ Added error catching/displaying for ajax-loaded php scripts;
 	+ Added default language for login/requests display and new users;
+	+ Added direct links to different pages in IP address table;
 
 	Bugfixes:
 	----------------------------

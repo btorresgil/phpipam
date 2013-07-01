@@ -119,8 +119,6 @@ else {
 					}
                 	//save exit code for host
                     $addresses[$index]['newStatus'] = $exitCode;
-					//save exit code
-					$addresses[$index]['newStatus'] = $code;
                     //remove thread
                     unset( $threads[$index] );
                 }
