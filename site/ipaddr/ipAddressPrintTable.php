@@ -200,18 +200,18 @@ if (sizeof($ipaddresses) == 0) {
 # print IP address
 else {
 	$ipaddress = $ipaddresses;
-    # break into 4 arrays
+    # break into arrays
 	$ipaddressesChunk = (array_chunk($ipaddresses, $pageLimit, true));
 
-	$c = 0;		# count for print for pages - $c++ per page
+	$c = 1;		# count for print for pages - $c++ per page
 	$n = 0;		# count for IP addresses - $n++ per IP address
 	$g = 0;		# count for compress consecutive class
 	
 	foreach($ipaddressesChunk as $ipaddresses2) {
 	
-		if(($c+1) == $_REQUEST['sPage']) 	{ $show = true; }
-		else 								{ $show = false; }
-	
+		if($c == $_REQUEST['sPage']) 	{ $show = true;  $display = "display:block;";}
+		else 							{ $show = false; $display = "display:none";  }
+
 		foreach($ipaddresses2 as $ipaddress2)  
 		{
 			if($show) {
@@ -358,13 +358,14 @@ else {
 	            	if ( $unused  ) {
 	            	    print '<tr class="th"><td></td><td colspan="'. $colspan['unused'] .'" class="unused">'. $unused['ip'] . ' (' . $unused['hosts'] .')</td><td colspan=2></td></tr>'. "\n";
 	            	}    
-	            }	   
-	            
-	            /* next IP address for free check */
-		        $n++;         
-	        }
-        }	
-	$c++;
+	            }	
+            }   
+            
+            /* next IP address for free check */
+	        $n++;         
+        }
+        
+		$c++;
 	}	
 }
 ?>
