@@ -101,9 +101,9 @@ $sizeIP = sizeof($ipaddresses);					// number of all
 $repeats   = ceil($sizeIP / $pageLimit); 		// times to repeat body
 
 # set page number from post
-$maxPages = round($sizeIP/$pageLimit,0)+1;																			// set max number of pages
-if($_REQUEST['sPage']>$maxPages)			{ $_REQUEST['sPage'] = 1; }												// reset to 1 if number too big
-elseif(!is_numeric($_REQUEST['sPage']))		{ $_REQUEST['sPage'] = str_replace("page", "", $_REQUEST['sPage']); }	// remove p from page
+$maxPages = round($sizeIP/$pageLimit,0)+1;																								// set max number of pages
+if($_REQUEST['sPage']>$maxPages || !isset($_REQUEST['sPage']))	{ $_REQUEST['sPage'] = 1; }												// reset to 1 if number too big
+elseif(!is_numeric($_REQUEST['sPage']))							{ $_REQUEST['sPage'] = str_replace("page", "", $_REQUEST['sPage']); }	// remove p from page
 
 ?>
 <br>
