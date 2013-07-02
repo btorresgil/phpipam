@@ -88,7 +88,7 @@ else {
         		//calculate diff since last alive
 				$tDiff = time() - strtotime($addresses[$z]['lastSeen']);
 				//set Old status
-				if($tDiff < $statuses[1])	{ $addresses[$z]['oldStatus'] = 0; }	//old online
+				if($tDiff <= $statuses[1])	{ $addresses[$z]['oldStatus'] = 0; }	//old online
 				else						{ $addresses[$z]['oldStatus'] = 2; }	//old offline        	
 
 				//start new thread
@@ -169,9 +169,9 @@ if(sizeof($stateDiff)>0 && $email)
 		//Changes
 		foreach($stateDiff as $change) {
 			//reformat statuses
-			if($change['oldStatus'] == "0")	{ $oldStatus = "Online"; }
+			if($change['oldStatus'] == 0)	{ $oldStatus = "Online"; }
 			else							{ $oldStatus = "Offline"; }
-			if($change['newStatus'] == "0")	{ $newStatus = "Online"; }
+			if($change['newStatus'] == 0)	{ $newStatus = "Online"; }
 			else							{ $newStatus = "Offline"; }
 			//set subnet
 			$subnet = getSubnetDetails($change['subnetId']);
@@ -180,14 +180,19 @@ if(sizeof($stateDiff)>0 && $email)
 			$section = getSectionDetailsById($subnet['sectionId']);
 			$sectionPrint = $section['name']." (".$section['description'].")";
 			//ago
-			$ago = sec2hms(time() - strtotime($change['lastSeen']));
+			if(is_null($change['lastSeen']) || $change['lastSeen']=="0000-00-00 00:00:00") {
+				$ago	  = "never";
+			} else {
+				$timeDiff = time() - strtotime($change['lastSeen']);
+				$ago 	  = $change['lastSeen']." (".sec2hms($timeDiff)." ago)";
+			}
 			
 			$html[] = "<tr>";
 			$html[] = "	<td style='padding:3px 8px;border:1px solid silver;'>$change[id]</td>";
 			$html[] = "	<td style='padding:3px 8px;border:1px solid silver;'>$subnetPrint</td>";
 			$html[] = "	<td style='padding:3px 8px;border:1px solid silver;'>$sectionPrint</td>";
 			$html[] = "	<td style='padding:3px 8px;border:1px solid silver;'>".Transform2long($change['ip_addr'])."</td>";
-			$html[] = "	<td style='padding:3px 8px;border:1px solid silver;'>$change[lastSeen] ($ago ago)</td>";
+			$html[] = "	<td style='padding:3px 8px;border:1px solid silver;'>$ago</td>";
 			$html[] = "	<td style='padding:3px 8px;border:1px solid silver;'>$oldStatus</td>";
 			$html[] = "	<td style='padding:3px 8px;border:1px solid silver;'>$newStatus</td>";
 

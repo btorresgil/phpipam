@@ -52,8 +52,8 @@ $setFields = explode(";", $setFieldsTemp);
  * Get all ip addresses in subnet and subnet details!
  */
 $title = _("IP addresses in subnet ");	# prefix for multiple subnets
-if(sizeof($slaves) == 0) { $ipaddresses   = getIpAddressesBySubnetIdSort ($subnetId, $sort['field'], $sort['direction']);  }
-else					 { $ipaddresses   = getIpAddressesBySubnetIdSlavesSort ($subnetId, $sort['field'], $sort['direction']);	$title = _("All IP addresses belonging to ALL nested subnets"); }
+if(sizeof($slaves) == 0) { $ipaddresses   = getIpAddressesBySubnetIdSort ($subnetId, $sort['field'], $sort['direction']);  $slavePing = false; }
+else					 { $ipaddresses   = getIpAddressesBySubnetIdSlavesSort ($subnetId, $sort['field'], $sort['direction']);	$title = _("All IP addresses belonging to ALL nested subnets"); $slavePing = true; }
 $SubnetDetails = getSubnetDetailsById     ($subnetId);
 
 /* die if empty! */
