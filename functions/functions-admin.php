@@ -1039,6 +1039,35 @@ function setUpdateSectionQuery ($update)
 
 
 /**
+ * Update section ordering
+ */
+function UpdateSectionOrder ($order) 
+{
+    global $db;                                                                     # get variables from config file
+    $database = new database($db['host'], $db['user'], $db['pass'], $db['name']);	# open db connection  
+
+	// set querries for each section
+	$query = "";
+	foreach($order as $key=>$o) {
+		$query .= "update `sections` set `order` = $o where `id` = $key; \n";
+	}
+	//log
+	$log = prepareLogFromArray ($order);
+	//execute multiple queries
+	try { $result = $database->executeMultipleQuerries($query); }
+	catch (Exception $e) { 
+		$error =  $e->getMessage(); 
+        updateLogTable ('Section reordering failed ('. $update['name']. ') - '.$error, $log, 2);	# write error log
+        print ('<div class="alert alert-error">'._("Cannot reorder sections").' - '.$error.'!</div>');
+		return false;
+	}
+	# success
+    updateLogTable ('Section reordering ok', $log, 1);			# write success log
+    return true;
+}
+
+
+/**
  * Parse section permissions
  */
 function parseSectionPermissions($permissions)

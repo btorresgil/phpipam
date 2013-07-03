@@ -4,7 +4,7 @@
 # miha petkovsek <miha.petkovsek@gmail.com>, 2013.
 #
 
-# "Project-Id-Version: 0.83.001\n"
+# "Project-Id-Version: 0.84.001\n"
 # "Report-Msgid-Bugs-To: Miha Petkovsek <miha.petkovsek@gmail.com>\n"
 # "POT-Creation-Date: 2013-04-02 14:33+0200\n"
 # "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
@@ -3968,4 +3968,24 @@ msgstr ""
 
 #: site/admin/settings.php
 msgid "Select default language"
+msgstr ""
+
+#: site/admin/manageSection.php
+msgid "Section order"
+msgstr ""
+
+#: site/admin/manageSectionOrder.php
+msgid "You can manually set order in which sections are displayed in. Default is creation date."
+msgstr ""
+
+#: site/admin/manageSectionOrder.php
+msgid "Order"
+msgstr ""
+
+#: site/admin/manageSectionOrderResult.php
+msgid "Section reordering successful"
+msgstr ""
+
+#: site/functions/functions-admin.php
+msgid "Cannot reorder sections"
 msgstr ""

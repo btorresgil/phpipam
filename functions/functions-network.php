@@ -279,7 +279,7 @@ function fetchSections ()
 {
     global $db;                                                                      # get variables from config file
     /* set query */
-    $query 	  = 'select * from `sections` order by `id` asc;';
+    $query 	  = 'select * from `sections` order by IF(ISNULL(`order`),1,0),`order`,`id` asc;';
     $database = new database($db['host'], $db['user'], $db['pass'], $db['name']);
 
     /* execute */

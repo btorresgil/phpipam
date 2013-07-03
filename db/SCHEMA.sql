@@ -118,6 +118,8 @@ CREATE TABLE `sections` (
   `description` text,
   `permissions` varchar(1024) DEFAULT NULL,
   `strictMode` INT(1)  NOT NULL  DEFAULT '1',
+  `subnetOrdering` VARCHAR(16)  NULL  DEFAULT NULL,
+  `order` INT(3)  NULL  DEFAULT NULL,
   PRIMARY KEY (`name`),
   UNIQUE KEY `id_2` (`id`),
   KEY `id` (`id`)
@@ -171,7 +173,7 @@ LOCK TABLES `settings` WRITE;
 
 INSERT INTO `settings` (`id`, `siteTitle`, `siteAdminName`, `siteAdminMail`, `siteDomain`, `siteURL`, `domainAuth`, `showTooltips`, `enableIPrequests`, `enableVRF`, `enableDNSresolving`, `version`, `donate`, `IPfilter`, `printLimit`, `vlanDuplicate`, `subnetOrdering`, `visualLimit`, `htmlMail`)
 VALUES
-	(1, 'phpipam IP address management', 'Sysadmin', 'admin@domain.local', 'domain.local', 'http://yourpublicurl.com', 0, 1, 1, 1, 0, '0.8', 0, 'mac;owner;state;switch;note', 50, 1, 'subnet,asc', 24, X'31');
+	(1, 'phpipam IP address management', 'Sysadmin', 'admin@domain.local', 'domain.local', 'http://yourpublicurl.com', 0, 1, 1, 1, 0, '0.84', 0, 'mac;owner;state;switch;note', 50, 1, 'subnet,asc', 24, X'31');
 	
 /*!40000 ALTER TABLE `settings` ENABLE KEYS */;
 UNLOCK TABLES;

@@ -864,6 +864,32 @@ $(document).on("click", "#editSectionSubmit", function() {
     }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});
     return false;
 });
+//section ordering
+$('button.sectionOrder').click(function() {
+    showSpinner();
+    //load edit data
+    $.post("site/admin/manageSectionOrder.php", function(data) {
+        $('div.popup_w500').html(data);
+        showPopup('popup_w500');
+        hideSpinner();
+    }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});
+	return false;
+});
+//section ordering save
+$(document).on("click", "#sectionOrderSubmit", function() {
+	showSpinner();
+	var order = $('form#sectionOrder').serialize();
+    $.post('site/admin/manageSectionOrderResult.php', order, function(data) {
+        $('div.sectionOrderResult').html(data).slideDown('fast');
+
+        //reload after 2 seconds if succeeded!
+        if(data.search("error") == -1)     { setTimeout(function (){window.location.reload();}, 1500); }
+        else                             { hideSpinner(); hideSpinner();
+        }
+    }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});
+    return false;
+
+});
 
 
 /*    Subnets

@@ -1,4 +1,4 @@
-== 0.9
+== 0.84.001
 
 	New features:
 	----------------------------
@@ -13,6 +13,7 @@
 	+ Added direct links to different pages in IP address table;
 	+ Subnets can now be edited directly from nested subnets list;
 	+ When adding nested subnets default vlan/vrf is selected from parent;
+	+ Added Section ordering;
 
 	Bugfixes:
 	----------------------------

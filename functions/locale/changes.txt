@@ -335,3 +335,26 @@ msgstr ""
 #: site/admin/languages.php
 msgid "Version"
 msgstr ""
+
+
+### 0.84.001 ###
+
+#: site/admin/manageSection.php
+msgid "Section order"
+msgstr ""
+
+#: site/admin/manageSectionOrder.php
+msgid "You can manually set order in which sections are displayed in. Default is creation date."
+msgstr ""
+
+#: site/admin/manageSectionOrder.php
+msgid "Order"
+msgstr ""
+
+#: site/admin/manageSectionOrderResult.php
+msgid "Section reordering successful"
+msgstr ""
+
+#: site/functions/functions-admin.php
+msgid "Cannot reorder sections"
+msgstr ""
