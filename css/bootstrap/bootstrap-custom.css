@@ -591,6 +591,10 @@ ul#subnets li.active a {
 	font-weight: bold;
 	color: #333;
 }
+ul#subnets li.active li a {
+	font-weight: 300;
+	color: #333;
+}
 ul#subnets li.leaf.active i {
 	padding-left: 0px;
 }
