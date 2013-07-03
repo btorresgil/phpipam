@@ -1,4 +1,4 @@
-== 0.84.001
+== 0.84.002
 
 	New features:
 	----------------------------
@@ -14,6 +14,7 @@
 	+ Subnets can now be edited directly from nested subnets list;
 	+ When adding nested subnets default vlan/vrf is selected from parent;
 	+ Added Section ordering;
+	+ Added per/section subnet ordering (overrides dafault form settings);
 
 	Bugfixes:
 	----------------------------

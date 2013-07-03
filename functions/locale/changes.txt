@@ -358,3 +358,10 @@ msgstr ""
 #: site/functions/functions-admin.php
 msgid "Cannot reorder sections"
 msgstr ""
+
+
+### 0.84.002 ###
+
+#: site/admin/manageSectionEdit.php
+msgid "Default"
+msgstr ""

@@ -437,7 +437,17 @@ function fetchSubnets ($sectionId, $orderType = "subnet", $orderBy = "asc" )
     /* check for sorting in settings and override */
     $settings = getAllSettings();
     
-    if(isset($settings['subnetOrdering']))	{
+    /* get section details to check for ordering */
+    $section = getSectionDetailsById ($sectionId);
+    
+    // section ordering
+    if($section['subnetOrdering']!="default" && strlen($section['subnetOrdering'])>0 ) {
+	    $sort = explode(",", $section['subnetOrdering']);
+	    $orderType = $sort[0];
+	    $orderBy   = $sort[1];	    
+    }
+    // default - set via settings
+    elseif(isset($settings['subnetOrdering']))	{
 	    $sort = explode(",", $settings['subnetOrdering']);
 	    $orderType = $sort[0];
 	    $orderBy   = $sort[1];
@@ -446,7 +456,7 @@ function fetchSubnets ($sectionId, $orderType = "subnet", $orderBy = "asc" )
     /* set query, open db connection and fetch results */
     $query 	  = "select * from `subnets` where `sectionId` = '$sectionId' ORDER BY `masterSubnetId`,`$orderType` $orderBy;";
     $database = new database($db['host'], $db['user'], $db['pass'], $db['name']);
-
+    
     /* execute */
     try { $subnets = $database->getArray( $query ); }
     catch (Exception $e) { 

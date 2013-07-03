@@ -999,14 +999,14 @@ function setUpdateSectionQuery ($update)
 	# add section
     if ($update['action'] == "add") 
     {
-        $query = 'Insert into sections (`name`,`description`,`permissions`,`strictMode`) values ("'.$update['name'].'", "'.$update['description'].'", "'.$update['permissions'].'", "'.$update['strictMode'].'");';
+        $query = 'Insert into sections (`name`,`description`,`permissions`,`strictMode`,`subnetOrdering`) values ("'.$update['name'].'", "'.$update['description'].'", "'.$update['permissions'].'", "'.$update['strictMode'].'", "'.$update['subnetOrdering'].'");';
     }
     # edit section
     else if ($update['action'] == "edit") 
     {
         $section_old = getSectionDetailsById ( $update['id'] );												# Get old section name for update
-        # Update section name
-        $query   = "update `sections` set `name` = '$update[name]', `description` = '$update[description]', `permissions` = '$update[permissions]', `strictMode`='$update[strictMode]' where `id` = '$update[id]';";	
+        # Update section
+        $query   = "update `sections` set `name` = '$update[name]', `description` = '$update[description]', `permissions` = '$update[permissions]', `strictMode`='$update[strictMode]', `subnetOrdering`='$update[subnetOrdering]' where `id` = '$update[id]';";	
         
         # delegate permissions if set
         if($update['delegate'] == 1) {

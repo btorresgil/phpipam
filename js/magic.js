@@ -844,8 +844,8 @@ $('button.editSection').click(function() {
     var action         = $(this).attr('data-action');
     //load edit data
     $.post("site/admin/manageSectionEdit.php", {sectionId:sectionId, action:action}, function(data) {
-        $('div.popup_w500').html(data);
-        showPopup('popup_w500');
+        $('div.popup_w700').html(data);
+        showPopup('popup_w700');
         hideSpinner();
     }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});
 });
