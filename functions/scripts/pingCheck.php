@@ -169,10 +169,12 @@ if(sizeof($stateDiff)>0 && $email)
 		//Changes
 		foreach($stateDiff as $change) {
 			//reformat statuses
-			if($change['oldStatus'] == 0)	{ $oldStatus = "Online"; }
-			else							{ $oldStatus = "Offline"; }
-			if($change['newStatus'] == 0)	{ $newStatus = "Online"; }
-			else							{ $newStatus = "Offline"; }
+			if($change['oldStatus'] == 0)		{ $oldStatus = "Online"; }
+			elseif($change['oldStatus'] == 1)	{ $oldStatus = "Check failed"; }
+			else								{ $oldStatus = "Offline"; }
+			if($change['newStatus'] == 0)		{ $newStatus = "Online"; }
+			elseif($change['newStatus'] == 1)	{ $oldStatus = "Check failed"; }
+			else								{ $newStatus = "Offline"; }
 			//set subnet
 			$subnet = getSubnetDetails($change['subnetId']);
 			$subnetPrint = Transform2long($subnet['subnet'])."/".$subnet['mask']." - ".$subnet['description'];
