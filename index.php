@@ -183,7 +183,7 @@ else								 		{ $url = "http://$_SERVER[SERVER_NAME]".BASE; }
 			print "<div id='content' class='span10'>";
 				if( isset($_REQUEST['toolsId']) && (strlen($_REQUEST['toolsId']) == 0) )	{ unset($_REQUEST['toolsId']); }
 				# subnets
-				if($_REQUEST['page'] == "subnets" && !isset($_REQUEST['subnetId']))					{ print "<div class='alert alert-info alert-dash'><i class='icon-gray icon-chevron-left'></i> "._('Please select subnet from left menu')."!</div>"; }
+				if($_REQUEST['page'] == "subnets" && !isset($_REQUEST['subnetId']))					{ include_once("site/ipaddr/sectionAllSubnets.php"); }
 				else if($_REQUEST['page'] == "subnets")												{ include_once("site/ipaddr/ipAddressSwitch.php"); }
 				# tools		
 				else if ($_REQUEST['page'] == "tools" && !isset($_REQUEST['toolsId']))				{ print "<div class='alert alert-info alert-dash'><i class='icon-gray icon-chevron-left'></i> "._('Please select tool from left menu!')."</div>"; }

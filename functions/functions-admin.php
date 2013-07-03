@@ -875,7 +875,7 @@ function printAdminSubnets( $subnets, $actions = true, $vrf = "0" )
 				$html[] = "	<td>$requests</td>";
 				$html[] = "	<td>$pCheck</td>";
 				if($actions) {
-				$html[] = "	<td class='actions'>";
+				$html[] = "	<td class='actions' style='padding:0px;>";
 				$html[] = "	<div class='btn-group'>";
 				$html[] = "		<button class='btn btn-small editSubnet'     data-action='edit'   data-subnetid='".$option['value']['id']."'  data-sectionid='".$option['value']['sectionId']."'><i class='icon-gray icon-pencil'></i></button>";
 				$html[] = "		<button class='btn btn-small showSubnetPerm' data-action='show'   data-subnetid='".$option['value']['id']."'  data-sectionid='".$option['value']['sectionId']."'><i class='icon-gray icon-tasks'></i></button>";
