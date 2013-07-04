@@ -624,8 +624,11 @@ function getIpAddressesForVisual ($subnetId)
     
     /* reformat array */
     foreach($ipaddresses as $ip) {
-	    $out[$ip['ip_addr']]['state'] = $ip['state'];
-	    $out[$ip['ip_addr']]['id']    = $ip['id'];
+	    $out[$ip['ip_addr']]['state'] 		= $ip['state'];
+	    $out[$ip['ip_addr']]['id']    		= $ip['id'];
+	    $out[$ip['ip_addr']]['ip_addr']    	= $ip['ip_addr'];
+	    $out[$ip['ip_addr']]['desc']  		= $ip['description'];
+	    $out[$ip['ip_addr']]['dns_name']  	= $ip['dns_name'];
     }
 
     /* return ip address array */
