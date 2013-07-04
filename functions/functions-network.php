@@ -1758,6 +1758,33 @@ function moveIPAddress ($id, $subnetId)
 
 
 /**
+ *	Insert scan results
+ */
+function insertScanResults($res, $subnetId)
+{
+    global $db;                                                                      # get variables from config file
+    $database = new database($db['host'], $db['user'], $db['pass'], $db['name']);    # open db
+    
+    # set queries
+    foreach($res as $ip) {
+	    $query[] = "insert into `ipaddresses` (`ip_addr`,`subnetId`,`description`,`dns_name`,`lastSeen`) values ('".transform2decimal($ip['ip_addr'])."', '$subnetId', '$ip[description]', '$ip[dns_name]', NOW()); ";
+    }
+    # glue
+    $query = implode("\n", $query);
+
+    # execute query
+    try { $database->executeMultipleQuerries($query); }
+    catch (Exception $e) { 
+        $error =  $e->getMessage(); 
+        print "<div class='alert alert-error'>$error</div>";
+        return false;
+    }
+    # default ok
+    return true;
+}
+
+
+/**
  * Get IP address details
  */
 function getIpAddrDetailsById ($id) 

@@ -4,7 +4,7 @@
 # miha petkovsek <miha.petkovsek@gmail.com>, 2013.
 #
 
-# "Project-Id-Version: 0.84.002\n"
+# "Project-Id-Version: 0.84.005\n"
 # "Report-Msgid-Bugs-To: Miha Petkovsek <miha.petkovsek@gmail.com>\n"
 # "POT-Creation-Date: 2013-04-02 14:33+0200\n"
 # "PO-Revision-Date: 2013-06-28 14:33+0200\n"
@@ -3983,8 +3983,8 @@ msgid "scan"
 msgstr "skeniranje"
 
 #: site/ipaddr/subnetScan.php
-msgid "You can set parameters for scan under functions/config-scan.php"
-msgstr "Parametre skeniranja lahko spreminjate v functions/config-scan.php"
+msgid "You can set parameters for scan under functions/scan/config-scan.php"
+msgstr "Parametre skeniranja lahko spreminjate v functions/scan/config-scan.php"
 
 #: site/ipaddr/subnetScan.php
 msgid "Discovery scans"
@@ -4029,3 +4029,19 @@ msgstr "Ne morem spremeniti vrstnega reda"
 #: site/admin/manageSectionEdit.php
 msgid "Default"
 msgstr "Privzeto"
+
+#: site/ipaddr/subnetDiscoveryPing.php
+msgid "Threading is required for scanning subnets. Please recompile PHP with pcntl extension"
+msgstr "Podpora za threading je zahtevana za skeniranje omrežij. Prosimo naložite pcntl podporo za php"
+
+#: site/ipaddr/subnetDiscoveryPing.php
+msgid "Add discovered hosts"
+msgstr "Dodaj odkrite naprave"
+
+#: site/ipaddr/subnetDiscoveryPingResult.php
+msgid "Scan results added to database"
+msgstr "Rezultati skeniranja dodani v bazo"
+
+#: site/ipaddr/subnetScan.php
+msgid "Invalid ping path"
+msgstr "Napačna pot do programa ping"

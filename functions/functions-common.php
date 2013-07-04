@@ -668,6 +668,28 @@ function sec2hms($sec, $padHours = false)
 }
 
 
+/**
+ *	get php exec path
+ */
+function getPHPExecutableFromPath() 
+{
+	$paths = explode(PATH_SEPARATOR, getenv('PATH'));
+	foreach ($paths as $path) {
+		// we need this for XAMPP (Windows)
+		if (strstr($path, 'php.exe') && isset($_SERVER["WINDIR"]) && file_exists($path) && is_file($path)) {
+			return $path;
+	}
+	else {
+		$php_executable = $path . DIRECTORY_SEPARATOR . "php" . (isset($_SERVER["WINDIR"]) ? ".exe" : "");
+			if (file_exists($php_executable) && is_file($php_executable)) {
+				return $php_executable;
+			}
+		}
+	}
+	return FALSE; // not found
+}
+
+
 
 
 

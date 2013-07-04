@@ -5,7 +5,7 @@
  ***************************/
 
 /* required functions */
-require_once('../../functions/functions.php'); 
+require_once('../../../functions/functions.php'); 
 
 /* verify that user has write permissions for subnet */
 $subnetPerm = checkSubnetPermission ($_REQUEST['subnetId']);
@@ -44,9 +44,9 @@ $ip_addr = getIpAddressesBySubnetId ($_POST['subnetId']) ;
     		<select name="scanType">
     			<!-- Discovery scans -->
 	    		<optgroup label="<?php print _('Discovery scans');?>">
-		    		<option value="DiscPing">Ping <?php print _('scan');?></option>
-		    		<option value="DiscNmap">NMap <?php print _('scan');?></option>
-		    		<option value="DiscSnmp">SNMP <?php print _('scan');?></option>
+		    		<option value="DiscoveryPing">Ping <?php print _('scan');?></option>
+		    		<option value="DiscoveryNmap">NMap <?php print _('scan');?></option>
+		    		<option value="DiscoverySnmp">SNMP <?php print _('scan');?></option>
 	    		</optgroup>
     			<!-- Status update scans -->
 	    		<optgroup label="<?php print _('Status update scans');?>">
@@ -62,7 +62,7 @@ $ip_addr = getIpAddressesBySubnetId ($_POST['subnetId']) ;
 
     <!-- warning -->
     <div class="alert alert-warn alert-block" id="alert-scan">
-    <?php print _('You can set parameters for scan under functions/config-scan.php'); ?>!<br>
+    <?php print _('You can set parameters for scan under functions/scan/config-scan.php'); ?>!<br>
     &middot; <?php print _('Discovery scans discover new hosts');?><br>
     &middot; <?php print _('Status update scans update alive status for whole subnet');?><br>
     </div>

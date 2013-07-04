@@ -6,7 +6,6 @@
 
 /* required functions */
 require_once('../../functions/functions.php'); 
-require_once('../../functions/config-scan.php'); 
 
 /* verify that user has write permissions for subnet */
 $subnetPerm = checkSubnetPermission ($_REQUEST['subnetId']);

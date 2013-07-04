@@ -3985,8 +3985,8 @@ msgid "scan"
 msgstr "scanner"
 
 #: site/ipaddr/subnetScan.php
-msgid "You can set parameters for scan under functions/config-scan.php"
-msgstr "Vous pouvez paramétrer le scan dans functions/config-scan.php"
+msgid "You can set parameters for scan under functions/scan/config-scan.php"
+msgstr "Vous pouvez paramétrer le scan dans functions/scan/config-scan.php"
 
 #: site/ipaddr/subnetScan.php
 msgid "Discovery scans"

@@ -349,7 +349,7 @@ $(document).on("click", "table.ipaddresses th a.sort", function() {
 $('a.scan_subnet').click(function() {
 	showSpinner();
 	var subnetId = $(this).attr('data-subnetId');
-	$.post('site/ipaddr/subnetScan.php', {subnetId:subnetId}, function(data) {
+	$.post('site/ipaddr/scan/subnetScan.php', {subnetId:subnetId}, function(data) {
         $('div.popup_w700').html(data);
         showPopup('popup_w700');
 		hideSpinner();
@@ -362,12 +362,35 @@ $(document).on('click','#subnetScanSubmit', function() {
 	var subnetId = $(this).attr('data-subnetId');
 	var pingType = $('select[name=scanType]').find(":selected").val();
 	$('#alert-scan').slideUp('fast');
-	$.post('site/ipaddr/subnetScan'+pingType+".php", {subnetId:subnetId, pingType:pingType}, function(data) {
+	$.post('site/ipaddr/scan/subnetScan'+pingType+".php", {subnetId:subnetId, pingType:pingType}, function(data) {
         $('#subnetScanResult').html(data);
 		hideSpinner();
     }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});
 	return false;
-})
+});
+//remove result
+$(document).on('click', '.resultRemove', function() {
+	var target = $(this).attr('data-target');
+	$('tr.'+target).remove();
+	return false;
+});
+//submit scanning result
+$(document).on('click', 'a#saveScanResults', function() {
+	showSpinner();
+	var script   = $(this).attr('data-script');
+	var subnetId = $(this).attr('data-subnetId');
+	var postData = $('form.'+script+"Form").serialize();
+	var postData = postData+"&subnetId="+subnetId;
+	$.post('site/ipaddr/scan/subnetScan'+script+"Result.php", postData, function(data) {
+        $('#subnetScanAddResult').html(data);
+        //hide if success!
+        //reload after 2 seconds if succeeded!
+        if(data.search("error") == -1)   { setTimeout(function (){window.location.reload();}, 1500); }
+        else                             { hideSpinner(); }
+    }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});
+	return false;
+});
+
 
 
 /*    import IP addresses

@@ -306,7 +306,7 @@ msgid "scan"
 msgstr ""
 
 #: site/ipaddr/subnetScan.php
-msgid "You can set parameters for scan under functions/config-scan.php"
+msgid "You can set parameters for scan under functions/scan/config-scan.php"
 msgstr ""
 
 #: site/ipaddr/subnetScan.php
@@ -364,4 +364,23 @@ msgstr ""
 
 #: site/admin/manageSectionEdit.php
 msgid "Default"
+msgstr ""
+
+
+### 0.84.005 ###
+
+#: site/ipaddr/subnetDiscoveryPing.php
+msgid "Threading is required for scanning subnets. Please recompile PHP with pcntl extension"
+msgstr ""
+
+#: site/ipaddr/subnetDiscoveryPing.php
+msgid "Add discovered hosts"
+msgstr ""
+
+#: site/ipaddr/subnetDiscoveryPingResult.php
+msgid "Scan results added to database"
+msgstr ""
+
+#: site/ipaddr/subnetScan.php
+msgid "Invalid ping path"
 msgstr ""

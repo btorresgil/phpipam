@@ -10,13 +10,13 @@ set cronjob:
 *\/15 * * * *  /usr/local/bin/php /<sitepath>/functions/scripts/pingCheck.php
 */
 
-//configs
-$MAX_THREADS = 128;						//set max concurrent threads
+// config
 $email = true;							//set mail with status diff to admins
 $emailText = false;						//format to send mail via text or html
 //$wait = 500;							//time to wait for response in ms
 $count = 1;								//number of pings to send
-//response
+
+// response
 $stateDiff = array();					//Array with differences, can be used to email to admins
 
 // test to see if threading is available
@@ -33,9 +33,12 @@ $settings = getAllSettings();
 $statuses = explode(";", $settings['pingStatus']);
 
 
-
+//verify that pign path is correct
+if(!file_exists($pathPing)) {
+	print "Invalid ping path! You can set parameters for scan under functions/scan/config-scan.php\n";
+}
 //threads not supported, scan 1 by one - it is highly recommended to enable threading for php
-if(!$threads) {
+elseif(!$threads) {
 	//print warning
 	print "Warning: Threading is not supported!\n";
 	$m=0;														//Array count
