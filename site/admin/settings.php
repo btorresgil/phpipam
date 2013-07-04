@@ -238,9 +238,11 @@ $langs = getLanguages ();
 			$opts = array(
 				"0"=>_("Show all"),
 				"10"=>"10",
-				"25"=>"25",
-				"50"=>"50",
-				"100"=>"100"
+				"30"=>"30",
+				"62"=>"62",
+				"100"=>"100",
+				"126"=>"126",
+				"254"=>"254"
 			);
 			
 			foreach($opts as $key=>$line) {
@@ -294,6 +296,13 @@ $langs = getLanguages ();
 	</td>
 </tr>
 
+<!-- result -->
+<tr class="th">
+	<td colspan="2">
+		<div class="settingsEdit"></div>
+	</td>
+	<td></td>
+</tr>
 
 <!-- Submit -->
 <tr class="th">
@@ -306,6 +315,3 @@ $langs = getLanguages ();
 
 </table>
 </form>
-
-<!-- result holder -->
-<div class="settingsEdit"></div>
