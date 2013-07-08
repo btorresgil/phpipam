@@ -8,6 +8,9 @@
 /* include required scripts */
 require_once('../../functions/functions.php');
 
+/* verify that user is logged in */
+isUserAuthenticated(false);
+
 // verify that user has write access
 $subnetPerm = checkSubnetPermission ($_POST['subnetId']);
 if($subnetPerm < 2) {

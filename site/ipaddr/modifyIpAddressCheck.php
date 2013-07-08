@@ -12,7 +12,7 @@ require_once('../../functions/functions.php');
 CheckReferrer();
 
 /* verify that user is authenticated! */
-isUserAuthenticated ();
+isUserAuthenticated (true);
 
 /* verify that user has write access */
 $subnetPerm = checkSubnetPermission ($_REQUEST['subnetId']);
