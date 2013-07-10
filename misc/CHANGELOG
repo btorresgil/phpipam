@@ -21,6 +21,8 @@
 
 	Bugfixes:
 	----------------------------
+	+ Fixed wrong VLAN display in tools;
+	+ Fixed subnet/section links from VLANS if base not /;
 
 == 0.8
 

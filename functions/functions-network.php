@@ -1292,7 +1292,7 @@ function getAllVlans($tools = false)
 	}
 		
     /* check if it came from tools and use different query! */
-    if($tools) 	{ $query = 'SELECT vlans.number,vlans.name,vlans.description,subnets.subnet,subnets.mask,subnets.id'.$myFieldsInsert['id'].' AS subnetId,subnets.sectionId FROM vlans LEFT JOIN subnets ON subnets.vlanId = vlans.vlanId ORDER BY vlans.number ASC;'; }
+    if($tools) 	{ $query = 'SELECT vlans.number,vlans.name,vlans.description,subnets.subnet,subnets.mask,subnets.id AS subnetId,subnets.sectionId'.$myFieldsInsert['id'].' FROM vlans LEFT JOIN subnets ON subnets.vlanId = vlans.vlanId ORDER BY vlans.number ASC;'; }
     else 		{ $query = 'select * from `vlans` order by `number` asc;'; }
 
     /* execute */
