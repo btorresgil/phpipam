@@ -23,6 +23,7 @@
 	----------------------------
 	+ Fixed wrong VLAN display in tools;
 	+ Fixed subnet/section links from VLANS if base not /;
+	+ Fixed warning in apache log on subnet editing if no VRFs are configured;
 
 == 0.8
 

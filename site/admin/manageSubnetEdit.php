@@ -193,7 +193,7 @@ else															{ $readonly = false; }
         print '<option disabled="disabled">'._('Select VRF').'</option>';
         print '<option value="0">'._('None').'</option>';
         
-        if(sizeof($VRFs) > 0) {
+        if($VRFs!=false) {
         foreach($VRFs as $vrf) {
         
         	if ($vrf['vrfId'] == $subnetDataOld['vrfId']) 	{ print '<option value="'. $vrf['vrfId'] .'" selected>'. $vrf['name'] .'</option>'; }
