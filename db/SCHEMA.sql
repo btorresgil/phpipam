@@ -39,6 +39,7 @@ CREATE TABLE `ipaddresses` (
   `note` text,
   `lastSeen` DATETIME  NULL  DEFAULT '0000-00-00 00:00:00',
   `excludePing` BINARY  NULL  DEFAULT '0',
+  `editDate` TIMESTAMP  NULL  ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -120,6 +121,7 @@ CREATE TABLE `sections` (
   `strictMode` INT(1)  NOT NULL  DEFAULT '1',
   `subnetOrdering` VARCHAR(16)  NULL  DEFAULT NULL,
   `order` INT(3)  NULL  DEFAULT NULL,
+  `editDate` TIMESTAMP  NULL  ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`name`),
   UNIQUE KEY `id_2` (`id`),
   KEY `id` (`id`)
@@ -165,6 +167,8 @@ CREATE TABLE `settings` (
   `htmlMail` binary(1) NOT NULL DEFAULT '1',
   `pingStatus` VARCHAR(12)  NOT NULL  DEFAULT '1800;3600',
   `defaultLang` INT(3)  NULL  DEFAULT NULL,
+  `editDate` TIMESTAMP  NULL  ON UPDATE CURRENT_TIMESTAMP,
+  `api` BINARY  NOT NULL  DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -192,6 +196,7 @@ CREATE TABLE `settingsDomain` (
   `use_ssl` tinyint(1) DEFAULT '0',
   `use_tls` tinyint(1) DEFAULT '0',
   `ad_port` int(5) DEFAULT '389',
+  `editDate` TIMESTAMP  NULL  ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -224,6 +229,7 @@ CREATE TABLE `subnets` (
   `showName` tinyint(1) DEFAULT '0',
   `permissions` varchar(1024) DEFAULT NULL,
   `pingSubnet` BOOL  NOT NULL  DEFAULT '0',
+  `editDate` TIMESTAMP  NULL  ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -260,6 +266,7 @@ CREATE TABLE `switches` (
   `version` varchar(128) DEFAULT NULL,
   `description` varchar(256) DEFAULT NULL,
   `sections` varchar(128) DEFAULT NULL,
+  `editDate` TIMESTAMP  NULL  ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `hostname` (`hostname`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -285,6 +292,7 @@ CREATE TABLE `userGroups` (
   `g_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `g_name` varchar(32) DEFAULT NULL,
   `g_desc` varchar(1024) DEFAULT NULL,
+  `editDate` TIMESTAMP  NULL  ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`g_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -315,6 +323,7 @@ CREATE TABLE `users` (
   `email` varchar(64) CHARACTER SET utf8 DEFAULT NULL,
   `domainUser` binary(1) DEFAULT '0',
   `lang` INT(2)  NULL  DEFAULT '1',
+  `editDate` TIMESTAMP  NULL  ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`username`),
   UNIQUE KEY `id_2` (`id`),
   KEY `id` (`id`)
@@ -351,7 +360,8 @@ INSERT INTO `lang` (`l_id`, `l_code`, `l_name`)
 VALUES
 	(1, 'en', 'English'),
 	(2, 'sl_SI', 'Slovenščina'),
-	(3, 'fr_FR', 'Français');
+	(3, 'fr_FR', 'Français'),
+	(4, 'nl_NL','Nederlands');
 
 
 
@@ -365,6 +375,7 @@ CREATE TABLE `vlans` (
   `name` varchar(255) NOT NULL,
   `number` int(4) DEFAULT NULL,
   `description` text,
+  `editDate` TIMESTAMP  NULL  ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`vlanId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -390,10 +401,26 @@ CREATE TABLE `vrf` (
   `name` varchar(32) NOT NULL DEFAULT '',
   `rd` varchar(32) DEFAULT NULL,
   `description` varchar(256) DEFAULT NULL,
+  `editDate` TIMESTAMP  NULL  ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`vrfId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
+# Dump of table api
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `api`;
+
+CREATE TABLE `api` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `app_id` varchar(32) NOT NULL DEFAULT '',
+  `app_code` varchar(32) NOT NULL DEFAULT '',
+  `app_permissions` int(1) DEFAULT '1',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `app_id` (`app_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+
 # update version
 # ------------------------------------------------------------
-UPDATE `settings` set `version` = '0.81';
+UPDATE `settings` set `version` = '0.85';

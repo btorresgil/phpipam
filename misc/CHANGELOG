@@ -1,4 +1,4 @@
-== 0.84.008
+== 0.84.011
 
 	New features:
 	----------------------------
@@ -8,7 +8,6 @@
 
 	Enhancements:
 	----------------------------
-	+ Added French translation (Denis Darré);
 	+ Added error catching/displaying for ajax-loaded php scripts;
 	+ Added default language for login/requests display and new users;
 	+ Added direct links to different pages in IP address table;
@@ -18,12 +17,18 @@
 	+ Added per/section subnet ordering (overrides dafault form settings);
 	+ Clicking on section now shows all subnets and belonging details;
 	+ If session timeouts after re-login last requested page will be opened;
+	
+	Translations:
+	----------------------------
+	+ Added French translation (Denis Darré);
+	+ Added Dutch translation (Michiel Visser);
 
 	Bugfixes:
 	----------------------------
 	+ Fixed wrong VLAN display in tools;
 	+ Fixed subnet/section links from VLANS if base not /;
 	+ Fixed warning in apache log on subnet editing if no VRFs are configured;
+	+ Fixed admin menu off-screen overflow;
 
 == 0.8
 

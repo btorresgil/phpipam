@@ -1792,7 +1792,7 @@ function getCustomIPaddrFields()
 	
 	/* unset standard fields */
 	unset($res['id'], $res['subnetId'], $res['ip_addr'], $res['description'], $res['dns_name'], $res['switch']);
-	unset($res['port'], $res['mac'], $res['owner'], $res['state'], $res['note'], $res['lastSeen'], $res['excludePing']);
+	unset($res['port'], $res['mac'], $res['owner'], $res['state'], $res['note'], $res['lastSeen'], $res['excludePing'], $res['editDate']);
 	
 	return $res;
 }
@@ -1825,7 +1825,7 @@ function getCustomIPaddrFieldsNumArr()
 	
 	/* unset standard fields */
 	unset($res['id'], $res['subnetId'], $res['ip_addr'], $res['description'], $res['dns_name'], $res['switch']);
-	unset($res['port'], $res['mac'], $res['owner'], $res['state'], $res['note'], $res['lastSeen'], $res['excludePing']);
+	unset($res['port'], $res['mac'], $res['owner'], $res['state'], $res['note'], $res['lastSeen'], $res['excludePing'], $res['editDate']);
 	
 	/* reindex */
 	foreach($res as $line) {
@@ -1923,7 +1923,7 @@ function getCustomSubnetFields()
 	
 	/* unset standard fields */
 	unset($res['id'], $res['subnet'], $res['mask'], $res['sectionId'], $res['description'], $res['masterSubnetId']);
-	unset($res['vrfId'], $res['allowRequests'], $res['adminLock'], $res['vlanId'], $res['showName'],$res['permissions']);
+	unset($res['vrfId'], $res['allowRequests'], $res['adminLock'], $res['vlanId'], $res['showName'],$res['permissions'],$res['editDate']);
 	unset($res['pingSubnet']);
 	
 	return $res;
@@ -1957,7 +1957,7 @@ function getCustomSubnetsFieldsNumArr()
 	
 	/* unset standard fields */
 	unset($res['id'], $res['subnet'], $res['mask'], $res['sectionId'], $res['description'], $res['masterSubnetId']);
-	unset($res['vrfId'], $res['allowRequests'], $res['adminLock'], $res['vlanId'], $res['showName'],$res['permissions']);
+	unset($res['vrfId'], $res['allowRequests'], $res['adminLock'], $res['vlanId'], $res['showName'],$res['permissions'],$res['editDate']);
 	
 	/* reindex */
 	foreach($res as $line) {
@@ -2055,7 +2055,7 @@ function getCustomVLANFields()
 	}
 	
 	/* unset standard fields */
-	unset($res['vlanId'], $res['name'], $res['number'], $res['description']);
+	unset($res['vlanId'], $res['name'], $res['number'], $res['description'],$res['editDate']);
 	
 	return $res;
 }
@@ -2087,7 +2087,7 @@ function getCustomVLANFieldsNumArr()
 	}
 	
 	/* unset standard fields */
-	unset($res['vlanId'], $res['name'], $res['number'], $res['description']);
+	unset($res['vlanId'], $res['name'], $res['number'], $res['description'],$res['editDate']);
 	
 	/* reindex */
 	foreach($res as $line) {
@@ -2181,7 +2181,7 @@ function getCustomUserFields()
 	}
 	
 	/* unset standard fields */
-	unset($res['id'], $res['username'], $res['password'], $res['groups'], $res['role'], $res['real_name'], $res['email'], $res['domainUser'], $res['lang']);
+	unset($res['id'], $res['username'], $res['password'], $res['groups'], $res['role'], $res['real_name'], $res['email'], $res['domainUser'], $res['lang'],$res['editDate']);
 	
 	return $res;
 }
@@ -2213,7 +2213,7 @@ function getCustomUserFieldsNumArr()
 	}
 	
 	/* unset standard fields */
-	unset($res['id'], $res['username'], $res['password'], $res['groups'], $res['role'], $res['real_name'], $res['email'], $res['domainUser']);
+	unset($res['id'], $res['username'], $res['password'], $res['groups'], $res['role'], $res['real_name'], $res['email'], $res['domainUser'],$res['editDate']);
 	
 	/* reindex */
 	foreach($res as $line) {
