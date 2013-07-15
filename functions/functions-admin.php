@@ -943,7 +943,7 @@ function updateSubnetPermissions ($subnet)
 /**
  * Update section
  */
-function UpdateSection ($update) 
+function UpdateSection ($update, $api = false) 
 {
     global $db;                                                                     # get variables from config file
     $database = new database($db['host'], $db['user'], $db['pass'], $db['name']);	# open db connection  
@@ -953,7 +953,7 @@ function UpdateSection ($update)
     $update['description'] = mysqli_real_escape_string($database, $update['description']); 
     $update['name'] 	   = mysqli_real_escape_string($database, $update['name']); 
     
-    if (!$update['name']) 	{ die('<div class="alert alert-error">'._('Name is mandatory').'!</div>'); }	# section name is mandatory
+    if (!$api && !$update['name']) 	{ die('<div class="alert alert-error">'._('Name is mandatory').'!</div>'); }	# section name is mandatory
 
     $query = setUpdateSectionQuery ($update);										# set update section query
 
@@ -967,8 +967,8 @@ function UpdateSection ($update)
 		catch (Exception $e) { 
     		$error =  $e->getMessage(); 
             updateLogTable ('Section ' . $update['action'] .' failed ('. $update['name']. ') - '.$error, $log, 2);	# write error log
-            print ('<div class="alert alert-error">'.("Cannot $update[action] all entries").' - '.$error.'!</div>');
-    		return false;
+            if(!$api) print ('<div class="alert alert-error">'.("Cannot $update[action] all entries").' - '.$error.'!</div>');
+			return false;
     	}
     	# success
         updateLogTable ('Section '. $update['name'] . ' ' . $update['action'] .' ok', $log, 1);			# write success log
@@ -982,7 +982,8 @@ function UpdateSection ($update)
 		catch (Exception $e) { 
     		$error =  $e->getMessage(); 
             updateLogTable ('Adding section '. $update['name'] .'failed - '.$error, $log, 2);							# write error log
-            die('<div class="alert alert-error">'.('Cannot update database').'!<br>'.$error.'</div>');  
+            if(!$api)  die('<div class="alert alert-error">'.('Cannot update database').'!<br>'.$error.'</div>');  
+            return false;
 		}
 		# success
         updateLogTable ('Section '. $update['name'] .' added succesfully', $log, 1);					# write success log
@@ -997,12 +998,12 @@ function UpdateSection ($update)
 function setUpdateSectionQuery ($update) 
 {
 	# add section
-    if ($update['action'] == "add") 
+    if ($update['action'] == "add" || $update['action'] == "create") 
     {
         $query = 'Insert into sections (`name`,`description`,`permissions`,`strictMode`,`subnetOrdering`) values ("'.$update['name'].'", "'.$update['description'].'", "'.$update['permissions'].'", "'.$update['strictMode'].'", "'.$update['subnetOrdering'].'");';
     }
     # edit section
-    else if ($update['action'] == "edit") 
+    else if ($update['action'] == "edit" || $update['action'] == "update") 
     {
         $section_old = getSectionDetailsById ( $update['id'] );												# Get old section name for update
         # Update section
@@ -1496,6 +1497,7 @@ function updateSettings($settings)
     $query   .= '`printLimit` 	      = "'. $settings['printLimit'] .'", ' . "\n"; 
     $query   .= '`visualLimit` 	      = "'. $settings['visualLimit'] .'", ' . "\n"; 
     $query   .= '`vlanDuplicate` 	  = "'. isCheckbox($settings['vlanDuplicate']) .'", ' . "\n"; 
+    $query   .= '`api` 	  			  = "'. isCheckbox($settings['api']) .'", ' . "\n"; 
     $query   .= '`subnetOrdering` 	  = "'. $settings['subnetOrdering'] .'", ' . "\n"; 
     $query   .= '`pingStatus` 	  	  = "'. $settings['pingStatus'] .'", ' . "\n"; 
     $query   .= '`defaultLang` 	  	  = "'. $settings['defaultLang'] .'" ' . "\n"; 
@@ -2331,6 +2333,58 @@ function getAPIkeyByName($app_id, $reformat = false)
 		return $api[0];
 	}
 }
+
+
+/**
+ * Get API key by id
+ */
+function getAPIkeyById($id)
+{
+    global $db;                                                                      # get variables from config file
+    $database = new database($db['host'], $db['user'], $db['pass'], $db['name']); 
+    
+    # set query
+    $query  = "select * from `api` where `id` = $id;";
+    # get result
+    try { $api = $database->getArray( $query ); }
+    catch (Exception $e) { 
+        $error =  $e->getMessage(); 
+        print $error;
+        return false;
+    } 
+	return $api[0];
+}
+
+
+/**
+ *	Modify API details
+ */
+function modifyAPI($api)
+{
+    global $db;                                                                      # get variables from config file
+    $database = new database($db['host'], $db['user'], $db['pass'], $db['name']); 
+    
+    # set query based on action
+    if($api['action']=="add")			{ $query = "insert into `api` (`app_id`,`app_code`,`app_permissions`) values ('$api[app_id]','$api[app_code]','$api[app_permissions]');"; }
+    elseif($api['action']=="edit")		{ $query = "update `api` set `app_id`='$api[app_id]',`app_code`='$api[app_code]',`app_permissions`='$api[app_permissions]' where `id`=$api[id] ; "; }
+    elseif($api['action']=="delete")	{ $query = "delete from `api` where `id` = $api[id];"; }
+    else 								{ return false; }
+        
+	$log = prepareLogFromArray ($api);												# prepare log 
+
+	/* execute */
+    try { $database->executeQuery( $query ); }
+    catch (Exception $e) { 
+    	$error =  $e->getMessage(); 
+		updateLogTable ('API update failed - '.$error, $log, 2);	# write error log
+		return false;
+    }
+   
+	# success
+    updateLogTable ('API updated ok', $log, 1);	# write success log
+    return true;
+}
+
 
 
 

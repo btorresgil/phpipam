@@ -1542,6 +1542,43 @@ $(document).on("click", "#langEditSubmit", function() {
 
 
 
+/* API
+*********/
+//Load edit API form
+$('button.editAPI').click(function() {
+    showSpinner();
+    var appid    = $(this).attr('data-appid');
+    var action   = $(this).attr('data-action');
+    $.post('site/admin/apiEdit.php', {appid:appid, action:action}, function(data) {
+        $('div.popup_w700').html(data);
+        showPopup('popup_w700');
+        hideSpinner();
+    }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});
+    return false;    
+});
+//Edit API details
+$(document).on("click", "#apiEditSubmit", function() {
+    showSpinner();
+    var apidata = $('form#apiEdit').serialize();
+    $.post('site/admin/apiEditResult.php', apidata, function(data) {
+        $('div.apiEditResult').html(data).slideDown('fast');
+        //reload after 2 seconds if succeeded!
+        if(data.search("error") == -1)     	{ setTimeout(function (){window.location.reload();}, 1500); }
+        else                             	{ hideSpinner(); }
+    }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});
+    return false;
+});
+//regenerate API key
+$(document).on('click', "#regApiKey", function() {
+	showSpinner();
+    $.post('site/admin/apiKeyGenerate.php', function(data) {
+        $('input#appcode').val(data);
+        hideSpinner();
+    }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});
+    return false;
+});
+
+
 
 
 
