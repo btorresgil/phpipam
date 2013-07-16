@@ -30,10 +30,28 @@ class Subnets
 	/** 
 	* create new subnet 
 	*/
-	public function createSubnets()
+	public function createSubnets($_params)
 	{
-		/* not yet implementes */
-		throw new Exception('Action not yet implemented');
+		//init section class
+		$subnet = new Subnet();
+		//required parameters
+		$subnet->action      		= $this->_params['action'];
+		$subnet->sectionId        	= $this->_params['sectionId'];
+		$subnet->masterSubnetId 	= $this->_params['masterSubnetId'];
+		$subnet->subnet		  		= $this->_params['subnet'];
+		$subnet->mask	  			= $this->_params['mask'];
+		$subnet->description	  	= $this->_params['description'];
+		$subnet->vrfId			  	= $this->_params['vrfId'];
+		$subnet->vlanId			  	= $this->_params['vlanId'];
+		$subnet->allowRequests		= $this->_params['allowRequests'];
+		$subnet->showName			= $this->_params['showName'];
+		$subnet->permissions		= $this->_params['permissions'];
+		$subnet->pingSubnet			= $this->_params['pingSubnet'];
+
+		//create section
+		$res = $subnet->createSubnet(); 	
+		//return result
+		return $res;
 	}
 
 

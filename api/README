@@ -88,9 +88,24 @@ Per-controller options
 = Subnets
 ---------
 	= read
-		all			returns all subnet
-		id			returns subnet by id
-		sectionId	returns all subnets in specified sectionId
-		format		returns subnet in specified format
+		all				returns all subnet
+		id				returns subnet by id
+		sectionId		returns all subnets in specified sectionId
+		format			returns subnet in specified format
 		
 		example: ?controller=subnets&action=read&id=1
+		
+	= create
+		sectionId		(mandatory) sectionId for subnet
+		masterSubnetId	(mandatory) parent subnet Id (0 = root)
+		subnet
+		mask
+		description
+		vrfId
+		vlanId
+		allowRequests
+		showName
+		permissions
+		pingSubnet
+		
+		
