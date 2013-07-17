@@ -688,7 +688,7 @@ function compressDHCPranges ($ipaddresses)
 		}
 	}
 	//overrwrite ipaddresses and rekey
-	$ipaddresses = array_values($ipFormatted);
+	$ipaddresses = @array_values($ipFormatted);
 		
 	//return
 	return $ipaddresses;

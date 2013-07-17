@@ -1927,7 +1927,7 @@ function getCustomSubnetFields()
 	/* unset standard fields */
 	unset($res['id'], $res['subnet'], $res['mask'], $res['sectionId'], $res['description'], $res['masterSubnetId']);
 	unset($res['vrfId'], $res['allowRequests'], $res['adminLock'], $res['vlanId'], $res['showName'],$res['permissions'],$res['editDate']);
-	unset($res['pingSubnet']);
+	unset($res['pingSubnet'], $res['isFolder']);
 	
 	return $res;
 }
