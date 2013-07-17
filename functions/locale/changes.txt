@@ -504,3 +504,23 @@ msgstr ""
 #: site/admin/apiEditResult.php
 msgid "API delete success"
 msgstr ""
+
+
+
+### 0.86.001 ###
+
+#: site/ipaddr/ipAddressPrintTable.php
+msgid "DHCP range"
+msgstr ""
+
+#: site/ipaddr/ipAddressPrintTable.php
+msgid "Check avalibility (disabled)"
+msgstr ""
+
+#: site/admin/settings.php
+msgid "DHCP compress"
+msgstr ""
+
+#: site/admin/settings.php
+msgid "Compress DHCP ranges in IP table"
+msgstr ""

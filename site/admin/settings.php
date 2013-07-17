@@ -195,6 +195,16 @@ $langs = getLanguages ();
 	<th colspan="3"><h4><?php print _('Display settings'); ?></h4></th>
 </tr>
 
+<!-- DHCP compress -->
+<tr>
+	<td class="title"><?php print _('DHCP compress'); ?></td>
+	<td>
+		<input type="checkbox" value="1" name="dhcpCompress" <?php if($settings['dhcpCompress'] == 1) print 'checked'; ?>>
+	</td>
+	<td class="info">
+		<?php print _('Compress DHCP ranges in IP table'); ?>
+	</td>
+</tr>
 
 <!-- Tooltips -->
 <tr>

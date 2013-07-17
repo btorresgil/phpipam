@@ -168,6 +168,7 @@ CREATE TABLE `settings` (
   `pingStatus` VARCHAR(12)  NOT NULL  DEFAULT '1800;3600',
   `defaultLang` INT(3)  NULL  DEFAULT NULL,
   `editDate` TIMESTAMP  NULL  ON UPDATE CURRENT_TIMESTAMP,
+  `dhcpCompress` BOOL  NOT NULL  DEFAULT '0',
   `api` BINARY  NOT NULL  DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -229,6 +230,7 @@ CREATE TABLE `subnets` (
   `showName` tinyint(1) DEFAULT '0',
   `permissions` varchar(1024) DEFAULT NULL,
   `pingSubnet` BOOL  NOT NULL  DEFAULT '0',
+  `isFolder` INT  NOT NULL  DEFAULT '0',
   `editDate` TIMESTAMP  NULL  ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -423,4 +425,4 @@ CREATE TABLE `api` (
 
 # update version
 # ------------------------------------------------------------
-UPDATE `settings` set `version` = '0.85';
+UPDATE `settings` set `version` = '0.86';

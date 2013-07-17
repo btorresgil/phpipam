@@ -636,6 +636,65 @@ function getIpAddressesForVisual ($subnetId)
 }
 
 
+/**
+ * Compress DHCP ranges
+ */
+function compressDHCPranges ($ipaddresses) 
+{
+	//loop through IP addresses
+	for($c=0; $c<sizeof($ipaddresses); $c++) {			
+		// gap between this and previous
+		if(gmp_strval( @gmp_sub($ipaddresses[$c]['ip_addr'], $ipaddresses[$c-1]['ip_addr'])) != 1) {
+			//remove index flag
+			unset($fIndex);	
+			//save IP address
+			$ipFormatted[$c] = $ipaddresses[$c];
+			$ipFormatted[$c]['class'] = "ip";
+			
+			// no gap this -> next
+			if(gmp_strval( @gmp_sub($ipaddresses[$c]['ip_addr'], $ipaddresses[$c+1]['ip_addr'])) == -1 && $ipaddresses[$c]['state']==3) {
+				//is state the same?
+				if($ipaddresses[$c]['state']==$ipaddresses[$c+1]['state']) {
+					$fIndex = $c;
+					$ipFormatted[$fIndex]['startIP'] = $ipaddresses[$c]['ip_addr'];
+					$ipFormatted[$c]['class'] = "range-dhcp";
+				}
+			}
+		}
+		// no gap between this and previous
+		else {
+			// is state same as previous?
+			if($ipaddresses[$c]['state']==$ipaddresses[$c-1]['state'] && $ipaddresses[$c]['state']==3) {
+				//add stop IP
+				$ipFormatted[$fIndex]['stopIP'] = $ipaddresses[$c]['ip_addr'];
+				//add range span
+				$ipFormatted[$fIndex]['numHosts'] = gmp_strval( gmp_add(@gmp_sub($ipaddresses[$c]['ip_addr'], $ipFormatted[$fIndex]['ip_addr']),1));
+			}
+			// different state
+			else {
+				//remove index flag
+				unset($fIndex);
+				//save IP address
+				$ipFormatted[$c] = $ipaddresses[$c];
+				$ipFormatted[$c]['class'] = "ip";
+				
+				//check if state is same as next to start range
+				if($ipaddresses[$c]['state']==$ipaddresses[$c+1]['state'] &&  gmp_strval( @gmp_sub($ipaddresses[$c]['ip_addr'], $ipaddresses[$c+1]['ip_addr'])) == -1 && $ipaddresses[$c]['state']==3) {
+					$fIndex = $c;
+					$ipFormatted[$fIndex]['startIP'] = $ipaddresses[$c]['ip_addr'];
+					$ipFormatted[$c]['class'] = "range-dhcp";
+				}
+			}
+		}
+	}
+	//overrwrite ipaddresses and rekey
+	$ipaddresses = array_values($ipFormatted);
+		
+	//return
+	return $ipaddresses;
+}
+
+
 
 /**
  * Count number of ip addresses in provided subnet

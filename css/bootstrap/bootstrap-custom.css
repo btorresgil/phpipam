@@ -666,6 +666,10 @@ ul#subnets li.leaf.active i {
 .table.ipaddresses td.btn-actions .btn-toolbar {
 	margin: 0px;
 }
+.table.ipaddresses tr.dhcp td {
+	background: rgba(225,225,225,0.7) !important;
+	text-shadow: 1px 1px 1px white;
+}
 
 .ipaddress_subnet th {
 	text-align: right;
