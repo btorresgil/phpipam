@@ -122,6 +122,8 @@ CREATE TABLE `sections` (
   `subnetOrdering` VARCHAR(16)  NULL  DEFAULT NULL,
   `order` INT(3)  NULL  DEFAULT NULL,
   `editDate` TIMESTAMP  NULL  ON UPDATE CURRENT_TIMESTAMP,
+  `showVLAN` BOOL  NOT NULL  DEFAULT '0',
+  `showVRF` BOOL  NOT NULL  DEFAULT '0',
   PRIMARY KEY (`name`),
   UNIQUE KEY `id_2` (`id`),
   KEY `id` (`id`)
@@ -363,7 +365,8 @@ VALUES
 	(1, 'en', 'English'),
 	(2, 'sl_SI', 'Slovenščina'),
 	(3, 'fr_FR', 'Français'),
-	(4, 'nl_NL','Nederlands');
+	(4, 'nl_NL','Nederlands'),
+	(5, 'de_DE','Deutsch');
 
 
 
@@ -425,4 +428,4 @@ CREATE TABLE `api` (
 
 # update version
 # ------------------------------------------------------------
-UPDATE `settings` set `version` = '0.86';
+UPDATE `settings` set `version` = '0.87';

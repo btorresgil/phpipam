@@ -15,7 +15,7 @@ msgstr ""
 # This file is distributed under the same license as the phpipam package.
 # miha petkovsek <miha.petkovsek@gmail.com>, 2013.
 #
-# "Project-Id-Version: 0.84.005\n"
+# "Project-Id-Version: 0.86.001\n"
 # "Report-Msgid-Bugs-To: Miha Petkovsek <miha.petkovsek@gmail.com>\n"
 # "POT-Creation-Date: 2013-04-02 14:33+0200\n"
 # "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
@@ -348,7 +348,6 @@ msgid "Database connection failed"
 msgstr "Kan geen connectie met de database maken"
 
 #: functions/functions-tools.php:31
-#, fuzzy
 msgid "(closest parent)"
 msgstr "(closest parent)"
 
@@ -536,7 +535,6 @@ msgid "Please select setting from left menu!"
 msgstr "Selecteer een instelling uit het linkermenu"
 
 #: site/tools/searchResultsExport.php:95
-#, fuzzy
 msgid "phpipam_search_export_"
 msgstr "phpipam_search_export_"
 
@@ -4210,3 +4208,137 @@ msgstr "Resultaten van de scan welke aan de datatbase zijn toegevoegd"
 #: site/ipaddr/subnetScan.php
 msgid "Invalid ping path"
 msgstr "Ongeldig pad naar ping"
+
+# ## 0.85.002 ###
+#: site/admin/settings.php
+msgid "Display settings"
+msgstr "Weergave"
+
+#: site/admin/settings.php
+msgid "Enable or disable API server module"
+msgstr "API-module aan- of uitzetten"
+
+#: site/admin/api.php
+msgid "Please enable API module under server management"
+msgstr "Voor deze functie dient de API-module ingeschakeld te worden "
+
+#: site/admin/adminMenu.php site/admin/api.php
+msgid "API management"
+msgstr "API-Beheer"
+
+#: site/admin/api.php
+msgid "Create API key"
+msgstr "Maak API-sleutel"
+
+#: site/admin/api.php
+msgid "App id"
+msgstr "Applicatie-ID"
+
+#: site/admin/api.php
+msgid "App code"
+msgstr "Applicatie-code"
+
+#: site/admin/api.php
+msgid "App permissions"
+msgstr "Applicatie-rechten"
+
+#: site/admin/api.php
+msgid "edit app details"
+msgstr "bewerk details applicatie"
+
+#: site/admin/api.php
+msgid "remove app"
+msgstr "verwijder applicatie"
+
+#: site/admin/api.php
+msgid "No Apps available"
+msgstr "Geen applicaties geconfigureerd"
+
+#: site/admin/api.php
+msgid "API instructions"
+msgstr "Instructies bij API"
+
+#: site/admin/api.php
+msgid "API documentation"
+msgstr "API Documentatie"
+
+#: site/admin/api.php
+msgid "The following PHP extensions for API server are missing"
+msgstr "De volgende PHP-extensies voor de API-server missen:"
+
+#: site/admin/api.php
+msgid "Please recompile PHP to include missing extensions for API server"
+msgstr "U dient PHP met alle missende extensies te hercompileren."
+
+#: site/admin/apiEdit.php
+msgid "Add new api key"
+msgstr "Sleutel toevoegen"
+
+#: site/admin/apiEdit.php
+msgid "Enter application identifier"
+msgstr "Identificatie van de applicatie"
+
+#: site/admin/apiEdit.php
+msgid "Application code"
+msgstr "Applicatie-code"
+
+#: site/admin/apiEdit.php
+msgid "Regenerate"
+msgstr "Opnieuw genereren"
+
+#: site/admin/apiEdit.php
+msgid "Disabled"
+msgstr "Uitgeschakeld"
+
+#: site/admin/apiEditResult.php
+msgid "Invalid application code"
+msgstr "Ongeldige applicatiecode"
+
+#: site/admin/apiEditResult.php
+msgid "Invalid application id"
+msgstr "Ongeldige applicatie-ID"
+
+#: site/admin/apiEditResult.php
+msgid "Invalid permissions"
+msgstr "Ongeldige rechten"
+
+#: site/admin/apiEditResult.php
+msgid "API add error"
+msgstr "Fout bij toevoegen API"
+
+#: site/admin/apiEditResult.php
+msgid "API edit error"
+msgstr "Fout bij bewerken API"
+
+#: site/admin/apiEditResult.php
+msgid "API delete error"
+msgstr "Fout bij verwijderen API"
+
+#: site/admin/apiEditResult.php
+msgid "API add success"
+msgstr "Toevoegen API geslaagd"
+
+#: site/admin/apiEditResult.php
+msgid "API edit success"
+msgstr "Bewerken API geslaagd"
+
+#: site/admin/apiEditResult.php
+msgid "API delete success"
+msgstr "Verwijderen API geslaagd"
+
+# ## 0.86.001 ###
+#: site/ipaddr/ipAddressPrintTable.php
+msgid "DHCP range"
+msgstr "DHCP-reeks"
+
+#: site/ipaddr/ipAddressPrintTable.php
+msgid "Check avalibility (disabled)"
+msgstr "Controleer beschikbaarheid (uitgeschakeld)"
+
+#: site/admin/settings.php
+msgid "DHCP compress"
+msgstr "DHCP samenvatten"
+
+#: site/admin/settings.php
+msgid "Compress DHCP ranges in IP table"
+msgstr "DHCP-reeksen in de IP-tabel samenvatten"

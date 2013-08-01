@@ -29,6 +29,8 @@ $sections = fetchSections ();
     <th><?php print _('Name'); ?></th>
     <th><?php print _('Description'); ?></th>
     <th><?php print _('Strict mode'); ?></th>
+    <th><?php print _('Show VLANs'); ?></th>
+    <th><?php print _('Show VRFs'); ?></th>
     <th><?php print _('Group Permissions'); ?></th>
     <th></th>
 </tr>
@@ -42,10 +44,22 @@ foreach ($sections as $section)
     print '	<td>'. $section['description'] .'</td>'. "\n";
 
     # strictMode
-    if($section['strictMode'] == 0)	{ $mode = _("no"); }
-    else							{ $mode = _("yes"); }
+    if($section['strictMode'] == 0)	{ $mode = _("No"); }
+    else							{ $mode = _("Yes"); }
   
     print '	<td>'. $mode .'</td>'. "\n";
+    
+    # Show VLANs
+    print " <td>";
+    if(@$section['showVLAN']==1) { print _("Yes"); }
+    else						 { print _("No"); }
+    print "	</td>";
+
+    # Show VRFs
+    print " <td>";
+    if(@$section['showVRF']==1)  { print _("Yes"); }
+    else						 { print _("No"); }
+    print "	</td>";
 
     # permissions
 	print "<td>";    

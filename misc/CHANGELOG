@@ -1,4 +1,4 @@
-== 0.86.001
+== 0.87.001
 
 	New features:
 	----------------------------
@@ -7,6 +7,8 @@
 	+ ICMP check IP status in demand;
 	+ Compressed (grouped) DHCP IP ranges;
 	+ API server version 0.1;
+	+ Option to show and group subnets by VLAN in subnets list;
+	+ Option to show and group subnets by VRF in subnets list;
 
 	Enhancements:
 	----------------------------
@@ -25,6 +27,7 @@
 	----------------------------
 	+ Added French translation (Denis Darré);
 	+ Added Dutch translation (Michiel Visser);
+	+ Added German translation (Carsten Brückner);
 
 	Bugfixes:
 	----------------------------
@@ -32,6 +35,7 @@
 	+ Fixed subnet/section links from VLANS if base not /;
 	+ Fixed warning in apache log on subnet editing if no VRFs are configured;
 	+ Fixed admin menu off-screen overflow;
+	+ Fixed firefox error when selectiong rights for section/subnets was not possible;
 
 == 0.8
 

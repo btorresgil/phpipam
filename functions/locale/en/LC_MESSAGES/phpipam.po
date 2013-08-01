@@ -4,7 +4,7 @@
 # miha petkovsek <miha.petkovsek@gmail.com>, 2013.
 #
 
-# "Project-Id-Version: 0.85.002\n"
+# "Project-Id-Version: 0.87.001\n"
 # "Report-Msgid-Bugs-To: Miha Petkovsek <miha.petkovsek@gmail.com>\n"
 # "POT-Creation-Date: 2013-04-02 14:33+0200\n"
 # "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
@@ -4141,4 +4141,76 @@ msgstr ""
 
 #: site/admin/settings.php
 msgid "Compress DHCP ranges in IP table"
+msgstr ""
+
+#: site/subnets.php
+msgid "Add new"
+msgstr ""
+
+#: site/subnets.php
+msgid "Add new folder to"
+msgstr ""
+
+# site/subnets.php
+msgid "Available VLANs"
+msgstr ""
+
+# site/subnets.php
+msgid "Available VRFs"
+msgstr ""
+
+#: functions/functions-common.php
+msgid "Subnet contains more subnets"
+msgstr ""
+
+#: functions/functions-common.php
+msgid "Click on folder to open/close"
+msgstr ""
+
+#: functions/functions-common.php
+msgid "VLAN contains subnets"
+msgstr ""
+
+#: functions/functions-common.php
+msgid "VRF contains subnets"
+msgstr ""
+
+#: site/admin/manageSection.php
+msgid "Show VLANs"
+msgstr ""
+
+#: site/admin/manageSection.php
+msgid "Show VRFs"
+msgstr ""
+
+#: site/admin/manageSectionEdit.php
+msgid "Show list of VLANs and belonging subnets in subnet list"
+msgstr ""
+
+#: site/admin/manageSectionEdit.php
+msgid "Show list of VRFs and belonging subnets in subnet list"
+msgstr ""
+
+#: site/ipaddr/vlanDetails.php
+msgid "VLAN details"
+msgstr ""
+
+#: site/ipaddr/vlanSubnets.php
+msgid "has no belonging subnets"
+msgstr ""
+
+#: site/ipaddr/vlanSubnets.php
+msgid "belonging subnets"
+msgstr ""
+
+#: site/ipaddr/vlanDetails.php
+msgid "VRF details"
+msgstr ""
+
+#: site/ipaddr/vlanDetails.php
+msgid "Invalid VLAN id"
+msgstr ""
+
+#: site/ipaddr/vrfDetails.php
+msgid "Invalid VRF id"
 msgstr ""

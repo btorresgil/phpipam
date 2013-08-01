@@ -346,7 +346,7 @@ function getUsersNotInGroup($gid)
 	foreach($users as $u) {
 		if($u['role'] != "Administrator") {
 			$g = json_decode($u['groups'], true);		
-			if(!in_array($gid, $g)) { $out[] = $u['id']; }
+			if(!@in_array($gid, $g)) { $out[] = $u['id']; }
 		}
 	}
 	# return
@@ -1000,14 +1000,14 @@ function setUpdateSectionQuery ($update)
 	# add section
     if ($update['action'] == "add" || $update['action'] == "create") 
     {
-        $query = 'Insert into sections (`name`,`description`,`permissions`,`strictMode`,`subnetOrdering`) values ("'.$update['name'].'", "'.$update['description'].'", "'.$update['permissions'].'", "'.$update['strictMode'].'", "'.$update['subnetOrdering'].'");';
+        $query = 'Insert into sections (`name`,`description`,`permissions`,`strictMode`,`subnetOrdering`,`showVLAN`,`showVRF`) values ("'.$update['name'].'", "'.$update['description'].'", "'.$update['permissions'].'", "'.isCheckbox($update['strictMode']).'", "'.$update['subnetOrdering'].'", "'.isCheckbox($update['showVLAN']).'", "'.isCheckbox($update['showVRF']).'");';
     }
     # edit section
     else if ($update['action'] == "edit" || $update['action'] == "update") 
     {
         $section_old = getSectionDetailsById ( $update['id'] );												# Get old section name for update
         # Update section
-        $query   = "update `sections` set `name` = '$update[name]', `description` = '$update[description]', `permissions` = '$update[permissions]', `strictMode`='$update[strictMode]', `subnetOrdering`='$update[subnetOrdering]' where `id` = '$update[id]';";	
+        $query   = "update `sections` set `name` = '$update[name]', `description` = '$update[description]', `permissions` = '$update[permissions]', `strictMode`='".isCheckbox($update['strictMode'])."', `subnetOrdering`='$update[subnetOrdering]', `showVLAN`='".isCheckbox($update['showVLAN'])."', `showVRF`='".isCheckbox($update['showVRF'])."' where `id` = '$update[id]';";	
         
         # delegate permissions if set
         if($update['delegate'] == 1) {

@@ -776,12 +776,12 @@ function get_menu_html( $subnets, $rootId = 0 )
 				if($sp != 0) {	
 					# print name
 					if($option['value']['showName'] == 1) {
-						$html[] = '<li class="folder folder-'.$open.' '.$active.'"><i class="icon-gray icon-folder-'.$open.'" rel="tooltip" data-placement="right" data-html="true" title="Subnet contains more subnets.<br>Click on folder to open/close."></i>';
+						$html[] = '<li class="folder folder-'.$open.' '.$active.'"><i class="icon-gray icon-folder-'.$open.'" rel="tooltip" data-placement="right" data-html="true" title="'._('Subnet contains more subnets').'<br>'._('Click on folder to open/close').'"></i>';
 						$html[] = '<a href="subnets/'.$option['value']['sectionId'].'/'.$option['value']['id'].'/" rel="tooltip" data-placement="right" title="'.Transform2long($option['value']['subnet']).'/'.$option['value']['mask'].'">'.$option['value']['description'].'</a>'; 				
 					}
 					# print subnet
 					else {
-						$html[] = '<li class="folder folder-'.$open.' '.$active.'""><i class="icon-gray icon-folder-'.$open.'" rel="tooltip" data-placement="right" data-html="true" title="Subnet contains more subnets.<br>Click on folder to open/close."></i>';
+						$html[] = '<li class="folder folder-'.$open.' '.$active.'""><i class="icon-gray icon-folder-'.$open.'" rel="tooltip" data-placement="right" data-html="true" title="'._('Subnet contains more subnets').'<br>'._('Click on folder to open/close').'"></i>';
 						$html[] = '<a href="subnets/'.$option['value']['sectionId'].'/'.$option['value']['id'].'/" rel="tooltip" data-placement="right" title="'.$option['value']['description'].'">'.Transform2long($option['value']['subnet']).'/'.$option['value']['mask'].'</a>'; 										
 					}
 
@@ -809,6 +809,170 @@ function get_menu_html( $subnets, $rootId = 0 )
 				}
 		}
 		
+		# Close menu
+		$html[] = '</ul>';
+		
+		return implode( "\n", $html );
+}
+
+
+/**
+ * Build the HTML menu for VLANS
+ *
+ * based on http://pastebin.com/GAFvSew4
+ */
+function get_menu_vlan( $vlans, $sectionId )
+{
+		$html = array();
+
+		# Menu start
+		$html[] = '<ul id="subnets">';
+		
+		# loop through vlans
+		foreach ( $vlans as $item ) {	
+		
+			# set open / closed -> vlan directly
+			if($_REQUEST['vlanId'] == $item['vlanId'] && !isset($_REQUEST['subnetId'])) {
+				$open = "open";
+				$active = "active";
+				$leafClass="icon-gray";					
+			}
+			elseif(isSubnetIdVlan ($_REQUEST['subnetId'], $item['vlanId'])) {
+				$open = "open";
+				$active = "";
+				$leafClass="icon-gray";				
+			}
+			else {
+				$open = "close";
+				$active = "";
+				$leafClass="icon-gray";		
+			}
+			
+			# new item
+			$html[] = '<li class="folder folder-'.$open.' '.$active.'"><i class="icon-gray icon-folder-'.$open.'" rel="tooltip" data-placement="right" data-html="true" title="'._('VLAN contains subnets').'.<br>'._('Click on folder to open/close').'"></i>';
+			$html[] = '<a href="vlan/'.$sectionId.'/'.$item['vlanId'].'/" rel="tooltip" data-placement="right" title="'.$item['description'].'">'.$item['number'].' ('.$item['name'].')</a>'; 				
+
+			# fetch all subnets in VLAN
+			$subnets = getAllSubnetsInSectionVlan ($item['vlanId'], $sectionId);
+			
+			# if some exist print next ul
+			if($subnets) 
+			{
+				# print subnet
+				if($open == "open") { $html[] = '<ul class="submenu submenu-'.$open.'">'; }							# show if opened
+				else 				{ $html[] = '<ul class="submenu submenu-'.$open.'" style="display:none">'; }	# hide - prevent flickering						
+			
+				# loop through subnets
+				foreach($subnets as $subnet) {
+					# check permission
+					$permission = checkSubnetPermission ($subnet['id']);
+					if($permission > 0) {
+					
+						# for active class
+						if(isset($_REQUEST['subnetId']) && ($subnet['id'] == $_REQUEST['subnetId']))	{ $active = "active";	$leafClass=""; }
+						else 																			{ $active = ""; 		$leafClass="icon-gray" ;}		
+						
+						# check if showName is set
+						if($subnet['showName'] == 1) {
+							$html[] = '<li class="leaf '.$active.'"><i class="'.$leafClass.' icon-chevron-right"></i>';
+							$html[] = '<a href="subnets/'.$subnet['sectionId'].'/'.$subnet['id'].'/" rel="tooltip" data-placement="right" title="'.Transform2long($subnet['subnet']).'/'.$subnet['mask'].'">'.$subnet['description'].'</a></li>';						
+						}
+						else {
+							$html[] = '<li class="leaf '.$active.'""><i class="'.$leafClass.' icon-chevron-right"></i>';
+							$html[] = '<a href="subnets/'.$subnet['sectionId'].'/'.$subnet['id'].'/" rel="tooltip" data-placement="right" title="'.$subnet['description'].'">'.Transform2long($subnet['subnet']).'/'.$subnet['mask'].'</a></li>';												
+						}
+					
+					}
+				}
+				
+				# close ul
+				$html[] = '</ul>';
+				$html[] = '</li>';
+			}
+		}
+
+		# Close menu
+		$html[] = '</ul>';
+		
+		return implode( "\n", $html );
+}
+
+
+/**
+ * Build the HTML menu for VLANS
+ *
+ * based on http://pastebin.com/GAFvSew4
+ */
+function get_menu_vrf( $vrfs, $sectionId )
+{
+		$html = array();
+
+		# Menu start
+		$html[] = '<ul id="subnets">';
+		
+		# loop through vlans
+		foreach ( $vrfs as $item ) {	
+		
+			# set open / closed -> vlan directly
+			if($_REQUEST['vrfId'] == $item['vrfId'] && !isset($_REQUEST['subnetId'])) {
+				$open = "open";
+				$active = "active";
+				$leafClass="icon-gray";					
+			}
+			elseif(isSubnetIdVrf ($_REQUEST['subnetId'], $item['vrfId'])) {
+				$open = "open";
+				$active = "";
+				$leafClass="icon-gray";				
+			}
+			else {
+				$open = "close";
+				$active = "";
+				$leafClass="icon-gray";		
+			}
+			
+			# new item
+			$html[] = '<li class="folder folder-'.$open.' '.$active.'"><i class="icon-gray icon-folder-'.$open.'" rel="tooltip" data-placement="right" data-html="true" title="'._('VRF contains subnets').'.<br>'._('Click on folder to open/close').'"></i>';
+			$html[] = '<a href="vrf/'.$sectionId.'/'.$item['vrfId'].'/" rel="tooltip" data-placement="right" title="'.$item['description'].'">'.$item['name'].'</a>'; 				
+
+			# fetch all subnets in VLAN
+			$subnets = getAllSubnetsInSectionVrf ($item['vrfId'], $sectionId);
+						
+			# if some exist print next ul
+			if($subnets) 
+			{
+				# print subnet
+				if($open == "open") { $html[] = '<ul class="submenu submenu-'.$open.'">'; }							# show if opened
+				else 				{ $html[] = '<ul class="submenu submenu-'.$open.'" style="display:none">'; }	# hide - prevent flickering						
+			
+				# loop through subnets
+				foreach($subnets as $subnet) {
+					# check permission
+					$permission = checkSubnetPermission ($subnet['id']);
+					if($permission > 0) {
+					
+						# for active class
+						if(isset($_REQUEST['subnetId']) && ($subnet['id'] == $_REQUEST['subnetId']))	{ $active = "active";	$leafClass=""; }
+						else 																			{ $active = ""; 		$leafClass="icon-gray" ;}		
+						
+						# check if showName is set
+						if($subnet['showName'] == 1) {
+							$html[] = '<li class="leaf '.$active.'"><i class="'.$leafClass.' icon-chevron-right"></i>';
+							$html[] = '<a href="subnets/'.$subnet['sectionId'].'/'.$subnet['id'].'/" rel="tooltip" data-placement="right" title="'.Transform2long($subnet['subnet']).'/'.$subnet['mask'].'">'.$subnet['description'].'</a></li>';						
+						}
+						else {
+							$html[] = '<li class="leaf '.$active.'""><i class="'.$leafClass.' icon-chevron-right"></i>';
+							$html[] = '<a href="subnets/'.$subnet['sectionId'].'/'.$subnet['id'].'/" rel="tooltip" data-placement="right" title="'.$subnet['description'].'">'.Transform2long($subnet['subnet']).'/'.$subnet['mask'].'</a></li>';												
+						}
+					
+					}
+				}
+				
+				# close ul
+				$html[] = '</ul>';
+				$html[] = '</li>';
+			}
+		}
+
 		# Close menu
 		$html[] = '</ul>';
 		

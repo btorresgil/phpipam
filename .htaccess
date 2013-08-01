@@ -47,6 +47,12 @@ RewriteRule ^subnets/(.*)/(.*)/(.*)/$ index.php?page=subnets&section=$1&subnetId
 RewriteRule ^subnets/(.*)/(.*)/$ index.php?page=subnets&section=$1&subnetId=$2 [L]
 RewriteRule ^subnets/(.*)/$ index.php?page=subnets&section=$1 [L]
 
+# vlans
+RewriteRule ^vlan/(.*)/(.*)/$ index.php?page=vlan&section=$1&vlanId=$2 [L]
+
+# vrfs
+RewriteRule ^vrf/(.*)/(.*)/$ index.php?page=vrf&section=$1&vrfId=$2 [L]
+
 # search override
 RewriteRule ^tools/search/(.*)$ index.php?page=tools&toolsId=search&ip=$1 [L]
 # hosts override

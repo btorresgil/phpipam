@@ -35,6 +35,8 @@ $update['description'] 		= htmlentities($_POST['description'], ENT_COMPAT | ENT_
 $update['id']          		= $_POST['id'];
 $update['strictMode']  		= $_POST['strictMode'];
 $update['subnetOrdering']  	= $_POST['subnetOrdering'];
+$update['showVLAN']  		= $_POST['showVLAN'];
+$update['showVRF']  		= $_POST['showVRF'];
 
 if(isset($_POST['delegate'])) {
 	if($_POST['delegate'] == 1) {

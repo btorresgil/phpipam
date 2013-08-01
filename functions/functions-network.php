@@ -164,6 +164,98 @@ function getSwitchById ($switchId)
 
 
 /**
+ * Get all VLANSs in section
+ */
+function getAllVlansInSection ($sectionId)
+{
+    global $db;                                                                      # get variables from config file
+    $database    = new database($db['host'], $db['user'], $db['pass'], $db['name']);     
+	/* execute query */
+	$query = "select distinct(`v`.`vlanId`),`v`.`name`,`v`.`number`, `v`.`description` from `subnets` as `s`,`vlans` as `v` where `s`.`sectionId` = $sectionId and `s`.`vlanId`=`v`.`vlanId` order by `v`.`number` asc;";
+
+    /* execute */
+    try { $vlans = $database->getArray( $query ); }
+    catch (Exception $e) { 
+        $error =  $e->getMessage(); 
+        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        return false;
+    } 	
+    
+   	/* return false if none, else list */
+	if(sizeof($vlans) == 0) { return false; }
+	else 					{ return $vlans; }
+}
+
+
+/**
+ *	Get All subnets inside secton with vlan
+ */
+function getAllSubnetsInSectionVlan ($vlanId, $sectionId, $orderType = "subnet", $orderBy = "asc")
+{
+    global $db;                                                                      # get variables from config file
+    $database    = new database($db['host'], $db['user'], $db['pass'], $db['name']);     
+
+    /* check for sorting in settings and override */
+    $settings = getAllSettings();
+    
+    /* get section details to check for ordering */
+    $section = getSectionDetailsById ($sectionId);
+    
+    // section ordering
+    if($section['subnetOrdering']!="default" && strlen($section['subnetOrdering'])>0 ) {
+	    $sort = explode(",", $section['subnetOrdering']);
+	    $orderType = $sort[0];
+	    $orderBy   = $sort[1];	    
+    }
+    // default - set via settings
+    elseif(isset($settings['subnetOrdering']))	{
+	    $sort = explode(",", $settings['subnetOrdering']);
+	    $orderType = $sort[0];
+	    $orderBy   = $sort[1];
+    }
+
+	/* execute query */
+	$query = "select * from `subnets` where `vlanId` = '$vlanId' and `sectionId` = '$sectionId' ORDER BY `$orderType` $orderBy;";
+	
+    /* execute */
+    try { $subnets = $database->getArray( $query ); }
+    catch (Exception $e) { 
+        $error =  $e->getMessage(); 
+        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        return false;
+    } 	
+    
+   	/* return false if none, else list */
+	if(sizeof($subnets) == 0) 	{ return false; }
+	else 						{ return $subnets; }
+}
+
+
+/**
+ *	Check if subnet is in vlan
+ */
+function isSubnetIdVlan ($subnetId, $vlanId)
+{
+    global $db;                                                                      # get variables from config file
+    $database    = new database($db['host'], $db['user'], $db['pass'], $db['name']);     
+	/* execute query */
+	$query = "select count(*) as `cnt` from `subnets` where `vlanId` = '$vlanId' and `id` = '$subnetId';";
+	
+    /* execute */
+    try { $subnets = $database->getArray( $query ); }
+    catch (Exception $e) { 
+        $error =  $e->getMessage(); 
+        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        return false;
+    } 	
+    
+   	/* return false if none, else list */
+	if($subnets[0]['cnt']==0) 	{ return false; }
+	else 						{ return true; }
+}
+
+
+/**
  *	Validate VLAN number
  */
 function validateVlan ($vlan)
@@ -202,6 +294,31 @@ function getVLANbyNumber ($number)
 	if(sizeof($vlan) == 0) 	{ return false; }
 	else 					{ return $vlan; }
 }
+
+
+/**
+ *	get VLAN details by ID
+ */
+function getVLANbyId ($id) 
+{
+    global $db;                                                                      # get variables from config file
+    $database    = new database($db['host'], $db['user'], $db['pass'], $db['name']);     
+	/* execute query */
+	$query = 'select * from `vlans` where `vlanId` = "'. $id .'";';
+    
+    /* execute */
+    try { $vlan = $database->getArray( $query ); }
+    catch (Exception $e) { 
+        $error =  $e->getMessage(); 
+        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        return false;
+    } 
+   	
+   	/* return false if none, else list */
+	if(sizeof($vlan) == 0) 	{ return false; }
+	else 					{ return $vlan[0]; }
+}
+
 
 
 
@@ -260,6 +377,99 @@ function getVRFDetailsById ($vrfId)
 	if(sizeof($vrf) == 0) 	{ return false; }
 	else 					{ return $vrf[0]; }
 }
+
+
+/**
+ * Get all VRFs in section
+ */
+function getAllVrfsInSection ($sectionId)
+{
+    global $db;                                                                      # get variables from config file
+    $database    = new database($db['host'], $db['user'], $db['pass'], $db['name']);     
+	/* execute query */
+	$query = "select distinct(`v`.`vrfId`),`v`.`name`,`v`.`description` from `subnets` as `s`,`vrf` as `v` where `s`.`sectionId` = $sectionId and `s`.`vrfId`=`v`.`vrfId` order by `v`.`name` asc;";
+	
+    /* execute */
+    try { $vrfs = $database->getArray( $query ); }
+    catch (Exception $e) { 
+        $error =  $e->getMessage(); 
+        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        return false;
+    } 	
+    
+   	/* return false if none, else list */
+	if(sizeof($vrfs) == 0) 	{ return false; }
+	else 					{ return $vrfs; }
+}
+
+
+/**
+ *	Get All subnets inside secton with vlan
+ */
+function getAllSubnetsInSectionVRF ($vrfId, $sectionId, $orderType = "subnet", $orderBy = "asc")
+{
+    global $db;                                                                      # get variables from config file
+    $database    = new database($db['host'], $db['user'], $db['pass'], $db['name']);     
+
+    /* check for sorting in settings and override */
+    $settings = getAllSettings();
+    
+    /* get section details to check for ordering */
+    $section = getSectionDetailsById ($sectionId);
+    
+    // section ordering
+    if($section['subnetOrdering']!="default" && strlen($section['subnetOrdering'])>0 ) {
+	    $sort = explode(",", $section['subnetOrdering']);
+	    $orderType = $sort[0];
+	    $orderBy   = $sort[1];	    
+    }
+    // default - set via settings
+    elseif(isset($settings['subnetOrdering']))	{
+	    $sort = explode(",", $settings['subnetOrdering']);
+	    $orderType = $sort[0];
+	    $orderBy   = $sort[1];
+    }
+
+	/* execute query */
+	$query = "select * from `subnets` where `vrfId` = '$vrfId' and `sectionId` = '$sectionId' ORDER BY `$orderType` $orderBy;";
+	
+    /* execute */
+    try { $vrfs = $database->getArray( $query ); }
+    catch (Exception $e) { 
+        $error =  $e->getMessage(); 
+        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        return false;
+    } 	
+    
+   	/* return false if none, else list */
+	if(sizeof($vrfs) == 0) 	{ return false; }
+	else 					{ return $vrfs; }
+}
+
+
+/**
+ *	Check if subnet is in vlan
+ */
+function isSubnetIdVrf ($subnetId, $vrfId)
+{
+    global $db;                                                                      # get variables from config file
+    $database    = new database($db['host'], $db['user'], $db['pass'], $db['name']);     
+	/* execute query */
+	$query = "select count(*) as `cnt` from `subnets` where `vrfId` = '$vrfId' and `id` = '$subnetId';";
+	
+    /* execute */
+    try { $subnets = $database->getArray( $query ); }
+    catch (Exception $e) { 
+        $error =  $e->getMessage(); 
+        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        return false;
+    } 	
+    
+   	/* return false if none, else list */
+	if($subnets[0]['cnt']==0) 	{ return false;  }
+	else 						{ return true; }
+}
+
 
 
 

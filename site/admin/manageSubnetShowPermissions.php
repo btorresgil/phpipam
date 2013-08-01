@@ -52,7 +52,7 @@ $subnet = getSubnetDetailsById($_POST['subnetId']);
 		print "	<td>$g[g_name]</td>";
 		print "	<td>";
 			
-		print "<label class='checkbox inline noborder'>";			
+		print "<span class='checkbox inline noborder'>";			
 
 		print "	<input type='radio' name='group$g[g_id]' value='0' checked> na";
 		if($permissons[$g['g_id']] == "1")	{ print " <input type='radio' name='group$g[g_id]' value='1' checked> ro"; }			
@@ -61,7 +61,7 @@ $subnet = getSubnetDetailsById($_POST['subnetId']);
 		else								{ print " <input type='radio' name='group$g[g_id]' value='2'> rw"; }			
 		if($permissons[$g['g_id']] == "3")	{ print " <input type='radio' name='group$g[g_id]' value='3' checked> rwa"; }			
 		else								{ print " <input type='radio' name='group$g[g_id]' value='3'> rwa"; }
-		print "</label>";
+		print "</span>";
 
 		# hidden
 		print "<input type='hidden' name='subnetId' value='$_POST[subnetId]'>";

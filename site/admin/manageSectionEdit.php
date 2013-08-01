@@ -66,6 +66,30 @@ $section = getSectionDetailsById ($_POST['sectionId']);
 			</td>
 		</tr>
 
+		<!-- Show VLANs -->
+		<tr>
+			<td><?php print _('Show VLANs'); ?></td>
+			<td colspan="2">
+				<select name="showVLAN" class="input-small" <?php if($_POST['action']=="delete") print 'disabled="disabled"'; ?>>
+					<option value="1"><?php print _('Yes'); ?></option>
+					<option value="0" <?php if($section['showVLAN'] == "0") print "selected='selected'"; ?>><?php print _('No'); ?></option>
+				</select>
+				<span class="help-inline"><?php print _('Show list of VLANs and belonging subnets in subnet list'); ?></span>
+			</td>
+		</tr>
+
+		<!-- Show VRFs -->
+		<tr>
+			<td><?php print _('Show VRFs'); ?></td>
+			<td colspan="2">
+				<select name="showVRF" class="input-small" <?php if($_POST['action']=="delete") print 'disabled="disabled"'; ?>>
+					<option value="1"><?php print _('Yes'); ?></option>
+					<option value="0" <?php if($section['showVRF'] == "0") print "selected='selected'"; ?>><?php print _('No'); ?></option>
+				</select>
+				<span class="help-inline"><?php print _('Show list of VRFs and belonging subnets in subnet list'); ?></span>
+			</td>
+		</tr>
+
 		<!-- Subnet ordering -->
 		<tr>
 			<td class="title"><?php print _('Subnet ordering'); ?></td>
@@ -120,7 +144,7 @@ $section = getSectionDetailsById ($_POST['sectionId']);
 				
 			# line
 			print "<td>";			
-			print "<label class='checkbox inline noborder'>";			
+			print "<span class='checkbox inline noborder'>";			
 
 			print "	<input type='radio' name='group$g[g_id]' value='0' checked> na";
 			if($permissions[$g['g_id']] == "1")	{ print " <input type='radio' name='group$g[g_id]' value='1' checked> ro"; }			
@@ -129,7 +153,7 @@ $section = getSectionDetailsById ($_POST['sectionId']);
 			else								{ print " <input type='radio' name='group$g[g_id]' value='2'> rw"; }			
 			if($permissions[$g['g_id']] == "3")	{ print " <input type='radio' name='group$g[g_id]' value='3' checked> rwa"; }			
 			else								{ print " <input type='radio' name='group$g[g_id]' value='3'> rwa"; }	
-			print "</label>";
+			print "</span>";
 			print "</td>";
 			
 			print "</tr>";			
@@ -168,9 +192,10 @@ $section = getSectionDetailsById ($_POST['sectionId']);
 
 <!-- footer -->
 <div class="pFooter">
-	<button class="btn btn-small hidePopups"><?php print _('Cancel'); ?></button>
-	<button class="btn btn-small <?php if($_POST['action']=="delete") { print "btn-danger";} else { print "btn-success"; } ?>" id="editSectionSubmit"><i class="icon-white <?php if($_POST['action']=="add") { print "icon-plus"; } else if ($_POST['action']=="delete") { print "icon-trash"; } else { print "icon-ok"; } ?>"></i> <?php print ucwords(_($_POST['action'])); ?></button>
-
+	<div class="btn-group">
+		<button class="btn btn-small hidePopups"><?php print _('Cancel'); ?></button>
+		<button class="btn btn-small <?php if($_POST['action']=="delete") { print "btn-danger";} else { print "btn-success"; } ?>" id="editSectionSubmit"><i class="icon-white <?php if($_POST['action']=="add") { print "icon-plus"; } else if ($_POST['action']=="delete") { print "icon-trash"; } else { print "icon-ok"; } ?>"></i> <?php print ucwords(_($_POST['action'])); ?></button>
+	</div>
 	<!-- result holder -->
 	<div class="sectionEditResult"></div>
 </div>	
