@@ -226,8 +226,9 @@ $(document).on("click", ".modIPaddr", function() {
     var action    = $(this).attr('data-action');
     var id        = $(this).attr('data-id');
     var subnetId  = $(this).attr('data-subnetId');
+    var stopIP    = $(this).attr('data-stopIP');
     //format posted values
-    var postdata = "action="+action+"&id="+id+"&subnetId="+subnetId;
+    var postdata = "action="+action+"&id="+id+"&subnetId="+subnetId+"&stopIP="+stopIP;
     $.post('site/ipaddr/modifyIpAddress.php', postdata, function(data) {
         $('div.popup_w400').html(data);
         showPopup('popup_w400');

@@ -113,7 +113,7 @@ $myFieldsSize = sizeof($myFields);
 		<td><?php print _('IP address'); ?>
 		</td>
 		<td>
-			<input type="text" name="ip_addr" class="ip_addr" value="<?php print $details['ip_addr']; ?>" size="30" placeholder="<?php print _('IP address'); ?>">
+			<input type="text" name="ip_addr" class="ip_addr" value="<?php print $details['ip_addr']; if(is_numeric($_REQUEST['stopIP'])>0) print "-".transform2long($_REQUEST['stopIP']); ?>" size="30" placeholder="<?php print _('IP address'); ?>">
     		<i class="icon-gray icon-bell" rel="tooltip" data-html='true' data-placement="bottom" title="<?php print _('You can add,edit or delete multiple IP addresses<br>by specifying IP range (e.g. 10.10.0.0-10.10.0.25)'); ?>"></i>
     		
    			<input type="hidden" name="action" 	 	value="<?php print $act; 	?>">

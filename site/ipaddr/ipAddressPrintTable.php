@@ -360,7 +360,7 @@ else {
 				if( $permission > 1) {
 					if($ipaddress[$n]['class']=="range-dhcp") 
 					{
-						print "		<a class='edit_ipaddress   btn btn-mini modIPaddr' data-action='edit'   data-subnetId='".$ipaddress[$n]['subnetId']."' data-id='".$ipaddress[$n]['id']."' href='#' 											   rel='tooltip' title='"._('Edit IP address details')."'>						<i class='icon-gray icon-pencil'>  </i></a>";
+						print "		<a class='edit_ipaddress   btn btn-mini modIPaddr' data-action='edit'   data-subnetId='".$ipaddress[$n]['subnetId']."' data-id='".$ipaddress[$n]['id']."' data-stopIP='".$ipaddress[$n]['stopIP']."' href='#' 		   rel='tooltip' title='"._('Edit IP address details')."'>						<i class='icon-gray icon-pencil'>  </i></a>";
 						print "		<a class='				   btn btn-mini disabled' href='#'>																<i class='icon-gray icon-retweet'> </i></a>"; 
 						print "		<a class='				   btn btn-mini disabled' href='#'>																<i class='icon-gray icon-search'></i></a>";
 						print "		<a class='				   btn btn-mini disabled' href='#'>																<i class='icon-gray icon-envelope'></i></a>";

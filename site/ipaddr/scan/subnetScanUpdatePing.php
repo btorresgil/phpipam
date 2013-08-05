@@ -5,7 +5,7 @@
  ***************************/
 
 /* required functions */
-require_once('../../functions/functions.php'); 
+require_once('../../../functions/functions.php'); 
 
 /* verify that user is logged in */
 isUserAuthenticated(true);
