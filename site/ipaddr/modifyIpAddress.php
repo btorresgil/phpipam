@@ -342,14 +342,16 @@ $myFieldsSize = sizeof($myFields);
 
 <!-- footer -->
 <div class="pFooter">
-	<button class="btn btn-small hidePopups"><?php print _('Cancel'); ?></button>
-	<?php
-	# add delete if it came from visual edit!
-	if($action == 'all-edit') {
-	print "<button class='btn btn-small btn-danger' id='editIPAddressSubmit' data-action='all-delete'><i class='icon-white icon-trash'></i> "._('Delete IP')."</button>";		
-	}
-	?>
-	<button class="btn btn-small <?php if($action=="delete") { print "btn-danger"; } else { print "btn-success"; } ?>" id="editIPAddressSubmit" data-action='<?php print $action; ?>'><i class="icon-white <?php if($act=="add") { print "icon-plus"; } else if ($act=="delete") { print "icon-trash"; } else { print "icon-ok"; } ?>"></i> <?php print ucwords($btnName); ?> IP</button>
+	<div class="btn-group">
+		<button class="btn btn-small hidePopups"><?php print _('Cancel'); ?></button>
+		<?php
+		# add delete if it came from visual edit!
+		if($action == 'all-edit') {
+		print "<button class='btn btn-small btn-danger' id='editIPAddressSubmit' data-action='all-delete'><i class='icon-white icon-trash'></i> "._('Delete IP')."</button>";		
+		}
+		?>
+		<button class="btn btn-small <?php if($action=="delete") { print "btn-danger"; } else { print "btn-success"; } ?>" id="editIPAddressSubmit" data-action='<?php print $action; ?>'><i class="icon-white <?php if($act=="add") { print "icon-plus"; } else if ($act=="delete") { print "icon-trash"; } else { print "icon-ok"; } ?>"></i> <?php print ucwords($btnName); ?> IP</button>
+	</div>
 
 	<!-- holder for result -->
 	<div class="addnew_check"></div>

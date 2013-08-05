@@ -42,9 +42,10 @@ else 							{ $_POST['oldname'] = $_POST['fieldName'];}
 
 <!-- footer -->
 <div class="pFooter">
-	<button class="btn btn-small hidePopups"><?php print _('Close'); ?></button>
-	<button class="btn btn-small <?php if($_POST['action']=="delete") print "btn-danger" ?>" id="editcustomSubnetSubmit"><i class="icon-gray <?php if($_POST['action']=="delete") print "icon-white" ?> icon-ok"></i> <?php print ucwords(_($_POST['action'])); ?></button>
-
+	<div class="btn-group">
+		<button class="btn btn-small hidePopups"><?php print _('Close'); ?></button>
+		<button class="btn btn-small <?php if($_POST['action']=="delete") { print "btn-danger"; } else { print "btn-success";} ?>" id="editcustomSubnetSubmit"><i class="icon-white <?php if($_POST['action']=="add") { print "icon-plus"; } else if ($_POST['action']=="delete") { print "icon-trash"; } else { print "icon-ok"; } ?> icon-ok"></i> <?php print ucwords(_($_POST['action'])); ?></button>
+	</div>
 	<!-- result -->
 	<div class="customSubnetEditResult"></div>
 </div>

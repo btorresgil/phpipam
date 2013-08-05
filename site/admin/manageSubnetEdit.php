@@ -333,15 +333,17 @@ else															{ $readonly = false; }
 
 <!-- footer -->
 <div class="pFooter">
-	<button class="btn btn-small hidePopups"><?php print _('Cancel'); ?></button>
-	<?php
-	//if action == edit and location = IPaddresses print also delete form
-	if(($_POST['action'] == "edit") && ($_POST['location'] == "IPaddresses") ) {
-		print "<button class='btn btn-small btn-danger editSubnetSubmitDelete editSubnetSubmit'><i class='icon-white icon-trash'></i> "._('Delete subnet')."</button>";
-	}
-	?>
-	<button class="btn btn-small editSubnetSubmit <?php if($_POST['action']=="delete") print "btn-danger"; else print "btn-success"; ?>"><i class="icon-white <?php if($_POST['action']=="add") { print "icon-plus"; } else if ($_POST['action']=="delete") { print "icon-trash"; } else { print "icon-ok"; } ?>"></i> <?php print ucwords(_($_POST['action'])); ?></button>
-
+	<div class="btn-group">
+		<button class="btn btn-small hidePopups"><?php print _('Cancel'); ?></button>
+		<?php
+		//if action == edit and location = IPaddresses print also delete form
+		if(($_POST['action'] == "edit") && ($_POST['location'] == "IPaddresses") ) {
+			print "<button class='btn btn-small btn-danger editSubnetSubmitDelete editSubnetSubmit'><i class='icon-white icon-trash'></i> "._('Delete subnet')."</button>";
+		}
+		?>
+		<button class="btn btn-small editSubnetSubmit <?php if($_POST['action']=="delete") print "btn-danger"; else print "btn-success"; ?>"><i class="icon-white <?php if($_POST['action']=="add") { print "icon-plus"; } else if ($_POST['action']=="delete") { print "icon-trash"; } else { print "icon-ok"; } ?>"></i> <?php print ucwords(_($_POST['action'])); ?></button>
+	</div>
+	
 	<div class="manageSubnetEditResult"></div>
 	<!-- vlan add holder from subnets -->
 	<div id="addNewVlanFromSubnetEdit" style="display:none"></div>

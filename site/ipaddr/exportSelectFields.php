@@ -112,6 +112,8 @@ print '</form>';
 
 <!-- footer -->
 <div class="pFooter">
-	<button class="btn btn-small hidePopups"><?php print _('Cancel'); ?></button>
-	<button class="btn btn-small" id="exportSubnet"><i class="icon-gray icon-download"></i> <?php print _('Export'); ?></button>
+	<div class="btn-group">
+		<button class="btn btn-small hidePopups"><?php print _('Cancel'); ?></button>
+		<button class="btn btn-small btn-success" id="exportSubnet"><i class="icon-white icon-download"></i> <?php print _('Export'); ?></button>
+	</div>
 </div>

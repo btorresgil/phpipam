@@ -66,7 +66,7 @@ $myFieldsSize = sizeof($myFields);
 /* set colspan */
 $colspan['unused'] = sizeof($setFields) + $myFieldsSize;
 $colspan['ipaddr'] = sizeof($setFields) + $myFieldsSize + 4;
-$colspan['dhcp']   = sizeof($setFields) + $myFieldsSize - 2;
+$colspan['dhcp']   = sizeof($setFields) + $myFieldsSize - 3;
 
 /* 
 if result not empty use first IP address in subnet to identify type 
@@ -262,7 +262,10 @@ else {
 			    {
 			    	print "<tr class='dhcp'>"; 
 				    print "	<td>";
+				    # status icon
+				    if($SubnetDetails['pingSubnet']=="1") {
 				    print "		<span class='status status-padded'></span>";
+					} 
 				    print 		Transform2long( $ipaddress[$n]['ip_addr']).' - '.Transform2long( $ipaddress[$n]['stopIP'])." (".$ipaddress[$n]['numHosts'].")";
 				    print 		reformatIPState($ipaddress[$n]['state']);
 				    print "	</td>";
