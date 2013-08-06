@@ -30,9 +30,11 @@ foreach ($requiredExt as $extension) {
 }
 
 /* check if mod_rewrite is enabled in apache */
-$modules = apache_get_modules();
-if(!in_array("mod_rewrite", $modules)) {
-	$missingExt[] = "mod_rewrite (Apache module)";
+if (function_exists("apache_get_modules")) {
+    $modules = apache_get_modules();
+    if(!in_array("mod_rewrite", $modules)) {
+        $missingExt[] = "mod_rewrite (Apache module)";
+    }
 }
 
 /* if any extension is missing print error and die! */

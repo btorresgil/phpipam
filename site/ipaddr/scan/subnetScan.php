@@ -12,13 +12,16 @@ isUserAuthenticated(false);
 
 /* verify that user has write permissions for subnet */
 $subnetPerm = checkSubnetPermission ($_REQUEST['subnetId']);
-if($subnetPerm < 2) 	{ die('<div class="alert alert-error">'._('You do not have permissions to modify hosts in this subnet').'!</div>'); }
+if($subnetPerm < 2) 						{ die('<div class="pHeader">Error</div><div class="alert alert-error">'._('You do not have permissions to modify hosts in this subnet').'!</div><div class="pFooter"><button class="btn btn-small hidePopups">'._('Cancel').'</button></div>'); }
 
 /* verify post */
 CheckReferrer();
 
 # get subnet details
 $subnet = getSubnetDetailsById ($_POST['subnetId']);
+
+# IPv6 is not supported
+if ( IdentifyAddress( $subnet['subnet'] ) == "IPv6") { die('<div class="pHeader">Error</div><div class="alert alert-error">'._('IPv6 scanning is not supported').'!</div><div class="pFooter"><button class="btn btn-small hidePopups">'._('Cancel').'</button></div>'); }
 
 # get all IP addresses
 $ip_addr = getIpAddressesBySubnetId ($_POST['subnetId']) ;

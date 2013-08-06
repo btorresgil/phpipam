@@ -604,5 +604,8 @@ msgid "Invalid VRF id"
 msgstr ""
 
 
+### 0.87.004 ###
 
-
+#: site/ipaddr/scan/subnetScan.php
+msgid "IPv6 scanning is not supported"
+msgstr ""

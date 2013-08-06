@@ -643,7 +643,7 @@ function setModifySubnetDetailsQuery ($subnetDetails)
         $query .= ' "'. $subnetDetails['subnet'] 		 .'", ' . "\n"; 
         $query .= ' "'. $subnetDetails['mask'] 			 .'", ' . "\n"; 
         $query .= ' "'. $subnetDetails['sectionId'] 	 .'", ' . "\n"; 
-        $query .= ' "'. htmlentities($subnetDetails['description']) .'", ' . "\n"; 
+        $query .= ' "'. $subnetDetails['description']    .'", ' . "\n"; 
         $query .= ' "'. $subnetDetails['vlanId'] 			 .'", ' . "\n"; 
         $query .= ' "'. $subnetDetails['vrfId'] 		 .'", ' . "\n"; 
         $query .= ' "'. $subnetDetails['masterSubnetId'] .'", ' . "\n"; 
@@ -684,7 +684,7 @@ function setModifySubnetDetailsQuery ($subnetDetails)
 		}
 
         $query  = 'update subnets set '. "\n";
-        $query .= '`description` 	= "'. htmlentities($subnetDetails['description']) .'", '. "\n";
+        $query .= '`description` 	= "'. $subnetDetails['description'] .'", '. "\n";
         if($subnetDetails['sectionId'] != $subnetDetails['sectionIdNew']) {
         $query .= '`sectionId`      = "'. $subnetDetails['sectionIdNew'] 	.'", '. "\n";
         }
