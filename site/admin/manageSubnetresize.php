@@ -68,8 +68,10 @@ $subnet = getSubnetDetailsById ($_POST['subnetId']);
 
 <!-- footer -->
 <div class="pFooter">
-	<button class="btn btn-small hidePopup2"><?php print _('Cancel'); ?></button>
-	<button class="btn btn-small btn-success" id="subnetResizeSubmit"><i class="icon-white icon-ok"></i> <?php print _('Resize subnet'); ?></button>
+	<div class="btn-group">
+		<button class="btn btn-small hidePopup2"><?php print _('Cancel'); ?></button>
+		<button class="btn btn-small btn-success" id="subnetResizeSubmit"><i class="icon-white icon-ok"></i> <?php print _('Resize subnet'); ?></button>
+	</div>
 
 	<div class="subnetResizeResult"></div>
 </div>

@@ -60,11 +60,45 @@ $setFields = explode(";", $setFieldsTemp);
 				# check permissions for user
 				$perm = checkSectionPermission ($section['id']);
 				if($perm > 0 ) {
-					if( ($section['name'] == $_REQUEST['section']) || ($section['id'] == $_REQUEST['section']) ) 	{ print "<li class='active'>"; }
-					else 																							{ print "<li>"; }
 				
-					print "	<a href='subnets/$section[id]/' rel='tooltip' data-placement='bottom' title='"._('Show all subnets in section')." $section[name]'>$section[name]</a>";
-					print "</li>";
+					# print only masters!
+					if($section['masterSection']=="0" || empty($section['masterSection'])) {
+					
+						# check if has slaves
+						unset($sves);
+						foreach($sections as $s) {
+							if($s['masterSection']==$section['id']) { $sves[$s['id']] = $s; }
+						}
+						
+						# slaves?
+						if(isset($sves)) {
+					
+							if($_REQUEST['section']==$section['id'])	{ print "<li class='active'><a href='subnets/$section[id]/'>$section[name]</a></li>"; }
+							else										{ print "<li><a href='subnets/$section[id]/'>$section[name]</a></li>"; }
+													
+							print "<li class='dropdown'>";
+							print " <a class='dropdown-toggle topmenulink' data-toggle='dropdown' style='padding-left:2px;margin-right:2px;'>&nbsp;<b class='caret' style='maring-top:0px;'></b></a>";
+							print "		<ul class='dropdown-menu tools'>";	
+							print "		<li class='nav-header' style='text-transform:none;'>"._('SubSections in')." $section[name]</li>";	
+							print "		<li class='divider'></li>";						
+
+							foreach($sves as $sl) {
+								if($_REQUEST['section']==$sl['id']) { print "<li class='active'><a href='subnets/$sl[id]/'>$sl[name]</a></li>"; }
+								else								{ print "<li><a href='subnets/$sl[id]/'>$sl[name]</a></li>"; }
+							}
+							
+							print "		</ul>";
+							print "</li>";
+						}
+						# no slaves
+						else {
+							if( ($section['name'] == $_REQUEST['section']) || ($section['id'] == $_REQUEST['section']) ) 	{ print "<li class='active'>"; }
+							else 																							{ print "<li>"; }	
+	
+							print "	<a href='subnets/$section[id]/' rel='tooltip' data-placement='bottom' title='"._('Show all subnets in section')." $section[name]'>$section[name]</a>";
+							print "</li>";	
+						}
+					}
 				}
 			}
 			?>

@@ -54,6 +54,24 @@ $section = getSectionDetailsById ($_POST['sectionId']);
 			</td>
 		</tr>
 
+		<!-- Master Subnet -->
+		<tr>
+			<td><?php print _('Parent'); ?></td>
+			<td colspan="2">
+				<select name="masterSection" style="width:auto;" <?php if($_POST['action']=="delete") print 'disabled="disabled"'; ?>>
+					<option value="0">Root</option>
+					<?php
+					$sections = fetchsections(false);
+					foreach($sections as $s) {
+						if($s['id']==$section['masterSection'])	{ print "<option value='$s[id]' selected='selected'>$s[name]</option>"; }
+						else									{ print "<option value='$s[id]'>$s[name]</option>"; }
+					}
+					?>
+				</select>
+				<span class="help-inline"><?php print _('Select parent section to create subsection'); ?></span>
+			</td>
+		</tr>
+
 		<!-- Strict Mode -->
 		<tr>
 			<td><?php print _('Strict Mode'); ?></td>

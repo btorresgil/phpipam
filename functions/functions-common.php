@@ -774,8 +774,13 @@ function get_menu_html( $subnets, $rootId = 0 )
 			{
 				# if user has access permission
 				if($sp != 0) {	
+					# folder
+					if($option['value']['isFolder'] == 1) {
+						$html[] = '<li class="folder folder-'.$open.' '.$active.'"><i class="icon-gray icon-folder-'.$open.'" rel="tooltip" data-placement="right" data-html="true" title="'._('Folder contains more subnets').'<br>'._('Click on folder to open/close').'"></i>';
+						$html[] = '<a href="subnets/'.$option['value']['sectionId'].'/'.$option['value']['id'].'/">'.$option['value']['description'].'</a>'; 				
+					}
 					# print name
-					if($option['value']['showName'] == 1) {
+					elseif($option['value']['showName'] == 1) {
 						$html[] = '<li class="folder folder-'.$open.' '.$active.'"><i class="icon-gray icon-folder-'.$open.'" rel="tooltip" data-placement="right" data-html="true" title="'._('Subnet contains more subnets').'<br>'._('Click on folder to open/close').'"></i>';
 						$html[] = '<a href="subnets/'.$option['value']['sectionId'].'/'.$option['value']['id'].'/" rel="tooltip" data-placement="right" title="'.Transform2long($option['value']['subnet']).'/'.$option['value']['mask'].'">'.$option['value']['description'].'</a>'; 				
 					}
@@ -796,8 +801,13 @@ function get_menu_html( $subnets, $rootId = 0 )
 			# Leaf items (last)
 			else
 				if($sp != 0) {
+					# folder
+					if($option['value']['isFolder'] == 1) {
+						$html[] = '<li class="leaf '.$active.'"><i class="icon-gray icon-folder-open"></i>';
+						$html[] = '<a href="subnets/'.$option['value']['sectionId'].'/'.$option['value']['id'].'/">'.$option['value']['description'].'</a></li>';
+					}
 					# print name
-					if($option['value']['showName'] == 1) {				
+					elseif($option['value']['showName'] == 1) {				
 						$html[] = '<li class="leaf '.$active.'""><i class="'.$leafClass.' icon-chevron-right"></i>';
 						$html[] = '<a href="subnets/'.$option['value']['sectionId'].'/'.$option['value']['id'].'/" rel="tooltip" data-placement="right" title="'.Transform2long($option['value']['subnet']).'/'.$option['value']['mask'].'">'.$option['value']['description'].'</a></li>';
 					}
@@ -1069,8 +1079,16 @@ function printSubnets( $subnets, $actions = true, $vrf = "0", $custom = array() 
 				// print item
 				if($permission != 0) {
 					$html[] = "<tr>";
+					# is folder?
+					if($option['value']['isFolder']==1) {
+					$html[] = "	<td class='level$count'><span class='structure' style='padding-left:$padding; margin-left:$margin;'></span><i class='icon-gray icon-folder-open'></i> <a href='subnets/".$option['value']['sectionId']."/".$option['value']['id']."/'> $description</a></td>";						
+					$html[] = "	<td class='level$count'><span class='structure' style='padding-left:$padding; margin-left:$margin;'></span> $description</td>";						
+
+					}
+					else {
 					$html[] = "	<td class='level$count'><span class='structure' style='padding-left:$padding; margin-left:$margin;'></span><a href='subnets/".$option['value']['sectionId']."/".$option['value']['id']."/'>  ".transform2long($option['value']['subnet']) ."/".$option['value']['mask']."</a></td>";
-					$html[] = "	<td class='level$count'><span class='structure' style='padding-left:$padding; margin-left:$margin;'></span> $description</td>";
+					$html[] = "	<td class='level$count'><span class='structure' style='padding-left:$padding; margin-left:$margin;'></span> $description</td>";						
+					}
 					$html[] = "	<td>$vlan</td>";
 					#vrf
 					if($vrf == "1") {

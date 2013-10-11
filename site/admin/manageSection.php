@@ -8,8 +8,25 @@
 /* verify that user is admin */
 checkAdmin();
 
+$sections = fetchSections (true);
 
-$sections = fetchSections ();
+# ets do some reordering to show slaves!
+foreach($sections as $s) {
+	if($s['masterSection']=="0") {
+		# it is master
+		$s['class'] = "master";
+		$sectionssorted[] = $s;
+		# check for slaves
+		foreach($sections as $ss) {
+			if($ss['masterSection']==$s['id']) {
+				$ss['class'] = "slave";
+				$sectionssorted[] = $ss;
+			}
+		}
+	}
+}
+
+$sections = $sectionssorted;
 ?>
 
 <h4><?php print _('Section management'); ?></h4>
@@ -28,6 +45,7 @@ $sections = fetchSections ();
 <tr>
     <th><?php print _('Name'); ?></th>
     <th><?php print _('Description'); ?></th>
+    <th><?php print _('Parent'); ?></th>
     <th><?php print _('Strict mode'); ?></th>
     <th><?php print _('Show VLANs'); ?></th>
     <th><?php print _('Show VRFs'); ?></th>
@@ -39,9 +57,19 @@ $sections = fetchSections ();
 <?php
 foreach ($sections as $section)
 {
-	print '<tr>'. "\n";
+	print '<tr class="'.$section['class'].'">'. "\n";
+
     print '	<td>'. str_replace("_", " ", $section['name']).'</td>'. "\n";
     print '	<td>'. $section['description'] .'</td>'. "\n";
+    
+    # master Section
+    if($section['masterSection']!= "0") {
+		# get section details
+		$ssec = getSectionDetailsById($section['masterSection']);    
+	    print "	<td>$ssec[name]</td>";	    
+    } else {
+	    print "	<td>/</td>";	    
+    }
 
     # strictMode
     if($section['strictMode'] == 0)	{ $mode = _("No"); }

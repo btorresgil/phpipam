@@ -389,8 +389,13 @@ ul.admin li.active a {
 .nav-tabs .dropdown-menu.admin li a:hover {
 	background: #b94a48;
 }
-.navbar .sections li.active a {
+.navbar .sections li.active a,
+.navbar .sections li.active a:hover {
+	background: #F1FAFE;
+}
+.navbar .sections li ul li.active a {
 	background: #F1FAFE !important;
+	color: #333 !important;
 }
 
 /* multiple line sections fix */
@@ -1073,6 +1078,7 @@ table.editSubnetDetails td.hr {
 }
 table.editSubnetDetails td.middle {
 	vertical-align: middle;
+	white-space: nowrap;
 }
 
 table#manageSection {
@@ -1082,6 +1088,16 @@ table#manageSection th,
 table#manageSection td {
 	padding-right: 40px;
 	vertical-align: top;
+}
+table#manageSection tr.master td {
+	border-top: medium double #dddddd;
+}
+table#manageSection tr.slave td:nth-child(1),
+table#manageSection tr.slave td:nth-child(2) {
+	padding-left: 20px;
+} 
+table#manageSection tr.slave td:nth-child(1):before {
+	content: " - ";
 }
 
 table#logs span {

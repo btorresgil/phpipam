@@ -1183,6 +1183,41 @@ $(document).on("click", ".vlanManagementEditFromSubnetButton", function() {
 
 
 
+
+
+/*	Folders
+************************************/
+//create new folder popup
+$('#add_folder').click(function() {
+	showSpinner();
+    var subnetId  = $(this).attr('data-subnetId');
+    var sectionId = $(this).attr('data-sectionId');
+    var action    = $(this).attr('data-action');
+    //format posted values
+    var postdata     = "sectionId="+sectionId+"&subnetId="+subnetId+"&action="+action+"&location=IPaddresses";
+    
+    $.post('site/admin/manageFolderEdit.php', postdata, function(data) {
+        $('div.popup_w700').html(data);
+        showPopup('popup_w700');
+        hideSpinner();
+	}).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});
+ 
+    return false;    
+});
+//submit folder changes
+$(document).on("click", ".editFolderSubmit", function() {
+	var postData = $('form#editFolderDetails').serialize();
+	$.post('site/admin/manageFolderEditSubmit.php', postData, function(data) {
+		$('.manageFolderEditResult').html(data);
+        //reload after 2 seconds if succeeded!
+        if(data.search("error") == -1)   { setTimeout(function (){window.location.reload();}, 1500); }
+        else                             { hideSpinner(); hideSpinner(); }
+    }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});	
+	return false;
+});
+
+
+
 /*    Switches
 ********************************/
 //open form

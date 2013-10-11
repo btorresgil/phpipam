@@ -4214,3 +4214,17 @@ msgstr ""
 #: site/ipaddr/vrfDetails.php
 msgid "Invalid VRF id"
 msgstr ""
+
+### 0.88.001 ###
+
+#: site/admin/manageSection.php
+msgid "Parent"
+msgstr ""
+
+#: site/sections.php
+msgid "SubSections in"
+msgstr ""
+
+#: site/admin/manageSectionEdit.php
+msgid "Select parent section to create subsection"
+msgstr ""

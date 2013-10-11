@@ -37,6 +37,7 @@ $update['strictMode']  		= $_POST['strictMode'];
 $update['subnetOrdering']  	= $_POST['subnetOrdering'];
 $update['showVLAN']  		= $_POST['showVLAN'];
 $update['showVRF']  		= $_POST['showVRF'];
+$update['masterSection']	= $_POST['masterSection'];
 
 if(isset($_POST['delegate'])) {
 	if($_POST['delegate'] == 1) {

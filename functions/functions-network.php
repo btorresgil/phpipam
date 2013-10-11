@@ -485,11 +485,13 @@ function isSubnetIdVrf ($subnetId, $vrfId)
 /**
  * Get all sections
  */
-function fetchSections ()
+function fetchSections ($all = true)
 {
     global $db;                                                                      # get variables from config file
     /* set query */
-    $query 	  = 'select * from `sections` order by IF(ISNULL(`order`),1,0),`order`,`id` asc;';
+    if($all) 	{ $query = 'select * from `sections` order by IF(ISNULL(`order`),1,0),`order`,`id` asc;'; }
+    else		{ $query = 'select * from `sections` where `masterSection` = 0 order by IF(ISNULL(`order`),1,0),`order`,`id` asc;'; }
+    
     $database = new database($db['host'], $db['user'], $db['pass'], $db['name']);
 
     /* execute */
@@ -664,7 +666,7 @@ function fetchSubnets ($sectionId, $orderType = "subnet", $orderBy = "asc" )
     }
 
     /* set query, open db connection and fetch results */
-    $query 	  = "select * from `subnets` where `sectionId` = '$sectionId' ORDER BY `masterSubnetId`,`$orderType` $orderBy;";
+    $query 	  = "select * from `subnets` where `sectionId` = '$sectionId' ORDER BY `isFolder` desc,`masterSubnetId`,`$orderType` $orderBy;";
     $database = new database($db['host'], $db['user'], $db['pass'], $db['name']);
     
     /* execute */
@@ -1457,11 +1459,17 @@ function printDropdownMenuBySection($sectionId, $subnetMasterId = "0")
 {
 		# get all subnets
 		$subnets = fetchSubnets ($sectionId);
+		$folders = fetchFolders ($sectionId);
 		
 		$html = array();
 		
 		$rootId = 0;									# root is 0
-		
+
+		# folders
+		foreach ( $folders as $item )
+			$childrenF[$item['masterSubnetId']][] = $item;
+					
+		# subnets
 		foreach ( $subnets as $item )
 			$children[$item['masterSubnetId']][] = $item;
 		
@@ -1475,13 +1483,55 @@ function printDropdownMenuBySection($sectionId, $subnetMasterId = "0")
 		# display selected subnet as opened
 		$allParents = getAllParents ($_REQUEST['subnetId']);
 		
+		
 		# structure
 		$html[] = "<select name='masterSubnetId'>";
-		# root
-		$html[] = "<option disabled>"._("Select Master subnet")."</option>";
-		$html[] = "<option value='0'>"._("Root subnet")."</option>";
+				
+		# folders
+		if(sizeof($folders)>0) {
+			$html[] = "<optgroup label='"._("Folders")."'>";
+			# return table content (tr and td's) - folders
+			while ( $loop && ( ( $option = each( $childrenF[$parent] ) ) || ( $parent > $rootId ) ) )
+			{
+				# repeat 
+				$repeat  = str_repeat( " - ", ( count($parent_stack)) );
+				# dashes
+				if(count($parent_stack) == 0)	{ $dash = ""; }
+				else							{ $dash = $repeat; }
+								
+				# count levels
+				$count = count( $parent_stack ) + 1;
+				
+				# print table line
+				if(strlen($option['value']['subnet']) > 0) { 
+					# selected
+					if($option['value']['id'] == $subnetMasterId) 	{ $html[] = "<option value='".$option['value']['id']."' selected='selected'>$repeat ".$option['value']['description']."</option>"; }
+					else 											{ $html[] = "<option value='".$option['value']['id']."'>$repeat ".$option['value']['description']."</option>"; }					
+				}
+				
+				if ( $option === false ) { $parent = array_pop( $parent_stack ); }
+				# Has slave subnets
+				elseif ( !empty( $children[$option['value']['id']] ) ) {														
+					array_push( $parent_stack, $option['value']['masterSubnetId'] );
+					$parent = $option['value']['id'];
+				}
+				# Last items
+				else { }
+			}
+			$html[] = "</optgroup>";
+		}
+
+		# subnets
+		$html[] = "<optgroup label='"._("Subnets")."'>";
 		
-		# return table content (tr and td's)
+		# root subnet
+		if(!isset($subnetMasterId) || $subnetMasterId==0) {
+			$html[] = "<option value='0' selected='selected'>"._("Root subnet")."</option>";
+		} else {
+			$html[] = "<option value='0'>"._("Root subnet")."</option>";			
+		}
+				
+		# return table content (tr and td's) - subnets
 		while ( $loop && ( ( $option = each( $children[$parent] ) ) || ( $parent > $rootId ) ) )
 		{
 			# repeat 
@@ -1493,12 +1543,11 @@ function printDropdownMenuBySection($sectionId, $subnetMasterId = "0")
 			# count levels
 			$count = count( $parent_stack ) + 1;
 			
-			
-			# print table line
-			if(strlen($option['value']['subnet']) > 0) { 
+			# print table line if it exists and it is not folder
+			if(strlen($option['value']['subnet']) > 0 && $option['value']['isFolder']!=1) { 
 				# selected
 				if($option['value']['id'] == $subnetMasterId) 	{ $html[] = "<option value='".$option['value']['id']."' selected='selected'>$repeat ".transform2long($option['value']['subnet'])."/".$option['value']['mask']." (".$option['value']['description'].")</option>"; }
-				else 											{ $html[] = "<option value='".$option['value']['id']."'>$repeat ".transform2long($option['value']['subnet'])."/".$option['value']['mask']." (".$option['value']['description'].")</option>"; }
+				else 											{ $html[] = "<option value='".$option['value']['id']."'>$repeat ".transform2long($option['value']['subnet'])."/".$option['value']['mask']." (".$option['value']['description'].")</option>"; }					
 			}
 			
 			if ( $option === false ) { $parent = array_pop( $parent_stack ); }
@@ -1510,6 +1559,7 @@ function printDropdownMenuBySection($sectionId, $subnetMasterId = "0")
 			# Last items
 			else { }
 		}
+		$html[] = "</optgroup>";
 		$html[] = "</select>";
 		
 		print implode( "\n", $html );
@@ -1715,6 +1765,125 @@ function getSubnetStatsDashboard($type, $limit = "10", $perc = false)
     /* return subnets array */
     return($stats);   	
 }
+
+
+
+
+
+
+
+
+
+
+/* @folder functions -------------------- */
+
+/**
+ * Get all folders in provided sectionId
+ */
+function fetchFolders ($sectionId, $orderType = "subnet", $orderBy = "asc" )
+{
+    global $db;                                                                      # get variables from config file
+    /* check for sorting in settings and override */
+    $settings = getAllSettings();
+    
+    /* get section details to check for ordering */
+    $section = getSectionDetailsById ($sectionId);
+    
+    // section ordering
+    if($section['subnetOrdering']!="default" && strlen($section['subnetOrdering'])>0 ) {
+	    $sort = explode(",", $section['subnetOrdering']);
+	    $orderType = $sort[0];
+	    $orderBy   = $sort[1];	    
+    }
+    // default - set via settings
+    elseif(isset($settings['subnetOrdering']))	{
+	    $sort = explode(",", $settings['subnetOrdering']);
+	    $orderType = $sort[0];
+	    $orderBy   = $sort[1];
+    }
+
+    /* set query, open db connection and fetch results */
+    $query 	  = "select * from `subnets` where `sectionId` = '$sectionId' and `isFolder` = 1 ORDER BY `masterSubnetId`,`$orderType` $orderBy;";
+    $database = new database($db['host'], $db['user'], $db['pass'], $db['name']);
+    
+    /* execute */
+    try { $subnets = $database->getArray( $query ); }
+    catch (Exception $e) { 
+        $error =  $e->getMessage(); 
+        print ("<div class='alert alert-error'>"._('Error').":$error</div>");
+        return false;
+    } 
+    $database->close();
+
+    /* return subnets array */
+    return($subnets);
+}
+
+
+/**
+ *	Print dropdown menu for folders in section!
+ */
+function printDropdownMenuBySectionFolders($sectionId, $subnetMasterId = "0") 
+{
+		# get all subnets
+		$subnets = fetchFolders ($sectionId);
+		
+		$html = array();
+		
+		$rootId = 0;									# root is 0
+		
+		foreach ( $subnets as $item )
+			$children[$item['masterSubnetId']][] = $item;
+		
+		# loop will be false if the root has no children (i.e., an empty menu!)
+		$loop = !empty( $children[$rootId] );
+		
+		# initializing $parent as the root
+		$parent = $rootId;
+		$parent_stack = array();
+		
+		# display selected subnet as opened
+		$allParents = getAllParents ($_REQUEST['subnetId']);
+		
+		# structure
+		$html[] = "<select name='masterSubnetId'>";
+		# root
+		$html[] = "<option disabled>"._("Select Master folder")."</option>";
+		$html[] = "<option value='0'>"._("Root folder")."</option>";
+		
+		# return table content (tr and td's)
+		while ( $loop && ( ( $option = each( $children[$parent] ) ) || ( $parent > $rootId ) ) )
+		{
+			# repeat 
+			$repeat  = str_repeat( " - ", ( count($parent_stack)) );
+			# dashes
+			if(count($parent_stack) == 0)	{ $dash = ""; }
+			else							{ $dash = $repeat; }
+							
+			# count levels
+			$count = count( $parent_stack ) + 1;
+			
+			# print table line
+			if(strlen($option['value']['subnet']) > 0) { 
+				# selected
+				if($option['value']['id'] == $subnetMasterId) 	{ $html[] = "<option value='".$option['value']['id']."' selected='selected'>$repeat ".$option['value']['description']."</option>"; }
+				else 											{ $html[] = "<option value='".$option['value']['id']."'>$repeat ".$option['value']['description']."</option>"; }
+			}
+			
+			if ( $option === false ) { $parent = array_pop( $parent_stack ); }
+			# Has slave subnets
+			elseif ( !empty( $children[$option['value']['id']] ) ) {														
+				array_push( $parent_stack, $option['value']['masterSubnetId'] );
+				$parent = $option['value']['id'];
+			}
+			# Last items
+			else { }
+		}
+		$html[] = "</select>";
+		
+		print implode( "\n", $html );
+}
+
 
 
 

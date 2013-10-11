@@ -56,8 +56,10 @@ $ip_addr = getIpAddressesBySubnetId ($_POST['subnetId']) ;
 
 <!-- footer -->
 <div class="pFooter">
-	<button class="btn btn-small hidePopup2"><?php print _('Cancel'); ?></button>
-	<button class="btn btn-small btn-danger" id="subnetTruncateSubmit" data-subnetId='<?php print $_POST['subnetId']; ?>'><i class="icon-white icon-trash"></i> <?php print _('Truncate subnet'); ?></button>
+	<div class="btn-group">
+		<button class="btn btn-small hidePopup2"><?php print _('Cancel'); ?></button>
+		<button class="btn btn-small btn-danger" id="subnetTruncateSubmit" data-subnetId='<?php print $_POST['subnetId']; ?>'><i class="icon-white icon-trash"></i> <?php print _('Truncate subnet'); ?></button>
+	</div>
 
 	<div class="subnetTruncateResult"></div>
 </div>

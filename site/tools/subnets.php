@@ -78,14 +78,25 @@ foreach ($sections as $section) {
 				if(empty($subnet['VLAN']) || $subnet['VLAN'] == 0) { $subnet['VLAN'] = ""; }
 	
 				print "<tr>";	
+				# folder?
+				if($subnet['isFolder']==1) {
+				print "	<td><i class='icon-gray icon-folder-open'></i> <a href='subnets/$section[id]/$subnet[id]/'>$subnet[description]</a></td>";
+				print "	<td>$subnet[description]</td>";					
+				}
+				else {
 				print "	<td><a href='subnets/$section[id]/$subnet[id]/'>".transform2long($subnet['subnet']) ."/$subnet[mask]</a></td>";
 				print "	<td>$subnet[description]</td>";
+				}
 				print "	<td>$subnet[VLAN]</td>";
     
 				if($masterSubnet) { print '	<td>/</td>' . "\n"; }
 				else {
 					$master = getSubnetDetailsById ($subnet['masterSubnetId']);
-					print "	<td><a href='subnets/$subnet[sectionId]/$master[id]/'>".transform2long($master['subnet']) .'/'. $master['mask'] .'</a></td>' . "\n";
+					if($master['isFolder'])
+						print "	<td><i class='icon-gray icon-folder-open'></i> <a href='subnets/$subnet[sectionId]/$master[id]/'>$master[description]</a></td>" . "\n";
+					else {
+						print "	<td><a href='subnets/$subnet[sectionId]/$master[id]/'>".transform2long($master['subnet']) .'/'. $master['mask'] .'</a></td>' . "\n";
+					}
 				}
 	
 				# details - usage

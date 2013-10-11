@@ -1,4 +1,4 @@
-== 0.87.004
+== 0.88.001
 
 	New features:
 	----------------------------
@@ -9,6 +9,7 @@
 	+ API server version 0.1;
 	+ Option to show and group subnets by VLAN in subnets list;
 	+ Option to show and group subnets by VRF in subnets list;
+	+ Added subsections;
 
 	Enhancements:
 	----------------------------

@@ -638,8 +638,16 @@ function setModifySubnetDetailsQuery ($subnetDetails)
 		}
         
         $query  = 'insert into subnets '. "\n";
+        # is folder?
+        if($subnetDetails['isFolder']) {
+        $query .= '(`isFolder`,`subnet`, `mask`, `sectionId`, `description`, `vlanId`, `vrfId`, `masterSubnetId`, `allowRequests`, `showName`, `permissions`, `pingSubnet` '.$myFieldsInsert['query'].') ' . "\n";       
+        $query .= 'values (' . "\n";
+        $query .= '1, ' . "\n"; 
+		}
+		else {
         $query .= '(`subnet`, `mask`, `sectionId`, `description`, `vlanId`, `vrfId`, `masterSubnetId`, `allowRequests`, `showName`, `permissions`, `pingSubnet` '.$myFieldsInsert['query'].') ' . "\n";
         $query .= 'values (' . "\n";
+        }
         $query .= ' "'. $subnetDetails['subnet'] 		 .'", ' . "\n"; 
         $query .= ' "'. $subnetDetails['mask'] 			 .'", ' . "\n"; 
         $query .= ' "'. $subnetDetails['sectionId'] 	 .'", ' . "\n"; 
@@ -865,8 +873,14 @@ function printAdminSubnets( $subnets, $actions = true, $vrf = "0" )
 			# print table line
 			if(strlen($option['value']['subnet']) > 0) { 
 				$html[] = "<tr>";
-				$html[] = "	<td class='level$count'><span class='structure' style='padding-left:$padding; margin-left:$margin;'></span><a href='subnets/".$option['value']['sectionId']."/".$option['value']['id']."/'>  ".transform2long($option['value']['subnet']) ."/".$option['value']['mask']."</a></td>";
+				# folder
+				if($option['value']['isFolder']==1) {
+				$html[] = "	<td class='level$count'><span class='structure' style='padding-left:$padding; margin-left:$margin;'></span><i class='icon-gray icon-folder-open'></i> <a href='subnets/".$option['value']['sectionId']."/".$option['value']['id']."/'>$description</a></td>";
 				$html[] = "	<td class='level$count'><span class='structure' style='padding-left:$padding; margin-left:$margin;'></span> $description</td>";
+				} else {
+				$html[] = "	<td class='level$count'><span class='structure' style='padding-left:$padding; margin-left:$margin;'></span><a href='subnets/".$option['value']['sectionId']."/".$option['value']['id']."/'>  ".transform2long($option['value']['subnet']) ."/".$option['value']['mask']."</a></td>";
+				$html[] = "	<td class='level$count'><span class='structure' style='padding-left:$padding; margin-left:$margin;'></span> $description</td>";	
+				}
 				$html[] = "	<td>$vlan</td>";
 				#vrf
 				if($vrf == "1") {
@@ -1000,14 +1014,14 @@ function setUpdateSectionQuery ($update)
 	# add section
     if ($update['action'] == "add" || $update['action'] == "create") 
     {
-        $query = 'Insert into sections (`name`,`description`,`permissions`,`strictMode`,`subnetOrdering`,`showVLAN`,`showVRF`) values ("'.$update['name'].'", "'.$update['description'].'", "'.$update['permissions'].'", "'.isCheckbox($update['strictMode']).'", "'.$update['subnetOrdering'].'", "'.isCheckbox($update['showVLAN']).'", "'.isCheckbox($update['showVRF']).'");';
+        $query = 'Insert into sections (`name`,`description`,`permissions`,`strictMode`,`subnetOrdering`,`showVLAN`,`showVRF`, `masterSection`) values ("'.$update['name'].'", "'.$update['description'].'", "'.$update['permissions'].'", "'.isCheckbox($update['strictMode']).'", "'.$update['subnetOrdering'].'", "'.isCheckbox($update['showVLAN']).'", "'.isCheckbox($update['showVRF']).'", "'.$update['masterSection'].'");';
     }
     # edit section
     else if ($update['action'] == "edit" || $update['action'] == "update") 
     {
         $section_old = getSectionDetailsById ( $update['id'] );												# Get old section name for update
         # Update section
-        $query   = "update `sections` set `name` = '$update[name]', `description` = '$update[description]', `permissions` = '$update[permissions]', `strictMode`='".isCheckbox($update['strictMode'])."', `subnetOrdering`='$update[subnetOrdering]', `showVLAN`='".isCheckbox($update['showVLAN'])."', `showVRF`='".isCheckbox($update['showVRF'])."' where `id` = '$update[id]';";	
+        $query   = "update `sections` set `name` = '$update[name]', `description` = '$update[description]', `permissions` = '$update[permissions]', `strictMode`='".isCheckbox($update['strictMode'])."', `subnetOrdering`='$update[subnetOrdering]', `showVLAN`='".isCheckbox($update['showVLAN'])."', `showVRF`='".isCheckbox($update['showVRF'])."', `masterSection`='$update[masterSection]' where `id` = '$update[id]';";	
         
         # delegate permissions if set
         if($update['delegate'] == 1) {

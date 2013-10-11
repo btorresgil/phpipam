@@ -117,6 +117,7 @@ CREATE TABLE `sections` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(20) NOT NULL DEFAULT '',
   `description` text,
+  `masterSection` INT(11)  NULL  DEFAULT '0',
   `permissions` varchar(1024) DEFAULT NULL,
   `strictMode` INT(1)  NOT NULL  DEFAULT '1',
   `subnetOrdering` VARCHAR(16)  NULL  DEFAULT NULL,
@@ -428,4 +429,4 @@ CREATE TABLE `api` (
 
 # update version
 # ------------------------------------------------------------
-UPDATE `settings` set `version` = '0.87';
+UPDATE `settings` set `version` = '0.88';

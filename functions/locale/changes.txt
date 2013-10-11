@@ -609,3 +609,63 @@ msgstr ""
 #: site/ipaddr/scan/subnetScan.php
 msgid "IPv6 scanning is not supported"
 msgstr ""
+
+#: site/admin/manageFolderEdit.php
+msgid "You do not have permissions to add new folder in this section"
+msgstr ""
+
+#: site/admin/manageFolderEdit.php
+msgid "You do not have permissions to add edit/delete this folder"
+msgstr ""
+
+#: site/admin/manageFolderEdit.php
+msgid "folder"
+msgstr ""
+
+#: site/admin/manageFolderEdit.php
+msgid "Enter folder name"
+msgstr ""
+
+#: site/admin/manageFolderEdit.php
+msgid "Enter master folder if you want to nest it under existing folder, "
+"or select root to create root folder"
+msgstr ""
+
+#: site/admin/manageFolderEdit.php
+msgid "Master Folder"
+msgstr ""
+
+#: functions-functions-network.php
+msgid "Select Master folder"
+msgstr ""
+
+#: functions-functions-network.php
+msgid "Root folder"
+msgstr ""
+
+#: functions-functions-network.php
+msgid "Subnets"
+msgstr ""
+
+#: functions-functions-network.php
+msgid "Folders"
+msgstr ""
+
+#: functions-functions-common.php
+msgid "Folder contains more subnets"
+msgstr ""
+
+
+### 0.88.001 ###
+
+#: site/admin/manageSection.php
+msgid "Parent"
+msgstr ""
+
+#: site/sections.php
+msgid "SubSections in"
+msgstr ""
+
+#: site/admin/manageSectionEdit.php
+msgid "Select parent section to create subsection"
+msgstr ""
