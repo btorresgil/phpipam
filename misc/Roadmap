@@ -1,9 +1,18 @@
+version - 0.9
+
+	+ CSV import fix
+	+ Subnet folders
+	+ phpMailer
+	+ cron script date change
+	+ sidebar size
+		https://sourceforge.net/p/phpipam/bugs/117/
+	+ 
+
+
 features for next releases:
 ---------------------------
 	
 	- Planned
-		
-		+ Subnet folders;
 		
 		+ changelog for subnets, sections and ip addresses;
 		
@@ -11,11 +20,7 @@ features for next releases:
 			SNMP router table fetching
 			NMAP scan
 			Telnet scan
-		
-		+ implement phpmailer;
-		
-		+ Custom devices field;
-		
+				
 		+ LDAP search for username if domain user is added;
 		
 		+ Get next available subnet by providing mask;

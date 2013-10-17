@@ -1048,8 +1048,10 @@ function calculateSubnetDetails ( $usedhosts, $bitmask, $subnet )
  * Calculate subnet details based on input!
  *
  * We must provide used hosts and subnet mask to calculate free hosts, and subnet to identify type
+ *
+ *	$bcastfix = remove bcast and subnets from stats (subnetDetailsGraph)
  */
-function calculateSubnetDetailsNew ( $subnet, $bitmask, $online, $offline, $reserved, $dhcp )
+function calculateSubnetDetailsNew ( $subnet, $bitmask, $online, $offline, $reserved, $dhcp, $bcastfix = 0 )
 {
     $details['online']            = $online;		// number of online hosts
     $details['reserved']          = $reserved;		// number of reserved hosts
@@ -1065,6 +1067,7 @@ function calculateSubnetDetailsNew ( $subnet, $bitmask, $online, $offline, $rese
     else 										{ $type = 1; }
     
     $details['maxhosts']          = MaxHosts( $bitmask, $type ); 
+    $details['maxhosts'] 		  = gmp_strval( gmp_sub ($details['maxhosts'],$bcastfix) );
     
     // calculate free hosts
     $details['freehosts']         = gmp_strval( gmp_sub ($details['maxhosts'] , $details['used']) );
@@ -1698,7 +1701,7 @@ function MaxHosts( $mask, $type = 0 )
 	    	return gmp_strval(gmp_pow(2, 128 - $mask));
     	}
     	else {
-	    	return gmp_strval(gmp_sub(gmp_pow(2, 128 - $mask) ,1));
+	    	return gmp_strval(gmp_sub(gmp_pow(2, 128 - $mask) ,2));
     	}   
     }
 }

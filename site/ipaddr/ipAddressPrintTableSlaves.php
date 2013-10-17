@@ -137,7 +137,7 @@ foreach ($slaves as $slave) {
 		$slave['maxip'] = gmp_strval(gmp_add(MaxHosts($slave['mask'],$type),$diffAdd));
 		# calculate diff
 		$diff = gmp_strval(gmp_sub($slaves[$m+1]['subnet'], gmp_strval(gmp_add($slave['subnet'],$slave['maxip']))));
-		
+				
 		# if diff print free space
 		if($diff > 0) {
 			print "<tr class='success'>";
@@ -147,7 +147,6 @@ foreach ($slaves as $slave) {
 			print "</tr>";			
 		}		
 	}
-	
 	
 	# next - for free space check
 	$m++;	

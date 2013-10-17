@@ -35,30 +35,33 @@ for($m=1; $m<=$max;$m++) {
 	}
 }
 
-# create 1 line for $argv
-$ip = implode(";", $ip);
-
-# get php exec path
-$phpPath = getPHPExecutableFromPath();
-# set script
-$script = dirname(__FILE__) . '/../../../functions/scan/'.$_REQUEST['pingType'].'Script.php';
-
-# invoke CLI with threading support
-$cmd = "$phpPath $script '$ip'";
-
-# save result to $output
-exec($cmd, $output, $retval);
-
-# format result - alive
-$alive = json_decode(trim($output[0]));
-
-# if not numeric means error, print it!
-if(!is_numeric($alive[0]))	{
-	$error = $alive[0];
+# check if any hits are present
+if($ip) {
+	# create 1 line for $argv
+	$ip = implode(";", $ip);
+	
+	# get php exec path
+	$phpPath = getPHPExecutableFromPath();
+	# set script
+	$script = dirname(__FILE__) . '/../../../functions/scan/'.$_REQUEST['pingType'].'Script.php';
+	
+	# invoke CLI with threading support
+	$cmd = "$phpPath $script '$ip'";
+	
+	# save result to $output
+	exec($cmd, $output, $retval);
+	
+	# format result - alive
+	$alive = json_decode(trim($output[0]));
+	
+	# if not numeric means error, print it!
+	if(!is_numeric($alive[0]))	{
+		$error = $alive[0];
+	}
+	
+	#verify that pign path is correct
+	if(!file_exists($pathPing)) { $pingError = true; }
 }
-
-#verify that pign path is correct
-if(!file_exists($pathPing)) { $pingError = true; }
 
 ?>
 

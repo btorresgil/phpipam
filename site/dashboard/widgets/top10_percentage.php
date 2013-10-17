@@ -201,6 +201,15 @@ else {
 	print "<p>"._("No $type hosts configured")."</p>";
 	print "<small>"._("Add some hosts to subnets to calculate usage percentage")."</small>";
 	print "</blockquote>";
+
+	#remove loading
+	?>
+	<script type="text/javascript">
+	$(document).ready(function() {
+		$("#IPv4top10").fadeOut('fast');
+	});
+	</script>
+	<?php
 }
 ?>
 

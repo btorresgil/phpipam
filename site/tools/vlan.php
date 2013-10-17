@@ -60,7 +60,7 @@ foreach ($vlans as $vlan) {
 	}
 
 	# check permission
-	$permission = checkSubnetPermission ($vlan['id']);
+	$permission = checkSubnetPermission ($vlan['subnetId']);
 		
 	if($permission != "0") {
 		

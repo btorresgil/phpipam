@@ -124,7 +124,7 @@ if($permission == "0")	{ die("<div class='alert alert-error'>"._('You do not hav
 	/* action button groups */
 	print "<tr>";
 	print "	<th>"._('Actions')."</th>";
-	print "	<td>";
+	print "	<td class='actions'>";
 
 	print "	<div class='btn-toolbar'>";
 	print "	<div class='btn-group'>";

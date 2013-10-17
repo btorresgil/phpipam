@@ -606,6 +606,7 @@ ul#subnets li.active {
 }
 ul#subnets li.active a {
 	color: #333;
+	font-weight: bold;
 }
 ul#subnets li.active li a {
 	font-weight: 300;
@@ -710,6 +711,10 @@ ul#subnets li.leaf.active i {
 }
 .ipaddress_subnet td.info {
 	color: #aaa;
+}
+.ipaddress_subnet td.actions {
+	vertical-align: top;
+	text-align: left;
 }
 table.ipaddresses tr[class*="hidden-"] {
 /* 	display: none; */
