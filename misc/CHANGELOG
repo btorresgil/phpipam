@@ -10,6 +10,7 @@
 	+ Option to show and group subnets by VLAN in subnets list;
 	+ Option to show and group subnets by VRF in subnets list;
 	+ Added subsections;
+	+ Added AD username search;
 
 	Enhancements:
 	----------------------------
@@ -42,6 +43,8 @@
 	+ Fixed firefox error when selectiong rights for section/subnets was not possible;
 	+ Fixed subnet description in Cyrillic problem;
 	+ Fixed errors on no permissions for user;
+	+ Fixed Inaccurate Free Space Calculation (and Chart);
+	+ Fixed VLAN permissions where VLAN was not displayed;
 
 == 0.8
 

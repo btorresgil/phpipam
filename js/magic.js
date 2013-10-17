@@ -661,6 +661,36 @@ $(document).on("click", "a#randomPass", function() {
     $(this).html( password );
     return false;
 });
+//search domain popup
+$(document).on("click", ".adsearchuser", function() {
+	$('div.popup_w500').load('site/admin/userADsearchForm.php');
+
+    showPopup('popup_w500');
+    $('.popup_w700').css("z-index", "99");        //set behind popup
+    hideSpinner();
+});
+//search domain user result
+$(document).on("click", "#adsearchusersubmit", function() {
+	showSpinner();
+	var dname = $('#dusername').val();
+	$.post('site/admin/userADsearchResult.php', {dname:dname}, function(data) {
+		$('div#adsearchuserresult').html(data)
+		hideSpinner();
+	});
+});
+//get user data from result
+$(document).on("click", ".userselect", function() {
+	var uname 	 = $(this).attr('data-uname');
+	var username = $(this).attr('data-username');
+	var email 	 = $(this).attr('data-email');
+	//fill
+	$('form#usersEdit input[name=real_name]').val(uname);
+	$('form#usersEdit input[name=username]').val(username);
+	$('form#usersEdit input[name=email]').val(email);
+
+	hidePopup2();
+});
+
 
 
 /*    Edit groups

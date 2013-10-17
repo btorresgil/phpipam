@@ -72,7 +72,10 @@ if(isset($settings['defaultLang']) && !is_null($settings['defaultLang']) && $act
     <tr>
     	<td><?php print _('Username'); ?></td> 
     	<td><input type="text" name="username" value="<?php print $user['username']; ?>" <?php if($action == "edit" || $action == "delete") print 'readonly'; ?>></td>   
-    	<td class="info"><?php print _('Enter username'); ?></td>
+    	<td class="info">
+    		<a class='btn btn-small adsearchuser' rel='tooltip' title='Search AD for user details'><i class='icon-gray icon-search'></i></a>
+			<?php print _('Enter username'); ?>
+		</td>
     </tr>
 
     <!-- email -->
@@ -103,7 +106,8 @@ else {
     print '	>'._('Domain user').'</option> '. "\n";
     print '	</select>'. "\n";
     print '	</td> '. "\n";
-    print '	<td class="info">'._('Set user type').''. "\n";
+    print '	<td class="info">';
+    print _('Set user type').''. "\n";
     print '	<ul>'. "\n";
     print '		<li>'._('Local authenticates here').'</li>'. "\n";
     print '		<li>'._('Domain authenticates on AD, but still needs to be setup here for permissions etc.').'</li>'. "\n";

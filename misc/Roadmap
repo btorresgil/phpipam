@@ -1,6 +1,6 @@
 version - 0.9
 
-	+ CSV import fix
+	+ CSV import/export fix (pazi na custom fields0)
 	+ Subnet folders
 	+ phpMailer
 	+ cron script date change

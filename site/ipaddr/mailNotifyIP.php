@@ -121,9 +121,11 @@ if(sizeof($myFields) > 0) {
 
 <!-- footer -->
 <div class="pFooter">
-	<button class="btn btn-small hidePopups"><?php print _('Cancel'); ?></button>
-	<button class="btn btn-small" id="mailIPAddressSubmit"><?php print _('Send Mail'); ?></button>
-
+	<div class="btn-group">
+		<button class="btn btn-small hidePopups"><?php print _('Cancel'); ?></button>
+		<button class="btn btn-small btn-success" id="mailIPAddressSubmit"><?php print _('Send Mail'); ?></button>
+	</div>
+	
 	<!-- holder for result -->
 	<div class="sendmail_check"></div>
 </div>
