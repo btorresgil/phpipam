@@ -92,7 +92,7 @@ function updateUserById ($userModDetails) {
     if (empty($userModDetails['userId'])) {
     
          # custom fields
-        $myFields = getCustomUserFields();
+        $myFields = getCustomFields('users');
         $myFieldsInsert['query']  = '';
         $myFieldsInsert['values'] = '';
 	
@@ -111,7 +111,7 @@ function updateUserById ($userModDetails) {
     else {
 
         # custom fields
-        $myFields = getCustomUserFields();
+        $myFields = getCustomFields('users');
         $myFieldsInsert['query']  = '';
 	
         if(sizeof($myFields) > 0) {
@@ -165,7 +165,7 @@ function selfUpdateUser ($userModDetails)
     $query .= "`password` = '$userModDetails[password1]',";
     }
     $query .= "`real_name`= '$userModDetails[real_name]', `email` = '$userModDetails[email]', ";
-    $query .= "`lang`= '$userModDetails[lang]' ";
+    $query .= "`lang`= '$userModDetails[lang]', `widgets`='$userModDetails[widgets]' ";
     $query .= "where `id` = '$userModDetails[userId]';";
     
     /* set log file */
@@ -625,7 +625,7 @@ function setModifySubnetDetailsQuery ($subnetDetails)
         $subnetDetails['mask']        = $subnetDetails['subnet_temp'][1];
         
         # custom fields
-        $myFields = getCustomSubnetFields();
+        $myFields = getCustomFields('subnets');
         $myFieldsInsert['query']  = '';
         $myFieldsInsert['values'] = '';
 	
@@ -681,7 +681,7 @@ function setModifySubnetDetailsQuery ($subnetDetails)
     {
 
         # custom fields
-        $myFields = getCustomSubnetFields();
+        $myFields = getCustomFields('subnets');
         $myFieldsInsert['query']  = '';
 	
         if(sizeof($myFields) > 0) {
@@ -1121,16 +1121,43 @@ function updateSwitchDetails($switch)
     
     /* set querry based on action */
     if($switch['action'] == "add") {
+
+        # custom fields
+        $myFields = getCustomFields('switches');
+        $myFieldsInsert['query']  = '';
+        $myFieldsInsert['values'] = '';
+	
+        if(sizeof($myFields) > 0) {
+			/* set inserts for custom */
+			foreach($myFields as $myField) {			
+				$myFieldsInsert['query']  .= ', `'. $myField['name'] .'`';
+				$myFieldsInsert['values'] .= ", '". $switch[$myField['name']] . "'";
+			}
+		}
+
     	$query  = 'insert into `switches` '. "\n";
-    	$query .= '(`hostname`,`ip_addr`, `type`, `vendor`,`model`,`version`,`description`,`sections`) values '. "\n";
+    	$query .= '(`hostname`,`ip_addr`, `type`, `vendor`,`model`,`version`,`description`,`sections` '.$myFieldsInsert['query'].') values '. "\n";
    		$query .= '("'. $switch['hostname'] .'", "'. $switch['ip_addr'] .'", "'.$switch['type'].'", "'. $switch['vendor'] .'", '. "\n";
-   		$query .= ' "'. $switch['model'] .'", "'. $switch['version'] .'", "'. $switch['description'] .'", "'. $switch['sections'] .'" );'. "\n";
+   		$query .= ' "'. $switch['model'] .'", "'. $switch['version'] .'", "'. $switch['description'] .'", "'. $switch['sections'] .'" '. $myFieldsInsert['values'] .');'. "\n";
     }
     else if($switch['action'] == "edit") {
+
+       # custom fields
+        $myFields = getCustomFields('switches');
+        $myFieldsInsert['query']  = '';
+	
+        if(sizeof($myFields) > 0) {
+			/* set inserts for custom */
+			foreach($myFields as $myField) {			
+				$myFieldsInsert['query']  .= ', `'. $myField['name'] .'` = "'.$switch[$myField['name']].'" ';
+			}
+		}
+
     	$query  = 'update `switches` set '. "\n";    
     	$query .= '`hostname` = "'. $switch['hostname'] .'", `ip_addr` = "'. $switch['ip_addr'] .'", `type` = "'. $switch['type'] .'", `vendor` = "'. $switch['vendor'] .'", '. "\n";    
     	$query .= '`model` = "'. $switch['model'] .'", `version` = "'. $switch['version'] .'", `description` = "'. $switch['description'] .'", '. "\n";    
     	$query .= '`sections` = "'. $switch['sections'] .'" '. "\n"; 
+    	$query .= $myFieldsInsert['query']; 
     	$query .= 'where `id` = "'. $switch['switchId'] .'";'. "\n";    
     }
     else if($switch['action'] == "delete") {
@@ -1407,7 +1434,7 @@ function updateVLANDetails($vlan)
     if($vlan['action'] == "add") {
     
         # custom fields
-        $myFields = getCustomVLANFields();
+        $myFields = getCustomFields('vlans');
         $myFieldsInsert['query']  = '';
         $myFieldsInsert['values'] = '';
 	
@@ -1427,7 +1454,7 @@ function updateVLANDetails($vlan)
     else if($vlan['action'] == "edit") {
     
         # custom fields
-        $myFields = getCustomVLANFields();
+        $myFields = getCustomFields('vlans');
         $myFieldsInsert['query']  = '';
 	
         if(sizeof($myFields) > 0) {
@@ -1648,7 +1675,7 @@ function importCSVline ($line, $subnetId)
     $switch = getSwitchDetailsByHostname($line[7]);
     
     /* get custom fields */
-    $myFields = getCustomIPaddrFields();
+    $myFields = getCustomFields('ipaddresses');
     if(sizeof($myFields) > 0) {
     	$import['fieldName']  = "";
     	$import['fieldValue'] = "";
@@ -1779,19 +1806,20 @@ function updateSelectedIPaddrFields($fields)
 
 
 
-/* @custom IP address fields */
+
+/* @custom fields */
 
 
 /**
- * Get all fields in IP addresses
+ * Get all custom  fields
  */
-function getCustomIPaddrFields()
+function getCustomFields($table)
 {
     global $db;                                                                      # get variables from config file
     $database = new database($db['host'], $db['user'], $db['pass'], $db['name']); 
     
     /* first update request */
-    $query    = 'describe `ipaddresses`;';
+    $query    = "show full columns from `$table`;";
 
     /* execute */
     try { $fields = $database->getArray( $query ); }
@@ -1803,28 +1831,46 @@ function getCustomIPaddrFields()
   
 	/* return Field values only */
 	foreach($fields as $field) {
-		$res[$field['Field']]['name'] = $field['Field'];
-		$res[$field['Field']]['type'] = $field['Type'];
+		$res[$field['Field']]['name'] 	 = $field['Field'];
+		$res[$field['Field']]['type'] 	 = $field['Type'];
+		$res[$field['Field']]['Comment'] = $field['Comment'];
+		$res[$field['Field']]['Null'] 	 = $field['Null'];
 	}
 	
 	/* unset standard fields */
-	unset($res['id'], $res['subnetId'], $res['ip_addr'], $res['description'], $res['dns_name'], $res['switch']);
-	unset($res['port'], $res['mac'], $res['owner'], $res['state'], $res['note'], $res['lastSeen'], $res['excludePing'], $res['editDate']);
+	if($table == "users") {
+		unset($res['id'], $res['username'], $res['password'], $res['groups'], $res['role'], $res['real_name'], $res['email'], $res['domainUser'], $res['lang'],$res['editDate'],$res['widgets']);
+	}
+	elseif($table == "switches") {
+		unset($res['id'], $res['hostname'], $res['ip_addr'], $res['type'], $res['vendor'], $res['model'], $res['version'], $res['description'], $res['sections'],$res['editDate']);
+	}
+	elseif($table == "subnets") {
+		unset($res['id'], $res['subnet'], $res['mask'], $res['sectionId'], $res['description'], $res['masterSubnetId']);
+		unset($res['vrfId'], $res['allowRequests'], $res['adminLock'], $res['vlanId'], $res['showName'],$res['permissions'],$res['editDate']);
+		unset($res['pingSubnet'], $res['isFolder']);
+	}
+	elseif($table == "ipaddresses") {
+		unset($res['id'], $res['subnetId'], $res['ip_addr'], $res['description'], $res['dns_name'], $res['switch']);
+		unset($res['port'], $res['mac'], $res['owner'], $res['state'], $res['note'], $res['lastSeen'], $res['excludePing'], $res['editDate']);		
+	}
+	elseif($table == "vlans") {
+		unset($res['vlanId'], $res['name'], $res['number'], $res['description'],$res['editDate']);		
+	}
 	
 	return $res;
 }
 
 
 /**
- * Get all fields in IP addresses in number array
+ * Get all custom fields in number array
  */
-function getCustomIPaddrFieldsNumArr()
+function getCustomFieldsNumArr($table)
 {
     global $db;                                                                      # get variables from config file
     $database = new database($db['host'], $db['user'], $db['pass'], $db['name']); 
     
     /* first update request */
-    $query    = 'describe `ipaddresses`;';
+    $query    = "show full columns from `$table`;";
 
     /* execute */
     try { $fields = $database->getArray( $query ); }
@@ -1841,9 +1887,25 @@ function getCustomIPaddrFieldsNumArr()
 	}
 	
 	/* unset standard fields */
-	unset($res['id'], $res['subnetId'], $res['ip_addr'], $res['description'], $res['dns_name'], $res['switch']);
-	unset($res['port'], $res['mac'], $res['owner'], $res['state'], $res['note'], $res['lastSeen'], $res['excludePing'], $res['editDate']);
-	
+	if($table == "users") {
+		unset($res['id'], $res['username'], $res['password'], $res['groups'], $res['role'], $res['real_name'], $res['email'], $res['domainUser'], $res['lang'],$res['editDate'],$res['widgets']);
+	}
+	elseif($table == "switches") {
+		unset($res['id'], $res['hostname'], $res['ip_addr'], $res['type'], $res['vendor'], $res['model'], $res['version'], $res['description'], $res['sections'],$res['editDate']);
+	}
+	elseif($table == "subnets") {
+		unset($res['id'], $res['subnet'], $res['mask'], $res['sectionId'], $res['description'], $res['masterSubnetId']);
+		unset($res['vrfId'], $res['allowRequests'], $res['adminLock'], $res['vlanId'], $res['showName'],$res['permissions'],$res['editDate']);
+		unset($res['pingSubnet'], $res['isFolder']);
+	}
+	elseif($table == "ipaddresses") {
+		unset($res['id'], $res['subnetId'], $res['ip_addr'], $res['description'], $res['dns_name'], $res['switch']);
+		unset($res['port'], $res['mac'], $res['owner'], $res['state'], $res['note'], $res['lastSeen'], $res['excludePing'], $res['editDate']);		
+	}
+	elseif($table == "vlans") {
+		unset($res['vlanId'], $res['name'], $res['number'], $res['description'],$res['editDate']);		
+	}
+		
 	/* reindex */
 	foreach($res as $line) {
 		$out[] = $line['name'];
@@ -1854,440 +1916,63 @@ function getCustomIPaddrFieldsNumArr()
 
 
 /**
- *Update custom field
+ * Update custom field
  */
-function updateCustomIPField($field)
+function updateCustomField($field)
 {
     global $db;                                                                      # get variables from config file
     $database = new database($db['host'], $db['user'], $db['pass'], $db['name']); 
     
     /* update request */
-    if($field['action'] == "delete") 		{ $query  = 'ALTER TABLE `ipaddresses` DROP `'. $field['name'] .'`;'; }
-    else if ($field['action'] == "edit") 	{ $query  = 'ALTER TABLE `ipaddresses` CHANGE COLUMN `'. $field['oldname'] .'` `'. $field['name'] .'` VARCHAR(256) CHARACTER SET utf8 DEFAULT NULL;'; }
-    else 									{ $query  = 'ALTER TABLE `ipaddresses` ADD COLUMN `'. $field['name'] .'` VARCHAR(256) CHARACTER SET utf8 DEFAULT NULL;'; }
+    if($field['action']=="delete") 								{ $query  = "ALTER TABLE `$field[table]` DROP `$field[name]`;"; }
+    else if ($field['action']=="edit"&&@$field['NULL']=="NO") 	{ $query  = "ALTER TABLE `$field[table]` CHANGE COLUMN `$field[oldname]` `$field[name]` VARCHAR(256) CHARACTER SET utf8 NOT NULL COMMENT '$field[Comment]';"; }
+    else if ($field['action']=="edit") 							{ $query  = "ALTER TABLE `$field[table]` CHANGE COLUMN `$field[oldname]` `$field[name]` VARCHAR(256) CHARACTER SET utf8 DEFAULT NULL COMMENT '$field[Comment]';"; }
+    else if ($field['action']=="add"&&@$field['NULL']=="NO") 	{ $query  = "ALTER TABLE `$field[table]` ADD COLUMN 	`$field[name]` 					 VARCHAR(256) CHARACTER SET utf8 NOT NULL COMMENT '$field[Comment]';"; }
+    else 														{ $query  = "ALTER TABLE `$field[table]` ADD COLUMN 	`$field[name]` 					 VARCHAR(256) CHARACTER SET utf8 DEFAULT NULL COMMENT '$field[Comment]';"; }
     
     /* prepare log */ 
     $log = prepareLogFromArray ($field);
-    
-    if (!$database->executeQuery($query)) {
-        updateLogTable ('CustomIPField ' . $field['action'] .' failed ('. $field['name'] . ')', $log, 2);
-        return false;
-    }
-    else {
-        updateLogTable ('CustomIPField ' . $field['action'] .' success ('. $field['name'] . ')', $log, 0);
-        return true;
-    }
-}
 
-
-/**
- * reorder custom field
- */
-function reorderCustomIPField($next, $current)
-{
-    global $db;                                                                      # get variables from config file
-    $database = new database($db['host'], $db['user'], $db['pass'], $db['name']); 
-    
-    /* update request */
-    $query  = 'ALTER TABLE `ipaddresses` MODIFY COLUMN `'. $current .'` VARCHAR(256) AFTER `'. $next .'`;';
-    
-    if (!$database->executeQuery($query)) {
-        updateLogTable ('CustomIPField reordering failed ('. $next .' was not put before '. $current .')', $log, 2);
-        return false;
-    }
-    else {
-	    updateLogTable ('CustomIPField reordering success ('. $next .' put before '. $current .')', $log, 0);
-        return true;
-    }
-}
-
-
-
-
-
-
-
-
-
-
-/* @custom subnet fields */
-
-
-/**
- * Get all custom subnet fields
- */
-function getCustomSubnetFields()
-{
-    global $db;                                                                      # get variables from config file
-    $database = new database($db['host'], $db['user'], $db['pass'], $db['name']); 
-    
-    /* first update request */
-    $query    = 'describe `subnets`;';
-
-    /* execute */
-    try { $fields = $database->getArray( $query ); }
+    try { $database->executeQuery( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
         print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        updateLogTable ('Custom Field ' . $field['action'] .' failed ('. $field['name'] . ')', $log, 2);
         return false;
     } 
-  
-	/* return Field values only */
-	foreach($fields as $field) {
-		$res[$field['Field']]['name'] = $field['Field'];
-		$res[$field['Field']]['type'] = $field['Type'];
-	}
-	
-	/* unset standard fields */
-	unset($res['id'], $res['subnet'], $res['mask'], $res['sectionId'], $res['description'], $res['masterSubnetId']);
-	unset($res['vrfId'], $res['allowRequests'], $res['adminLock'], $res['vlanId'], $res['showName'],$res['permissions'],$res['editDate']);
-	unset($res['pingSubnet'], $res['isFolder']);
-	
-	return $res;
-}
 
-
-/**
- * Get all custom subnet fields in number array
- */
-function getCustomSubnetsFieldsNumArr()
-{
-    global $db;                                                                      # get variables from config file
-    $database = new database($db['host'], $db['user'], $db['pass'], $db['name']); 
-    
-    /* first update request */
-    $query    = 'describe `subnets`;';
-
-    /* execute */
-    try { $fields = $database->getArray( $query ); }
-    catch (Exception $e) { 
-        $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
-        return false;
-    } 
-  
-	/* return Field values only */
-	foreach($fields as $field) {
-		$res[$field['Field']]['name'] = $field['Field'];
-		$res[$field['Field']]['type'] = $field['Type'];
-	}
-	
-	/* unset standard fields */
-	unset($res['id'], $res['subnet'], $res['mask'], $res['sectionId'], $res['description'], $res['masterSubnetId']);
-	unset($res['vrfId'], $res['allowRequests'], $res['adminLock'], $res['vlanId'], $res['showName'],$res['permissions'],$res['editDate']);
-	
-	/* reindex */
-	foreach($res as $line) {
-		$out[] = $line['name'];
-	}
-	
-	return $out;
-}
-
-
-/**
- * Update custom subnet field
- */
-function updateCustomSubnetField($field)
-{
-    global $db;                                                                      # get variables from config file
-    $database = new database($db['host'], $db['user'], $db['pass'], $db['name']); 
-    
-    /* update request */
-    if($field['action'] == "delete") 		{ $query  = 'ALTER TABLE `subnets` DROP `'. $field['name'] .'`;'; }
-    else if ($field['action'] == "edit") 	{ $query  = 'ALTER TABLE `subnets` CHANGE COLUMN `'. $field['oldname'] .'` `'. $field['name'] .'` VARCHAR(1024) CHARACTER SET utf8 DEFAULT NULL;'; }
-    else 									{ $query  = 'ALTER TABLE `subnets` ADD COLUMN `'. $field['name'] .'` VARCHAR(1024) CHARACTER SET utf8 DEFAULT NULL;'; }
-    
-    /* prepare log */ 
-    $log = prepareLogFromArray ($field);
-    
-    if (!$database->executeQuery($query)) {
-        updateLogTable ('Custom Subnet Field ' . $field['action'] .' failed ('. $field['name'] . ')', $log, 2);
-        return false;
-    }
-    else {
-        updateLogTable ('Custom Subnet Field ' . $field['action'] .' success ('. $field['name'] . ')', $log, 0);
-        return true;
-    }
-}
-
-
-/**
- * reorder custom field
- */
-function reorderCustomSubnetField($next, $current)
-{
-    global $db;                                                                      # get variables from config file
-    $database = new database($db['host'], $db['user'], $db['pass'], $db['name']); 
-    
-    /* update request */
-    $query  = 'ALTER TABLE `subnets` MODIFY COLUMN `'. $current .'` VARCHAR(256) AFTER `'. $next .'`;';
-    
-    if (!$database->executeQuery($query)) {
-        updateLogTable ('Custom Subnet Field reordering failed ('. $next .' was not put before '. $current .')', $log, 2);
-        return false;
-    }
-    else {
-	    updateLogTable ('Custom Subnet Field reordering success ('. $next .' put before '. $current .')', $log, 0);
-        return true;
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-/* @custom VLAN fields */
-
-
-/**
- * Get all custom VLAN fields
- */
-function getCustomVLANFields()
-{
-    global $db;                                                                      # get variables from config file
-    $database = new database($db['host'], $db['user'], $db['pass'], $db['name']); 
-    
-    /* first update request */
-    $query    = 'describe `vlans`;';
-
-    /* execute */
-    try { $fields = $database->getArray( $query ); }
-    catch (Exception $e) { 
-        $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
-        return false;
-    } 
-  
-	/* return Field values only */
-	foreach($fields as $field) {
-		$res[$field['Field']]['name'] = $field['Field'];
-		$res[$field['Field']]['type'] = $field['Type'];
-	}
-	
-	/* unset standard fields */
-	unset($res['vlanId'], $res['name'], $res['number'], $res['description'],$res['editDate']);
-	
-	return $res;
-}
-
-
-/**
- * Get all custom VLAN fields in number array
- */
-function getCustomVLANFieldsNumArr()
-{
-    global $db;                                                                      # get variables from config file
-    $database = new database($db['host'], $db['user'], $db['pass'], $db['name']); 
-    
-    /* first update request */
-    $query    = 'describe `vlans`;';
-
-    /* execute */
-    try { $fields = $database->getArray( $query ); }
-    catch (Exception $e) { 
-        $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
-        return false;
-    } 
-  
-	/* return Field values only */
-	foreach($fields as $field) {
-		$res[$field['Field']]['name'] = $field['Field'];
-		$res[$field['Field']]['type'] = $field['Type'];
-	}
-	
-	/* unset standard fields */
-	unset($res['vlanId'], $res['name'], $res['number'], $res['description'],$res['editDate']);
-	
-	/* reindex */
-	foreach($res as $line) {
-		$out[] = $line['name'];
-	}
-	
-	return $out;
-}
-
-
-/**
- * Update custom VLAN field
- */
-function updateCustomVLANField($field)
-{
-    global $db;                                                                      # get variables from config file
-    $database = new database($db['host'], $db['user'], $db['pass'], $db['name']); 
-    
-    /* update request */
-    if($field['action'] == "delete") 		{ $query  = 'ALTER TABLE `vlans` DROP `'. $field['name'] .'`;'; }
-    else if ($field['action'] == "edit") 	{ $query  = 'ALTER TABLE `vlans` CHANGE COLUMN `'. $field['oldname'] .'` `'. $field['name'] .'` VARCHAR(256) CHARACTER SET utf8 DEFAULT NULL;'; }
-    else 									{ $query  = 'ALTER TABLE `vlans` ADD COLUMN `'. $field['name'] .'` VARCHAR(256) CHARACTER SET utf8 DEFAULT NULL;'; }
-    
-    /* prepare log */ 
-    $log = prepareLogFromArray ($field);
-    
-    if (!$database->executeQuery($query)) {
-        updateLogTable ('Custom VLAN Field ' . $field['action'] .' failed ('. $field['name'] . ')', $log, 2);
-        return false;
-    }
-    else {
-        updateLogTable ('Custom VLAN Field ' . $field['action'] .' success ('. $field['name'] . ')', $log, 0);
-        return true;
-    }
+    updateLogTable ('Custom Field ' . $field['action'] .' success ('. $field['name'] . ')', $log, 0);
+    return true;    
 }
 
 
 /**
  * reorder custom VLAN field
  */
-function reorderCustomVLANField($next, $current)
+function reorderCustomField($table, $next, $current)
 {
     global $db;                                                                      # get variables from config file
     $database = new database($db['host'], $db['user'], $db['pass'], $db['name']); 
+    
+    /* get field details */
+    $old = getFullFieldData($table, $current);
     
     /* update request */
-    $query  = 'ALTER TABLE `vlans` MODIFY COLUMN `'. $current .'` VARCHAR(256) AFTER `'. $next .'`;';
-    
-    if (!$database->executeQuery($query)) {
-        updateLogTable ('Custom VLAN Field reordering failed ('. $next .' was not put before '. $current .')', $log, 2);
-        return false;
-    }
-    else {
-	    updateLogTable ('Custom VLAN Field reordering success ('. $next .' put before '. $current .')', $log, 0);
-        return true;
-    }
-}
+    if($old['Null']=="NO")	{ $query  = 'ALTER TABLE `'.$table.'` MODIFY COLUMN `'. $current .'` VARCHAR(256) NOT NULL COMMENT "'.$old['Comment'].'" AFTER `'. $next .'`;'; }
+    else					{ $query  = 'ALTER TABLE `'.$table.'` MODIFY COLUMN `'. $current .'` VARCHAR(256) DEFAULT NULL COMMENT "'.$old['Comment'].'" AFTER `'. $next .'`;'; }
 
-
-
-
-
-
-
-/* @custom USer fields */
-
-
-/**
- * Get all custom User fields
- */
-function getCustomUserFields()
-{
-    global $db;                                                                      # get variables from config file
-    $database = new database($db['host'], $db['user'], $db['pass'], $db['name']); 
-    
-    /* first update request */
-    $query    = 'describe `users`;';
-
-    /* execute */
-    try { $fields = $database->getArray( $query ); }
+    try { $database->executeQuery( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
         print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        updateLogTable ('Custom Field reordering failed ('. $next .' was not put before '. $current .')', $log, 2);
         return false;
     } 
-  
-	/* return Field values only */
-	foreach($fields as $field) {
-		$res[$field['Field']]['name'] = $field['Field'];
-		$res[$field['Field']]['type'] = $field['Type'];
-	}
-	
-	/* unset standard fields */
-	unset($res['id'], $res['username'], $res['password'], $res['groups'], $res['role'], $res['real_name'], $res['email'], $res['domainUser'], $res['lang'],$res['editDate']);
-	
-	return $res;
+
+	updateLogTable ('Custom Field reordering success ('. $next .' put before '. $current .')', $log, 0);
+    return true;  
 }
 
-
-/**
- * Get all custom User fields in number array
- */
-function getCustomUserFieldsNumArr()
-{
-    global $db;                                                                      # get variables from config file
-    $database = new database($db['host'], $db['user'], $db['pass'], $db['name']); 
-    
-    /* first update request */
-    $query    = 'describe `users`;';
-
-    /* execute */
-    try { $fields = $database->getArray( $query ); }
-    catch (Exception $e) { 
-        $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
-        return false;
-    } 
-  
-	/* return Field values only */
-	foreach($fields as $field) {
-		$res[$field['Field']]['name'] = $field['Field'];
-		$res[$field['Field']]['type'] = $field['Type'];
-	}
-	
-	/* unset standard fields */
-	unset($res['id'], $res['username'], $res['password'], $res['groups'], $res['role'], $res['real_name'], $res['email'], $res['domainUser'],$res['editDate']);
-	
-	/* reindex */
-	foreach($res as $line) {
-		$out[] = $line['name'];
-	}
-	
-	return $out;
-}
-
-
-/**
- * Update custom user field
- */
-function updateCustomUserField($field)
-{
-    global $db;                                                                      # get variables from config file
-    $database = new database($db['host'], $db['user'], $db['pass'], $db['name']); 
-    
-    /* update request */
-    if($field['action'] == "delete") 		{ $query  = 'ALTER TABLE `users` DROP `'. $field['name'] .'`;'; }
-    else if ($field['action'] == "edit") 	{ $query  = 'ALTER TABLE `users` CHANGE COLUMN `'. $field['oldname'] .'` `'. $field['name'] .'` VARCHAR(256) CHARACTER SET utf8 DEFAULT NULL;'; }
-    else 									{ $query  = 'ALTER TABLE `users` ADD COLUMN `'. $field['name'] .'` VARCHAR(256) CHARACTER SET utf8 DEFAULT NULL;'; }
-    
-    /* prepare log */ 
-    $log = prepareLogFromArray ($field);
-    
-    if (!$database->executeQuery($query)) {
-        updateLogTable ('Custom User Field ' . $field['action'] .' failed ('. $field['name'] . ')', $log, 2);
-        return false;
-    }
-    else {
-        updateLogTable ('Custom User Field ' . $field['action'] .' success ('. $field['name'] . ')', $log, 0);
-        return true;
-    }
-}
-
-
-/**
- * reorder custom VLAN field
- */
-function reorderCustomUserField($next, $current)
-{
-    global $db;                                                                      # get variables from config file
-    $database = new database($db['host'], $db['user'], $db['pass'], $db['name']); 
-    
-    /* update request */
-    $query  = 'ALTER TABLE `users` MODIFY COLUMN `'. $current .'` VARCHAR(256) AFTER `'. $next .'`;';
-    
-    if (!$database->executeQuery($query)) {
-        updateLogTable ('Custom User Field reordering failed ('. $next .' was not put before '. $current .')', $log, 2);
-        return false;
-    }
-    else {
-	    updateLogTable ('Custom User Field reordering success ('. $next .' put before '. $current .')', $log, 0);
-        return true;
-    }
-}
 
 
 
@@ -2313,7 +1998,7 @@ function getAPIkeys()
     try { $apis = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print $error;
+         print ("<div class='alert alert-error'>"._('Error').": $error</div>");
         return false;
     } 
 	
@@ -2335,7 +2020,7 @@ function getAPIkeyByName($app_id, $reformat = false)
     try { $api = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print $error;
+         print ("<div class='alert alert-error'>"._('Error').": $error</div>");
         return false;
     } 
 	
@@ -2364,7 +2049,7 @@ function getAPIkeyById($id)
     try { $api = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print $error;
+         print ("<div class='alert alert-error'>"._('Error').": $error</div>");
         return false;
     } 
 	return $api[0];

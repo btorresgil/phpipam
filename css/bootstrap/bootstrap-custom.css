@@ -518,8 +518,8 @@ span.severity2 {
 	color: red;
 }
 
-#homeAccessLogs a,
-#homeErrorLogs a {
+#w-access_logs a,
+#w-error_logs a {
 	color: #333;
 	font-weight: 300;
 	cursor: pointer;
@@ -591,9 +591,20 @@ ul.submenu.submenu-open {
 ul#subnets li.active {
 	text-align: left;
 	padding-left: 3px;
+	
+	background: red;
+
+	background: #F1FAFE;
+
+	border-top: 1px solid #DAE3EA;
+	border-bottom: 1px solid  #DAE3EA;
+
+
+	margin: 0;
+
+	text-shadow: 1px 1px 0px white;
 }
 ul#subnets li.active a {
-	font-weight: bold;
 	color: #333;
 }
 ul#subnets li.active li a {
@@ -990,7 +1001,7 @@ table#userModSelf input[type="text"] {
 	margin-bottom: 0px;
 }
 table#userModSelf td {
-	vertical-align: middle;
+	vertical-align: top;
 }
 
 table.asImport input.vlan {

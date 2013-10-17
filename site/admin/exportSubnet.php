@@ -29,7 +29,7 @@ $subnet = getSubnetDetailsById ($subnetId);
 $ipaddresses = getIpAddressesBySubnetId ($subnetId);
 
 //get all custom fields!
-$myFields = getCustomIPaddrFields();
+$myFields = getCustomFields('ipaddresses');
 $myFieldsSize = sizeof($myFields);
 
 //formatting headers

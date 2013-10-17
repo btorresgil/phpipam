@@ -11,7 +11,7 @@ checkAdmin();
 $vlans = getAllVlans ();
 
 /* get custom fields */
-$custom = getCustomVLANFields();
+$custom = getCustomFields('vlans');
 ?>
 
 <h4><?php print _('Manage VLANs'); ?></h4>

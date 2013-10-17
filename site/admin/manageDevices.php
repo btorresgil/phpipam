@@ -10,6 +10,9 @@ if (!checkAdmin()) die('');
 /* get current devices */
 $switches = getAllUniqueSwitches();
 
+/* get custom fields */
+$custom = getCustomFields('switches');
+
 ?>
 
 <h4><?php print _('Device management'); ?></h4>
@@ -36,6 +39,11 @@ else {
 	print '	<th>'._('SW version').'</th>';
 	print '	<th>'._('Description').'</th>';
 	print '	<th><i class="icon-gray icon-info-sign" rel="tooltip" title="'._('Shows in which sections device will be visible for selection').'"></i> '._('Sections').'</th>';
+	if(sizeof($custom) > 0) {
+		foreach($custom as $field) {
+			print "<th>$field[name]</th>";
+		}
+	}
 	print '	<th></th>';
 	print '</tr>';
 
@@ -68,6 +76,13 @@ else {
 		}
 	
 	print '	</td>'. "\n";
+
+	//custom
+	if(sizeof($custom) > 0) {
+		foreach($custom as $field) {
+			print "<td>".$switchDetails[$field['name']]."</td>";
+		}
+	}
 	
 	print '	<td class="actions">'. "\n";
 	print "	<div class='btn-group'>";

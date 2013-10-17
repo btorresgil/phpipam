@@ -49,7 +49,7 @@ else if ($userModDetails['action'] == "delete") {
 
 
 //custom
-$myFields = getCustomUserFields();
+$myFields = getCustomFields('users');
 if(sizeof($myFields) > 0) {
 	foreach($myFields as $myField) {
 		# replace possible ___ back to spaces!

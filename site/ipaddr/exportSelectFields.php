@@ -93,7 +93,7 @@ print "	</tr>";
 }
 		
 #get all custom fields!
-$myFields = getCustomIPaddrFields();
+$myFields = getCustomFields('ipaddresses');
 if(sizeof($myFields) > 0) {
 	foreach($myFields as $myField) {
 	print "	<tr>";

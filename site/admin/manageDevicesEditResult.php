@@ -54,6 +54,16 @@ if(($device['action'] == "edit") || ($device['action'] == "delete") ) {
 	}
 }
 
+//custom
+$myFields = getCustomFields('switches');
+if(sizeof($myFields) > 0) {
+	foreach($myFields as $myField) {
+		# replace possible ___ back to spaces!
+		$myField['nameTest']      = str_replace(" ", "___", $myField['name']);
+		
+		if(isset($_POST[$myField['nameTest']])) { $device[$myField['name']] = $device[$myField['nameTest']];}
+	}
+}
 
 /* update details */
 if(!updateSwitchDetails($device)) {

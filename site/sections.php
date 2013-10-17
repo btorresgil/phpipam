@@ -56,10 +56,13 @@ $setFields = explode(";", $setFieldsTemp);
 			# if section is not set
 			if(!isset($_REQUEST['section'])) { $_REQUEST['section'] = ""; }
 			
+			$n=0;		//count of sections for empty!
+			
 			foreach($sections as $section) {
 				# check permissions for user
 				$perm = checkSectionPermission ($section['id']);
 				if($perm > 0 ) {
+					$n++;
 				
 					# print only masters!
 					if($section['masterSection']=="0" || empty($section['masterSection'])) {
@@ -101,6 +104,9 @@ $setFields = explode(";", $setFieldsTemp);
 					}
 				}
 			}
+			
+			# empty
+			if($n==0)	{ print "No sections available!"; }
 			?>
 		</ul>		
 		</div>

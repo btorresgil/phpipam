@@ -83,6 +83,32 @@ if($ipamusername['domainUser'] == "0") {
 	<td class="info"><?php print _('Select language'); ?></td>
 </tr>
 
+<!-- select widgets -->
+<tr>
+	<td style="vertical-align:top"><?php print _('Widgets'); ?></td>
+	<td>
+		<?php
+		$uwidgets = explode(";",$ipamusername['widgets']);	//selected
+		
+		# admin?
+		if($ipamusername['role']=="Administrator") {
+			$widgets  = getAllWidgets(true);
+			foreach($widgets as $k=>$w) {
+				if(@in_array($k, $uwidgets))	{ print "<input type='checkbox' name='widget-$k' value='on' checked> $k<br>"; }
+				else							{ print "<input type='checkbox' name='widget-$k' value='on'> $k<br>"; }
+			}			
+		} else {
+			$widgets  = getAllWidgets(false);
+			foreach($widgets as $k=>$w) {
+				if(@in_array($k, $uwidgets))	{ print "<input type='checkbox' name='widget-$k' value='on' checked> $k<br>"; }
+				else							{ print "<input type='checkbox' name='widget-$k' value='on'> $k<br>"; }
+			}	
+		}
+		?>
+	</td>
+	<td class="info"><?php print _("Select widgets to be displayed on dashboard"); ?></td>
+</tr>
+
 <!-- Submit and hidden values -->
 <tr class="th">
     <td></td> 

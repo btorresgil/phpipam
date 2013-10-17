@@ -66,7 +66,7 @@ if(!empty($ip['port'])) {
 $content .= "&bull; "._('Port').":\t"			 . $ip['port'] . "\n";
 }
 # custom
-$myFields = getCustomIPaddrFields();
+$myFields = getCustomFields('ipaddresses');
 if(sizeof($myFields) > 0) {
 	foreach($myFields as $myField) {
 		if(!empty($ip[$myField['name']])) {

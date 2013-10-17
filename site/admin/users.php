@@ -17,7 +17,7 @@ $users = getAllUsers();
 $settings = getallSettings();
 
 /* get custom fields */
-$custom = getCustomUserFields();
+$custom = getCustomFields('users');
 
 /* get languages */
 $langs = getLanguages ();

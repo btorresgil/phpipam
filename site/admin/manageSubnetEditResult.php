@@ -124,13 +124,18 @@ if($vlancheck != 'ok') {
 
 
 //custom
-$myFields = getCustomSubnetFields();
+$myFields = getCustomFields('subnets');
 if(sizeof($myFields) > 0) {
 	foreach($myFields as $myField) {
 		# replace possible ___ back to spaces!
 		$myField['nameTest']      = str_replace(" ", "___", $myField['name']);
 		
 		if(isset($_POST[$myField['nameTest']])) { $_POST[$myField['name']] = $_POST[$myField['nameTest']];}
+		
+		//not empty
+		if($myField['Null']=="NO" && strlen($_POST[$myField['name']])==0 && !checkAdmin(false)) {
+			$errors[] = "Field \"$myField[name]\" cannot be empty!";
+		}
 	}
 }
 

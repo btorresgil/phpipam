@@ -14,7 +14,7 @@ checkAdmin();
 $settings = getAllSettings();
 
 /* get custom fields */
-$custom = getCustomUserFields();
+$custom = getCustomFields('users');
 
 /* get languages */
 $langs = getLanguages ();

@@ -18,6 +18,15 @@ $user_old = getActiveUserDetails();
 /* get changed details */
 $modData = $_POST;
 
+
+/* widgets */
+foreach($modData as $k=>$md) {
+	if(substr($k, 0,7)=="widget-") {
+		$modData['widgets'] .= substr($k, 7).";";
+		unset($modData[$k]);
+	}
+}
+
 /* verify email */
 if (!checkEmail($modData['email'])) 											{ $error = _('Email not valid!'); }
 

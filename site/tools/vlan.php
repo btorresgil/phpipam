@@ -11,7 +11,7 @@ isUserAuthenticated ();
 $vlans = getAllVlans (true);
 
 /* get custom fields */
-$custom = getCustomVLANFields();
+$custom = getCustomFields('vlans');
 
 # title
 print "<h4>"._('Available VLANs:')."</h4>";

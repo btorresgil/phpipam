@@ -4,7 +4,7 @@
 # miha petkovsek <miha.petkovsek@gmail.com>, 2013.
 #
 
-# "Project-Id-Version: 0.88.001\n"
+# "Project-Id-Version: 0.89.001\n"
 # "Report-Msgid-Bugs-To: Miha Petkovsek <miha.petkovsek@gmail.com>\n"
 # "POT-Creation-Date: 2013-04-02 14:33+0200\n"
 # "PO-Revision-Date: 2013-06-28 14:33+0200\n"
@@ -4267,3 +4267,43 @@ msgstr "Sekcije v"
 #: site/admin/manageSectionEdit.php
 msgid "Select parent section to create subsection"
 msgstr "Izberite glavno sekcijo če jo želite kreirati pod aktivno"
+
+#: site/tools/userMenu.php
+msgid "Widgets"
+msgstr "Widgeti"
+
+msgid "Select widgets to be displayed on dashboard"
+msgstr "Izberite widgete za prikaz na dashboardu"
+
+#: site/dashboard/index.php
+msgid "No widgets selected"
+msgstr "Izbran ni noben widget"
+
+msgid "Please select widgets to be displayed on dashboard on user menu page"
+msgstr "Widgete za prikaz na dashboardu lahko izberete v svojih uporabniških nastavitvah"
+
+#: site/admin/customUserFieldsEdit.php
+msgid "Enter comment for users"
+msgstr "Vpišite komentar za uporanike"
+
+msgid "Required field"
+msgstr "Zahtevano polje"
+
+#: site/admin/customIPFields.php
+msgid "Required"
+msgstr "Zahtevano"
+
+#: site/admin/customDeviceFieldsEdit.php
+msgid "Custom device fields"
+msgstr "Dodatna polja za naprave"
+
+msgid "Add new custom device field"
+msgstr "Dodaj novo polje za naprave"
+
+#: site/ipaddr/sectionAllSubnets.php
+msgid "Belonging subsections"
+msgstr "Pripadajoči razdelki"
+
+#: site/subnets.php
+msgid "Back to"
+msgstr "Nazaj na"

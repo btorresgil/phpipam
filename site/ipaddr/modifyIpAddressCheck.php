@@ -43,13 +43,18 @@ else 									{ $ip['port'] = ""; }
 if ( !empty($_REQUEST['note']) ) 		{ $ip['note'] = htmlentities($_REQUEST['note'], ENT_COMPAT | ENT_HTML401, "UTF-8"); }		//prevent XSS
 else 									{ $ip['note'] = ""; }
 //custom
-$myFields = getCustomIPaddrFields();
+$myFields = getCustomFields('ipaddresses');
 if(sizeof($myFields) > 0) {
 	foreach($myFields as $myField) {
 		# replace possible ___ back to spaces!
 		$myField['nameTest']      = str_replace(" ", "___", $myField['name']);
 		
 		if(isset($_POST[$myField['nameTest']])) { $ip[$myField['name']] = $_POST[$myField['nameTest']];}
+				
+		//not null!
+		if($myField['Null']=="NO" && strlen($ip[$myField['name']])==0 && !checkAdmin(false,false)) {
+			die('<div class="alert alert-error">"'.$myField['name'].'" can not be empty!</div>');
+		}
 	}
 }
 

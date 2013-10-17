@@ -93,7 +93,7 @@ $setFields = explode(";", $setFieldsTemp);
 
 
 /* get all custom fields */
-$myFields = getCustomIPaddrFields();
+$myFields = getCustomFields('ipaddresses');
 $myFieldsSize = sizeof($myFields);
 ?>
 
@@ -110,8 +110,7 @@ $myFieldsSize = sizeof($myFields);
 
 	<!-- IP address -->
 	<tr>
-		<td><?php print _('IP address'); ?>
-		</td>
+		<td><?php print _('IP address'); ?> *</td>
 		<td>
 			<input type="text" name="ip_addr" class="ip_addr" value="<?php print $details['ip_addr']; if(is_numeric($_REQUEST['stopIP'])>0) print "-".transform2long($_REQUEST['stopIP']); ?>" size="30" placeholder="<?php print _('IP address'); ?>">
     		<i class="icon-gray icon-bell" rel="tooltip" data-html='true' data-placement="bottom" title="<?php print _('You can add,edit or delete multiple IP addresses<br>by specifying IP range (e.g. 10.10.0.0-10.10.0.25)'); ?>"></i>
@@ -281,10 +280,16 @@ $myFieldsSize = sizeof($myFields);
 			# replace spaces with |
 			$myField['nameNew'] = str_replace(" ", "___", $myField['name']);
 			
+			# required
+			if($myField['Null']=="NO")	{ $required = "*"; }
+			else						{ $required = ""; }
+			
 			print '<tr>'. "\n";
-			print '	<td>'. $myField['name'] .'</td>'. "\n";
+			print '	<td>'. $myField['name'] .' '.$required.'</td>'. "\n";
 			print '	<td>'. "\n";
-			print ' <input type="text" name="'. $myField['nameNew'] .'" placeholder="'. $myField['name'] .'" value="'. $details[$myField['name']]. '" size="30">'. "\n";
+			//comment
+			if(strlen($myField['Comment'])>0)	{ print ' <input type="text" name="'. $myField['nameNew'] .'" placeholder="'. $myField['name'] .'" value="'. $details[$myField['name']]. '" size="30" rel="tooltip" data-placement="right" title="'.$myField['Comment'].'">'. "\n"; }
+			else								{ print ' <input type="text" name="'. $myField['nameNew'] .'" placeholder="'. $myField['name'] .'" value="'. $details[$myField['name']]. '" size="30">'. "\n"; }
 			print '	</td>'. "\n";
 			print '</tr>'. "\n";		
 		}

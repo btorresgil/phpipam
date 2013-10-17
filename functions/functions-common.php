@@ -327,6 +327,27 @@ function getLangById ($id)
 
 
 /**
+ *	Get all widgets
+ */
+function getAllWidgets($admin = false)
+{
+	$widgets['statistics'] 		 = "Statistics";
+	$widgets['top10_hosts_v4'] 	 = "Top 10 IPv4 subnets by number of hosts";
+	$widgets['top10_hosts_v6'] 	 = "Top 10 IPv6 subnets by number of hosts";
+	$widgets['top10_percentage'] = "Top 10 IPv4 subnets by usage percentage";
+	
+	if($admin) {
+	$widgets['access_logs'] 	 = "Last 5 informational logs";
+	$widgets['error_logs'] 		 = "Last 5 warning / error logs";
+
+	}
+
+	return $widgets;
+}
+
+
+
+/**
  * Verify translation
  */
 function verifyTranslation ($code)
@@ -348,6 +369,29 @@ function getTranslationVersion ($code)
 	$ver = str_replace(array("Project-Id-Version:", " ", '"', "#",'\n', ":"), "", $ver);
 	//return version
 	return $ver;
+}
+
+
+/**
+ * Get full field data, including comments
+ */
+function getFullFieldData($table, $field)
+{
+    global $db;                                                                      # get variables from config file
+    /* set query, open db connection and fetch results */
+    $query = "show full columns from `$table` where `Field` = '$field';";
+    $database = new database($db['host'], $db['user'], $db['pass'], $db['name']);  
+
+    /* execute */
+    try { $details = $database->getArray( $query ); }
+    catch (Exception $e) { 
+        $error =  $e->getMessage(); 
+        //print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        return false;
+    } 
+    
+    /* return results */
+    return($details[0]);
 }
 
 
@@ -390,10 +434,12 @@ function checkSectionPermission ($sectionId)
 	if(sizeof($sectionP)>0) {
 		foreach($sectionP as $sk=>$sp) {
 			# check each group if user is in it and if so check for permissions for that group
+			if(sizeof($groups)>0) {
 			foreach($groups as $uk=>$up) {
 				if($uk == $sk) {
 					if($sp > $out) { $out = $sp; }
 				}
+			}
 			}
 		}
 	}
@@ -756,6 +802,9 @@ function get_menu_html( $subnets, $rootId = 0 )
 			if(isset($_REQUEST['subnetId']) && ($option['value']['id'] == $_REQUEST['subnetId']))	{ $active = "active";	$leafClass=""; }
 			else 																					{ $active = ""; 		$leafClass="icon-gray" ;}
 			
+			# override folder
+			if($option['value']['isFolder'] == 1 && ($option['value']['id'] == $_REQUEST['subnetId']))	{ $open = "open"; }
+			
 			# check for permissions if id is provided
 			if($option['value']['id'] != "") {
 				$sp = checkSubnetPermission ($option['value']['id']);
@@ -776,7 +825,7 @@ function get_menu_html( $subnets, $rootId = 0 )
 				if($sp != 0) {	
 					# folder
 					if($option['value']['isFolder'] == 1) {
-						$html[] = '<li class="folder folder-'.$open.' '.$active.'"><i class="icon-gray icon-folder-'.$open.'" rel="tooltip" data-placement="right" data-html="true" title="'._('Folder contains more subnets').'<br>'._('Click on folder to open/close').'"></i>';
+						$html[] = '<li class="folder folder-'.$open.' '.$active.'"><i class="icon-folder-'.$open.'" rel="tooltip" data-placement="right" data-html="true" title="'._('Folder contains more subnets').'<br>'._('Click on folder to open/close').'"></i>';
 						$html[] = '<a href="subnets/'.$option['value']['sectionId'].'/'.$option['value']['id'].'/">'.$option['value']['description'].'</a>'; 				
 					}
 					# print name
@@ -801,9 +850,9 @@ function get_menu_html( $subnets, $rootId = 0 )
 			# Leaf items (last)
 			else
 				if($sp != 0) {
-					# folder
+					# folder - opened
 					if($option['value']['isFolder'] == 1) {
-						$html[] = '<li class="leaf '.$active.'"><i class="icon-gray icon-folder-open"></i>';
+						$html[] = '<li class="leaf '.$active.'"><i class="icon-folder-'.$open.'"></i>';
 						$html[] = '<a href="subnets/'.$option['value']['sectionId'].'/'.$option['value']['id'].'/">'.$option['value']['description'].'</a></li>';
 					}
 					# print name

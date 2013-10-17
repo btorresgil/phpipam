@@ -33,7 +33,7 @@ checkAdmin();
 		
 		<?php
 		#get all custom fields!
-		$myFields = getCustomIPaddrFields();
+		$myFields = getCustomFields('ipaddresses');
 		if(sizeof($myFields) > 0) {
 			foreach($myFields as $myField) {
 				print '<option value="'. $myField['name'] .'"> '. $myField['name'] .'</option>';

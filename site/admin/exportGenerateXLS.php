@@ -23,7 +23,7 @@ $sections = fetchSections();
 
 
 //get all custom fields!
-$myFields = getCustomIPaddrFields();
+$myFields = getCustomFields('ipaddresses');
 $myFieldsSize = sizeof($myFields);
 
 $colSize = 8 + $myFieldsSize;

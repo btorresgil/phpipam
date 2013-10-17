@@ -5,17 +5,18 @@ features for next releases:
 		
 		+ Subnet folders;
 		
+		+ changelog for subnets, sections and ip addresses;
+		
 		+ Scan subnet for alive hosts and import
-			ICMP scan 
 			SNMP router table fetching
 			NMAP scan
 			Telnet scan
 		
 		+ implement phpmailer;
 		
-		+ checkbox for required fields;
-		
 		+ Custom devices field;
+		
+		+ LDAP search for username if domain user is added;
 		
 		+ Get next available subnet by providing mask;
 		

@@ -34,6 +34,33 @@ if ($sectionId == 'Administration')
 }
 else 
 {    
+
+	/* print subsections if they exist */
+	$subsections = getAllSubSections($_REQUEST['section']);
+	
+	# permissions
+	foreach($subsections as $k=>$ss) {
+			$perm = checkSectionPermission ($ss['id']);
+			if($perm > 0 ) 	{}
+			else			{ unset($subsections[$k]); }	
+	}
+	
+	if(sizeof($subsections)>0) {
+		//title
+		print "<h4>"._('Belonging subsections')."</h4><hr>";
+	
+		//table
+		print "<table class='table table-noborder table-auto'>";
+		
+		foreach($subsections as $ss) {
+			print "<tr>";
+			print "	<td><i class='icon-gray icon-folder-close'></i> <a href='subnets/$ss[id]/' rel='tooltip' data-placement='right' title='$ss[description]'>$ss[name]</a></td>";
+			print "</tr>";
+		}
+		
+		print "</table>";
+	}
+
 	/* print Subnets */
 	
     # get section name
@@ -53,6 +80,16 @@ else
 	    else									{ $iconClass='icon-resize-full';  $action = 'close'; }
     }
     else 										{ $iconClass='icon-resize-full';  $action = 'close';}
+    
+    # Check if it has parent, and if so print back link
+    if($sectionName['masterSection']!="0")	{
+    	# get details
+    	$mSection = getSectionDetailsById ($sectionName['masterSection']);
+    	
+	    print "<div class='subnets' style='padding-top:10px;'>";
+	    print "	<a href='subnets/$mSection[id]/'><i class='icon-gray icon-chevron-left'></i> "._('Back to')." $mSection[name]</a><hr>";
+	    print "</div>";
+    }
     
     print "<h4>"._('Available subnets')." <span class='pull-right' style='margin-right:5px;cursor:pointer;'><i class='icon-gray $iconClass' rel='tooltip' data-placement='bottom' title='"._('Expand/compress all folders')."' id='expandfolders' data-action='$action'></i></span></h4>";	
     print "<hr>";

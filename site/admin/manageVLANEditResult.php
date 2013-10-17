@@ -25,7 +25,7 @@ if($vlan['action'] == "add") {
 }
 
 //custom
-$myFields = getCustomVLANFields();
+$myFields = getCustomFields('vlans');
 if(sizeof($myFields) > 0) {
 	foreach($myFields as $myField) {
 		# replace possible ___ back to spaces!

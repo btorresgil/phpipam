@@ -49,7 +49,7 @@ $subnets = searchSubnets ($searchTerm, $searchTermEdited);
 $vlans = searchVLANs ($searchTerm);
 
 # get all custom fields 
-$myFields = getCustomIPaddrFields();
+$myFields = getCustomFields('ipaddresses');
 
 
 /* set the query */
@@ -82,7 +82,7 @@ $setFieldsTemp = getSelectedIPaddrFields();
 $setFields = explode(";", $setFieldsTemp);
 
 /* get all selected fields */
-$myFields = getCustomIPaddrFields();
+$myFields = getCustomFields('ipaddresses');
 
 # set col size
 $fieldSize 	= sizeof($setFields);

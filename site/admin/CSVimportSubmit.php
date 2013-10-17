@@ -37,7 +37,7 @@ else {
 	$numRows++;
 
 	//get custom fields
-	$myFields = getCustomIPaddrFields();
+	$myFields = getCustomFields('ipaddresses');
 	$myFieldsSize = sizeof($myFields);
 	
 	//add custom fields

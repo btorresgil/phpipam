@@ -85,8 +85,8 @@ $settings = getAllSettings();
     <li <?php if($_REQUEST['adminId'] == "filterIPFields") print "class='active'"; ?>>
 		<a href="administration/filterIPFields/"><i class="icon-chevron-right pull-right icon-gray"></i> <?php print _('Filter IP fields'); ?></a>
 	</li> 
-    <li <?php if($_REQUEST['adminId'] == "customIPFields") print "class='active'"; ?>>
-		<a href="administration/customIPFields/"><i class="icon-chevron-right pull-right icon-gray"></i> <?php print _('Custom fields'); ?></a>
+    <li <?php if($_REQUEST['adminId'] == "customFields") print "class='active'"; ?>>
+		<a href="administration/customFields/"><i class="icon-chevron-right pull-right icon-gray"></i> <?php print _('Custom fields'); ?></a>
 	</li> 
 </ul>
 

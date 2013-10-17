@@ -126,24 +126,22 @@ function readCookie(name) {
 
 
 
-/* @dashboard graphs ----------  */
+/* @dashboard widgets ----------  */
 
-if ($('#IPv4top10Hosts').length>0) {
-	//first
-	$.post('site/dashboard/top10_percentage.php', function(data) {
-		$('#IPv4top10').html(data);
-		// second
-		$.post('site/dashboard/top10_hosts.php', {type:"IPv4"}, function(data) {
-			$('#IPv4top10Hosts').html(data);
-			//third
-			$.post('site/dashboard/top10_hosts.php', {type:"IPv6"}, function(data) {
-				$('#IPv6top10Hosts').html(data);
-			});		
-		});	
+//if dashboard show widgets
+if($('#dashboard').length>0) {
+	//get all boxes
+	$('div[id^="w-"]').each(function(){
+		var w = $(this).attr('id');
+		//remove w-
+		w = w.replace("w-", "");
+		$.post('site/dashboard/widgets/'+w+'.php', function(data) {
+			$("#w-"+w+' .hContent').html(data);
+		}).fail(function(xhr, textStatus, errorThrown) {
+			$("#w-"+w+' .hContent').html('<blockquote style="margin-top:20px;margin-left:20px;">File not found!</blockquote>');
+		});
 	});
 }
-
-
 
 
 
@@ -1381,171 +1379,54 @@ $('button#filterIPSave').click(function() {
 });
 
 
-/*    custom IP fields
+
+
+/*    custom fields - general
 ************************************/
-//load edit form
-$('table.customIP tbody#ip button[data-direction!=down]').click(function() {
+
+//show edit form
+$(document).on("click", ".edit-custom-field", function() {
     showSpinner();
-    var action       = $(this).attr('data-action');
+    var action    = $(this).attr('data-action');
     var fieldName = $(this).attr('data-fieldname');
-    $.post('site/admin/customIPFieldsEdit.php',  {action:action, fieldName: fieldName}, function(data) {
+    var table	  = $(this).attr('data-table');
+    $.post('site/admin/customFieldsEdit.php',  {action:action, fieldName:fieldName, table:table}, function(data) {
         $('div.popup_w400').html(data);
         showPopup('popup_w400');
         hideSpinner();
     }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});
     return false;
 });
-//custom IP field edit submit form
+//submit change
 $(document).on("click", "#editcustomSubmit", function() {
     showSpinner();
-    var field = $('form#editCustomIPFields').serialize();
-    $.post('site/admin/customIPFieldsEditResult.php', field, function(data) {
-        $('div.customIPEditResult').html(data).slideDown('fast');
-        
-        //reload after 2 seconds if succeeded!
-        if(data.search("error") == -1)     { setTimeout(function (){window.location.reload();}, 1500); }
-        else                             { hideSpinner(); }
-    }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});
-    return false;
-});
-// field ordering
-$('table.customIP tbody#ip button.down').click(function() {
-    showSpinner();
-    var current  = $(this).attr('data-fieldname');
-    var next      = $(this).attr('data-nextfieldname');
-    $.post('site/admin/customIPFieldsOrder.php', {current:current, next:next}, function(data) {
-        $('div.customIPResult').html(data).slideDown('fast');
-        //reload after 2 seconds if succeeded!
-        if(data.search("error") == -1)     { setTimeout(function (){window.location.reload();}, 1000); }
-        else                             { hideSpinner(); }
-    }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});
-    return false;
-});
-
-
-/*    custom subnet fields
-************************************/
-//load edit form
-$('table.customIP tbody#subnet button[data-direction!=down]').click(function() {
-    showSpinner();
-    var action       = $(this).attr('data-action');
-    var fieldName = $(this).attr('data-fieldname');
-    $.post('site/admin/customSubnetFieldsEdit.php',  {action:action, fieldName: fieldName}, function(data) {
-        $('div.popup_w400').html(data);
-        showPopup('popup_w400');
-        hideSpinner();
-    }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});
-    return false;
-});
-//custom IP field edit submit form
-$(document).on("click", "#editcustomSubnetSubmit", function() {
-    showSpinner();
-    var field = $('form#editCustomSubnetFields').serialize();
-    $.post('site/admin/customSubnetFieldsEditResult.php', field, function(data) {
-        $('div.customSubnetEditResult').html(data).slideDown('fast');
-        
-        //reload after 2 seconds if succeeded!
-        if(data.search("error") == -1)     { setTimeout(function (){window.location.reload();}, 1500); }
-        else                             { hideSpinner(); }
-    }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});
-    return false;
-});
-// field ordering
-$('table.customIP tbody#subnet button.down').click(function() {
-    showSpinner();
-    var current  = $(this).attr('data-fieldname');
-    var next      = $(this).attr('data-nextfieldname');
-    $.post('site/admin/customSubnetFieldsOrder.php', {current:current, next:next}, function(data) {
-        $('div.customSubnetResult').html(data).slideDown('fast');
-        //reload after 2 seconds if succeeded!
-        if(data.search("error") == -1)     { setTimeout(function (){window.location.reload();}, 1000); }
-        else                             { hideSpinner(); }
-    }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});
-    return false;
-});
-
-
-/*    custom VLAN fields
-************************************/
-//load edit form
-$('table.customIP tbody#vlan button[data-direction!=down]').click(function() {
-    showSpinner();
-    var action       = $(this).attr('data-action');
-    var fieldName = $(this).attr('data-fieldname');
-    $.post('site/admin/customVLANFieldsEdit.php',  {action:action, fieldName: fieldName}, function(data) {
-        $('div.popup_w400').html(data);
-        showPopup('popup_w400');
-        hideSpinner();
-    }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});
-    return false;
-});
-//custom IP field edit submit form
-$(document).on("click", "#editcustomVLANSubmit", function() {
-    showSpinner();
-    var field = $('form#editCustomVLANFields').serialize();
-    $.post('site/admin/customVLANFieldsEditResult.php', field, function(data) {
-        $('div.customVLANEditResult').html(data).slideDown('fast');
-        
-        //reload after 2 seconds if succeeded!
-        if(data.search("error") == -1)     { setTimeout(function (){window.location.reload();}, 1500); }
-        else                             { hideSpinner(); }
-    }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});
-    return false;
-});
-// field ordering
-$('table.customIP tbody#vlan button.down').click(function() {
-    showSpinner();
-    var current  = $(this).attr('data-fieldname');
-    var next      = $(this).attr('data-nextfieldname');
-    $.post('site/admin/customVLANFieldsOrder.php', {current:current, next:next}, function(data) {
-        $('div.customVLANResult').html(data).slideDown('fast');
-        //reload after 2 seconds if succeeded!
-        if(data.search("error") == -1)     { setTimeout(function (){window.location.reload();}, 1000); }
-        else                             { hideSpinner(); }
-    }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});
-    return false;
-});
-
-
-/*    custom user fields
-************************************/
-//load edit form
-$('table.customIP tbody#customUser button[data-direction!=down]').click(function() {
-    showSpinner();
-    var action       = $(this).attr('data-action');
-    var fieldName = $(this).attr('data-fieldname');
-    $.post('site/admin/customUserFieldsEdit.php',  {action:action, fieldName: fieldName}, function(data) {
-        $('div.popup_w400').html(data);
-        showPopup('popup_w400');
-        hideSpinner();
-    }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});
-    return false;
-});
-//custom IP field edit submit form
-$(document).on("click", "#editcustomUserSubmit", function() {
-    showSpinner();
-    var field = $('form#editCustomUserFields').serialize();
-    $.post('site/admin/customUserFieldsEditResult.php', field, function(data) {
-        $('div.customUserEditResult').html(data).slideDown('fast');
+    var field = $('form#editCustomFields').serialize();
+    $.post('site/admin/customFieldsEditResult.php', field, function(data) {
+        $('div.customEditResult').html(data).slideDown('fast');
         //reload after 2 seconds if succeeded!
         if(data.search("error") == -1)   { setTimeout(function (){window.location.reload();}, 1500); }
         else                             { hideSpinner(); }
     }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});
     return false;
 });
-// field ordering
-$('table.customIP tbody#customUser button.down').click(function() {
+//field reordering
+$('table.customIP button.down').click(function() {
     showSpinner();
     var current  = $(this).attr('data-fieldname');
-    var next      = $(this).attr('data-nextfieldname');
-    $.post('site/admin/customUserFieldsOrder.php', {current:current, next:next}, function(data) {
-        $('div.customUserResult').html(data).slideDown('fast');
+    var next     = $(this).attr('data-nextfieldname');
+    var table	 = $(this).attr('data-table');
+    $.post('site/admin/customFieldsOrder.php', {current:current, next:next, table:table}, function(data) {
+        $('div.'+table+'-order-result').html(data).slideDown('fast');
         //reload after 2 seconds if succeeded!
-        if(data.search("error") == -1)   { setTimeout(function (){window.location.reload();}, 1000); }
+        if(data.search("error") == -1)     { setTimeout(function (){window.location.reload();}, 1000); }
         else                             { hideSpinner(); }
     }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});
     return false;
 });
+
+
+
+
 
 
 

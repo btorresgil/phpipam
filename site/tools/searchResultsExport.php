@@ -50,7 +50,7 @@ else {
 
 
 /* get all custom fields */
-$myFields = getCustomIPaddrFields();
+$myFields = getCustomFields('ipaddresses');
 $myFieldsSize = sizeof($myFields);
 
 

@@ -13,7 +13,7 @@ checkAdmin();
 $request = $_POST;
 
 /* custom fields modification */
-$myFields = getCustomIPaddrFields();
+$myFields = getCustomFields('ipaddresses');
 if(sizeof($myFields) > 0) {
 	foreach($myFields as $myField) {
 		# replace possible ___ back to spaces!

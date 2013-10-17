@@ -669,3 +669,48 @@ msgstr ""
 #: site/admin/manageSectionEdit.php
 msgid "Select parent section to create subsection"
 msgstr ""
+
+### 0.89.001 ###
+
+#: site/tools/userMenu.php
+msgid "Widgets"
+msgstr ""
+
+msgid "Select widgets to be displayed on dashboard"
+msgstr ""
+
+#: site/dashboard/index.php
+msgid "No widgets selected"
+msgstr ""
+
+msgid "Please select widgets to be displayed on dashboard on user menu page"
+msgstr ""
+
+
+### 0.89.002 ###
+
+#: site/admin/customUserFieldsEdit.php
+msgid "Enter comment for users"
+msgstr ""
+
+msgid "Required field"
+msgstr ""
+
+#: site/admin/custopmIPFields.php
+msgid "Required"
+msgstr ""
+
+#: site/admin/customDeviceFieldsEdit.php
+msgid "Custom device fields"
+msgstr ""
+
+msgid "Add new custom device field"
+msgstr ""
+
+#: site/ipaddr/sectionAllSubnets.php
+msgid "Belonging subsections"
+msgstr ""
+
+#: site/subnets.php
+msgid "Back to"
+msgstr ""

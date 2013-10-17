@@ -10,7 +10,7 @@ isUserAuthenticated ();
 if($_REQUEST['subnetId']) { $subnetId = $_REQUEST['subnetId']; }
 
 /* get custom subnet fields */
-$customSubnetFields = getCustomSubnetFields();
+$customSubnetFields = getCustomFields('subnets');
 $customSubnetFieldsSize = sizeof($customSubnetFields);
 
 /**

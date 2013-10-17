@@ -327,6 +327,7 @@ CREATE TABLE `users` (
   `real_name` varchar(128) CHARACTER SET utf8 DEFAULT NULL,
   `email` varchar(64) CHARACTER SET utf8 DEFAULT NULL,
   `domainUser` binary(1) DEFAULT '0',
+  `widgets` VARCHAR(1024)  NULL  DEFAULT 'statistics;top10_hosts_v4;top10_hosts_v6;top10_percentage',
   `lang` INT(2)  NULL  DEFAULT '1',
   `editDate` TIMESTAMP  NULL  ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`username`),
@@ -429,4 +430,4 @@ CREATE TABLE `api` (
 
 # update version
 # ------------------------------------------------------------
-UPDATE `settings` set `version` = '0.88';
+UPDATE `settings` set `version` = '0.89';

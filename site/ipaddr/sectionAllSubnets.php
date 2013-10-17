@@ -8,14 +8,14 @@
 isUserAuthenticated ();
 
 /* get custom fields */
-$custom = getCustomSubnetFields();
+$custom = getCustomFields('subnets');
 
 /* get all site settings */
 $settings = getAllSettings();
 
+
 # title
 print "<h4>"._('Available subnets')."</h4>";
-
 
 # check permission
 $permission = checkSectionPermission ($_REQUEST['section']);

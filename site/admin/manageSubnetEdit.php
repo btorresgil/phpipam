@@ -56,7 +56,7 @@ else {
 }
 
 /* get custom subnet fields */
-$customSubnetFields = getCustomSubnetFields();
+$customSubnetFields = getCustomFields('subnets');
 
 
 # set readonly flag
@@ -297,15 +297,21 @@ else															{ $readonly = false; }
 	    	print "	<td colspan='3' class='hr'><hr></td>";
 	    	print "</tr>";
 		    foreach($customSubnetFields as $field) {
+
 		    	# replace spaces
 		    	$field['nameNew'] = str_replace(" ", "___", $field['name']);
 		    	# retain newlines
 		    	$subnetDataOld[$field['name']] = str_replace("\n", "\\n", $subnetDataOld[$field['name']]);
 		    	
+		    	# required
+				if($field['Null']=="NO")	{ $required = "*"; }
+				else						{ $required = ""; }
+		    	
 			    print "<tr>";
-			    print "	<td class='middle'>$field[name]</td>";
+			    print "	<td class='middle'>$field[name] $required</td>";
 			    print "	<td colspan='2'>";
-			    print "	<input type='text' class='input-xxlarge' id='field-$field[nameNew]' name='$field[nameNew]' value='".$subnetDataOld[$field['name']]."' placeholder='".$subnetDataOld[$field['name']]."'>";
+			    if(strlen($field['Comment'])>0)	{ print "	<input type='text' class='input-xlarge' id='field-$field[nameNew]' name='$field[nameNew]' value='".$subnetDataOld[$field['name']]."' placeholder='".$subnetDataOld[$field['name']]."' rel='tooltip' data-placement='right' title='$field[Comment]'>"; }
+			    else							{ print "	<input type='text' class='input-xlarge' id='field-$field[nameNew]' name='$field[nameNew]' value='".$subnetDataOld[$field['name']]."' placeholder='".$subnetDataOld[$field['name']]."'>"; }
 			    print " </td>";
 			    print "</tr>";
 		    }

@@ -445,7 +445,7 @@ function searchSubnets ($searchterm, $searchTermEdited = "")
     $database    = new database($db['host'], $db['user'], $db['pass'], $db['name']); 
     
     # get custom subnet fields
-    $myFields = getCustomSubnetFields();
+    $myFields = getCustomFields('subnets');
     $custom  = '';
 
     if(sizeof($myFields) > 0) {
@@ -506,7 +506,7 @@ function searchVLANs ($searchterm)
     $database    = new database($db['host'], $db['user'], $db['pass'], $db['name']); 
 
     # get custom VLAN fields
-    $myFields = getCustomVLANFields();
+    $myFields = getCustomFields('vlans');
     $custom  = '';
 
     if(sizeof($myFields) > 0) {
@@ -834,7 +834,7 @@ function acceptIPrequest($request)
     $query  = 'update requests set `processed` = "1", `accepted` = "1", `adminComment` = "'. $request['adminComment'] .'" where `id` = "'. $request['requestId'] .'";' . "\n";
 
 	/* We need to get custom fields! */
-	$myFields = getCustomIPaddrFields();
+	$myFields = getCustomFields('ipaddresses');
 	$myFieldsInsert['query']  = '';
 	$myFieldsInsert['values'] = '';
 	

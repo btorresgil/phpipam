@@ -580,6 +580,30 @@ function getSectionDetailsByName ($name)
 }
 
 
+/**
+ *	Get all subsections
+ */
+function getAllSubSections($sectionId)
+{
+    global $db;                                                                      # get variables from config file
+    /* set query, open db connection and fetch results */
+    $query 	  = "select * from `sections` where `masterSection` = '$sectionId';";
+    $database = new database($db['host'], $db['user'], $db['pass'], $db['name']);
+
+    /* execute */
+    try { $sections = $database->getArray( $query ); }
+    catch (Exception $e) { 
+        $error =  $e->getMessage(); 
+        print ("<div class='alert alert-error'>"._('Error').":$error</div>");
+        return false;
+    } 
+    $database->close();
+
+    /* return subnets array */
+    return($sections);
+}
+
+
 
 
 
@@ -1600,7 +1624,7 @@ function getAllVlans($tools = false)
     $database    = new database($db['host'], $db['user'], $db['pass'], $db['name']); 
     
     # custom fields
-    $myFields = getCustomVLANFields();     
+    $myFields = getCustomFields('vlans');     
     $myFieldsInsert['id']  = '';
 	
     if(sizeof($myFields) > 0) {
@@ -2093,7 +2117,7 @@ function modifyIpAddress ($ip)
 function SetInsertQuery( $ip ) 
 {
 	/* First we need to get custom fields! */
-	$myFields = getCustomIPaddrFields();
+	$myFields = getCustomFields('ipaddresses');
 	$myFieldsInsert['query']  = '';
 	$myFieldsInsert['values'] = '';
 	

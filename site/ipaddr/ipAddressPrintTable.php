@@ -60,7 +60,7 @@ $SubnetDetails = getSubnetDetailsById     ($subnetId);
 if(sizeof($SubnetDetails) == 0) { die('<div class="alert alert-error">'._('Subnet does not exist').'!</div>');}
 
 /* get all selected fields */
-$myFields = getCustomIPaddrFields();
+$myFields = getCustomFields('ipaddresses');
 $myFieldsSize = sizeof($myFields);
 	
 /* set colspan */

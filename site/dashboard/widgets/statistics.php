@@ -4,6 +4,11 @@
  * Script to print some stats on home page....
  *********************************************/
 
+/* required functions */
+if(!function_exists('getSubnetStatsDashboard')) {
+require_once( dirname(__FILE__) . '/../../../functions/functions.php' );
+}
+
 /* get number of sections */
 $sectionNum = getNumberOfSections();
 

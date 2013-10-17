@@ -17,7 +17,7 @@ $vlanPost = $_POST;
 $vlan = subnetGetVLANdetailsById($_POST['vlanId']);
 
 /* get custom fields */
-$custom = getCustomVLANFields();
+$custom = getCustomFields('vlans');
 
 if ($_POST['action'] == "delete") 	{ $readonly = "readonly"; }
 else 								{ $readonly = ""; }

@@ -10,6 +10,9 @@ require_once('../../functions/functions.php');
 /* verify that user is admin */
 if (!checkAdmin()) die('');
 
+/* get custom fields */
+$custom = getCustomFields('switches');
+
 /* get switch detaild by Id! */
 if( ($_POST['action'] == "edit") || ($_POST['action'] == "delete") ) {
 	$switch = getSwitchDetailsById($_POST['switchId']);
@@ -98,6 +101,30 @@ else 								{ $readonly = ""; }
 			<input type="hidden" name="action" value="<?php print $_POST['action']; ?>">
 		</td>
 	</tr>
+
+	<!-- Custom -->
+	<?php
+	if(sizeof($custom) > 0) {
+
+		print '<tr>';
+		print '	<td colspan="2"><hr></td>';
+		print '</tr>';
+
+		foreach($custom as $field) {
+		
+			# replace spaces
+		    $field['nameNew'] = str_replace(" ", "___", $field['name']);
+			
+			print "<tr>";
+			print "	<td>$field[name]</td>";
+			print "	<td>";
+			print "		<input type='text' name='$field[nameNew]' value='".$switch[$field['name']]."' $readonly>";
+			print "	</td>";
+			print "</tr>";
+		}
+	}
+	
+	?>
 
 	<!-- Sections -->
 	<tr>

@@ -30,7 +30,7 @@ CheckReferrer();
 	<?php  
 	# get custom fields
 	#get all custom fields!
-	$myFields = getCustomIPaddrFields();
+	$myFields = getCustomFields('ipaddresses');
 	if(sizeof($myFields) > 0) {
 		$custFields = " | ";
 		foreach($myFields as $myField) {

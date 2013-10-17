@@ -6,12 +6,15 @@
  **********************************************/
 
 /* required functions */
-require_once( dirname(__FILE__) . '/../../functions/functions.php' );
+if(!function_exists('getSubnetStatsDashboard')) {
+require_once( dirname(__FILE__) . '/../../../functions/functions.php' );
+}
+
 # no errors!
 ini_set('display_errors', 0);
 
 # get subnets statistic
-$type = $_POST['type'];
+$type = 'IPv6';
 $subnetHost = getSubnetStatsDashboard($type, 10, false);
 
 /* detect duplicates */
@@ -193,3 +196,7 @@ else {
 	print "</blockquote>";
 }
 ?>
+
+<div id="IPv6top10Hosts" class="top10" style="height: 200px; width: 95%; margin-left: 3%; padding: 0px; position: relative; ">
+	<div style="text-align:center;padding-top:50px;"><strong><?php print _('Loading statistics'); ?></strong><br><img src="css/images/loading_dash.gif"></div>
+</div>

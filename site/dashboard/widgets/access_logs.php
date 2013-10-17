@@ -1,7 +1,12 @@
 <?php
 
+/* required functions */
+if(!function_exists('getSubnetStatsDashboard')) {
+require_once( dirname(__FILE__) . '/../../../functions/functions.php' );
+}
+
 /* print last 5 access logs */
-$logs = getAllLogs(5, NULL, NULL, NULL, 1,2,2);
+$logs = getAllLogs(5, NULL, NULL, NULL, 0, 0,0);
 
 print "<table class='table table-striped table-condensed table-hover table-top'>";
 

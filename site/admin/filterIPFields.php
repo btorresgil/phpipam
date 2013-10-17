@@ -20,7 +20,7 @@ $setFields = explode(";", $setFieldsTemp);
 unset($fields['id'], $fields['subnetId'], $fields['ip_addr'], $fields['description'], $fields['dns_name'], $fields['lastSeen'], $fields['excludePing']);
 
 /* unset custom! */
-$custom = getCustomIPaddrFields();
+$custom = getCustomFields('ipaddresses');
 if(sizeof($custom) > 0) {
 	foreach($custom as $key=>$cust) {
 		unset($fields[$key]);

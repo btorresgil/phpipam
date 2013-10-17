@@ -11,7 +11,7 @@ isUserAuthenticated ();
 $sections = fetchSections ();
 
 /* get custom fields */
-$custom = getCustomSubnetFields();
+$custom = getCustomFields('subnets');
 
 # title
 print "<h4>"._('Available subnets')."</h4>";

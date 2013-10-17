@@ -4,7 +4,9 @@
  **********************************************/
 
 /* required functions */
-require_once( dirname(__FILE__) . '/../../functions/functions.php' );
+if(!function_exists('getSubnetStatsDashboard')) {
+require_once( dirname(__FILE__) . '/../../../functions/functions.php' );
+}
 # no errors!
 ini_set('display_errors', 0);
 
@@ -201,3 +203,8 @@ else {
 	print "</blockquote>";
 }
 ?>
+
+
+<div id="IPv4top10" class="top10"  style="height:200px;width:95%;margin-left:3%;">
+	<div style="text-align:center;padding-top:50px;"><strong><?php print _('Loading statistics'); ?></strong><br><img src="css/images/loading_dash.gif"></div>
+</div>
