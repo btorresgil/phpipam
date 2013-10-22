@@ -474,6 +474,7 @@ function checkADLogin ($username, $password)
 		else { 
 			updateLogTable ('User '. $username .' failed to authenticate against AD.', "", 2);
 			$err = $adldap->getLastError();
+			print "<div class='alert alert-error'>$err</div>";
 			return 'Failed to authenticate user via AD!'; 
 		}
     }

@@ -67,6 +67,18 @@ if (!in_array("ldap", $availableExt)) { print '<div class="alert alert-error"><s
 	</td>
 </tr>
 
+<!-- USername -->
+<tr>
+	<td><?php print _('Domain account'); ?></td>
+	<td>
+		<input type="text" name="adminUsername" placeholder="<?php print _('Username'); ?>" value="<?php print $adSettings['adminUsername']; ?>"><br>			
+		<input type="text" name="adminPassword" placeholder="<?php print _('Password'); ?>" value="<?php print $adSettings['adminPassword']; ?>">			
+	</td>
+	<td class="info">
+		<?php print _('Domain account for search operations'); ?>
+	</td>
+</tr>
+
 <!-- SSL -->
 <tr>
 	<td><?php print _('Use SSL'); ?></td>

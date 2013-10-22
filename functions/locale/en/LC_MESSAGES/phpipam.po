@@ -4266,3 +4266,26 @@ msgstr ""
 #: site/subnets.php
 msgid "Back to"
 msgstr ""
+
+#: site/admin/manageAD_AD.php
+msgid "Domain account"
+msgstr ""
+
+msgid "Domain account for search operations"
+msgstr ""
+
+#: site/admin/userADsearchResult.php
+msgid "No users found"
+msgstr ""
+
+msgid "Possible reasons"
+msgstr ""
+
+msgid "Username not existing"
+msgstr ""
+
+msgid "Invalid baseDN setting for AD"
+msgstr ""
+
+msgid "AD account does not have enough privileges for search"
+msgstr ""

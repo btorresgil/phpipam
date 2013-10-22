@@ -1335,7 +1335,7 @@ function updateADsettings($ad)
     /* set query and update */
     $query    = 'update `settingsDomain` set '. "\n";
     $query   .= '`domain_controllers` = "'. $ad['domain_controllers'] .'", `base_dn` = "'. $ad['base_dn'] .'", `account_suffix` = "'. $ad['account_suffix'] .'", '. "\n";
-    $query   .= '`use_ssl` = "'. $ad['use_ssl'] .'", `use_tls` = "'. $ad['use_tls'] .'", `ad_port` = "'. $ad['ad_port'] .'"; '. "\n";
+    $query   .= '`use_ssl` = "'. $ad['use_ssl'] .'", `use_tls` = "'. $ad['use_tls'] .'", `ad_port` = "'. $ad['ad_port'] .'", `adminUsername`="'.$ad['adminUsername'].'", `adminPassword`="'.$ad['adminPassword'].'";'. "\n";
 
     /* execute */
     try { $database->executeQuery( $query ); }

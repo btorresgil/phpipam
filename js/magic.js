@@ -687,8 +687,11 @@ $(document).on("click", ".userselect", function() {
 	$('form#usersEdit input[name=real_name]').val(uname);
 	$('form#usersEdit input[name=username]').val(username);
 	$('form#usersEdit input[name=email]').val(email);
-
+	
 	hidePopup2();
+	hidePopup('popup_w500');
+
+	return false;
 });
 
 

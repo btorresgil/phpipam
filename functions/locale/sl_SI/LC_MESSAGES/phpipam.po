@@ -4307,3 +4307,26 @@ msgstr "Pripadajoči razdelki"
 #: site/subnets.php
 msgid "Back to"
 msgstr "Nazaj na"
+
+#: site/admin/manageAD_AD.php
+msgid "Domain account"
+msgstr "Domenski račun"
+
+msgid "Domain account for search operations"
+msgstr "Domenski račun za iskanje uporabnikov"
+
+#: site/admin/userADsearchResult.php
+msgid "No users found"
+msgstr "Nisem našel uporabnikov"
+
+msgid "Possible reasons"
+msgstr "Možni razlogi:"
+
+msgid "Username not existing"
+msgstr "Uporabniško ime ne obstaja"
+
+msgid "Invalid baseDN setting for AD"
+msgstr "Neveljaven osnovni DN za AD"
+
+msgid "AD account does not have enough privileges for search"
+msgstr "AD račun nima dovolj pravic za iskanje"

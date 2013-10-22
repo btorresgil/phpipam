@@ -160,7 +160,7 @@ CREATE TABLE `settings` (
   `enableIPrequests` tinyint(1) DEFAULT NULL,
   `enableVRF` tinyint(1) DEFAULT '1',
   `enableDNSresolving` tinyint(1) DEFAULT NULL,
-  `version` varchar(4) DEFAULT NULL,
+  `version` varchar(5) DEFAULT NULL,
   `donate` tinyint(1) DEFAULT '0',
   `IPfilter` varchar(128) DEFAULT NULL,
   `printLimit` int(4) unsigned DEFAULT '25',
@@ -200,6 +200,8 @@ CREATE TABLE `settingsDomain` (
   `use_ssl` tinyint(1) DEFAULT '0',
   `use_tls` tinyint(1) DEFAULT '0',
   `ad_port` int(5) DEFAULT '389',
+  `adminUsername` VARCHAR(64)  NULL  DEFAULT NULL ,
+  `adminPassword` VARCHAR(64)  NULL  DEFAULT NULL ,
   `editDate` TIMESTAMP  NULL  ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
