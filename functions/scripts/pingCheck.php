@@ -32,6 +32,9 @@ $settings = getAllSettings();
 // set ping statuses
 $statuses = explode(";", $settings['pingStatus']);
 
+//set execution start time
+$sTime = time();
+
 
 //verify that pign path is correct
 if(!file_exists($pathPing)) {
@@ -45,7 +48,7 @@ elseif(!$threads) {
 	//scan each
 	foreach($addresses as $ip) {
 		//calculate diff since last alive
-		$tDiff = time() - strtotime($ip['lastSeen']);
+		$tDiff = $sTime - strtotime($ip['lastSeen']);
 		//set Old status
 		if($tDiff < $statuses[1])	{ $addresses[$m]['oldStatus'] = 0; }	//old online
 		else						{ $addresses[$m]['oldStatus'] = 2; }	//old offline
@@ -89,7 +92,7 @@ else {
         	//only if index exists!
         	if(isset($addresses[$z])) {
         		//calculate diff since last alive
-				$tDiff = time() - strtotime($addresses[$z]['lastSeen']);
+				$tDiff = $sTime - strtotime($addresses[$z]['lastSeen']);
 				//set Old status
 				if($tDiff <= $statuses[1])	{ $addresses[$z]['oldStatus'] = 0; }	//old online
 				else						{ $addresses[$z]['oldStatus'] = 2; }	//old offline        	
@@ -116,7 +119,7 @@ else {
 						//if old is offline than check for time diff
 						if($addresses[$index]['oldStatus']==2) {
 							//calculate diff since last alive
-							$tDiff2 = time() - strtotime($addresses[$index]['lastSeen']);
+							$tDiff2 = $sTime - strtotime($addresses[$index]['lastSeen']);
 							//set New status
 							if($tDiff2 >= $statuses[1])	{ 
 								$stateDiff[] = $addresses[$index];	 				//change
@@ -129,7 +132,7 @@ else {
 						//if online before change
 						if($addresses[$index]['oldStatus']==0) {
 							//calculate diff since last alive
-							$tDiff2 = time() - strtotime($addresses[$index]['lastSeen']);							
+							$tDiff2 = $sTime - strtotime($addresses[$index]['lastSeen']);							
 							//set New status
 							if($tDiff2 >= $statuses[1])	{ 
 								$stateDiff[] = $addresses[$index];	 				//change
@@ -204,7 +207,7 @@ if(sizeof($stateDiff)>0 && $email)
 			if(is_null($change['lastSeen']) || $change['lastSeen']=="0000-00-00 00:00:00") {
 				$ago	  = "never";
 			} else {
-				$timeDiff = time() - strtotime($change['lastSeen']);
+				$timeDiff = $sTime - strtotime($change['lastSeen']);
 				$ago 	  = $change['lastSeen']." (".sec2hms($timeDiff)." ago)";
 			}
 			
