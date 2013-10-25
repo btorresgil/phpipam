@@ -179,10 +179,10 @@ if(sizeof($stateDiff)>0 && $email)
 		//table
 		$html[] = "<table style='margin-left:10px;margin-top:5px;width:auto;padding:0px;border-collapse:collapse;border:1px solid gray;'>";
 		$html[] = "<tr>";
-		$html[] = "	<th style='padding:3px 8px;border:1px solid silver;border-bottom:2px solid gray;'>id</th>";
+		$html[] = "	<th style='padding:3px 8px;border:1px solid silver;border-bottom:2px solid gray;'>IP</th>";
+		$html[] = "	<th style='padding:3px 8px;border:1px solid silver;border-bottom:2px solid gray;'>Description</th>";
 		$html[] = "	<th style='padding:3px 8px;border:1px solid silver;border-bottom:2px solid gray;'>Subnet</th>";
 		$html[] = "	<th style='padding:3px 8px;border:1px solid silver;border-bottom:2px solid gray;'>Section</th>";
-		$html[] = "	<th style='padding:3px 8px;border:1px solid silver;border-bottom:2px solid gray;'>IP</th>";
 		$html[] = "	<th style='padding:3px 8px;border:1px solid silver;border-bottom:2px solid gray;'>last seen</th>";
 		$html[] = "	<th style='padding:3px 8px;border:1px solid silver;border-bottom:2px solid gray;'>old status</th>";
 		$html[] = "	<th style='padding:3px 8px;border:1px solid silver;border-bottom:2px solid gray;'>new status</th>";
@@ -212,10 +212,10 @@ if(sizeof($stateDiff)>0 && $email)
 			}
 			
 			$html[] = "<tr>";
-			$html[] = "	<td style='padding:3px 8px;border:1px solid silver;'>$change[id]</td>";
+			$html[] = "	<td style='padding:3px 8px;border:1px solid silver;'>".Transform2long($change['ip_addr'])."</td>";
+			$html[] = "	<td style='padding:3px 8px;border:1px solid silver;'>$change[description]</td>";
 			$html[] = "	<td style='padding:3px 8px;border:1px solid silver;'>$subnetPrint</td>";
 			$html[] = "	<td style='padding:3px 8px;border:1px solid silver;'>$sectionPrint</td>";
-			$html[] = "	<td style='padding:3px 8px;border:1px solid silver;'>".Transform2long($change['ip_addr'])."</td>";
 			$html[] = "	<td style='padding:3px 8px;border:1px solid silver;'>$ago</td>";
 			$html[] = "	<td style='padding:3px 8px;border:1px solid silver;'>$oldStatus</td>";
 			$html[] = "	<td style='padding:3px 8px;border:1px solid silver;'>$newStatus</td>";

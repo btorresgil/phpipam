@@ -1,4 +1,4 @@
-== 0.89.002
+== 0.891.003
 
 	New features:
 	----------------------------
@@ -27,6 +27,7 @@
 	+ Per-user selection of widgets to display;
 	+ Added description and required field checkbox for custom IP/Subnet Fields;
 	+ Added custom device fields;
+	+ Mails are now sent through phpmailer;
 	
 	Translations:
 	----------------------------

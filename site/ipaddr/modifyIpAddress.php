@@ -85,6 +85,10 @@ else if ($action == "all-edit")	{ $btnName = _("edit"); 	$act = "edit"; }
 else if ($action == "delete")	{ $btnName = _("delete"); 	$act = "delete"; }
 else							{ $btnName = ""; }
 
+/* set delete flag */
+if($act=="delete")	{ $delete = "readonly='readonly'"; }
+else				{ $delete = ""; }
+
 
 /* get all selected fields for filtering */
 $setFieldsTemp = getSelectedIPaddrFields();
@@ -144,7 +148,7 @@ $myFieldsSize = sizeof($myFields);
 		print '<tr>'. "\n";
 		print '	<td>'._('DNS name').'</td>'. "\n";
 		print '	<td>'. "\n";
-		print ' <input type="text" name="dns_name" placeholder="'._('Hostname').'" value="'. $details['dns_name']. '" size="30">'. "\n";
+		print ' <input type="text" name="dns_name" placeholder="'._('Hostname').'" value="'. $details['dns_name']. '" size="30" '.$delete.'>'. "\n";
 		print "	<span class='btn btn-small'><i class='icon-gray icon-repeat' id='refreshHostname' rel='tooltip' title='"._('Click to check for hostname')."'></i></span>";
 		print '	</td>'. "\n";
 		print '</tr>'. "\n";
@@ -157,7 +161,7 @@ $myFieldsSize = sizeof($myFields);
 		print '<tr>'. "\n";
 		print '	<td>'._('MAC address').'</td>'. "\n";
 		print '	<td>'. "\n";
-		print ' <input type="text" name="mac" placeholder="'._('MAC address').'" value="'. $details['mac']. '" size="30">'. "\n";
+		print ' <input type="text" name="mac" placeholder="'._('MAC address').'" value="'. $details['mac']. '" size="30" '.$delete.'>'. "\n";
 		print '	</td>'. "\n";
 		print '</tr>'. "\n";
 	}
@@ -171,7 +175,7 @@ $myFieldsSize = sizeof($myFields);
 		print '<tr>'. "\n";
 		print '	<td>'._('Owner').'</td>'. "\n";
 		print '	<td>'. "\n";
-		print ' <input type="text" name="owner" id="owner" placeholder="'._('IP address owner').'" value="'. $details['owner']. '" size="30">'. "\n";
+		print ' <input type="text" name="owner" id="owner" placeholder="'._('IP address owner').'" value="'. $details['owner']. '" size="30" '.$delete.'>'. "\n";
 		print '	</td>'. "\n";
 		print '</tr>'. "\n";
 	}
@@ -187,7 +191,7 @@ $myFieldsSize = sizeof($myFields);
 		print '	<td>'._('Device').'</td>'. "\n";
 		print '	<td>'. "\n";
 
-		print '<select name="switch">'. "\n";
+		print '<select name="switch" '.$delete.'>'. "\n";
 		print '<option disabled>'._('Select device').':</option>'. "\n";
 		print '<option value="" selected>'._('None').'</option>'. "\n";
 		$switches = getAllUniqueSwitches();
@@ -213,7 +217,7 @@ $myFieldsSize = sizeof($myFields);
 		print '<tr>'. "\n";
 		print '	<td>'._('Port').'</td>'. "\n";
 		print '	<td>'. "\n";
-		print ' <input type="text" name="port"   id="port"   placeholder="'._('Port').'"   value="'. $details['port']. '" size="30">'. "\n";
+		print ' <input type="text" name="port"   id="port"   placeholder="'._('Port').'"   value="'. $details['port']. '" size="30" '.$delete.'>'. "\n";
 		print '	</td>'. "\n";
 		print '</tr>'. "\n";
 	}
@@ -227,7 +231,7 @@ $myFieldsSize = sizeof($myFields);
 		print '<tr>'. "\n";
 		print '	<td>'._('Note').'</td>'. "\n";
 		print '	<td class="note">'. "\n";
-		print ' <textarea name="note" cols="23" rows="2" placeholder="'._('Additional notes about IP address').'">'. $details['note'] . '</textarea>'. "\n";
+		print ' <textarea name="note" cols="23" rows="2" placeholder="'._('Additional notes about IP address').'" '.$delete.'>'. $details['note'] . '</textarea>'. "\n";
 		print '	</td>'. "\n";
 		print '</tr>'. "\n";
 	}
@@ -240,7 +244,7 @@ $myFieldsSize = sizeof($myFields);
 		print '<tr>'. "\n";
 		print '	<td>'._('Type').'</td>'. "\n";
 		print '	<td>'. "\n";
-		print '		<select name="state">'. "\n";
+		print '		<select name="state" '.$delete.'>'. "\n";
 		
 		#active, reserved, offline
 		print '		<option value="1" '; if(isset($details['state'])) { if ($details['state'] == "1") print 'selected'; } print '>'._('Active').'</option>'. "\n";
@@ -263,7 +267,7 @@ $myFieldsSize = sizeof($myFields);
 		print '<tr>';
 	 	print '<td>'._("Ping exclude").'</td>';
 	 	print '<td>';
-		print ' 	<input type="checkbox" name="excludePing" value="1" '.$checked.'>';
+		print ' 	<input type="checkbox" name="excludePing" value="1" '.$checked.' '.$delete.'>';
 		print ' 	<div class="help-inline">'. _('Exclude from ping status checks').'</div>';
 	 	print '</td>';
 	 	print '</tr>';
@@ -288,8 +292,8 @@ $myFieldsSize = sizeof($myFields);
 			print '	<td>'. $myField['name'] .' '.$required.'</td>'. "\n";
 			print '	<td>'. "\n";
 			//comment
-			if(strlen($myField['Comment'])>0)	{ print ' <input type="text" name="'. $myField['nameNew'] .'" placeholder="'. $myField['name'] .'" value="'. $details[$myField['name']]. '" size="30" rel="tooltip" data-placement="right" title="'.$myField['Comment'].'">'. "\n"; }
-			else								{ print ' <input type="text" name="'. $myField['nameNew'] .'" placeholder="'. $myField['name'] .'" value="'. $details[$myField['name']]. '" size="30">'. "\n"; }
+			if(strlen($myField['Comment'])>0)	{ print ' <input type="text" name="'. $myField['nameNew'] .'" placeholder="'. $myField['name'] .'" value="'. $details[$myField['name']]. '" size="30" '.$delete.' rel="tooltip" data-placement="right" title="'.$myField['Comment'].'">'. "\n"; }
+			else								{ print ' <input type="text" name="'. $myField['nameNew'] .'" placeholder="'. $myField['name'] .'" value="'. $details[$myField['name']]. '" size="30" '.$delete.'>'. "\n"; }
 			print '	</td>'. "\n";
 			print '</tr>'. "\n";		
 		}
@@ -304,7 +308,7 @@ $myFieldsSize = sizeof($myFields);
 	 <tr>
 	 	<td><?php print _('Unique'); ?></td>
 	 	<td>
-		 	<input type="checkbox" name="unique" value="1">
+		 	<input type="checkbox" name="unique" value="1" <?php print $delete; ?>>
 		 	<div class="help-inline"><?php print _('Unique hostname'); ?></div>
 	 	</td>
 	 </tr>

@@ -197,9 +197,11 @@ $myFieldsSize = sizeof($myFields);
 
 <!-- footer -->
 <div class="pFooter">
-	<button class="btn btn-small hidePopups"><?php print _('Cancel'); ?></button>
-	<button class="btn btn-small btn-danger manageRequest" data-action='reject'><i class="icon-white icon-remove"></i> <?php print _('Reject'); ?></button>
-	<button class="btn btn-small btn-success manageRequest" data-action='accept'><i class="icon-white icon-ok"></i> <?php print _('Accept'); ?></button>
+	<div class="btn-group">
+		<button class="btn btn-small hidePopups"><?php print _('Cancel'); ?></button>
+		<button class="btn btn-small btn-danger manageRequest" data-action='reject'><i class="icon-white icon-remove"></i> <?php print _('Reject'); ?></button>
+		<button class="btn btn-small btn-success manageRequest" data-action='accept'><i class="icon-white icon-ok"></i> <?php print _('Accept'); ?></button>
+	</div>
 	
 	<!-- result -->
 	<div class="manageRequestResult"></div>

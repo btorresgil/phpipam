@@ -18,7 +18,7 @@ if(!$vlan) {
 $settings = getAllSettings();
 
 # get custom VLAN fields
-$customVLANFields = getCustomVLANfields();
+$customVLANFields = getCustomFields('vlans');
 ?>
 
 <!-- content print! -->

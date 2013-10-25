@@ -2840,7 +2840,7 @@ function getAllIPsforScan($cli = false)
     $database    = new database($db['host'], $db['user'], $db['pass'], $db['name']); 
     
     //set query
-    $query = 'select `i`.`id`,`subnetId`,`ip_addr`,`lastSeen`,`lastSeen` as `oldStamp` from `ipaddresses` as `i`, `subnets` as `s` where `i`.`subnetId`=`s`.`id` and `s`.`pingSubnet` = 1 and `i`.`excludePing` != 1 order by `lastSeen` desc;';
+    $query = 'select `i`.`id`,`i`.`description`,`subnetId`,`ip_addr`,`lastSeen`,`lastSeen` as `oldStamp` from `ipaddresses` as `i`, `subnets` as `s` where `i`.`subnetId`=`s`.`id` and `s`.`pingSubnet` = 1 and `i`.`excludePing` != 1 order by `lastSeen` desc;';
 
 	//get IP addresses
     try { $res = $database->getArray( $query ); }

@@ -529,20 +529,37 @@ span.severity2 {
 
 
 /* @subnets list */
-#leftMenu.span2 {
+table#subnetsMenu {
+	width: 100%;	
+}
+table#subnetsMenu td {
+	vertical-align: top;
+}
+table#subnetsMenu td#subnetsLeft {
+	vertical-align:top;
+	white-space:nowrap;
+	width:200px;
 	border-right: 1px solid #eee;
+}
+
+#leftMenu {
+/* 	border-right: 1px solid #eee; */
 	
 	padding: 0px;
 }
-#leftMenu.span2 h4 {
+#leftMenu h4 {
 	padding-left: 10px;
 }
-div.subnets {
+div#content {
 	padding-left: 10px;
+	padding-right: 10px;
+}
+div.subnets {
+/* 	padding-left: 10px; */
 }
 ul#subnets {	
 	list-style: none;
-	margin-left: 0px;
+	margin-left: 10px;
 }
 ul#subnets li {
 	line-height: 20px;
@@ -898,7 +915,8 @@ table.slaves tr.success td {
 
 .nav-tools,
 .nav-admin {
-	margin: 0px 10px;
+/* 	margin: 0px 10px; */
+	margin: 0px;
 	margin-bottom: 20px;
 }
 .nav-tools .active a,

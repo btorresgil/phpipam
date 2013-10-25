@@ -172,15 +172,19 @@ else								 		{ $url = "http://$_SERVER[SERVER_NAME]".BASE; }
 		}
 		# side menus
 		else {
-			# load left menu
-			print "<div id='leftMenu' class='span2'>";
+			print "<table id='subnetsMenu'>";
+			print "<tr>";
+			
+			print "<td id='subnetsLeft'>";
+			print "<div id='leftMenu'>";
 				if($_REQUEST['page'] == "subnets" || $_REQUEST['page'] == "vlan" || $_REQUEST['page'] == "vrf")			{ include_once("site/subnets.php"); }
 				else if ($_REQUEST['page'] == "tools")																	{ include_once("site/tools/toolsMenu.php"); }
-				else if ($_REQUEST['page'] == "administration")															{ include_once("site/admin/adminMenu.php"); }
-			print "</div>";
+				else if ($_REQUEST['page'] == "administration")															{ include_once("site/admin/adminMenu.php"); }	
+			print "</div>";		
+			print "</td>";
 			
-			# load content
-			print "<div id='content' class='span10'>";
+			print "<td>";
+			print "<div id='content'>";
 				if( isset($_REQUEST['toolsId']) && (strlen($_REQUEST['toolsId']) == 0) )	{ unset($_REQUEST['toolsId']); }
 				# subnets
 				if($_REQUEST['page'] == "subnets" && !isset($_REQUEST['subnetId']))										{ include_once("site/ipaddr/sectionAllSubnets.php"); }
@@ -192,6 +196,10 @@ else								 		{ $url = "http://$_SERVER[SERVER_NAME]".BASE; }
 				else if ($_REQUEST['page'] == "administration"  && !isset($_REQUEST['adminId']))						{ print "<div class='alert alert-info alert-dash'><i class='icon-gray icon-chevron-left'></i> "._('Please select setting from left menu!')."</div>"; }    	
 				else if ($_REQUEST['page'] == "administration")															{ include_once("site/admin/$_REQUEST[adminId].php"); }    	
 			print "</div>";
+			print "</td>";
+			
+			print "</tr>";
+			print "</table>";
     	}
     	?>
       	
