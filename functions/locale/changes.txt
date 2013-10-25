@@ -740,3 +740,10 @@ msgstr ""
 
 msgid "AD account does not have enough privileges for search"
 msgstr ""
+
+
+### 0.891.003 ###
+
+#: site/admin/usersEditResult.php
+msgid "Admin user cannot be deleted"
+msgstr ""

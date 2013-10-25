@@ -1,4 +1,4 @@
-== 0.891.003
+== 0.891.004
 
 	New features:
 	----------------------------
@@ -28,6 +28,7 @@
 	+ Added description and required field checkbox for custom IP/Subnet Fields;
 	+ Added custom device fields;
 	+ Mails are now sent through phpmailer;
+	+ Admin user cannot be deleted;
 	
 	Translations:
 	----------------------------

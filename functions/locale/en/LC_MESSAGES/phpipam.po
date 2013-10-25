@@ -4,7 +4,7 @@
 # miha petkovsek <miha.petkovsek@gmail.com>, 2013.
 #
 
-# "Project-Id-Version: 0.89.001\n"
+# "Project-Id-Version: 0.891.003\n"
 # "Report-Msgid-Bugs-To: Miha Petkovsek <miha.petkovsek@gmail.com>\n"
 # "POT-Creation-Date: 2013-04-02 14:33+0200\n"
 # "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
@@ -4288,4 +4288,8 @@ msgid "Invalid baseDN setting for AD"
 msgstr ""
 
 msgid "AD account does not have enough privileges for search"
+msgstr ""
+
+#: site/admin/usersEditResult.php
+msgid "Admin user cannot be deleted"
 msgstr ""

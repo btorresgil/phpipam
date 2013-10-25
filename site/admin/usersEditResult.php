@@ -40,12 +40,18 @@ else if ($userModDetails['action'] == "edit") {
     $errors = verifyUserModInput($userModDetails);
 }
 else if ($userModDetails['action'] == "delete") {
-    if (!deleteUserById($userModDetails['userId'], $userModDetails['username'])) { print '<div class="alert alert-error>'._('Cannot delete user').' '. $userModDetails['username'] .'!</div>"'; }
-    else 																		 { print '<div class="alert alert-success">'._('User deleted successfully').'!</div>'; }
-    //stop script execution
-    die();
-}
 
+	//cannot delete admin user
+	if($userModDetails['username']=="Admin" ) {
+		die('<div class="alert alert-error">'._('Admin user cannot be deleted').'!</div>');
+	}	
+	else {
+	    if (!deleteUserById($userModDetails['userId'], $userModDetails['username'])) { print '<div class="alert alert-error">'._('Cannot delete user').' '. $userModDetails['username'] .'!</div>'; }
+	    else 																		 { print '<div class="alert alert-success">'._('User deleted successfully').'!</div>'; }
+	    //stop script execution
+	    die();	
+	}
+}
 
 
 //custom

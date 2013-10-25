@@ -4330,3 +4330,7 @@ msgstr "Neveljaven osnovni DN za AD"
 
 msgid "AD account does not have enough privileges for search"
 msgstr "AD račun nima dovolj pravic za iskanje"
+
+#: site/admin/usersEditResult.php
+msgid "Admin user cannot be deleted"
+msgstr "Administratorskega računa ni mogoče pobrisati"
