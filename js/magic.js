@@ -1049,7 +1049,7 @@ $(document).on("click", "button#subnetTruncateSubmit", function() {
 $(document).on("click", ".editSubnetSubmit", function() {
     showSpinner();
     var subnetData = $('form#editSubnetDetails').serialize();
-    
+        
     //if ipaddress and delete then change action!
     if($(this).hasClass("editSubnetSubmitDelete")) {
         subnetData = subnetData.replace("action=edit", "action=delete");
@@ -1152,10 +1152,11 @@ $(document).on("change", "select#selectSectionfromIPCalc", function() {
 
 /*    Edit subnet from ip address list
 ************************************/
-$('a.edit_subnet, button.edit_subnet, button#add_subnet').click(function () {
+$('.edit_subnet, button.edit_subnet, button#add_subnet').click(function () {
     var subnetId  = $(this).attr('data-subnetId');
     var sectionId = $(this).attr('data-sectionId');
     var action    = $(this).attr('data-action');
+
     //format posted values
     var postdata     = "sectionId="+sectionId+"&subnetId="+subnetId+"&action="+action+"&location=IPaddresses";
     //load add Subnet form / popup
@@ -1219,7 +1220,7 @@ $(document).on("click", ".vlanManagementEditFromSubnetButton", function() {
 /*	Folders
 ************************************/
 //create new folder popup
-$('#add_folder').click(function() {
+$('#add_folder, .add_folder').click(function() {
 	showSpinner();
     var subnetId  = $(this).attr('data-subnetId');
     var sectionId = $(this).attr('data-sectionId');
@@ -1237,12 +1238,27 @@ $('#add_folder').click(function() {
 });
 //submit folder changes
 $(document).on("click", ".editFolderSubmit", function() {
+	showSpinner();
 	var postData = $('form#editFolderDetails').serialize();
 	$.post('site/admin/manageFolderEditSubmit.php', postData, function(data) {
 		$('.manageFolderEditResult').html(data);
         //reload after 2 seconds if succeeded!
         if(data.search("error") == -1)   { setTimeout(function (){window.location.reload();}, 1500); }
         else                             { hideSpinner(); hideSpinner(); }
+    }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});	
+	return false;
+});
+//delete folder
+$(document).on("click", ".editFolderSubmitDelete", function() {
+	showSpinner();
+    var subnetId  = $(this).attr('data-subnetId');
+    //format posted values
+    var postData     = "subnetId="+subnetId+"&action=delete";
+	$.post('site/admin/manageFolderEditSubmit.php', postData, function(data) {
+		$('.manageFolderEditResult').html(data);
+        //reload after 2 seconds if succeeded!
+        if(data.search("error") == -1)   { setTimeout(function (){window.location.reload();}, 1500); }
+        else                             { hideSpinner(); }
     }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});	
 	return false;
 });

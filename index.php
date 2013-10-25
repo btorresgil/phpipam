@@ -177,7 +177,8 @@ else								 		{ $url = "http://$_SERVER[SERVER_NAME]".BASE; }
 			
 			print "<td id='subnetsLeft'>";
 			print "<div id='leftMenu'>";
-				if($_REQUEST['page'] == "subnets" || $_REQUEST['page'] == "vlan" || $_REQUEST['page'] == "vrf")			{ include_once("site/subnets.php"); }
+				if($_REQUEST['page'] == "subnets" || $_REQUEST['page'] == "vlan" || 
+				   $_REQUEST['page'] == "vrf" 	  || $_REQUEST['page'] == "folder")										{ include_once("site/subnets.php"); }
 				else if ($_REQUEST['page'] == "tools")																	{ include_once("site/tools/toolsMenu.php"); }
 				else if ($_REQUEST['page'] == "administration")															{ include_once("site/admin/adminMenu.php"); }	
 			print "</div>";		
@@ -188,7 +189,8 @@ else								 		{ $url = "http://$_SERVER[SERVER_NAME]".BASE; }
 				if( isset($_REQUEST['toolsId']) && (strlen($_REQUEST['toolsId']) == 0) )	{ unset($_REQUEST['toolsId']); }
 				# subnets
 				if($_REQUEST['page'] == "subnets" && !isset($_REQUEST['subnetId']))										{ include_once("site/ipaddr/sectionAllSubnets.php"); }
-				else if($_REQUEST['page'] == "subnets" || $_REQUEST['page'] == "vlan" || $_REQUEST['page'] == "vrf")	{ include_once("site/ipaddr/ipAddressSwitch.php"); }
+				else if($_REQUEST['page'] == "subnets" || $_REQUEST['page'] == "vlan" 
+					 || $_REQUEST['page'] == "vrf"	   || $_REQUEST['page'] == "folder")								{ include_once("site/ipaddr/ipAddressSwitch.php"); }
 				# tools		
 				else if ($_REQUEST['page'] == "tools" && !isset($_REQUEST['toolsId']))									{ print "<div class='alert alert-info alert-dash'><i class='icon-gray icon-chevron-left'></i> "._('Please select tool from left menu!')."</div>"; }
 				else if ($_REQUEST['page'] == "tools")																	{ include_once("site/tools/$_REQUEST[toolsId].php"); }

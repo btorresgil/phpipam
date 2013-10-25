@@ -4,7 +4,7 @@
 # miha petkovsek <miha.petkovsek@gmail.com>, 2013.
 #
 
-# "Project-Id-Version: 0.89.001\n"
+# "Project-Id-Version: 0.891.005\n"
 # "Report-Msgid-Bugs-To: Miha Petkovsek <miha.petkovsek@gmail.com>\n"
 # "POT-Creation-Date: 2013-04-02 14:33+0200\n"
 # "PO-Revision-Date: 2013-06-28 14:33+0200\n"
@@ -4334,3 +4334,50 @@ msgstr "AD račun nima dovolj pravic za iskanje"
 #: site/admin/usersEditResult.php
 msgid "Admin user cannot be deleted"
 msgstr "Administratorskega računa ni mogoče pobrisati"
+
+#: site/admin/manageFolderSubmit.php
+msgid "Error adding new folder"
+msgstr "Napaka pri dodajanju nove mape"
+
+msgid "Folder, IP addresses and all belonging subnets deleted successfully"
+msgstr "Mapa, IP naslovi in propadajoča omrežja izbrisana"
+
+msgid "Folder add successfull"
+msgstr "Mapa dodana"
+
+msgid "Folder edit successfull"
+msgstr "Mapa urejena"
+
+#: site/ipaddr/folderDetails.php
+msgid "Folder does not exist"
+msgstr "Mapa ne obstaja"
+
+msgid "You do not have permission to access this folder"
+msgstr "Nimate pravic za dostop do te mape"
+
+msgid "Folder details"
+msgstr "Podatki o mapi"
+
+msgid "Folder name"
+msgstr "Ime mape"
+
+msgid "Add new nested folder"
+msgstr "Dodaj novo mapo"
+
+msgid "directly nested folders"
+msgstr "pripadajoče mape"
+
+msgid "Folder has no nested folders or belonging subnets"
+msgstr "Mapa nima pripadajočih map in omrežij"
+
+msgid "You do not have permissions to edit folder"
+msgstr "Nimate pravic za urejanje mape"
+
+msgid "Edit folder"
+msgstr "Uredi mapo"
+
+msgid "Manage folder permissions"
+msgstr "Uredi pravice"
+
+msgid "Delete folder"
+msgstr "Izbriši mapo"

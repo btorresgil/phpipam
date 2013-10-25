@@ -25,6 +25,7 @@ else {
 	}	
 }
 
+
 /* verify post */
 CheckReferrer();
 
@@ -33,6 +34,13 @@ $settings = getAllSettings();
 
 /* get section details */
 $section = getSectionDetailsById($_POST['sectionId']);
+
+/* get master subnet details for folder overrides */
+if($_POST['masterSubnetId']!="0")	{
+	$mSection = getSubnetDetailsById($_POST['masterSubnetId']);
+	if($mSection['isFolder']=="1")	{ $isFolder = true; }
+	else							{ $isFolder = false; }
+} else 								{ $isFolder = true; }
 
 
 /**
@@ -53,7 +61,7 @@ if ( ($_POST['sectionId'] != $_POST['sectionIdNew']) && $_POST['action'] == "edi
 	$_POST['masterSubnetId'] = "0";
 
     # check for overlapping
-    if($section['strictMode'] == 1) {
+    if($section['strictMode'] == 1 && !$isFolder) {
     	/* verify that no overlapping occurs if we are adding root subnet */
     	if ( $overlap = verifySubnetOverlapping ($_POST['sectionIdNew'], $_POST['subnet'], $_POST['vrfId']) ) {
     		$errors[] = $overlap;
@@ -68,7 +76,7 @@ else if (($_POST['action'] == "add") && ($_POST['masterSubnetId'] == 0)) {
     $errors   	= verifyCidr ($_POST['subnet']);
 
     /* check for overlapping */
-    if($section['strictMode'] == 1) {
+    if($section['strictMode'] == 1 && !$isFolder) {
     	/* verify that no overlapping occurs if we are adding root subnet 
 	       only check for overlapping if vrf is empty or not exists!
     	*/
@@ -85,13 +93,13 @@ else if ($_POST['action'] == "add") {
     $errors   	= verifyCidr ($_POST['subnet']);
 
     /* verify that nested subnet is inside root subnet */
-    if($section['strictMode'] == 1) {
+    if($section['strictMode'] == 1 && !$isFolder) {
 	    if ( !$overlap = verifySubnetNesting ($_POST['masterSubnetId'], $_POST['subnet']) ) {
 	    	$errors[] = _('Nested subnet not in root subnet!');
 	    }
     }
     /* verify that no overlapping occurs if we are adding nested subnet */
-    if($section['strictMode'] == 1) {
+    if($section['strictMode'] == 1 && !$isFolder) {
    		if ( $overlap = verifyNestedSubnetOverlapping ($_POST['sectionId'], $_POST['subnet'], $_POST['vrfId'], $_POST['masterSubnetId']) ) {
     		$errors[] = $overlap;
     	}
@@ -101,7 +109,8 @@ else if ($_POST['action'] == "add") {
  * Check if slave is under master
  */
 else if ($_POST['action'] == "edit") {
-    if($section['strictMode'] == 1) {
+	
+    if($section['strictMode']==1 && !$isFolder) {
     	/* verify that nested subnet is inside root subnet */
     	if ( (!$overlap = verifySubnetNesting($_POST['masterSubnetId'], $_POST['subnet'])) && $_POST['masterSubnetId']!=0) {
     		$errors[] = _('Nested subnet not in root subnet!');

@@ -412,6 +412,159 @@ function getHighestLogId()
 
 
 
+/* @subnet functions ---------------- */
+/**
+ * Print subnets structure
+ */
+function printToolsSubnets( $subnets, $custom )
+{
+		$html = array();
+		
+		$rootId = 0;									# root is 0
+
+		# remove all not permitted!
+		foreach($subnets as $k=>$s) {
+			$permission = checkSubnetPermission ($s['id']);
+			if($permission == "0") { unset($subnets[$k]); }
+		}
+
+		if(sizeof($subnets) > 0) {
+		foreach ( $subnets as $item ) {
+			$children[$item['masterSubnetId']][] = $item;
+		}
+		}
+		
+		# loop will be false if the root has no children (i.e., an empty menu!)
+		$loop = !empty( $children[$rootId] );
+		
+		# initializing $parent as the root
+		$parent = $rootId;
+		$parent_stack = array();
+		
+		# display selected subnet as opened
+		if(isset($_REQUEST['subnetId']))
+		$allParents = getAllParents ($_REQUEST['subnetId']);
+		
+		# return table content (tr and td's)
+		while ( $loop && ( ( $option = each( $children[$parent] ) ) || ( $parent > $rootId ) ) )
+		{
+			# repeat 
+			$repeat  = str_repeat( " - ", ( count($parent_stack)) );
+			# dashes
+			if(count($parent_stack) == 0)	{ $dash = ""; }
+			else							{ $dash = "-"; }
+
+			if(count($parent_stack) == 0) {
+				$margin = "0px";
+				$padding = "0px";
+			}
+			else {
+				# padding
+				$padding = "10px";			
+
+				# margin
+				$margin  = (count($parent_stack) * 10) -10;
+				$margin  = $margin *2;
+				$margin  = $margin."px";				
+			}
+							
+			# count levels
+			$count = count( $parent_stack ) + 1;
+			
+			# get subnet details
+				# get VLAN
+				$vlan = subnetGetVLANdetailsById($option['value']['vlanId']);
+				$vlan = $vlan['number'];
+				if(empty($vlan) || $vlan == "0") 	{ $vlan = ""; }			# no VLAN
+
+				# description
+				if(strlen($option['value']['description']) == 0) 	{ $description = "/"; }													# no description
+				else 												{ $description = $option['value']['description']; }						# description		
+				
+				# requests
+				if($option['value']['allowRequests'] == 1) 			{ $requests = "enabled"; }												# requests enabled
+				else 												{ $requests = ""; }														# request disabled				
+
+				# hosts check
+				if($option['value']['pingSubnet'] == 1) 			{ $pCheck = "enabled"; }												# ping check enabled
+				else 												{ $pCheck = ""; }														# ping check disabled
+							
+			
+			# print table line
+			if(strlen($option['value']['subnet']) > 0) { 
+				$html[] = "<tr>";
+				# folder
+				if($option['value']['isFolder']==1) {
+				$html[] = "	<td class='level$count'><span class='structure' style='padding-left:$padding; margin-left:$margin;'></span><i class='icon-gray icon-folder-open'></i> <a href='folder/".$option['value']['sectionId']."/".$option['value']['id']."/'>$description</a></td>";
+				$html[] = "	<td class='level$count'><span class='structure' style='padding-left:$padding; margin-left:$margin;'></span> $description</td>";
+				} else {
+				$html[] = "	<td class='level$count'><span class='structure' style='padding-left:$padding; margin-left:$margin;'></span><a href='subnets/".$option['value']['sectionId']."/".$option['value']['id']."/'>  ".transform2long($option['value']['subnet']) ."/".$option['value']['mask']."</a></td>";
+				$html[] = "	<td class='level$count'><span class='structure' style='padding-left:$padding; margin-left:$margin;'></span> $description</td>";	
+				}
+				//vlan
+				$html[] = "	<td>$vlan</td>";
+				
+				//masterSubnet
+				if( $option['value']['masterSubnetId']==0 || empty($option['value']['masterSubnetId']))  	{ $masterSubnet = true; }		# check if it is master
+				else 																		 			 	{ $masterSubnet = false; }
+				
+				if($masterSubnet) { $html[] ='	<td>/</td>' . "\n"; }
+				else {
+					$master = getSubnetDetailsById ($option['value']['masterSubnetId']);
+					if($master['isFolder'])
+						$html[] = "	<td><i class='icon-gray icon-folder-open'></i> <a href='subnets/".$option['value']['sectionId']."/$master[id]/'>$master[description]</a></td>" . "\n";
+					else {
+						$html[] = "	<td><a href='subnets/".$option['value']['sectionId']."/$master[id]/'>".transform2long($master['subnet']) .'/'. $master['mask'] .'</a></td>' . "\n";
+					}
+				}
+				
+				//used , free				
+				if($option['value']['isFolder']==1) {
+					$html[] =  '<td></td>'. "\n";
+				}
+				elseif( (!$masterSubnet) || (!subnetContainsSlaves($option['value']['id']))) {
+		    		$ipCount = countIpAddressesBySubnetId ($option['value']['id']);
+		    		$calculate = calculateSubnetDetails ( gmp_strval($ipCount), $option['value']['mask'], $option['value']['subnet'] );
+
+		    		$html[] = ' <td class="used">'. reformatNumber($calculate['used']) .'/'. reformatNumber($calculate['maxhosts']) .' ('.reformatNumber($calculate['freehosts_percent']) .' %)</td>';
+		    	}
+		    	else {
+					$html[] =  '<td></td>'. "\n";
+				}			
+				
+				//requests				
+				$html[] = "	<td>$requests</td>";
+				$html[] = "	<td>$pCheck</td>";
+				
+				//custom
+				if(sizeof($custom) > 0) {
+			   		foreach($custom as $field) {
+			    		$html[] =  "	<td>".$option['value'][$field['name']]."</td>"; 
+			    	}
+			    }
+				
+				$html[] = "</tr>";
+			}
+			
+			if ( $option === false ) { $parent = array_pop( $parent_stack ); }
+			# Has slave subnets
+			elseif ( !empty( $children[$option['value']['id']] ) ) {														
+				array_push( $parent_stack, $option['value']['masterSubnetId'] );
+				$parent = $option['value']['id'];
+			}
+			# Last items
+			else { }
+		}
+		return implode( "\n", $html );
+}
+
+
+
+
+
+
+
+
 
 /* @ search functions ---------------- */
 

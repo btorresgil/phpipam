@@ -4293,3 +4293,50 @@ msgstr ""
 #: site/admin/usersEditResult.php
 msgid "Admin user cannot be deleted"
 msgstr ""
+
+#: site/admin/manageFolderSubmit.php
+msgid "Error adding new folder"
+msgstr ""
+
+msgid "Folder, IP addresses and all belonging subnets deleted successfully"
+msgstr ""
+
+msgid "Folder add successfull"
+msgstr ""
+
+msgid "Folder edit successfull"
+msgstr ""
+
+#: site/ipaddr/folderDetails.php
+msgid "Folder does not exist"
+msgstr ""
+
+msgid "You do not have permission to access this folder"
+msgstr ""
+
+msgid "Folder details"
+msgstr ""
+
+msgid "Folder name"
+msgstr ""
+
+msgid "Add new nested folder"
+msgstr ""
+
+msgid "directly nested folders"
+msgstr ""
+
+msgid "Folder has no nested folders or belonging subnets"
+msgstr ""
+
+msgid "You do not have permissions to edit folder"
+msgstr ""
+
+msgid "Edit folder"
+msgstr ""
+
+msgid "Manage folder permissions"
+msgstr ""
+
+msgid "Delete folder"
+msgstr ""

@@ -691,6 +691,7 @@ function fetchSubnets ($sectionId, $orderType = "subnet", $orderBy = "asc" )
 
     /* set query, open db connection and fetch results */
     $query 	  = "select * from `subnets` where `sectionId` = '$sectionId' ORDER BY `isFolder` desc,`masterSubnetId`,`$orderType` $orderBy;";
+    
     $database = new database($db['host'], $db['user'], $db['pass'], $db['name']);
     
     /* execute */
@@ -1501,11 +1502,14 @@ function printDropdownMenuBySection($sectionId, $subnetMasterId = "0")
 			$children[$item['masterSubnetId']][] = $item;
 		
 		# loop will be false if the root has no children (i.e., an empty menu!)
-		$loop = !empty( $children[$rootId] );
+		$loopF = !empty( $childrenF[$rootId] );
+		$loop  = !empty( $children[$rootId] );
 		
 		# initializing $parent as the root
 		$parent = $rootId;
-		$parent_stack = array();
+		
+		$parent_stackF = array();
+		$parent_stack  = array();
 		
 		# display selected subnet as opened
 		$allParents = getAllParents ($_REQUEST['subnetId']);
@@ -1515,19 +1519,19 @@ function printDropdownMenuBySection($sectionId, $subnetMasterId = "0")
 		$html[] = "<select name='masterSubnetId'>";
 				
 		# folders
-		if(sizeof($folders)>0) {
+		if(sizeof($folders)>0) {		
 			$html[] = "<optgroup label='"._("Folders")."'>";
 			# return table content (tr and td's) - folders
-			while ( $loop && ( ( $option = each( $childrenF[$parent] ) ) || ( $parent > $rootId ) ) )
+			while ( $loopF && ( ( $option = each( $childrenF[$parent] ) ) || ( $parent > $rootId ) ) )
 			{
 				# repeat 
-				$repeat  = str_repeat( " - ", ( count($parent_stack)) );
+				$repeat  = str_repeat( " - ", ( count($parent_stackF)) );
 				# dashes
-				if(count($parent_stack) == 0)	{ $dash = ""; }
+				if(count($parent_stackF) == 0)	{ $dash = ""; }
 				else							{ $dash = $repeat; }
 								
 				# count levels
-				$count = count( $parent_stack ) + 1;
+				$count = count( $parent_stackF ) + 1;
 				
 				# print table line
 				if(strlen($option['value']['subnet']) > 0) { 
@@ -1536,10 +1540,10 @@ function printDropdownMenuBySection($sectionId, $subnetMasterId = "0")
 					else 											{ $html[] = "<option value='".$option['value']['id']."'>$repeat ".$option['value']['description']."</option>"; }					
 				}
 				
-				if ( $option === false ) { $parent = array_pop( $parent_stack ); }
+				if ( $option === false ) { $parent = array_pop( $parent_stackF ); }
 				# Has slave subnets
-				elseif ( !empty( $children[$option['value']['id']] ) ) {														
-					array_push( $parent_stack, $option['value']['masterSubnetId'] );
+				elseif ( !empty( $childrenF[$option['value']['id']] ) ) {														
+					array_push( $parent_stackF, $option['value']['masterSubnetId'] );
 					$parent = $option['value']['id'];
 				}
 				# Last items

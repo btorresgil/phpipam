@@ -72,6 +72,19 @@ elseif($_REQUEST['page'] == "vrf") {
 		include_once('vrfSubnets.php');
 		print '</div>';		
 }
+# folders
+elseif($_REQUEST['page'] == "folder") {
+		# print VRF details
+		print "<div class='subnetDetails'>";
+		include_once("folderDetails.php");
+		print "</div>";
+		
+		# Subnets in VRF
+		print '<div class="ipaddresses_overlay">';
+		include_once('folderDetailsSubnets.php');
+		print '</div>';		
+}
+
 
 ?>
 

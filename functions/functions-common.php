@@ -826,7 +826,7 @@ function get_menu_html( $subnets, $rootId = 0 )
 					# folder
 					if($option['value']['isFolder'] == 1) {
 						$html[] = '<li class="folder folder-'.$open.' '.$active.'"><i class="icon-folder-'.$open.'" rel="tooltip" data-placement="right" data-html="true" title="'._('Folder contains more subnets').'<br>'._('Click on folder to open/close').'"></i>';
-						$html[] = '<a href="subnets/'.$option['value']['sectionId'].'/'.$option['value']['id'].'/">'.$option['value']['description'].'</a>'; 				
+						$html[] = '<a href="folder/'.$option['value']['sectionId'].'/'.$option['value']['id'].'/">'.$option['value']['description'].'</a>'; 				
 					}
 					# print name
 					elseif($option['value']['showName'] == 1) {
@@ -853,7 +853,7 @@ function get_menu_html( $subnets, $rootId = 0 )
 					# folder - opened
 					if($option['value']['isFolder'] == 1) {
 						$html[] = '<li class="leaf '.$active.'"><i class="icon-folder-'.$open.'"></i>';
-						$html[] = '<a href="subnets/'.$option['value']['sectionId'].'/'.$option['value']['id'].'/">'.$option['value']['description'].'</a></li>';
+						$html[] = '<a href="folder/'.$option['value']['sectionId'].'/'.$option['value']['id'].'/">'.$option['value']['description'].'</a></li>';
 					}
 					# print name
 					elseif($option['value']['showName'] == 1) {				
@@ -1275,6 +1275,30 @@ function printBreadcrumbs ($req)
 			}
 			$subnet = getSubnetDetailsById($req['subnetId']);
 			print "	<li class='active'>$subnet[description] (".Transform2long($subnet['subnet']).'/'.$subnet['mask'].")</li>";																# active subnet
+			print "</ul>";
+		}
+	}
+	# subnets
+	if($req['page'] == "folder")	{
+		if(isset($req['subnetId'])) {
+			# get all parents
+			$parents = getAllParents ($req['subnetId']);
+			print "<ul class='breadcrumb'>";
+			# remove root - 0
+			array_shift($parents);
+			
+			# section details
+			if(is_numeric($req['section']))	{ $section = getSectionDetailsById($req['section']); }					# if id is provided
+			else							{ $section = getSectionDetailsByName($req['section']); }				# if name is provided
+			
+			print "	<li><a href='subnets/$section[id]/'>$section[name]</a> <span class='divider'>/</span></li>";	# section name
+			
+			foreach($parents as $parent) {
+			$subnet = getSubnetDetailsById($parent);
+			print "	<li><a href='subnets/$section[id]/$parent/'>$subnet[description]</a> <span class='divider'>/</span></li>";								# subnets in between
+			}
+			$subnet = getSubnetDetailsById($req['subnetId']);
+			print "	<li class='active'>$subnet[description]</li>";																# active subnet
 			print "</ul>";
 		}
 	}

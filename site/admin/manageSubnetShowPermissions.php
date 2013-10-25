@@ -26,12 +26,20 @@ $subnet = getSubnetDetailsById($_POST['subnetId']);
 
 
 <!-- header -->
-<div class="pHeader"><?php print _('Manage subnet permissions'); ?></div>
+<div class="pHeader">
+	<?php 
+	if($subnet['isFolder']==1)	{ print _('Manage folder permissions');  }
+	else						{ print _('Manage subnet permissions');  }		
+	?>
+</div>
 
 <!-- content -->
 <div class="pContent">
 
-	<?php print _('Manage permissions for subnet'); ?> <?php print transform2long($subnet['subnet'])."/".$subnet['mask']." ($subnet[description])"; ?>
+	<?php 
+	if($subnet['isFolder']==1)	{ print _('Manage permissions for folder')." $subnet[description]"; }
+	else						{ print _('Manage permissions for subnet'); ?> <?php print transform2long($subnet['subnet'])."/".$subnet['mask']." ($subnet[description])"; }
+	?>
 	<hr>
 
 	<form id="editSubnetPermissions">

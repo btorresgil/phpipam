@@ -1,4 +1,4 @@
-== 0.891.004
+== 0.891.005
 
 	New features:
 	----------------------------
@@ -11,6 +11,7 @@
 	+ Option to show and group subnets by VRF in subnets list;
 	+ Added subsections;
 	+ Added AD username search;
+	+ Added folders;
 
 	Enhancements:
 	----------------------------

@@ -47,6 +47,10 @@ RewriteRule ^subnets/(.*)/(.*)/(.*)/$ index.php?page=subnets&section=$1&subnetId
 RewriteRule ^subnets/(.*)/(.*)/$ index.php?page=subnets&section=$1&subnetId=$2 [L]
 RewriteRule ^subnets/(.*)/$ index.php?page=subnets&section=$1 [L]
 
+# folders
+RewriteRule ^folder/(.*)/(.*)/$ index.php?page=folder&section=$1&subnetId=$2 [L]
+RewriteRule ^folder/(.*)/$ index.php?page=folder&section=$1 [L]
+
 # vlans
 RewriteRule ^vlan/(.*)/(.*)/$ index.php?page=vlan&section=$1&vlanId=$2 [L]
 

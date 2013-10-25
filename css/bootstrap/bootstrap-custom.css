@@ -33,6 +33,9 @@ table.table-noborder th,
 table.table-noborder td {
 	border: 0px;
 }
+table th {
+	vertical-align: top !important;
+}
 
 hr {
   margin: 5px;
