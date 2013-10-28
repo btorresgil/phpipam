@@ -131,7 +131,10 @@ if( (isset($_GET['note'])) && ($_GET['note'] == "on") ) {
 //custom
 if(sizeof($myFields) > 0) {
 	foreach($myFields as $myField) {
-		if( (isset($_GET[$myField['name']])) && ($_GET[$myField['name']] == "on") ) {
+		//set temp name - replace space with three ___
+		$myField['nameTemp'] = str_replace(" ", "___", $myField['name']);
+		
+		if( (isset($_GET[$myField['nameTemp']])) && ($_GET[$myField['nameTemp']] == "on") ) {
 			$worksheet->write($lineCount, $rowCount, $myField['name'] ,$format_title);
 			$rowCount++;
 		}
@@ -201,7 +204,10 @@ foreach ($ipaddresses as $ip) {
 	//custom
 	if(sizeof($myFields) > 0) {
 		foreach($myFields as $myField) {
-			if( (isset($_GET[$myField['name']])) && ($_GET[$myField['name']] == "on") ) {
+			//set temp name - replace space with three ___
+			$myField['nameTemp'] = str_replace(" ", "___", $myField['name']);
+			
+			if( (isset($_GET[$myField['nameTemp']])) && ($_GET[$myField['nameTemp']] == "on") ) {
 				$worksheet->write($lineCount, $rowCount, $ip[$myField['name']]);
 				$rowCount++;
 			}
