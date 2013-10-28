@@ -434,6 +434,14 @@ $(document).on("click", "input#csvImportYes", function() {
         else                             { hideSpinner(); }
     }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});
 });
+//donwload template
+$(document).on("click", "#csvtemplate", function() {
+    $("div.dl").remove();    //remove old innerDiv
+    $('div.exportDIV').append("<div style='display:none' class='dl'><iframe src='site/admin/csvtemplate.php'></iframe></div>");
+	
+	
+	return false;
+});
 
 
 /*    export IP addresses

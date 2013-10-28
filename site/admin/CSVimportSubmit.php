@@ -45,44 +45,55 @@ else {
 	
 	//get all to array!
 	for($m=0; $m < $numRows; $m++) {
+
 		//IP must be present!
-		if($data->val($m,'A') > 4 ) {
+		if(filter_var($data->val($m,'A'), FILTER_VALIDATE_IP)) {
 		
-		$outFile[$m]  = $data->val($m,'A').','.$data->val($m,'B').','.$data->val($m,'C').','.$data->val($m,'D').',';
-		$outFile[$m] .= $data->val($m,'E').','.$data->val($m,'F').','.$data->val($m,'G').','.$data->val($m,'H').',';
-		$outFile[$m] .= $data->val($m,'I');
-		//add custom fields
-		if(sizeof($myFields) > 0) {
-			$currLett = "J";
-			foreach($myFields as $field) {
-				$outFile[$m] .= ",".$data->val($m,$currLett++);
+			$outFile[$m]  = $data->val($m,'A').','.$data->val($m,'B').','.$data->val($m,'C').','.$data->val($m,'D').',';
+			$outFile[$m] .= $data->val($m,'E').','.$data->val($m,'F').','.$data->val($m,'G').','.$data->val($m,'H').',';
+			$outFile[$m] .= $data->val($m,'I');
+			//add custom fields
+			if(sizeof($myFields) > 0) {
+				$currLett = "J";
+				foreach($myFields as $field) {
+					$outFile[$m] .= ",".$data->val($m,$currLett++);
+				}
 			}
-		}
 		}
 	}
 }
 
 /* import each value */
-foreach($outFile as $line) {
+foreach($outFile as $k=>$line) {
 
-	//must be longer than 5
-	if(strlen($line) > 5) {
+	// explode it to array for verifications
+	$lineArr = explode(",", $line);
 	
-		//replace states!
-		$line = str_replace("Active", "1", $line);
-		$line = str_replace("Reserved", "2", $line);
-		$line = str_replace("Offline", "0", $line);
-		$line = str_replace("DHCP", "3", $line);
+	// array size must be at least 9
+	if(sizeof($lineArr)<9) {
+		$errors[] = "Line $k is invalid";
+		unset($outFile[$k]);									//wrong line, unset!
+	}
+	// all good, reformat
+	else {
+		// reformat IP state
+		if	  ($lineArr[1]=="Offline"  || $lineArr[1]=="Offline")	{ $lineArr[1] = 0; }
+		elseif($lineArr[1]=="Reserved" || $lineArr[1]=="Reserved")	{ $lineArr[1] = 2; }
+		elseif($lineArr[1]=="DHCP"	   || $lineArr[1]=="DHCP")		{ $lineArr[1] = 3; }
+		else														{ $lineArr[1] = 1; }
 		
-		//add slashes
-		$line = addslashes($line);
+		// reformat device
+		$devices = getAllUniqueSwitches ();
+		foreach($devices as $d) {
+			if($d['hostname']==$lineArr[6])	{ $lineArr[6] = $d['id']; }
+		}
 		
-		//import
-		$import = importCSVline ($line, $subnetId);
-		if (strlen($import) != 1) {
+		// insert
+		$import = importCSVline ($lineArr, $subnetId);
+		if (strlen($import) > 1) {
 			$errors[] = $import;
 		}
-	}
+	}		
 }
 
 

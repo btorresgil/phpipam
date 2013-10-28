@@ -46,6 +46,9 @@ CheckReferrer();
 	<br>
 	<img src="css/images/csvuploadexample.jpg" style="border:1px solid #999999">
 	<br><br>
+	
+	<!-- Download template -->
+	<a class="csvtemplate btn btn-small pull-right" id="csvtemplate">Download template</a>
 
 	<!-- Upload file form -->
 	<h4>1.) <?php print _('Upload file'); ?>:</h4>

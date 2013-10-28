@@ -266,8 +266,8 @@ function validateVlan ($vlan)
 		not higher that 4094
 	*/
 	if(empty($vlan)) 			{ return 'ok'; }
-	else if(!is_numeric($vlan)) { return _('VLAN must be numeric value!'); }
-	else if ($vlan > 4094) 		{ return _('Vlan number can be max 4094'); }
+	elseif(!is_numeric($vlan)) { return _('VLAN must be numeric value!'); }
+	elseif ($vlan > 4094) 		{ return _('Vlan number can be max 4094'); }
 	else 						{ return 'ok'; }
 }
 
@@ -2147,7 +2147,7 @@ function SetInsertQuery( $ip )
 		$query .= " '". $ip['switch'] ."', '". $ip['port'] ."', '". $ip['note'] ."', '". @$ip['excludePing'] ."' ". $myFieldsInsert['values'] .");";
 	}
 	/* edit multiple */
-	else if( ($ip['action'] == "edit") && ($ip['type'] == "series") ) 
+	elseif( ($ip['action'] == "edit") && ($ip['type'] == "series") ) 
 	{
 		$query  = "update `ipaddresses` ";
 		$query .= "set `ip_addr` = '". Transform2decimal( $ip['ip_addr'] ) ."', ";
@@ -2169,7 +2169,7 @@ function SetInsertQuery( $ip )
 		$query .= "where `subnetId` = '". $ip['subnetId'] ."' and `ip_addr` = '". Transform2decimal( $ip['ip_addr'] ) ."';";	
 	}
 	/* edit */
-	else if( $ip['action'] == "edit" ) 
+	elseif( $ip['action'] == "edit" ) 
 	{
 		$query  = "update ipaddresses ";
 		$query .= "set `ip_addr` = '". Transform2decimal( $ip['ip_addr'] ) ."', `description` = '". $ip['description'] ."', `dns_name` = '". $ip['dns_name'] ."' , `mac` = '". $ip['mac'] ."', ". "\n"; 
@@ -2184,15 +2184,15 @@ function SetInsertQuery( $ip )
 		$query .= "where `id` = '". $ip['id'] ."';";	
 	}
 	/* delete multiple */
-	else if( ($ip['action'] == "delete") && ($ip['type'] == "series") ) {
+	elseif( ($ip['action'] == "delete") && ($ip['type'] == "series") ) {
 		$query = "delete from ipaddresses where `subnetId` = '". $ip['subnetId'] ."' and `ip_addr` = '". Transform2decimal( $ip['ip_addr'] ) ."';";	
 	}
 	/* delete */
-	else if( $ip['action'] == "delete" ) {
+	elseif( $ip['action'] == "delete" ) {
 		$query = "delete from ipaddresses where `id` = '". $ip['id'] ."';";	
 	}
 	/* move */
-	else if ($ip['action'] == "move") {
+	elseif ($ip['action'] == "move") {
 		$query = "update `ipaddresses` set `subnetId` = '$ip[newSubnet]' where `id` = '$ip[id]';";
 	}
 	
@@ -2307,15 +2307,15 @@ function VerifyIpAddress( $ip , $subnet , $noStrict = false )
 		// is it valid?
 		if (!$Net_IPv4->validateIP($ip)) 										{ $error = _("IP address not valid")."! ($ip)"; }
 		// it must be in provided subnet
-		else if (!$Net_IPv4->ipInNetwork($ip, $subnet)) 						{ $error = _("IP address not in selected subnet")."! ($ip)"; }
+		elseif (!$Net_IPv4->ipInNetwork($ip, $subnet)) 							{ $error = _("IP address not in selected subnet")."! ($ip)"; }
 		//ignore  /31 and /32 subnet broadcast and subnet checks!
-		else if ($mask[1] == "31" || $mask[1] == "32" || $noStrict == true) 	{ }
+		elseif ($mask[1] == "31" || $mask[1] == "32" || $noStrict == true) 	{ }
 		// It cannot be subnet or broadcast
 		else {
             $net = $Net_IPv4->parseAddress($subnet);
           
             if ($net->network == $ip) 											{ $error = _("Cannot add subnet as IP address!"); }
-            else if ($net->broadcast == $ip) 									{ $error = _("Cannot add broadcast as IP address!"); }
+            elseif ($net->broadcast == $ip) 									{ $error = _("Cannot add broadcast as IP address!"); }
 		}
 	}
 	
@@ -2331,11 +2331,11 @@ function VerifyIpAddress( $ip , $subnet , $noStrict = false )
 		// is it valid?
 		if (!$Net_IPv6->checkIPv6($ip)) 										{ $error = _("IP address not valid")."! ($ip)"; }
 		// it must be in provided subnet
-		else if (!$Net_IPv6->isInNetmask($ip, $subnet)) 						{ $error = _("IP address not in selected subnet")."! ($ip)";}
+		elseif (!$Net_IPv6->isInNetmask($ip, $subnet)) 							{ $error = _("IP address not in selected subnet")."! ($ip)";}
 		//ignore  /127 and /128 subnet broadcast and subnet checks!
-		else if ($mask[1] == "127" || $mask[1] == "128" || $noStrict == true) 	{ }
+		elseif ($mask[1] == "127" || $mask[1] == "128" || $noStrict == true) 	{ }
 		//it cannot be subnet
-		else if ($ip == $subnet_short) 											{ $error = _("Cannot add subnet as IP address!");   }
+		elseif ($ip == $subnet_short) 											{ $error = _("Cannot add subnet as IP address!");   }
 	}
 	
 	/* return results */
@@ -2375,9 +2375,9 @@ function verifyCidr( $cidr , $subnet = 1 )
             //validate IP
             if (!$Net_IPv4->validateIP ($net->ip)) 					{ $errors[] = _("Invalid IP address!"); }
             //network must be same as provided IP address
-            else if (($net->network != $net->ip) && ($subnet == 1)) { $errors[] = _("IP address cannot be subnet! (Consider using")." ". $net->network .")"; }
+            elseif (($net->network != $net->ip) && ($subnet == 1)) 	{ $errors[] = _("IP address cannot be subnet! (Consider using")." ". $net->network .")"; }
             //validate netmask
-            else if (!$Net_IPv4->validateNetmask ($net->netmask)) 	{ $errors[] = _('Invalid netmask').' ' . $net->netmask; }    
+            elseif (!$Net_IPv4->validateNetmask ($net->netmask)) 	{ $errors[] = _('Invalid netmask').' ' . $net->netmask; }    
         }
         else 														{ $errors[] = _('Invalid CIDR format!'); }
 	}	
@@ -2467,7 +2467,7 @@ function FindUnusedIpAddresses ($ip1, $ip2, $type, $broadcast = 0, $checkType = 
 		$result['hosts'] = "1";
     }
     /* /31 */
-    else if($mask == "31" && $type=="IPv4") {
+    elseif($mask == "31" && $type=="IPv4") {
     	if($diff == 1 && $checkType == "networkempty" ) {
     	    $result['ip'] 	 = long2ip($ip1);
     	    $result['hosts'] = "2";		    	
@@ -2476,28 +2476,28 @@ function FindUnusedIpAddresses ($ip1, $ip2, $type, $broadcast = 0, $checkType = 
     	    $result['ip'] 	 = long2ip($ip1);
     	    $result['hosts'] = "1";		    	
     	}
-    	else if($diff == 1 && $checkType == "" ) {
+    	elseif($diff == 1 && $checkType == "" ) {
 /*
 	    	$result['ip'] 	 = long2ip($ip1);
 	    	$result['hosts'] = "";	
 */    	
     	}
-    	else if($diff == 1 && $checkType == "broadcast" ) {
+    	elseif($diff == 1 && $checkType == "broadcast" ) {
 	    	$result['ip'] 	 = long2ip($ip2);
 	    	$result['hosts'] = "1";	    	
     	}
-    	else if($diff == 2 ) {
+    	elseif($diff == 2 ) {
     	    $result['ip'] 	 = long2ip($ip1);
     	    $result['hosts'] = "2";	
     	}
     }    
     /* /128 */
-    else if($mask == "128" && $checkType=="networkempty" && $type=="IPv6") {
+    elseif($mask == "128" && $checkType=="networkempty" && $type=="IPv6") {
 	    $result['ip'] 	 = long2ip6($ip1);
 		$result['hosts'] = "1";
     }
     /* /127 */
-    else if($mask == "127" && $type=="IPv6") {
+    elseif($mask == "127" && $type=="IPv6") {
     	if($diff == 1 && $checkType == "networkempty" ) {
     	    $result['ip'] 	 = long2ip6($ip1);
     	    $result['hosts'] = "2";		    	
@@ -2506,23 +2506,23 @@ function FindUnusedIpAddresses ($ip1, $ip2, $type, $broadcast = 0, $checkType = 
     	    $result['ip'] 	 = long2ip6($ip1);
     	    $result['hosts'] = "1";		    	
     	}
-    	else if($diff == 1 && $checkType == "" ) {  	
+    	elseif($diff == 1 && $checkType == "" ) {  	
     	}
-    	else if($diff == 1 && $checkType == "broadcast" ) {
+    	elseif($diff == 1 && $checkType == "broadcast" ) {
 	    	$result['ip'] 	 = long2ip6($ip2);
 	    	$result['hosts'] = "1";	    	
     	}
-    	else if($diff == 2 ) {
+    	elseif($diff == 2 ) {
     	    $result['ip'] 	 = long2ip6($ip1);
     	    $result['hosts'] = "2";	
     	}
     } 
     /* if diff is less than 2 return false */
-    else if ( $diff < 2 ) {
+    elseif ( $diff < 2 ) {
         return false;
     }
     /* if diff is 2 return 1 IP address in the middle */
-    else if ( $diff == 2 ) 
+    elseif ( $diff == 2 ) 
     {
         if ($type == "IPv4") 
         {   //ipv4
@@ -2615,9 +2615,9 @@ function getFirstAvailableIPAddress ($subnetId)
     	else 			{ $firstAvailable = false; }
     }
     //if subnet /31
-    else if($mask == "31" && $type == "IPv4") {
+    elseif($mask == "31" && $type == "IPv4") {
     	if($size == 1)  	 { $firstAvailable = $ipaddressArray[0]; }
-    	else if($size == 2)  { 
+    	elseif($size == 2)  { 
     		$delta = $ipaddressArray[1] - $ipaddressArray[0];
     		if($delta == 1)  { $firstAvailable = $ipaddressArray[0]; }
     		else			 { $firstAvailable = gmp_strval(gmp_add($ipaddressArray[0], 1)); }
@@ -2625,14 +2625,14 @@ function getFirstAvailableIPAddress ($subnetId)
     	else 				 { $firstAvailable = false; }
     }
     //if subnet is /128
-    else if($mask == "128" && $type == "IPv6") {
+    elseif($mask == "128" && $type == "IPv6") {
     	if($size == 1)  { $firstAvailable = $ipaddressArray[0]; }
     	else 			{ $firstAvailable = false; }
     }
     //if subnet /127
-    else if($mask == "127" && $type == "IPv6") {
+    elseif($mask == "127" && $type == "IPv6") {
     	if($size == 1)  	 { $firstAvailable = $ipaddressArray[0]; }
-    	else if($size == 2)  { 
+    	elseif($size == 2)  { 
     		$delta = $ipaddressArray[1] - $ipaddressArray[0];
     		if($delta == 1)  { $firstAvailable = $ipaddressArray[0]; }
     		else			 { $firstAvailable = gmp_strval(gmp_add($ipaddressArray[0], 1)); }
@@ -2640,7 +2640,7 @@ function getFirstAvailableIPAddress ($subnetId)
     	else 				 { $firstAvailable = false; }
     }
     //if size = 0 return subnet +1
-    else if($size == 1) {
+    elseif($size == 1) {
     	$firstAvailable = gmp_strval(gmp_add($ipaddressArray[0], 1));
     }
     else {
@@ -2666,7 +2666,7 @@ function getFirstAvailableIPAddress ($subnetId)
             $net = $Net_IPv4->parseAddress(transform2long($subnet)."/".$mask);
 	        if ($net->broadcast == transform2long($firstAvailable)) { $firstAvailable = false; }
         }
-        else if ($type == "IPv6") {
+        elseif ($type == "IPv6") {
             require_once 'PEAR/Net/IPv6.php';
             $Net_IPv6 = new Net_IPv6();
         
@@ -2900,7 +2900,7 @@ function IdentifyAddress( $subnet )
     if (strpos($subnet, ":")) {
         return 'IPv6';
     }
-    else if (strpos($subnet, ".")) {
+    elseif (strpos($subnet, ".")) {
         return 'IPv4';
     } 
     /* decimal */

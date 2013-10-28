@@ -1641,9 +1641,6 @@ function writeInstructions ($instructions)
  */
 function importCSVline ($line, $subnetId)
 {
-	/* array */
-	$line = explode(",", $line);
-
     global $db;                                                                      # get variables from config file
     $database = new database($db['host'], $db['user'], $db['pass'], $db['name']); 
     
@@ -1652,27 +1649,11 @@ function importCSVline ($line, $subnetId)
     $subnet = Transform2long($subnetDetails['subnet']) . "/" . $subnetDetails['mask'];
    
     /* verify! */
-    if (VerifyIpAddress( $line[0] , $subnet )) {
-    	return _('Wrong IP address').' - '. $line[0];
-    } 
+    $err = VerifyIpAddress( $line[0],$subnet );
+    if($err)									{ return _('Wrong IP address').' - '.$err.' - '.$line[0]; }
     
     /* check for duplicates */
-    if (checkDuplicate ($line[0], $subnetId)) {
-    	return _('IP address already exists').' - '. $line[0];
-    }
-    
-    /* reformat state */
-    switch($line[5]) {
-    	case "Active": 		$line[5] = "1";	break;
-    	case "active": 		$line[5] = "1";	break;
-    	case "Reserved": 	$line[5] = "2";	break;
-    	case "reserved": 	$line[5] = "2";	break;
-    	case "Offline": 	$line[5] = "0";	break;
-    	case "offline": 	$line[5] = "0";	break;
-    }
-    
-    /* reformat switch! */
-    $switch = getSwitchDetailsByHostname($line[7]);
+    if (checkDuplicate ($line[0], $subnetId)) 	{ return _('IP address already exists').' - '.$line[0]; }
     
     /* get custom fields */
     $myFields = getCustomFields('ipaddresses');
@@ -1692,7 +1673,7 @@ function importCSVline ($line, $subnetId)
 	$query .= "(`subnetId`, `ip_addr`, `state`, `description`, `dns_name`, `mac`, `owner`, `switch`, `port`, `note` $import[fieldName] ) ";
 	$query .= "values ";
 	$query .= "('$subnetId','".Transform2decimal( $line[0] )."', '$line[1]','$line[2]','$line[3]','$line[4]','$line[5]','$line[6]','$switch[id]','$line[8]' $import[fieldValue]);";
-	
+		
 	/* set log details */
 	$log = prepareLogFromArray ($line);
 

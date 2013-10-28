@@ -544,6 +544,14 @@ table#subnetsMenu td#subnetsLeft {
 	width:200px;
 	border-right: 1px solid #eee;
 }
+table#subnetsMenu td#subnetsLeft {
+	vertical-align: top !important;
+}
+#leftMenu.menu-administration,
+#leftMenu.menu-tools {
+	padding-left: 10px;
+	padding-right: 10px;
+}
 
 #leftMenu {
 /* 	border-right: 1px solid #eee; */

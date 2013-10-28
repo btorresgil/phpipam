@@ -4381,3 +4381,7 @@ msgstr "Uredi pravice"
 
 msgid "Delete folder"
 msgstr "Izbriši mapo"
+
+#: site/admin/CSVimportSubmit.php
+msgid "Errors marked with red will be ignored from importing"
+msgstr "Napake, označene z rdečo bodo izključene iz vnosa"

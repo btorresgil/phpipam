@@ -57,9 +57,9 @@ else {
 /*
  *	print table
  *********************/
-print '<table class="table table-striped table-condensed">';
+print '<table class="table table-condensed">';
 
-/* headers */
+// headers 
 print '<tr>';
 print '	<th>'._('IP').'</th>';
 print '	<th>'._('Status').'</th>';
@@ -70,7 +70,7 @@ print '	<th>'._('Owner').'</th>';
 print '	<th>'._('Switch').'</th>';
 print '	<th>'._('Port').'</th>';
 print '	<th>'._('Note').'</th>';
-/* Add custom fields */
+// Add custom fields 
 if(sizeof($myFields) > 0) {
 	foreach($myFields as $field) {
 		print "	<th>$field[name]</th>";
@@ -79,12 +79,19 @@ if(sizeof($myFields) > 0) {
 print '</tr>';
 
 
-/* values - $outFile is provided by showscripts */
+// values - $outFile is provided by showscripts
+$errors = 0;
 foreach($outFile as $line) {
+
 	//put it to array
 	$field = explode(",", $line);
+
+	//verify IP address
+	if(!filter_var($field[0], FILTER_VALIDATE_IP)) 	{ $class = "error";	$errors++; }
+	else											{ $class = ""; }
+
 	//print
-	print '<tr>';
+	print '<tr class="'.$class.'">';
 	foreach ($field as $value) {
 		if (!empty($field[0])) {			//IP address must be present otherwise ignore field
 			print '<td>'. $value .'</td>';
@@ -92,15 +99,22 @@ foreach($outFile as $line) {
 	}
 	print '</tr>';
 }
-
 print '</table>';
 ?>
 
 <!-- confirmation -->
 <h4>3.) <?php print _('Import to database'); ?></h4>
 <hr>
+<?php
+// errors?
+if($errors>0) {
+	print "<div class='alert alert-error'>"._("Errors marked with red will be ignored from importing")."!</div>";
+}
+?>
 <br><?php print _('Should I import values to database'); ?>?
 
 <!-- YES / NO -->
-<input type="button" value="<?php print _('Yes'); ?>" class="btn btn-small" id="csvImportYes">
-<input type="button" value="<?php print _('No'); ?>"  class="btn btn-small" id="csvImportNo">
+<div class="btn-group" style="margin-bottom:10px;">
+	<input type="button" value="<?php print _('Yes'); ?>" class="btn btn-small btn-success" id="csvImportYes">
+	<input type="button" value="<?php print _('No'); ?>"  class="btn btn-small" id="csvImportNo">
+</div>	

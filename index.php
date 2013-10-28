@@ -176,7 +176,7 @@ else								 		{ $url = "http://$_SERVER[SERVER_NAME]".BASE; }
 			print "<tr>";
 			
 			print "<td id='subnetsLeft'>";
-			print "<div id='leftMenu'>";
+			print "<div id='leftMenu' class='menu-$_REQUEST[page]'>";
 				if($_REQUEST['page'] == "subnets" || $_REQUEST['page'] == "vlan" || 
 				   $_REQUEST['page'] == "vrf" 	  || $_REQUEST['page'] == "folder")										{ include_once("site/subnets.php"); }
 				else if ($_REQUEST['page'] == "tools")																	{ include_once("site/tools/toolsMenu.php"); }

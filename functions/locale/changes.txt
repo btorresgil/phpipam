@@ -797,3 +797,12 @@ msgstr ""
 
 msgid "Delete folder"
 msgstr ""
+
+
+
+
+### 0.891.005 ###
+
+#: site/admin/CSVimportSubmit.php
+msgid "Errors marked with red will be ignored from importing"
+msgstr ""
