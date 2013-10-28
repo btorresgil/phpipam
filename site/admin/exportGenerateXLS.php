@@ -111,12 +111,19 @@ foreach ($sections as $section)
 		if(sizeof($ipaddresses) > 0) {
 
 			foreach ($ipaddresses as $ip) {
-		
+			
 				//we need to reformat state!
 				switch($ip['state']) {
 					case 0: $ip['state'] = _("Offline");	break;
 					case 1: $ip['state'] = _("Active");		break;
 					case 2: $ip['state'] = _("Reserved");	break;
+					case 3: $ip['state'] = _("DHCP");		break;
+				}
+				
+				//change switch ID to name
+				$devices = getAllUniqueSwitches ();
+				foreach($devices as $d) {
+					if($d['id']==$ip['switch'])	{ $ip['switch']=$d['hostname']; }
 				}
 		
 				$worksheet->write($lineCount, 0, transform2long($ip['ip_addr']), $format_left);
