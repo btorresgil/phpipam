@@ -15,7 +15,7 @@ msgstr ""
 # This file is distributed under the same license as the phpipam package.
 # miha petkovsek <miha.petkovsek@gmail.com>, 2013.
 #
-# "Project-Id-Version: 0.86.001\n"
+# "Project-Id-Version: 0.891.006\n"
 # "Report-Msgid-Bugs-To: Miha Petkovsek <miha.petkovsek@gmail.com>\n"
 # "POT-Creation-Date: 2013-04-02 14:33+0200\n"
 # "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
@@ -4342,3 +4342,264 @@ msgstr "DHCP samenvatten"
 #: site/admin/settings.php
 msgid "Compress DHCP ranges in IP table"
 msgstr "DHCP-reeksen in de IP-tabel samenvatten"
+
+# ## 0.86.002 ###
+#: site/subnets.php
+msgid "Add new"
+msgstr "Toevoegen"
+
+#: site/subnets.php
+msgid "Add new folder to"
+msgstr "Voeg nieuwe map toe aan"
+
+# site/subnets.php
+msgid "Available VLANs"
+msgstr "Beschikbare VLANs"
+
+# site/subnets.php
+msgid "Available VRFs"
+msgstr "Beschikbare VRFs"
+
+#: functions/functions-common.php
+msgid "Subnet contains more subnets"
+msgstr "Subnet bevat meer subnetten"
+
+#: functions/functions-common.php
+msgid "Click on folder to open/close"
+msgstr "Klik op de map voor openen/sluiten"
+
+#: functions/functions-common.php
+msgid "VLAN contains subnets"
+msgstr "VLAN bevat subnetten"
+
+#: functions/functions-common.php
+msgid "VRF contains subnets"
+msgstr "VRF bevat subnetten"
+
+# ## 0.87.001 ###
+#: site/admin/manageSection.php
+msgid "Show VLANs"
+msgstr "Toon VLANs"
+
+#: site/admin/manageSection.php
+msgid "Show VRFs"
+msgstr "Toon VRFs"
+
+#: site/admin/manageSectionEdit.php
+msgid "Show list of VLANs and belonging subnets in subnet list"
+msgstr "Toon VLANs met bijbehorende subnetten in de lijst"
+
+#: site/admin/manageSectionEdit.php
+msgid "Show list of VRFs and belonging subnets in subnet list"
+msgstr "Toon VRFs met bijbehorende subnetten in de lijst"
+
+#: site/ipaddr/vlanDetails.php
+msgid "VLAN details"
+msgstr "Details van VLAN"
+
+#: site/ipaddr/vlanSubnets.php
+msgid "has no belonging subnets"
+msgstr "heeft geen onderliggende subnetten"
+
+#: site/ipaddr/vlanSubnets.php
+msgid "belonging subnets"
+msgstr "onderliggende subnetten"
+
+#: site/ipaddr/vlanDetails.php
+msgid "VRF details"
+msgstr "Details van VRF"
+
+#: site/ipaddr/vlanDetails.php
+msgid "Invalid VLAN id"
+msgstr "Ongeldig VLAN-nummer"
+
+#: site/ipaddr/vrfDetails.php
+msgid "Invalid VRF id"
+msgstr "Ongeldige VRF"
+
+# ## 0.87.004 ###
+#: site/ipaddr/scan/subnetScan.php
+msgid "IPv6 scanning is not supported"
+msgstr "Scannen van IPv6 wordt niet ondersteund"
+
+#: site/admin/manageFolderEdit.php
+msgid "You do not have permissions to add new folder in this section"
+msgstr "U heeft geen rechten om een nieuwe map in deze sectie aan te maken"
+
+#: site/admin/manageFolderEdit.php
+msgid "You do not have permissions to add edit/delete this folder"
+msgstr ""
+"U heeft geen rechten om deze map aan te maken, te bewerken of te verwijderen"
+
+#: site/admin/manageFolderEdit.php
+msgid "folder"
+msgstr "map"
+
+#: site/admin/manageFolderEdit.php
+msgid "Enter folder name"
+msgstr "Mapnaam"
+
+#: site/admin/manageFolderEdit.php
+msgid ""
+"Enter master folder if you want to nest it under existing folder, or select "
+"root to create root folder"
+msgstr ""
+"Geef bovenliggende map indien u wilt nesten onder een bestaande map, kies "
+"hoofd om een nieuwe map te maken"
+
+#: site/admin/manageFolderEdit.php
+msgid "Master Folder"
+msgstr "Hoofdmap"
+
+#: functions-functions-network.php
+msgid "Select Master folder"
+msgstr "Kies hoofdmap"
+
+#: functions-functions-network.php
+msgid "Root folder"
+msgstr "Hoofdmap"
+
+#: functions-functions-network.php
+msgid "Folders"
+msgstr "Mappen"
+
+#: functions-functions-common.php
+msgid "Folder contains more subnets"
+msgstr "Map bevat meer subnetten"
+
+# ## 0.88.001 ###
+#: site/admin/manageSection.php
+msgid "Parent"
+msgstr "Bovenliggend"
+
+#: site/sections.php
+msgid "SubSections in"
+msgstr "Subsecties in"
+
+#: site/admin/manageSectionEdit.php
+msgid "Select parent section to create subsection"
+msgstr "Kies een bovenliggende sectie"
+
+# ## 0.89.001 ###
+#: site/tools/userMenu.php
+msgid "Widgets"
+msgstr "Widgets"
+
+msgid "Select widgets to be displayed on dashboard"
+msgstr "Selecteer de widgets die op het dashboard weergegeven dienen te worden"
+
+#: site/dashboard/index.php
+msgid "No widgets selected"
+msgstr "Geen widgets geselecteerd"
+
+msgid "Please select widgets to be displayed on dashboard on user menu page"
+msgstr "Selecteer de weer te geven widgets voor het gebruikersmenu"
+
+# ## 0.89.002 ###
+#: site/admin/customUserFieldsEdit.php
+msgid "Enter comment for users"
+msgstr "Opmerkingen voor gebruikers"
+
+msgid "Required field"
+msgstr "Vereist veld"
+
+#: site/admin/custopmIPFields.php
+msgid "Required"
+msgstr "Vereist"
+
+#: site/admin/customDeviceFieldsEdit.php
+msgid "Custom device fields"
+msgstr "Eigen apparaat-velden"
+
+msgid "Add new custom device field"
+msgstr "Voeg nieuw eigen apparaat-veld toe"
+
+#: site/ipaddr/sectionAllSubnets.php
+msgid "Belonging subsections"
+msgstr "Onderliggende subsecties"
+
+#: site/subnets.php
+msgid "Back to"
+msgstr "Terug naar"
+
+# ## 0.891.001 ###
+#: site/admin/manageAD_AD.php
+msgid "Domain account"
+msgstr "Domeingebruiker"
+
+msgid "Domain account for search operations"
+msgstr "Domeingebruiker voor zoekopdrachten"
+
+#: site/admin/userADsearchResult.php
+msgid "No users found"
+msgstr "Geen gebruikers gevonden"
+
+msgid "Possible reasons"
+msgstr "Mogelijke redenen"
+
+msgid "Username not existing"
+msgstr "Gebruikersnaam bestaat niet"
+
+msgid "Invalid baseDN setting for AD"
+msgstr "Ongeldige baseDN-instelling voor Active Directory"
+
+msgid "AD account does not have enough privileges for search"
+msgstr "De AD-gebruiker heeft niet genoeg rechten om te zoeken"
+
+# ## 0.891.003 ###
+#: site/admin/usersEditResult.php
+msgid "Admin user cannot be deleted"
+msgstr "De gebruiker Admin kan niet verwijderd worden"
+
+# ## 0.891.004 ###
+#: site/admin/manageFolderSubmit.php
+msgid "Error adding new folder"
+msgstr "Fout bij het toevoegen van nieuwe map"
+
+msgid "Folder, IP addresses and all belonging subnets deleted successfully"
+msgstr "Map, IP-adressen en alle onderliggende subnetten met succes verwijderd"
+
+msgid "Folder add successfull"
+msgstr "Map met succes toegevoegd"
+
+msgid "Folder edit successfull"
+msgstr "Map met succes bijgewerkt"
+
+#: site/ipaddr/folderDetails.php
+msgid "Folder does not exist"
+msgstr "Map bestaat niet"
+
+msgid "You do not have permission to access this folder"
+msgstr "U heeft geen rechten om in deze map te kijken"
+
+msgid "Folder details"
+msgstr "Details van map"
+
+msgid "Folder name"
+msgstr "Mapnaam"
+
+msgid "Add new nested folder"
+msgstr "Nieuwe onderliggende map toevoegen"
+
+msgid "directly nested folders"
+msgstr "direct onderliggende mappen"
+
+msgid "Folder has no nested folders or belonging subnets"
+msgstr "Map heeft geen onderliggende mappen of subnetten"
+
+msgid "You do not have permissions to edit folder"
+msgstr "U heeft geen rechten om deze map te bewerken"
+
+msgid "Edit folder"
+msgstr "Map bewerken"
+
+msgid "Manage folder permissions"
+msgstr "Beheer maprechten"
+
+msgid "Delete folder"
+msgstr "Map verwijderen"
+
+# ## 0.891.005 ###
+#: site/admin/CSVimportSubmit.php
+msgid "Errors marked with red will be ignored from importing"
+msgstr "In rood gemarkeerde fouten worden bij de import genegeerd"
