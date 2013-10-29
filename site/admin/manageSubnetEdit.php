@@ -253,7 +253,7 @@ else															{ $readonly = false; }
 		print '<tr style="display:none"><td colspan="8"><input type="hidden" name="allowRequests" value="'. $subnetDataOld['allowRequests'] .'"></td></tr>'. "\n";
 	}	
 
-	/* show names instead of ip address! */
+		/* show names instead of ip address! */
 		print '<tr>' . "\n";
         print '	<td>'._('Show as name').'</td>' . "\n";
         print '	<td>' . "\n";
@@ -283,13 +283,13 @@ else															{ $readonly = false; }
 		if( isset($subnetDataOld['pingSubnet']) && ($subnetDataOld['pingSubnet'] == 1) )	{ $checked = "checked"; }
 		else																				{ $checked = ""; }
 	
+		# check host status
 		print '<tr>' . "\n";
         print '	<td>'._('Check hosts status').'</td>' . "\n";
         print '	<td>' . "\n";
         print '		<input type="checkbox" name="pingSubnet" value="1" '.$checked.'>'. "\n";
         print '	</td>' . "\n";
         print '	<td class="info">'._('Ping hosts inside subnet to check avalibility').'</td>' . "\n";
-        
 
     	# custom Subnet fields
 	    if(sizeof($customSubnetFields) > 0) {

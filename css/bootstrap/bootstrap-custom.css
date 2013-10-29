@@ -584,16 +584,30 @@ ul.submenu {
 	margin-left: 0px;	
 }
 ul[class*="submenu-"] {
-	background-image: url("../../css/images/ul-bg.png");
+	/* vertical ul lines */
+/* 	background-image: url("../../css/images/ul-bg.png"); */
 	background-repeat: repeat-y;
-/* 	background: url("../../css/images/ul-bg.png") repeat-y; */
 }
 ul[class*="submenu-"] li {
+	/* horizontal ul lines */
 	padding-left: 20px !important;
-	background: url("../../css/images/li-bg.png") no-repeat 4px 11px;
+/* 	background: url("../../css/images/li-bg.png") no-repeat 4px 11px; */
+	background: url("../../css/images/li.png") no-repeat 4px -3px;
+	
+	/* 
+	barva li: #ced2d2 
+	barva ozadja: #f9f9f9
+	barva active: #f1fafe
+	*/
+
 }
-li.leaf {
-/* 	padding-left: 27px !important; */
+ul[class*="submenu-"] li:last-child {
+	/* last child in inactive line  */
+	background: url("../../css/images/ul-li-bg.png") no-repeat 3px 0px;
+}
+li.active ul[class*="submenu-"] li:last-child {
+	/* last child in active line  */
+	background: url("../../css/images/ul-li-bg-active.png") no-repeat 3px 0px;
 }
 
 ul.submenu.submenu-open {
@@ -642,6 +656,7 @@ ul#subnets li.active li a {
 }
 ul#subnets li.leaf.active i {
 	padding-left: 0px;
+	border: none;
 }
 
 
@@ -1083,6 +1098,9 @@ table#manageSubnets th,
 table#manageSubnets td {
 	padding-right: 0px;
 	vertical-align: middle;
+	
+	padding-top: 6px;
+	padding-bottom: 6px;
 }
 table#manageSubnets td[class*="level"] {
 	padding-left: 20px;
@@ -1096,6 +1114,7 @@ table#manageSubnets .structure {
 	
 	padding-top: 10px;
 	padding-bottom: 10px;
+	
 }
 table#manageSubnets tbody[id*="content-subnet-"] {
 /* 	display: none; */

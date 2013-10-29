@@ -51,13 +51,13 @@ $ip_addr = getIpAddressesBySubnetId ($_POST['subnetId']) ;
     			<!-- Discovery scans -->
 	    		<optgroup label="<?php print _('Discovery scans');?>">
 		    		<option value="DiscoveryPing">Ping <?php print _('scan');?></option>
-		    		<option value="DiscoveryNmap">NMap <?php print _('scan');?></option>
-		    		<option value="DiscoverySnmp">SNMP <?php print _('scan');?></option>
+<!-- 		    		<option value="DiscoveryNmap">NMap <?php print _('scan');?></option> -->
+<!-- 		    		<option value="DiscoverySnmp">SNMP <?php print _('scan');?></option> -->
 	    		</optgroup>
     			<!-- Status update scans -->
 	    		<optgroup label="<?php print _('Status update scans');?>">
 		    		<option value="UpdatePing">Ping <?php print _('scan');?></option>
-		    		<option value="UpdateNmap">NMap <?php print _('scan');?></option>
+<!-- 		    		<option value="UpdateNmap">NMap <?php print _('scan');?></option> -->
 	    		</optgroup>
 
 			</select>
