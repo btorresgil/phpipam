@@ -40,11 +40,10 @@ try {
 	// set OpenLDAP flag
 	if($settings['domainAuth'] == "2") { $adldap->setUseOpenLDAP(true); }
 
-
 	//search for domain user!
 	$userinfo = $adldap->user()->info("$_POST[dname]*", array("*"));
 	
-	echo $adldap->getLastError();
+	//echo $adldap->getLastError();
 }
 catch (adLDAPException $e) {
 	die('<div class="alert alert-error">'. $e .'</div>');
@@ -67,7 +66,7 @@ if(!isset($userinfo['count'])) {
 	print "<li>"._('AD account does not have enough privileges for search')."</li>";
 	print "</div>";
 } else {
-	print _("Following users were found").": ($userinfo[count]):<hr>";
+	print _(" Following users were found").": ($userinfo[count]):<hr>";
 	
 	print "<table class='table table-striped'>";
 	

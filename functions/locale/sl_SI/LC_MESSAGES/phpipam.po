@@ -4385,3 +4385,12 @@ msgstr "Izbriši mapo"
 #: site/admin/CSVimportSubmit.php
 msgid "Errors marked with red will be ignored from importing"
 msgstr "Napake, označene z rdečo bodo izključene iz vnosa"
+
+msgid "Search user in AD"
+msgstr "Poišči uporabnika v AD"
+
+msgid "Following users were found"
+msgstr "Našel sem sledeče uporabnike"
+
+msgid "Select"
+msgstr "Izberi"

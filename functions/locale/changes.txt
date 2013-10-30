@@ -807,3 +807,16 @@ msgstr ""
 msgid "Errors marked with red will be ignored from importing"
 msgstr ""
 
+
+
+### 0.9 ###
+
+#: site/admin/userADsearchForm.php
+msgid "Search user in AD"
+msgstr ""
+
+msgid "Following users were found"
+msgstr ""
+
+msgid "Select"
+msgstr ""

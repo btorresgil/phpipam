@@ -35,6 +35,4 @@ checkAdmin();
 	<div class="btn-group">
 		<button class="btn btn-small hidePopup2"><?php print _('Cancel'); ?></button>
 	</div>
-
-	<div class="subnetResizeResult"></div>
 </div>

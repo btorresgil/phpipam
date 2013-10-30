@@ -42,7 +42,7 @@ foreach($addresses as $m=>$ip) {
 		}
 		else {
 			//never?
-			if($ip['lastSeen']=="0000-00-00" || is_null($ip['lastSeen'])) {
+			if($ip['lastSeen']=="0000-00-00 00:00:00" || is_null($ip['lastSeen'])) {
 				$code['text'] = $code['text']." (last seen - never)";
 			} else {
 				$code['text'] = $code['text']." (last seen $ip[lastSeen])";

@@ -4340,3 +4340,13 @@ msgstr ""
 
 msgid "Delete folder"
 msgstr ""
+
+#: site/admin/userADsearchForm.php
+msgid "Search user in AD"
+msgstr ""
+
+msgid "Following users were found"
+msgstr ""
+
+msgid "Select"
+msgstr ""
