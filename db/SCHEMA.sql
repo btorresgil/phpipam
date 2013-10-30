@@ -48,21 +48,20 @@ LOCK TABLES `ipaddresses` WRITE;
 
 INSERT INTO `ipaddresses` (`id`, `subnetId`, `ip_addr`, `description`, `dns_name`, `mac`, `owner`, `state`, `switch`, `port`, `note`)
 VALUES
-	(1,'1','336395549904799703390415618052362076164','Test IPv6 hosts','ipv6.test.domain.local','','','1','','',''),
-	(2,'1','336395549904799703390415618052362076165','Test IPv6 hosts','ipv6_2.test.domain.local','','','1','','',''),
-	(3,'1','336395549904799703390415618052362076166','Test IPv6 hosts','ipv6_3.test.domain.local','','','1','','',''),
-	(4,'1','336395549904799703390415618052362076176','MyHost','','','','1','','',''),
-	(5,'3','168427779','Server1','server1.cust1.local','','','1','','',''),
-	(6,'3','168427780','Server2','server2.cust1.local','','','1','','',''),
-	(7,'3','168427781','Server3','server3.cust1.local','','','2','','',''),
-	(8,'3','168427782','Server4','server4.cust1.local','','','2','','',''),
-	(9,'3','168428021','Gateway','','','','1','','',''),
-	(10,'4','168428286','Gateway','','','','1','','',''),
-	(11,'4','168428042','Server1','ser1.client2.local','','','1','','',''),
-	(12,'6','1507077123','webserver','89-212-44-3.dynamic.t-2.net','','','1','','',''),
-	(13,'6','1507077124','webserver','89-212-44-4.dynamic.t-2.net','','','1','','',''),
-	(14,'6','1507077125','webserver','89-212-44-5.dynamic.t-2.net','','','1','','',''),
-	(15,'6','1507077126','webserver','89-212-44-6.dynamic.t-2.net','','','1','','','');
+	(1,'3','168427779','Server1','server1.cust1.local','','','1','','',''),
+	(2,'3','168427780','Server2','server2.cust1.local','','','1','','',''),
+	(3,'3','168427781','Server3','server3.cust1.local','','','2','','',''),
+	(4,'3','168427782','Server4','server4.cust1.local','','','2','','',''),
+	(5,'3','168428021','Gateway','','','','1','','',''),
+	(6,'4','168428286','Gateway','','','','1','','',''),
+	(7,'4','168428042','Server1','ser1.client2.local','','','1','','',''),
+	(8,'6','1507077123','webserver','89-212-44-3.dynamic.t-2.net','','','1','','',''),
+	(9,'6','1507077124','webserver','89-212-44-4.dynamic.t-2.net','','','1','','',''),
+	(10,'6','1507077125','webserver','89-212-44-5.dynamic.t-2.net','','','1','','',''),
+	(11,'6','1507077126','webserver','89-212-44-6.dynamic.t-2.net','','','1','','',''),
+	(12, '10', '172037636', 'DHCP range', '', '', '', '3', '', '', ''),
+	(13, '10', '172037637', 'DHCP range', '', '', '', '3', '', '', ''),
+	(14, '10', '172037638', 'DHCP range', '', '', '', '3', '', '', '');
 
 /*!40000 ALTER TABLE `ipaddresses` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -181,7 +180,7 @@ LOCK TABLES `settings` WRITE;
 
 INSERT INTO `settings` (`id`, `siteTitle`, `siteAdminName`, `siteAdminMail`, `siteDomain`, `siteURL`, `domainAuth`, `showTooltips`, `enableIPrequests`, `enableVRF`, `enableDNSresolving`, `version`, `donate`, `IPfilter`, `printLimit`, `vlanDuplicate`, `subnetOrdering`, `visualLimit`, `htmlMail`)
 VALUES
-	(1, 'phpipam IP address management', 'Sysadmin', 'admin@domain.local', 'domain.local', 'http://yourpublicurl.com', 0, 1, 1, 1, 0, '0.84', 0, 'mac;owner;state;switch;note', 50, 1, 'subnet,asc', 24, X'31');
+	(1, 'phpipam IP address management', 'Sysadmin', 'admin@domain.local', 'domain.local', 'http://yourpublicurl.com', 0, 1, 1, 1, 0, '0.9', 0, 'mac;owner;state;switch;note', 50, 1, 'subnet,asc', 24, X'31');
 	
 /*!40000 ALTER TABLE `settings` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -243,16 +242,18 @@ CREATE TABLE `subnets` (
 LOCK TABLES `subnets` WRITE;
 /*!40000 ALTER TABLE `subnets` DISABLE KEYS */;
 
-INSERT INTO `subnets` (`id`, `subnet`, `mask`, `sectionId`, `description`, `vrfId`, `masterSubnetId`, `allowRequests`, `vlanId`, `showName`, `permissions`)
+INSERT INTO `subnets` (`id`, `subnet`, `mask`, `sectionId`, `description`, `vrfId`, `masterSubnetId`, `allowRequests`, `vlanId`, `showName`, `permissions`, `isFolder`)
 VALUES
-	(1,'336395549904799703390415618052362076160','64','3','Private subnet 1',0,'0',1,1,1,'{\"3\":\"1\",\"2\":\"2\"}'),
-	(2,'168427520','16','1','Business customers',0,'0',1,0,1,'{\"3\":\"1\",\"2\":\"2\"}'),
-	(3,'168427776','24','1','Customer 1',0,'2',1,0,1,'{\"3\":\"1\",\"2\":\"2\"}'),
-	(4,'168428032','24','1','Customer 2',0,'2',1,0,1,'{\"3\":\"1\",\"2\":\"2\"}'),
-	(5,'168460288','17','2','DMZ zone',0,'0',1,0,1,'{\"3\":\"1\",\"2\":\"2\"}'),
-	(6,'1507077120','24','2','Public translations for DMZ',0,'0',1,0,1,'{\"3\":\"1\",\"2\":\"2\"}'),
-	(7,'168460288','23','2','DMZ production',0,'5',1,0,1,'{\"3\":\"1\",\"2\":\"2\"}'),
-	(8,'168460800','23','2','DMZ testing',0,'5',1,0,1,'{\"3\":\"1\",\"2\":\"2\"}');
+	(1,'336395549904799703390415618052362076160','64','3','Private subnet 1',0,'0',1,1,1,'{\"3\":\"1\",\"2\":\"2\"}',0),
+	(2,'168427520','16','1','Business customers',0,'0',1,0,1,'{\"3\":\"1\",\"2\":\"2\"}',0),
+	(3,'168427776','24','1','Customer 1',0,'2',1,0,1,'{\"3\":\"1\",\"2\":\"2\"}',0),
+	(4,'168428032','24','1','Customer 2',0,'2',1,0,1,'{\"3\":\"1\",\"2\":\"2\"}',0),
+	(5,'168460288','17','2','DMZ zone',0,'0',1,0,1,'{\"3\":\"1\",\"2\":\"2\"}',0),
+	(6,'1507077120','24','2','Public translations for DMZ',0,'0',1,0,1,'{\"3\":\"1\",\"2\":\"2\"}',0),
+	(7,'168460288','23','2','DMZ production',0,'5',1,0,1,'{\"3\":\"1\",\"2\":\"2\"}',0),
+	(8,'168460800','23','2','DMZ testing',0,'5',1,0,1,'{\"3\":\"1\",\"2\":\"2\"}',0),
+	(9, '0', '', 1, 'My folder', 0, 0, 0, 0, 0, '{\"3\":\"1\",\"2\":\"2\"}', 1),
+	(10, '172037632', '24', 1, 'DHCP range', 0, 9, 0, 0, 1, '{\"3\":\"1\",\"2\":\"2\"}', 0);
 
 /*!40000 ALTER TABLE `subnets` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -340,9 +341,9 @@ CREATE TABLE `users` (
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 
-INSERT INTO `users` (`id`, `username`, `password`, `groups`, `role`, `real_name`, `email`, `domainUser`)
+INSERT INTO `users` (`id`, `username`, `password`, `groups`, `role`, `real_name`, `email`, `domainUser`,`widgets`)
 VALUES
-	(1,'Admin',X'6431306262383036653937643335333866623133623535383164623131653965',X'','Administrator','phpIPAM Admin','admin@domain.local',X'30');
+	(1,'Admin',X'6431306262383036653937643335333866623133623535383164623131653965',X'','Administrator','phpIPAM Admin','admin@domain.local',X'30','statistics;top10_hosts_v4;top10_hosts_v6;top10_percentage;access_logs;error_logs;');
 
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -432,4 +433,4 @@ CREATE TABLE `api` (
 
 # update version
 # ------------------------------------------------------------
-UPDATE `settings` set `version` = '0.89';
+UPDATE `settings` set `version` = '0.9';

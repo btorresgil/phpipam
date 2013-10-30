@@ -2787,8 +2787,9 @@ function getIPaddressesBySwitchName ( $name )
 
 /* $ping ---------- */
 
+
 /**
- * Ping host
+ * Ping host - PEAR
  */
 function pingHost ($ip, $count="1", $exit=false)
 {
@@ -2808,6 +2809,58 @@ function pingHost ($ip, $count="1", $exit=false)
 	//return result for web or cmd
 	if(!$exit) 	{ return $retval; }
 	else	  	{ exit($retval); }
+}
+
+
+/**
+ * Ping host - PEAR
+ */
+function pingHostPear ($ip, $count="1", $exit=false)
+{
+	require_once "PEAR/Net/Ping.php";
+	$ping = Net_Ping::factory();
+	
+	if(PEAR::isError($ping)) {
+		echo $ping->getMessage();
+	} 
+	else {
+		$ping->setArgs(array('count' => $count, 'timeout' => 2));
+	
+		$pRes = $ping->ping($ip);
+	
+		// check response
+		if(PEAR::isError($pRes)) {
+			$result['code'] = 2;
+			$result['text'] = $pRes->message;
+		}
+		else {
+			//all good
+			if($pRes->_transmitted == $pRes->_received) {
+				$result['code'] = 0;
+				$result['text'] = "RTT: ".$pRes->_round_trip['avg'] . " ms";
+			}
+			//ping loss
+			elseif($pRes->_received == 0) {
+				$result['code'] = 1;
+				$result['text'] = "Offline";
+			}
+			//faile
+			else {
+				$result['code'] = 3;
+				$result['text'] = "Unknown error";
+			}
+		}
+	}
+    
+    //exit codes
+    // 0 = online
+    // 1 = offline
+    // 2 = error
+    // 3 = unknown error
+        
+	//return result for web or cmd
+	if(!$exit) 	{ return $result; }
+	else	  	{ exit	($result); }
 }
 
 

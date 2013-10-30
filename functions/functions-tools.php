@@ -1155,7 +1155,7 @@ function fetchInstructions ()
 function getLatestPHPIPAMversion() 
 {
 	/* fetch page */
-	$handle = fopen("http://mihap.si/phpipamversion.php", "r");
+	$handle = fopen("http://phpipam.net/phpipamversion.php", "r");
 	while (!feof($handle)) {
 		$version = fgets($handle);		
 	}

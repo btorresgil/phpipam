@@ -21,31 +21,27 @@ if($subnetPerm < 2) {
 //get IP address details
 $ip = getIpAddrDetailsById ($_POST['id']);
 
-//verify that pign path is correct
-if(!file_exists($pathPing)) { $pingError = true; }
 
 //try to ping it
-if(pingHost($ip['ip_addr'], 1) == '0')  {
-	$status = "Online";
-	@updateLastSeen($_POST['id']);
-}
-else {
-	$status = "Offline";
-}
-?>
+$pingRes = pingHostPear($ip['ip_addr'], 1);
 
+//update last seen if success
+if($pingRes['code']==0) { @updateLastSeen($_POST['id']); }
+?>
 
 <!-- header -->
 <div class="pHeader"><?php print _('Ping check result'); ?></div>
 
 <!-- content -->
 <div class="pContent">
-	<?php if($pingError) { ?>
-		<div class="alert alert-error"><?php print _("Invalid ping path")."<hr>". _("You can set parameters for scan under functions/scan/config-scan.php"); ?></div>
-	<?php } elseif($status == "Online") { ?>
-		<div class="alert alert-success"><?php print _("IP address")." ".$ip['ip_addr']." "._("is alive"); ?></div>
-	<?php } else { ?>
+	<?php if($pingRes['code']==2) { ?>
+		<div class="alert alert-error"><?php print _("Error").": $pingRes[text]"; ?></div>
+	<?php } elseif($pingRes['code']==0) { ?>
+		<div class="alert alert-success"><?php print _("IP address")." ".$ip['ip_addr']." "._("is alive"); ?><hr><?php print $pingRes['text']; ?></div>
+	<?php } elseif($pingRes['code']==1) { ?>
 		<div class="alert alert-error"><?php print _("IP address")." ".$ip['ip_addr']." "._("is not alive"); ?></div>
+	<?php } elseif($pingRes['code']==3) { ?>
+		<div class="alert alert-error"><?php print _("Error")." $pingRes[text]"; ?></div>
 	<?php } ?>
 </div>
 

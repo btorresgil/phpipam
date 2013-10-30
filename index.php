@@ -74,9 +74,9 @@ else								 		{ $url = "http://$_SERVER[SERVER_NAME]".BASE; }
 	<!-- js -->
 	<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
 	<script type="text/javascript" src="js/jclock.jquery.js"></script>
-<!-- 	<script type="text/javascript" src="js/magic.min.js"></script> -->
+	<script type="text/javascript" src="js/magic.min.js"></script>
 	<script type="text/javascript" src="js/login.js"></script>
-	<script type="text/javascript" src="js/magic.js"></script>
+<!-- 	<script type="text/javascript" src="js/magic.js"></script> -->
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
 	
 

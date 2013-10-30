@@ -609,6 +609,14 @@ li.active ul[class*="submenu-"] li:last-child {
 	/* last child in active line  */
 	background: url("../../css/images/ul-li-bg-active.png") no-repeat 3px 0px;
 }
+/* active leaf */
+li.leaf.active {
+	background: #F1FAFE url("../../css/images/li.png") no-repeat 4px -3px !important;
+}
+/* active submenu background */
+ul[class*="submenu-"] li.folder.active {
+	background: #F1FAFE url("../../css/images/li.png") no-repeat 4px -3px !important;	
+}
 
 ul.submenu.submenu-open {
 	display: block;

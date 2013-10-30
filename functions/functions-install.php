@@ -617,6 +617,9 @@ function fieldExists($table, $fieldName)
 function installDatabase($root)
 {
     global $db;                                                                      # get variables from config file
+    
+    error_reporting(E_ERROR); 
+    
     $databaseRoot    = new database($db['host'], $root['user'], $root['pass']); 
     
     /* Check connection */
@@ -665,7 +668,7 @@ function installDatabase($root)
 	    
     /* return true, if some errors occured script already died! */
     sleep(1);
-   	updateLogTable ('Database installed successfully!', "version ".VERSION." installed", 1);
+   	updateLogTable ('Database installed successfully!', "version 0.9 installed", 1);
    	return true;
 }
 
