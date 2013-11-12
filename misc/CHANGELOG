@@ -1,9 +1,10 @@
-== 0.9.001
+== 0.9.002
 
 	Bugfixes:
 	--------
 	+ UI fixes;
 	+ Fixed bug where last page of IP addresses was inaccessible;
+	+ IP address state change is now sent to all admins;
 
 == 0.9
 

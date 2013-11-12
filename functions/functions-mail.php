@@ -431,5 +431,50 @@ function sendIPResultEmail($request)
 	updateLogTable ("IP request response mail (confirm,reject) sent ok", "Sending notification mail to $mail[recipients] succeeded!", $severity = 0);
 	return true;
 }
+
+
+
+/**
+ *	Send status update mail
+ */ 
+function sendStatusUpdateMail($content, $subject)
+{
+	# get settings
+	global $settings;
+	global $mail;
+
+	# php mailer class
+	require_once 'phpMailer/class.phpmailer.php';
+	$pmail = new PHPMailer(true);				//true = default
+	$pmail->CharSet="UTF-8";					//set utf8
+
+	# set mail parameters
+	try {
+		$pmail->SetFrom("ipam@$settings[siteDomain]", $settings['siteTitle']);
+		// add admins to CC
+		$admins = getAllAdminUsers ();
+		foreach($admins as $admin) {
+			$pmail->AddAddress($admin['email']);
+		}
+		// content
+		$pmail->Subject = $subject;
+
+		$pmail->MsgHTML($content);
+		
+		# pošlji
+		$pmail->Send();
+	} catch (phpmailerException $e) {
+	  	updateLogTable ("Sending notification mail for IP address state change failed!\n".$e->errorMessage(), $severity = 2);
+	  	return false;
+	} catch (Exception $e) {
+	  	updateLogTable ("Sending notification mail for IP address state change failed!\n".$e->errorMessage(), $severity = 2);
+		return false;
+	}
+	
+	# write log for ok
+	updateLogTable ("Sending notification mail for IP address state change succeeded!", $severity = 0);
+	return true;
+}
+
  
 ?>

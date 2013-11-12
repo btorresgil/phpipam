@@ -229,11 +229,12 @@ if(sizeof($stateDiff)>0 && $email)
 		$html[] = "</body>";
 		$html[] = "</html>";
 		
-		//save to 
+		//save to array
 		$mail['content'] = implode("\n", $html);
 
-		//send
-		mail($settings['siteAdminMail'], $mail['subject'], $mail['content'], $mail['headers']);
+		//send to all admins
+		sendStatusUpdateMail($mail['content'], $mail['subject']);
+		//mail($settings['siteAdminMail'], $mail['subject'], $mail['content'], $mail['headers']);
 	}
 }
 
