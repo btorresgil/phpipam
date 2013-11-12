@@ -610,7 +610,7 @@ li.active ul[class*="submenu-"] li:last-child {
 	background: url("../../css/images/ul-li-bg-active.png") no-repeat 3px 0px;
 }
 /* active leaf */
-li.leaf.active {
+ul#subnets li.folder li.leaf.active {
 	background: #F1FAFE url("../../css/images/li.png") no-repeat 4px -3px !important;
 }
 /* active submenu background */

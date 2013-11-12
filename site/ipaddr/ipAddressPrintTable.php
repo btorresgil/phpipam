@@ -114,7 +114,7 @@ $repeats   = ceil($sizeIP / $pageLimit); 		// times to repeat body
 
 # set page number from post
 $maxPages = round($sizeIP/$pageLimit,0);																								// set max number of pages
-if($_REQUEST['sPage']>$maxPages || !isset($_REQUEST['sPage']))	{ $_REQUEST['sPage'] = 1; }												// reset to 1 if number too big
+if($_REQUEST['sPage']>$repeats || !isset($_REQUEST['sPage']))	{ $_REQUEST['sPage'] = 1; }												// reset to 1 if number too big
 elseif(!is_numeric($_REQUEST['sPage']))							{ $_REQUEST['sPage'] = str_replace("page", "", $_REQUEST['sPage']); }	// remove p from page
 
 ?>
@@ -132,7 +132,7 @@ if($sizeIP  > $pageLimit) { ?>
 		if($_REQUEST['sPage']==1) 			{ print "<a href='subnets/$_REQUEST[section]/$_REQUEST[subnetId]/page".($_REQUEST['sPage']-1)."/' class='btn btn-mini disabled'><i class='icon-gray icon-chevron-left'></i></a>"; }
 		else								{ print "<a href='subnets/$_REQUEST[section]/$_REQUEST[subnetId]/page".($_REQUEST['sPage']-1)."/' class='btn btn-mini' rel='tooltip' title='". _('Previous page')."'><i class='icon-gray icon-chevron-left'></i></a>"; }
 		//next page
-		if($_REQUEST['sPage']==$maxPages) 	{ print "<a href='subnets/$_REQUEST[section]/$_REQUEST[subnetId]/page".($_REQUEST['sPage']+1)."/' class='btn btn-mini disabled'><i class='icon-gray icon-chevron-right'></i></a>"; }
+		if($_REQUEST['sPage']==$repeats) 	{ print "<a href='subnets/$_REQUEST[section]/$_REQUEST[subnetId]/page".($_REQUEST['sPage']+1)."/' class='btn btn-mini disabled'><i class='icon-gray icon-chevron-right'></i></a>"; }
 		else								{ print "<a href='subnets/$_REQUEST[section]/$_REQUEST[subnetId]/page".($_REQUEST['sPage']+1)."/' class='btn btn-mini' rel='tooltip' title='". _('Next page')."'><i class='icon-gray icon-chevron-right'></i></a>"; }
 	
 		?>
@@ -145,7 +145,7 @@ if($sizeIP  > $pageLimit) { ?>
 if($sizeIP  > $pageLimit) { 
 	print "<div class='pull-right'>";
 	print "<select name='jumptoPage' class='jumptoPage' style='width:auto;'>";
-	for($m=1; $m<=$maxPages; $m++) {
+	for($m=1; $m<=$repeats; $m++) {
 		if($m==$_REQUEST['sPage'])		{ print "<option value='page$m' data-sectionId='$_REQUEST[section]' data-subnetId='$_REQUEST[subnetId]' selected='selected'>"._('Page')." $m</option>"; }
 		else 							{ print "<option value='page$m' data-sectionId='$_REQUEST[section]' data-subnetId='$_REQUEST[subnetId]'>"._('Page')." $m</option>"; }
 	}
@@ -434,7 +434,7 @@ if($sizeIP  > $pageLimit) { ?>
 		if($_REQUEST['sPage']==1) 			{ print "<a href='subnets/$_REQUEST[section]/$_REQUEST[subnetId]/page".($_REQUEST['sPage']-1)."/' class='btn btn-mini disabled'><i class='icon-gray icon-chevron-left'></i></a>"; }
 		else								{ print "<a href='subnets/$_REQUEST[section]/$_REQUEST[subnetId]/page".($_REQUEST['sPage']-1)."/' class='btn btn-mini' rel='tooltip' title='". _('Previous page')."'><i class='icon-gray icon-chevron-left'></i></a>"; }
 		//next page
-		if($_REQUEST['sPage']==$maxPages) 	{ print "<a href='subnets/$_REQUEST[section]/$_REQUEST[subnetId]/page".($_REQUEST['sPage']+1)."/' class='btn btn-mini disabled'><i class='icon-gray icon-chevron-right'></i></a>"; }
+		if($_REQUEST['sPage']==$repeats) 	{ print "<a href='subnets/$_REQUEST[section]/$_REQUEST[subnetId]/page".($_REQUEST['sPage']+1)."/' class='btn btn-mini disabled'><i class='icon-gray icon-chevron-right'></i></a>"; }
 		else								{ print "<a href='subnets/$_REQUEST[section]/$_REQUEST[subnetId]/page".($_REQUEST['sPage']+1)."/' class='btn btn-mini' rel='tooltip' title='". _('Next page')."'><i class='icon-gray icon-chevron-right'></i></a>"; }
 	
 		?>

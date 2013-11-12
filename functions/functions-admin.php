@@ -652,7 +652,7 @@ function setModifySubnetDetailsQuery ($subnetDetails)
         $query .= ' "'. $subnetDetails['mask'] 			 .'", ' . "\n"; 
         $query .= ' "'. $subnetDetails['sectionId'] 	 .'", ' . "\n"; 
         $query .= ' "'. $subnetDetails['description']    .'", ' . "\n"; 
-        $query .= ' "'. $subnetDetails['vlanId'] 			 .'", ' . "\n"; 
+        $query .= ' "'. $subnetDetails['vlanId'] 		 .'", ' . "\n"; 
         $query .= ' "'. $subnetDetails['vrfId'] 		 .'", ' . "\n"; 
         $query .= ' "'. $subnetDetails['masterSubnetId'] .'", ' . "\n"; 
         $query .= ''. isCheckbox($subnetDetails['allowRequests']) .','."\n";

@@ -113,6 +113,7 @@ else															{ $readonly = false; }
     <input type="hidden" name="sectionId"       value="<?php print $_POST['sectionId'];    ?>">
     <input type="hidden" name="subnetId"        value="<?php print $_POST['subnetId'];     ?>">       
     <input type="hidden" name="action"    		value="<?php print $_POST['action']; ?>">
+	<input type="hidden" name="vlanId" 			value="0">
 
     <?php
 	# custom Subnet fields
