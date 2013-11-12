@@ -3,6 +3,7 @@
 // include required scripts
 require_once( dirname(__FILE__) . '/../functions.php' );
 require_once( dirname(__FILE__) . '/Thread.php');
+require_once( dirname(__FILE__) . '/../functions-mail.php');
 
 /*
 set cronjob:
