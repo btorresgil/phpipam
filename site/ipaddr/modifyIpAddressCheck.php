@@ -67,6 +67,12 @@ $ip['id']      		= $_REQUEST['id'];
 $ip['state']   		= $_REQUEST['state'];
 $ip['excludePing']	= $_REQUEST['excludePing'];
 
+//replace ' in all instances
+foreach($ip as $k=>$v) {
+	//escape " and '
+	$ip[$k] = str_replace("'", "\'", $v);
+}
+
 # set excludePing
 if($ip['excludePing'] != "1") { $ip['excludePing'] = "0"; }
 

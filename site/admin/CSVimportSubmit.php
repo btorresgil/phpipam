@@ -66,6 +66,10 @@ else {
 /* import each value */
 foreach($outFile as $k=>$line) {
 
+	//escape " and '
+	$line = str_replace("\"", "\\\"", $line);
+	$line = str_replace("'", "\'", $line);
+
 	// explode it to array for verifications
 	$lineArr = explode(",", $line);
 	

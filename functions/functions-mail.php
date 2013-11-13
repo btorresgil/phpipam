@@ -447,6 +447,12 @@ function sendStatusUpdateMail($content, $subject)
 	require_once 'phpMailer/class.phpmailer.php';
 	$pmail = new PHPMailer(true);				//true = default
 	$pmail->CharSet="UTF-8";					//set utf8
+	
+	# add plain text
+	$contentAlt = str_replace("<th style='padding:3px 8px;border:1px solid silver;border-bottom:2px solid gray;'>", " | ", $content);	//replace th
+	$contentAlt = str_replace("<td style='padding:3px 8px;border:1px solid silver;'>", " | ", $contentAlt);								//replace td
+	$contentAlt = str_replace("</tr>", "\n", $contentAlt);																				//add breaks
+	$contentAlt = strip_tags($contentAlt);																								//strip rest of html
 
 	# set mail parameters
 	try {
@@ -458,9 +464,10 @@ function sendStatusUpdateMail($content, $subject)
 		}
 		// content
 		$pmail->Subject = $subject;
+		$pmail->AltBody = $mail['contentAlt'];
 
 		$pmail->MsgHTML($content);
-		
+				
 		# pošlji
 		$pmail->Send();
 	} catch (phpmailerException $e) {

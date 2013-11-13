@@ -98,11 +98,11 @@ if(sizeof($myFields) > 0) {
 	foreach($myFields as $myField) {
 		
 		//change spaces to ___
-		$myField['name'] = str_replace(" ", "___", $myField['name']);
+		$myField['nameTemp'] = str_replace(" ", "___", $myField['name']);
 
 		print "	<tr>";
 		print "	<td>$myField[name]</td>";
-		print "	<td><input type='checkbox' name='$myField[name]' checked> </td>";
+		print "	<td><input type='checkbox' name='$myField[nameTemp]' checked> </td>";
 		print "	</tr>";	
 	}
 }
