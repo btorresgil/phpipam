@@ -609,8 +609,12 @@ function searchSubnets ($searchterm, $searchTermEdited = "")
 	}
     
     /* set query */    
-	$query[] = 'select * from `subnets` where `description` like "%'. $searchterm .'%" or `subnet` between "'. $searchTermEdited['low'] .'" and "'. $searchTermEdited['high'] .'" '.$custom.';';
-	
+    if($searchTermEdited['low']==0 && $searchTermEdited['high']==0) {
+		$query[] = 'select * from `subnets` where `description` like "%'. $searchterm .'%" and "'. $searchTermEdited['high'] .'" '.$custom.';';
+    } else {
+		$query[] = 'select * from `subnets` where `description` like "%'. $searchterm .'%" or `subnet` between "'. $searchTermEdited['low'] .'" and "'. $searchTermEdited['high'] .'" '.$custom.';';	    
+    }
+		
 	/* search inside subnets even if IP does not exist! */
 	if($searchTermEdited['low']==$searchTermEdited['high']) {
 		$allSubnets = fetchAllSubnets ();

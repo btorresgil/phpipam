@@ -288,13 +288,23 @@ if(sizeof($subnets) > 0) {
 				if($line['masterSubnetId'] == 0) { $line['masterSubnetId'] = "/"; }
 				else {
 					$line['masterSubnetId'] = getSubnetDetailsById ($line['masterSubnetId']);
-					$line['masterSubnetId'] = transform2long($line['masterSubnetId']['subnet']) .'/'. $line['masterSubnetId']['mask'];
+					# folder?
+					if($line['isFolder']==1) {
+						$line['masterSubnetId'] = "<i class='icon-folder-open icon-gray'></i> $line[description]";						
+					} else {
+						$line['masterSubnetId'] = transform2long($line['masterSubnetId']['subnet']) .'/'. $line['masterSubnetId']['mask'];					
+					}
 				}
 			
 				print '<tr class="subnetSearch" subnetId="'. $line['id'] .'" sectionName="'. $section['name'] .'" sectionId="'. $section['id'] .'" link="'. $section['name'] .'|'. $line['id'] .'">'. "\n";
 	
 				print '	<td>'. $section['name'] . '</td>'. "\n"; 
-				print '	<td><a href="subnets/'.$line['sectionId'].'/'.$line['id'].'/">'. transform2long($line['subnet']) . '/'.$line['mask'].'</a></td>'. "\n"; 
+				//folder?
+				if($line['isFolder']==1) {
+				print '	<td><a href="subnets/'.$line['sectionId'].'/'.$line['id'].'/"><i class="icon-folder-open icon-gray"></i> '.$line['description'].'</a></td>'. "\n"; 
+				} else {
+				print '	<td><a href="subnets/'.$line['sectionId'].'/'.$line['id'].'/">'. transform2long($line['subnet']) . '/'.$line['mask'].'</a></td>'. "\n"; 					
+				}
 				print ' <td><a href="subnets/'.$line['sectionId'].'/'.$line['id'].'/">'. $line['description'] .'</a></td>' . "\n";
 				print ' <td>'. $line['masterSubnetId'] .'</td>' . "\n";
 				print ' <td>'. $vlan['number'] .'</td>' . "\n";

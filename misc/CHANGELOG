@@ -2,7 +2,7 @@
 	
 	New features:
 	----------------------------
-	+ Favourite subnets widget;
+	+ Favourite subnets for quick access;
 
 	Bugfixes:
 	--------
@@ -11,6 +11,7 @@
 	+ IP address state change is now sent to all admins;
 	+ Fixed subnet displaying as 0.0.0.0/0 in details;
 	+ Fixed links to subnets form vlans and vrfs;
+	+ Fixed search result showing all folders if searched item is not IP address;
 
 == 0.9
 

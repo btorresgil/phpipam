@@ -1,7 +1,5 @@
 version - 0.9
 
-	+ folders v path ne smejo imeti 0.0.0.0/0
-	+ favourite subnets
 	+ changelog za ip, subnet, section
 	+ status - available, trash (preveri kako)
 	+ Widget header links to widget;
