@@ -53,6 +53,7 @@ else								 		{ $url = "http://$_SERVER[SERVER_NAME]".BASE; }
 	<base href="<?php print $url; ?>" />
 
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
 	
 	<meta name="Description" content=""> 
 	<meta name="title" content="<?php print $settings['siteTitle']; ?>"> 
@@ -74,9 +75,9 @@ else								 		{ $url = "http://$_SERVER[SERVER_NAME]".BASE; }
 	<!-- js -->
 	<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
 	<script type="text/javascript" src="js/jclock.jquery.js"></script>
-	<script type="text/javascript" src="js/magic.min.js"></script>
+<!-- 	<script type="text/javascript" src="js/magic.min.js"></script> -->
 	<script type="text/javascript" src="js/login.js"></script>
-<!-- 	<script type="text/javascript" src="js/magic.js"></script> -->
+	<script type="text/javascript" src="js/magic.js"></script>
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
 	
 

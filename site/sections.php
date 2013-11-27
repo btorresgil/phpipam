@@ -112,11 +112,27 @@ $setFields = explode(";", $setFieldsTemp);
 		</div>
 	</td>
 
-	<!-- instructions -->	
+
+	<?php
+	//check if user has favourite subnets
+	$user = getActiveUserDetails();
+	if(strlen(trim($user['favourite_subnets']))>0) {
+	?>
+	<!-- Favourites -->	
 	<td class="fixed instr">	
-		<ul class="nav nav-tabs">
-			<li>
-				<a href="tools/instructions/" rel='tooltip' data-placement='bottom' title="<?php print _('Show IP addressing guide'); ?>"><img src="css/images/info.png" style="width:20px;"></a>
+		<ul class="nav nav-tabs" style="margin-right:0px;">
+			<li <?php if($_REQUEST['toolsId']=="favourites") print "class='active'"; ?> >
+				<a href="tools/favourites/" rel='tooltip' data-placement='bottom' title="<?php print _('Favourite networks'); ?>" style='height:20px;'><i class='icon-star icon-white'></i></a>
+			</li>
+		</ul>
+	</td>
+	<?php } ?>
+	
+	<!-- instructions -->
+	<td class="fixed instr">	
+		<ul class="nav nav-tabs" style="margin-right:0px;">
+			<li <?php if($_REQUEST['toolsId']=="instructions") print "class='active'"; ?>>
+				<a href="tools/instructions/" rel='tooltip' data-placement='bottom' title="<?php print _('Show IP addressing guide'); ?>" style='height:20px;'><i class='icon-white icon-info-sign'></i></a>
 			</li>
 		</ul>
 	</td>
@@ -125,7 +141,7 @@ $setFields = explode(";", $setFieldsTemp);
 	<td class="fixed">
 	    <ul class="nav nav-tabs pull-right">
 	    	<li class="dropdown">
-	    		<a class="dropdown-toggle topmenulink" data-toggle="dropdown" href="" rel='tooltip' data-placement='bottom' title='<?php print _('Show tools menu'); ?>'><i class="icon-wrench icon-white"></i> <?php print _('Tools'); ?> <b class="caret"></b></a>
+	    		<a class="dropdown-toggle topmenulink" data-toggle="dropdown" href="" rel='tooltip' data-placement='bottom' title='<?php print _('Show tools menu'); ?>' style='height:20px;'><i class="icon-wrench icon-white"></i></a>
 	    		<ul class="dropdown-menu tools">
 	    			<!-- public -->
 	    			<li class="nav-header"><?php print _('Available IPAM tools'); ?> </li>
@@ -142,6 +158,7 @@ $setFields = explode(";", $setFieldsTemp);
 				    	print "	<li "; if($_REQUEST['toolsId'] == "vlan") 		print "class='active'"; print "><a href='tools/vlan/'>"._('VLANs')."</a></li>"; 	
 				    	print "	<li "; if($_REQUEST['toolsId'] == "subnets") 	print "class='active'"; print "><a href='tools/subnets/'>"._('Subnets')."</a></li>"; 
 				    	print "	<li "; if($_REQUEST['toolsId'] == "search") 	print "class='active'"; print "><a href='tools/search/'>"._('Search')."</a></li>"; 
+				    	print "	<li "; if($_REQUEST['toolsId'] == "search") 	print "class='active'"; print "><a href='tools/favourites/'>"._('Favourite networks')."</a></li>"; 
 				    	print "	<li class='divider'></li>";
 				    	print "	<li><a href='tools/'>"._('Show all tools')."</a></li>";	
 	

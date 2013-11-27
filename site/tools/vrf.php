@@ -75,7 +75,7 @@ else {
 	
 				print "	<td>$subnet[VLAN]</td>";
 				print "	<td>$subnet[description]</td>";
-				print "	<td><a href='/subnets/$section[id]/$subnet[id]/'>".transform2long($subnet['subnet'])."/$subnet[mask]</a></td>";    
+				print "	<td><a href='subnets/$section[id]/$subnet[id]/'>".transform2long($subnet['subnet'])."/$subnet[mask]</a></td>";    
 	    
 				if($masterSubnet) { 
 					print '	<td>/</td>' . "\n"; 
@@ -84,7 +84,7 @@ else {
 					$master = getSubnetDetailsById ($subnet['masterSubnetId']);
 					# orphaned
 					if(strlen($master['subnet']) == 0)	{ print "	<td><div class='alert alert-warn'>"._('Master subnet does not exist')."!</div></td>";}
-					else 								{ print "	<td><a href='/subnets/$subnet[sectionId]/$subnet[masterSubnetId]/'>".transform2long($master['subnet'])."/$master[mask] ($master[description])</a></td>"; }
+					else 								{ print "	<td><a href='subnets/$subnet[sectionId]/$subnet[masterSubnetId]/'>".transform2long($master['subnet'])."/$master[mask] ($master[description])</a></td>"; }
 				}
 	
 				# details

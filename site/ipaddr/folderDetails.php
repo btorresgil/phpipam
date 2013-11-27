@@ -101,6 +101,13 @@ if($permission == "0")	{ die("<div class='alert alert-error'>"._('You do not hav
 	if($permission == "1") {
 		print "<button class='btn btn-small btn-inverse disabled' 	href='' rel='tooltip' title='"._('You do not have permissions to edit folder')."'>	<i class='icon-lock icon-white'></i></button> ";	# lock info
 		print "<a class='disabled btn btn-small'  					href=''>																			<i class='icon-pencil'></i></a>";					# edit subnet
+		# favourite
+		if(isSubnetFavourite($SubnetDetails['id'])) {
+		print "<a class='btn btn-small btn-info editFavourite' href='' data-subnetId='$SubnetDetails[id]' data-action='remove'>		<i class='icon-white icon-star favourite-$SubnetDetails[id]' rel='tooltip' title='"._('Click to remove from favourites')."'></i></a> ";	# favourite
+		} 
+		else {
+		print "<a class='btn btn-small editFavourite' href='' data-subnetId='$SubnetDetails[id]' data-action='add'>					<i class='icon-star icon-star-empty favourite-$SubnetDetails[id]' rel='tooltip' title='"._('Click to add to favourites')."'></i></a> ";	# favourite			
+		}
 		if($permissionsSection == 3) {
 		print "<a class='edit_subnet btn btn-small '				href='' rel='tooltip' title='"._('Add new nested subnet')."' 	data-subnetId='$SubnetDetails[id]' data-action='add' data-id='' data-sectionId='$SubnetDetails[sectionId]'> 	<i class='icon-plus-sign'></i></a> ";		# add new child subnet
 		print "<a class='add_folder btn btn-small '					href='' rel='tooltip' title='"._('Add new nested folder')."' 	data-subnetId='$SubnetDetails[id]' data-action='add' data-id='' data-sectionId='$SubnetDetails[sectionId]'> 	<i class='icon-folder-close'></i></a> ";		# add new child subnet
@@ -113,6 +120,13 @@ if($permission == "0")	{ die("<div class='alert alert-error'>"._('You do not hav
 	else if ($permission == 2) {
 		print "<a class='btn btn-small disabled' 					href='' rel='tooltip' title='"._('Edit folder')."'		>							<i class='icon-pencil'></i></a>";		# edit subnet
 		if($permissionsSection == 3) {
+		# favourite
+		if(isSubnetFavourite($SubnetDetails['id'])) {
+		print "<a class='btn btn-small btn-info editFavourite' href='' data-subnetId='$SubnetDetails[id]' data-action='remove'>		<i class='icon-white icon-star favourite-$SubnetDetails[id]' rel='tooltip' title='"._('Click to remove from favourites')."'></i></a> ";	# favourite
+		} 
+		else {
+		print "<a class='btn btn-small editFavourite' href='' data-subnetId='$SubnetDetails[id]' data-action='add'>					<i class='icon-star icon-star-empty favourite-$SubnetDetails[id]' rel='tooltip' title='"._('Click to add to favourites')."'></i></a> ";	# favourite			
+		}
 		print "<a class='edit_subnet btn btn-small '				href='' rel='tooltip' title='"._('Add new nested subnet')."' 	data-subnetId='$SubnetDetails[id]' data-action='add' data-id='' data-sectionId='$SubnetDetails[sectionId]'> <i class='icon-plus-sign'></i></a> ";		# add new child subnet
 		print "<a class='add_folder btn btn-small '					href='' rel='tooltip' title='"._('Add new nested folder')."' 	data-subnetId='$SubnetDetails[id]' data-action='add' data-id='' data-sectionId='$SubnetDetails[sectionId]'> 	<i class='icon-folder-close'></i></a> ";		# add new child subnet
 		}
@@ -124,6 +138,13 @@ if($permission == "0")	{ die("<div class='alert alert-error'>"._('You do not hav
 	}
 	else if ($permission == 3) {
 		print "<a class='add_folder btn btn-small' 					href='' rel='tooltip' title='"._('Edit folder')."'					data-action='edit' data-subnetId='$SubnetDetails[id]' data-sectionId='$SubnetDetails[sectionId]'>			<i class='icon-pencil'></i></a>";		# edit subnet
+		# favourite
+		if(isSubnetFavourite($SubnetDetails['id'])) {
+		print "<a class='btn btn-small btn-info editFavourite' href='' data-subnetId='$SubnetDetails[id]' data-action='remove'>		<i class='icon-white icon-star favourite-$SubnetDetails[id]' rel='tooltip' title='"._('Click to remove from favourites')."'></i></a> ";	# favourite
+		} 
+		else {
+		print "<a class='btn btn-small editFavourite' href='' data-subnetId='$SubnetDetails[id]' data-action='add'>					<i class='icon-star icon-star-empty favourite-$SubnetDetails[id]' rel='tooltip' title='"._('Click to add to favourites')."'></i></a> ";	# favourite			
+		}
 		if(checkAdmin (false, false)) {
 		print "<a class='showSubnetPerm btn btn-small' 				href='' rel='tooltip' title='"._('Manage folder permissions')."'	data-subnetId='$SubnetDetails[id]' data-sectionId='$SubnetDetails[sectionId]' data-action='show'>			<i class='icon-tasks'></i></a>";			# edit subnet
 		}

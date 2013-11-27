@@ -469,6 +469,47 @@ $(document).on("click", "button#exportSubnet", function() {
 });
 
 
+/*	add / remove favourite subnet
+*********************************/
+$(document).on('click', 'a.editFavourite', function() {
+	var subnetId = $(this).attr('data-subnetId');
+	var action   = $(this).attr('data-action');
+	var from     = $(this).attr('data-from');
+	var item     = $(this);
+
+	//remove
+	$.post('site/tools/favouriteEdit.php', {subnetId:subnetId, action:action, from:from}, function(data) {
+		//success - widget - remove item
+		if(data=='success' && from=='widget') 	{ 
+			$('tr.favSubnet-'+subnetId).addClass('error');
+			$('tr.favSubnet-'+subnetId).delay(200).fadeOut(); 
+		}
+		//success - subnet - toggle star-empty
+		else if (data=='success') 				{ 
+			$('i.favourite-'+subnetId).toggleClass('icon-star-empty').toggleClass('icon-white'); 
+			$(item).toggleClass('btn-info');
+			//remove
+			if(action=="remove") {
+				$('i.favourite-'+subnetId).attr('data-original-title','Click to add to favourites');
+				$(item).attr('data-action','add');
+			}
+			//add
+			else {
+				$('i.favourite-'+subnetId).attr('data-original-title','Click to remove from favourites');
+				$(item).attr('data-action','remove');				
+			}
+		}
+		//fail
+		else {
+	        $('div.popup_w500').html(data);
+	        showPopup('popup_w500');
+	        hideSpinner();			
+		}
+	}).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});
+	return false;
+});
+
+
 /*    request IP address for non-admins if locked or viewer
 *********************************************************/
 //show request form

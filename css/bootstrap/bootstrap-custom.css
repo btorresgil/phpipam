@@ -421,6 +421,7 @@ table.nav td.fixed {
 }
 table.nav td.instr {
 	border-left: 1px solid #666;
+	border-right: 1px solid #666;
 }
 
 

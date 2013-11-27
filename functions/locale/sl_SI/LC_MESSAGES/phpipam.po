@@ -4,7 +4,7 @@
 # miha petkovsek <miha.petkovsek@gmail.com>, 2013.
 #
 
-# "Project-Id-Version: 0.9\n"
+# "Project-Id-Version: 0.91.001\n"
 # "Report-Msgid-Bugs-To: Miha Petkovsek <miha.petkovsek@gmail.com>\n"
 # "POT-Creation-Date: 2013-04-02 14:33+0200\n"
 # "PO-Revision-Date: 2013-06-28 14:33+0200\n"
@@ -4394,3 +4394,27 @@ msgstr "Našel sem sledeče uporabnike"
 
 msgid "Select"
 msgstr "Izberi"
+
+#: functions/functions-common.php
+msgid "Favourite subnets"
+msgstr "Priljubljena omrežja"
+
+msgid "No favourite subnets selected"
+msgstr "Ni priljubljenih omrežij"
+
+msgid "You can add subnets to favourites by clicking star icon in subnet details"
+msgstr "Omrežje lahko dodate v priljubljene s klikom na szvezdivo v podatkih o omrežju"
+
+msgid "Click to remove from favourites"
+msgstr "Kliknite za odstranitev"
+
+msgid "Click to add to favourites"
+msgstr "Kliknite za dodajanje"
+
+#: site/tools/favouriteEdit.php
+msgid "Error editing favourite"
+msgstr "Napaka pri urejanju priljubljenih omrežij"
+
+#: site/sections.php
+msgid "Favourite networks"
+msgstr "Priljubljena omrežja"

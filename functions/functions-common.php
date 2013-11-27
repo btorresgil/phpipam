@@ -331,18 +331,137 @@ function getLangById ($id)
  */
 function getAllWidgets($admin = false)
 {
-	$widgets['statistics'] 		 = "Statistics";
-	$widgets['top10_hosts_v4'] 	 = "Top 10 IPv4 subnets by number of hosts";
-	$widgets['top10_hosts_v6'] 	 = "Top 10 IPv6 subnets by number of hosts";
-	$widgets['top10_percentage'] = "Top 10 IPv4 subnets by usage percentage";
+	$widgets['statistics'] 		  = "Statistics";
+	$widgets['favourite_subnets'] = "Favourite subnets";
+	$widgets['top10_hosts_v4'] 	  = "Top 10 IPv4 subnets by number of hosts";
+	$widgets['top10_hosts_v6'] 	  = "Top 10 IPv6 subnets by number of hosts";
+	$widgets['top10_percentage']  = "Top 10 IPv4 subnets by usage percentage";
 	
 	if($admin) {
-	$widgets['access_logs'] 	 = "Last 5 informational logs";
-	$widgets['error_logs'] 		 = "Last 5 warning / error logs";
+	$widgets['access_logs'] 	  = "Last 5 informational logs";
+	$widgets['error_logs'] 		  = "Last 5 warning / error logs";
 
 	}
 
 	return $widgets;
+}
+
+
+/**
+ * get user favourite subnets
+ */
+function getFavouriteSubnets()
+{
+    # get user details
+    $user = getActiveUserDetails();
+    
+    # none
+    if(strlen($user['favourite_subnets'])==0) {
+	    return false;
+    }
+    # ok
+    else {
+    	//store to array
+    	$favs = explode(";", $user['favourite_subnets']);
+    	$favs = array_filter($favs);
+    	//fetch details
+	    $subnets = getUserFavouriteSubnets($favs);
+	    
+	    return $subnets;
+    }
+
+}
+
+
+/**
+ *	get user favourite subnets
+ */
+function getUserFavouriteSubnets($subnetIds)
+{
+    global $db;                                                                      # get variables from config file
+    $database = new database($db['host'], $db['user'], $db['pass'], $db['name']);  
+
+	# get details for each id
+	foreach($subnetIds as $id) {
+		$query = "select `su`.`id` as `subnetId`,`se`.`id` as `sectionId`, `subnet`, `mask`,`su`.`description`,`se`.`description` as `section`, `vlanId`, `isFolder`
+				  from `subnets` as `su`, `sections` as `se` where `su`.`id` = $id and `su`.`sectionId` = `se`.`id` limit 1;";
+
+	    /* execute */
+	    try { $sdetails = $database->getArray( $query ); }
+	    catch (Exception $e) { 
+	        $error =  $e->getMessage(); 
+	        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+	        return false;
+	    }
+	    
+	    # out array
+	    $subnets[] = $sdetails[0];
+	}
+	
+	//return result
+	return $subnets;
+}
+
+
+/**
+ *	check if subnet is favourited
+ */
+function isSubnetFavourite($subnetId)
+{
+    # get user details
+    $user = getActiveUserDetails();
+    
+    # none
+    if(strlen($user['favourite_subnets'])==0) {
+	    return false;
+    }
+	# check
+	else {
+    	//store to array
+    	$favs = explode(";", $user['favourite_subnets']);
+    	//check
+    	if(in_array($subnetId, $favs)) {
+	    	return true;
+    	} else {
+	    	return false;
+    	}
+	}	
+}
+
+
+/**
+ *	edit favourite
+ */
+function editFavourite($post)
+{
+    global $db;                                                                      # get variables from config file
+    $database = new database($db['host'], $db['user'], $db['pass'], $db['name']);  
+
+    # get user details and favourites
+    $user = getActiveUserDetails();
+	# empty
+	$old = explode(";", $user['favourite_subnets']);
+		
+	# set query
+	if($post['action'] == "remove") {
+		$new = implode(";", array_diff($old, array($post['subnetId'])));
+		$query = "update `users` set `favourite_subnets` = '$new' where `id` = '$user[id]' limit 1;"; 		
+	} elseif($post['action'] == "add") {  
+		if(!is_array($old))	{ $old = array(); }
+		$new = implode(";",array_merge(array($post['subnetId']), $old));
+		$query = "update `users` set `favourite_subnets` = '$new' where `id` = '$user[id]' limit 1;"; 		
+	} else { 
+		return false;
+	}
+		
+	# execute
+    try { $database->executeQuery( $query ); }
+    catch (Exception $e) { 
+        $error =  $e->getMessage(); 
+        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        return false;
+    }
+    return true;
 }
 
 
@@ -1271,7 +1390,11 @@ function printBreadcrumbs ($req)
 			
 			foreach($parents as $parent) {
 			$subnet = getSubnetDetailsById($parent);
-			print "	<li><a href='subnets/$section[id]/$parent/'>$subnet[description] (".Transform2long($subnet['subnet']).'/'.$subnet['mask'].")</a> <span class='divider'>/</span></li>";								# subnets in between
+			if($subnet['isFolder']==1) {
+				print "	<li><a href='subnets/$section[id]/$parent/'><i class='icon-folder-open icon-gray'></i> $subnet[description]</a> <span class='divider'>/</span></li>";								# subnets in between
+			} else {
+				print "	<li><a href='subnets/$section[id]/$parent/'>$subnet[description] (".Transform2long($subnet['subnet']).'/'.$subnet['mask'].")</a> <span class='divider'>/</span></li>";								# subnets in between				
+			}
 			}
 			$subnet = getSubnetDetailsById($req['subnetId']);
 			print "	<li class='active'>$subnet[description] (".Transform2long($subnet['subnet']).'/'.$subnet['mask'].")</li>";																# active subnet
@@ -1295,7 +1418,7 @@ function printBreadcrumbs ($req)
 			
 			foreach($parents as $parent) {
 			$subnet = getSubnetDetailsById($parent);
-			print "	<li><a href='subnets/$section[id]/$parent/'>$subnet[description]</a> <span class='divider'>/</span></li>";								# subnets in between
+			print "	<li><a href='subnets/$section[id]/$parent/'><i class='icon-folder-open icon-gray'></i> $subnet[description]</a> <span class='divider'>/</span></li>";								# subnets in between
 			}
 			$subnet = getSubnetDetailsById($req['subnetId']);
 			print "	<li class='active'>$subnet[description]</li>";																# active subnet

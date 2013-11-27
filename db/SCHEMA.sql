@@ -332,6 +332,7 @@ CREATE TABLE `users` (
   `domainUser` binary(1) DEFAULT '0',
   `widgets` VARCHAR(1024)  NULL  DEFAULT 'statistics;top10_hosts_v4;top10_hosts_v6;top10_percentage',
   `lang` INT(2)  NULL  DEFAULT '1',
+  `favourite_subnets` VARCHAR(1024)  NULL  DEFAULT NULL,
   `editDate` TIMESTAMP  NULL  ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`username`),
   UNIQUE KEY `id_2` (`id`),

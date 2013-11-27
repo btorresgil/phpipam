@@ -32,8 +32,17 @@ $setFields = explode(";", $setFieldsTemp);
 	</li>
 </ul>
 
-<h4><?php print _('Devices'); ?></h4>
+<h4><?php print _('Subnets'); ?></h4>
 <ul class="nav nav-tabs nav-stacked nav-tools">    
+	<li <?php if($_REQUEST['toolsId'] == "favourites") print "class='active'"; ?>>
+		<a href="tools/favourites/"><i class="icon-chevron-right pull-right icon-gray"></i> <?php print _('Favourite networks'); ?></a>
+	</li> 
+	<li <?php if($_REQUEST['toolsId'] == "subnets") print "class='active'"; ?>>
+		<a href="tools/subnets/"><i class="icon-chevron-right pull-right icon-gray"></i> <?php print _('Subnets'); ?></a>
+	</li>  
+	<li <?php if($_REQUEST['toolsId'] == "vlan") print "class='active'"; ?>>
+		<a href="tools/vlan/"><i class="icon-chevron-right pull-right icon-gray"></i> <?php print _('VLANs'); ?></a>
+	</li> 
 	<li <?php if($_REQUEST['toolsId'] == "devices") print "class='active'"; ?>>
 		<a href="tools/devices/"><i class="icon-chevron-right pull-right icon-gray "></i> <?php print _('Devices'); ?></a>
 	</li>
@@ -42,13 +51,7 @@ $setFields = explode(";", $setFieldsTemp);
 	<li <?php if($_REQUEST['toolsId'] == "vrf") print "class='active'"; ?>>
 		<a href="tools/vrf/"><i class="icon-chevron-right pull-right icon-gray"></i> <?php print _('VRF'); ?></a>
 	</li>    
-    <?php } ?> 
-	<li <?php if($_REQUEST['toolsId'] == "vlan") print "class='active'"; ?>>
-		<a href="tools/vlan/"><i class="icon-chevron-right pull-right icon-gray"></i> <?php print _('VLANs'); ?></a>
-	</li>   
-	<li <?php if($_REQUEST['toolsId'] == "subnets") print "class='active'"; ?>>
-		<a href="tools/subnets/"><i class="icon-chevron-right pull-right icon-gray"></i> <?php print _('Subnets'); ?></a>
-	</li>  
+    <?php } ?>    
 </ul>
 
 

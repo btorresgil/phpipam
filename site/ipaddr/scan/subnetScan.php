@@ -83,7 +83,7 @@ $ip_addr = getIpAddressesBySubnetId ($_POST['subnetId']) ;
 <div class="pFooter">
 	<div class="btn-group">
 		<button class="btn btn-small hidePopups"><?php print _('Cancel'); ?></button>
-		<button class="btn btn-small btn-success" id="subnetScanSubmit" data-subnetId='<?php print $_POST['subnetId']; ?>'><i class="icon-white icon-star"></i> <?php print _('Scan subnet'); ?></button>
+		<button class="btn btn-small btn-success" id="subnetScanSubmit" data-subnetId='<?php print $_POST['subnetId']; ?>'><i class="icon-white icon-refresh"></i> <?php print _('Scan subnet'); ?></button>
 	</div>
 
 	<div class="subnetTruncateResult"></div>

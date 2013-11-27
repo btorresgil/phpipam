@@ -1,10 +1,16 @@
-== 0.9.002
+== 0.91.001
+	
+	New features:
+	----------------------------
+	+ Favourite subnets widget;
 
 	Bugfixes:
 	--------
 	+ UI fixes;
 	+ Fixed bug where last page of IP addresses was inaccessible;
 	+ IP address state change is now sent to all admins;
+	+ Fixed subnet displaying as 0.0.0.0/0 in details;
+	+ Fixed links to subnets form vlans and vrfs;
 
 == 0.9
 
