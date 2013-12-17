@@ -4,7 +4,7 @@
 # miha petkovsek <miha.petkovsek@gmail.com>, 2013.
 #
 
-# "Project-Id-Version: 0.91.001\n"
+# "Project-Id-Version: 0.92.001\n"
 # "Report-Msgid-Bugs-To: Miha Petkovsek <miha.petkovsek@gmail.com>\n"
 # "POT-Creation-Date: 2013-04-02 14:33+0200\n"
 # "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
@@ -4373,4 +4373,57 @@ msgstr ""
 
 #: site/sections.php
 msgid "Favourite networks"
+msgstr ""
+
+#: site/ipaddr/ipDetailsChangelog.php
+msgid "Changelog"
+msgstr ""
+
+msgid "No changelogs available"
+msgstr ""
+
+msgid "No changelog entries are available for this host"
+msgstr ""
+
+msgid "No changelog entries are available for this subnet"
+msgstr ""
+
+msgid "No changelog entries are available for this section"
+msgstr ""
+
+#: site/ipaddr/ipDetails.php
+msgid "Avalibility"
+msgstr ""
+
+msgid "Last edited"
+msgstr ""
+
+msgid "Action"
+msgstr ""
+
+msgid "Result"
+msgstr ""
+
+msgid "Change"
+msgstr ""
+
+#: site/tools/changelogPrint.php
+msgid "Output has been limited to last 50 lines"
+msgstr ""
+
+msgid "Output has been limited to last 100 lines"
+msgstr ""
+
+msgid "Output has been limited to last 250 lines"
+msgstr ""
+
+msgid "Output has been limited to last 500 lines"
+msgstr ""
+
+#: site/admin/settings.php
+msgid "Enable changelog"
+msgstr ""
+
+#: site/tools/changelog.php
+msgid "Change logging is disabled. You can enable it under administration"
 msgstr ""

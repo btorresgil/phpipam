@@ -77,7 +77,7 @@ else								 		{ $url = "http://$_SERVER[SERVER_NAME]".BASE; }
 	<script type="text/javascript" src="js/jclock.jquery.js"></script>
 <!-- 	<script type="text/javascript" src="js/magic.min.js"></script> -->
 	<script type="text/javascript" src="js/login.js"></script>
-	<script type="text/javascript" src="js/magic.js"></script>
+	<script type="text/javascript" src="js/magic-0.92.js"></script>
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
 	
 
@@ -188,8 +188,11 @@ else								 		{ $url = "http://$_SERVER[SERVER_NAME]".BASE; }
 			print "<td>";
 			print "<div id='content'>";
 				if( isset($_REQUEST['toolsId']) && (strlen($_REQUEST['toolsId']) == 0) )	{ unset($_REQUEST['toolsId']); }
+				# subnet changelog
+				if($_REQUEST['page'] == "subnets" && $_REQUEST['sPage'] == "changelog")									{ include_once("site/ipaddr/subnetChangelog.php"); }
 				# subnets
-				if($_REQUEST['page'] == "subnets" && !isset($_REQUEST['subnetId']))										{ include_once("site/ipaddr/sectionAllSubnets.php"); }
+				elseif($_REQUEST['page'] == "subnets" && !isset($_REQUEST['subnetId']))									{ include_once("site/ipaddr/sectionAllSubnets.php"); }
+				# subnets, vrf, vlan, folder
 				else if($_REQUEST['page'] == "subnets" || $_REQUEST['page'] == "vlan" 
 					 || $_REQUEST['page'] == "vrf"	   || $_REQUEST['page'] == "folder")								{ include_once("site/ipaddr/ipAddressSwitch.php"); }
 				# tools		

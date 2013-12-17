@@ -172,6 +172,7 @@ CREATE TABLE `settings` (
   `editDate` TIMESTAMP  NULL  ON UPDATE CURRENT_TIMESTAMP,
   `dhcpCompress` BOOL  NOT NULL  DEFAULT '0',
   `api` BINARY  NOT NULL  DEFAULT '0',
+  `enableChangelog` TINYINT(1)  NOT NULL  DEFAULT '1',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -429,9 +430,27 @@ CREATE TABLE `api` (
   `app_permissions` int(1) DEFAULT '1',
   PRIMARY KEY (`id`),
   UNIQUE KEY `app_id` (`app_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+# Dump of table changelog
+# ------------------------------------------------------------
+DROP TABLE IF EXISTS `changelog`;
+
+CREATE TABLE `changelog` (
+  `cid` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `ctype` set('ip_addr','subnet','section') NOT NULL DEFAULT '',
+  `coid` int(11) unsigned NOT NULL,
+  `cuser` int(11) unsigned NOT NULL,
+  `caction` set('add','edit','delete','truncate','resize','perm_change') NOT NULL DEFAULT 'edit',
+  `cresult` set('error','success') NOT NULL DEFAULT '',
+  `cdate` datetime NOT NULL,
+  `cdiff` varchar(2048) DEFAULT NULL,
+  PRIMARY KEY (`cid`),
+  KEY `coid` (`coid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 # update version
 # ------------------------------------------------------------
-UPDATE `settings` set `version` = '0.9';
+UPDATE `settings` set `version` = '0.92';

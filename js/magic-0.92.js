@@ -642,6 +642,17 @@ $(document).on("click", "#randomPassSelf", function() {
     return false;
 });
 
+/* changelog */
+//submit form
+$('form#cform').submit(function () {
+    showSpinner();
+    var limit = $('form#cform .climit').val();
+    var filter = $('form#cform .cfilter').val();
+    //update search page
+    window.location = "tools/changelog/"+filter+"/"+limit+"/";
+    return false;
+});
+
 
 
 

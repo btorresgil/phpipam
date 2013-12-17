@@ -40,7 +40,7 @@ else {
 		print "<tr class='favSubnet-$f[subnetId]'>";
 		
 		if($f['isFolder']==1) {
-			print "	<td><a href='subnets/$f[sectionId]/$f[subnetId]/'><i class='icon-folder-close icon-gray'></i> $f[description]</a></td>";
+			print "	<td><a href='folder/$f[sectionId]/$f[subnetId]/'><i class='icon-folder-close icon-gray'></i> $f[description]</a></td>";
 		}
 		else {
 			print "	<td><a href='subnets/$f[sectionId]/$f[subnetId]/'>".transform2long($f['subnet'])."/$f[mask]</a></td>";		

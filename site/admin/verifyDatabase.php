@@ -4,7 +4,7 @@
  * Script to verify database structure
  ****************************************/
  
-/* v 0.85 */
+/* v 0.92 */
 
 
 /* verify that user is admin */
@@ -24,7 +24,7 @@ $fields['ipaddresses'] 	  = array("subnetId", "ip_addr", "description", "dns_nam
 $fields['logs']			  = array("severity", "date", "username", "ipaddr", "command", "details");
 $fields['requests']		  = array("subnetId", "ip_addr", "description", "dns_name", "owner", "requester", "comment", "processed", "accepted", "adminComment");
 $fields['sections']		  = array("name", "description", "permissions", "strictMode", "subnetOrdering", "order", "showVLAN", "showVRF", "masterSection");
-$fields['settings']		  = array("siteTitle", "siteAdminName", "siteAdminMail", "siteDomain", "siteURL", "domainAuth", "showTooltips", "enableIPrequests", "enableVRF", "enableDNSresolving", "version", "donate", "IPfilter", "printLimit", "visualLimit", "vlanDuplicate", "htmlMail", "subnetOrdering", "pingStatus", "defaultLang", "api", "dhcpCompress");
+$fields['settings']		  = array("siteTitle", "siteAdminName", "siteAdminMail", "siteDomain", "siteURL", "domainAuth", "showTooltips", "enableIPrequests", "enableVRF", "enableDNSresolving", "version", "donate", "IPfilter", "printLimit", "visualLimit", "vlanDuplicate", "htmlMail", "subnetOrdering", "pingStatus", "defaultLang", "api", "dhcpCompress", "enableChangelog");
 $fields['settingsDomain'] = array("account_suffix", "base_dn", "domain_controllers", "use_ssl", "use_tls", "ad_port", "adminUsername", "adminPassword");
 $fields['subnets'] 		  = array("subnet", "mask", "sectionId", "description", "masterSubnetId", "vrfId", "allowRequests", "vlanId", "showName", "permissions", "pingSubnet", "isFolder");
 $fields['switches'] 	  = array("hostname", "ip_addr", "type", "vendor", "model", "version", "description", "sections");

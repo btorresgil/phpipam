@@ -113,6 +113,7 @@ foreach ($sections as $section)
    	print '	<td class="actions">'. "\n";
    	print "	<div class='btn-group'>";
 	print "		<button class='btn btn-small editSection' data-action='edit'   data-sectionid='$section[id]'><i class='icon-gray icon-pencil'></i></button>";
+	print "		<a class='btn btn-small' href='administration/manageSection/sectionChangelog/$section[id]/'><i class='icon-gray icon-time'></i></a>";
 	print "		<button class='btn btn-small editSection' data-action='delete' data-sectionid='$section[id]'><i class='icon-gray icon-remove'></i></button>";
 	print "	</div>";
 	print '	</td>'. "\n";

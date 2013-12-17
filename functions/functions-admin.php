@@ -228,7 +228,7 @@ function modifyLang ($lang)
 
 
 /**
- *	getall groups
+ *	get all groups
  */
 function getAllGroups() 
 {
@@ -248,6 +248,23 @@ function getAllGroups()
    	/* return false if none, else list */
 	if(sizeof($groups) == 0) { return false; }
 	else					 { return $groups; }
+}
+
+
+/**
+ *	get all groups - array order by key
+ */
+function rekeyGroups($groups) 
+{
+	foreach($groups as $k=>$g) {
+		$tkey = $g['g_id'];
+
+		$out[$tkey]['g_id']   = $g['g_id'];		
+		$out[$tkey]['g_name'] = $g['g_name'];
+		$out[$tkey]['g_desc'] = $g['g_desc'];
+	}
+	
+	return $out;
 }
 
 
@@ -594,15 +611,32 @@ function modifySubnetDetails ($subnetDetails, $lastId = false)
     $query = setModifySubnetDetailsQuery ($subnetDetails, $sectionChange);
         
 	$log = prepareLogFromArray ($subnetDetails);																				# prepare log 
+	
+    /* save old if delete */
+    if($subnetDetails['action']=="delete")		{ $dold = getSubnetDetailsById ($subnetDetails['subnetId']); }
+    elseif($subnetDetails['action']=="edit")	{ $old  = getSubnetDetailsById ($subnetDetails['subnetId']); }
 
     # execute query
-    try { $updateId=$database->executeMultipleQuerries($query, $lastId); }
+    try { $updateId=$database->executeMultipleQuerries($query, true); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
         updateLogTable ('Subnet ('. $subnetDetails['description'] .') '. $subnetDetails['action'] .' failed', $log, 2);	# write error log
         print "<div class='alert alert-error'>$error</div>";
+        //save changelog
+		writeChangelog('subnet', $ip['action'], 'error', $old, $new);
         return false;
     }
+
+    /* for changelog */
+	if($subnetDetails['action']=="add") {
+		$subnetDetails['subnetId'] = $updateId;
+		writeChangelog('subnet', $subnetDetails['action'], 'success', array(), $subnetDetails);
+	} elseif ($subnetDetails['action']=="delete") {
+		$dold['subnetId'] = $dold['id'];
+		writeChangelog('subnet', $subnetDetails['action'], 'success', $dold, array());
+	} else {
+		writeChangelog('subnet', $subnetDetails['action'], 'success', $old, $subnetDetails);
+	}
     
     # success
     updateLogTable ('Subnet ('. $subnetDetails['description'] .') '. $subnetDetails['action'] .' ok', $log, 1);		# write success log
@@ -783,8 +817,38 @@ function modifySubnetMask ($subnetId, $mask)
     }
     else {
         updateLogTable ('Subnet resized ok', $log, 1);		# write success log
+		
+		/* changelog */
+		writeChangelog('subnet', 'resize', 'success', array(), array("subnetId"=>$subnetId, "mask"=>$mask));
+
         return true;
     }
+}
+
+
+/**
+ * truncate subnet
+ */
+function truncateSubnet($subnetId) 
+{
+    global $db;                                                                      # get variables from config file
+    $database    = new database($db['host'], $db['user'], $db['pass'], $db['name']); 
+    
+    /* first update request */
+    $query    = 'delete from `ipaddresses` where `subnetId` = '. $subnetId .';'; 
+
+	/* execute */
+    try { $database->executeQuery($query); }
+    catch (Exception $e) { 
+    	$error =  $e->getMessage(); 
+    	die('<div class="alert alert-error">'.$error.'</div>');
+    }
+    
+    /* changelog */
+	writeChangelog('subnet', 'truncate', 'success', array(), array("Truncate"=>'Subnet truncated', "subnetId"=>$subnetId));
+  
+	/* return true if locked */
+	return true;	
 }
 
 
@@ -926,7 +990,9 @@ function updateSubnetPermissions ($subnet)
 
     # set querries for subnet and each slave
     foreach($subnet['slaves'] as $slave) {
-    	$query .= "update `subnets` set `permissions` = '$subnet[permissions]' where `id` = $slave;";	    
+    	$query .= "update `subnets` set `permissions` = '$subnet[permissions]' where `id` = $slave;";	
+    	
+    	writeChangelog('subnet', 'perm_change', 'success', array(), array("permissions_change"=>"$subnet[permissions]", "subnetId"=>$slave));
     }
     
 	# execute
@@ -972,12 +1038,17 @@ function UpdateSection ($update, $api = false)
     $query = setUpdateSectionQuery ($update);										# set update section query
 
 	$log = prepareLogFromArray ($update);											# prepare log
+	
+	/* save old if delete */
+    if($update['action']=="delete")		{ $dold = getSectionDetailsById ($update['id']); }
+    elseif($update['action']=="edit")	{ $old  = getSectionDetailsById ($update['id']); }
+
 
     # delete and edit requires multiquery
     if ( ( $update['action'] == "delete") || ( $update['action'] == "edit") )
     {
 		# execute
-		try { $result = $database->executeMultipleQuerries($query); }
+		try { $result = $database->executeMultipleQuerries($query, true); }
 		catch (Exception $e) { 
     		$error =  $e->getMessage(); 
             updateLogTable ('Section ' . $update['action'] .' failed ('. $update['name']. ') - '.$error, $log, 2);	# write error log
@@ -986,13 +1057,22 @@ function UpdateSection ($update, $api = false)
     	}
     	# success
         updateLogTable ('Section '. $update['name'] . ' ' . $update['action'] .' ok', $log, 1);			# write success log
+        
+        /* for changelog */
+        if ($update['action']=="delete") {
+			$dold['id'] = $update['id'];
+			writeChangelog('section', $update['action'], 'success', $dold, array());
+		} else {
+			writeChangelog('section', $update['action'], 'success', $old, $update);
+		}
+        
         return true;
     }
     # add is single querry
     else 
     {
 		# execute
-		try { $result = $database->executeQuery($query); }
+		try { $result = $database->executeQuery($query, true); }
 		catch (Exception $e) { 
     		$error =  $e->getMessage(); 
             updateLogTable ('Adding section '. $update['name'] .'failed - '.$error, $log, 2);							# write error log
@@ -1001,6 +1081,11 @@ function UpdateSection ($update, $api = false)
 		}
 		# success
         updateLogTable ('Section '. $update['name'] .' added succesfully', $log, 1);					# write success log
+        
+        /* for changelog */
+		$update['id'] = $result;
+		writeChangelog('section', $update['action'], 'success', array(), $update);
+        
         return true;
     }
 }
@@ -1540,6 +1625,7 @@ function updateSettings($settings)
     $query   .= '`visualLimit` 	      = "'. $settings['visualLimit'] .'", ' . "\n"; 
     $query   .= '`vlanDuplicate` 	  = "'. isCheckbox($settings['vlanDuplicate']) .'", ' . "\n"; 
     $query   .= '`api` 	  			  = "'. isCheckbox($settings['api']) .'", ' . "\n"; 
+    $query   .= '`enableChangelog` 	  = "'. isCheckbox($settings['enableChangelog']) .'", ' . "\n"; 
     $query   .= '`subnetOrdering` 	  = "'. $settings['subnetOrdering'] .'", ' . "\n"; 
     $query   .= '`pingStatus` 	  	  = "'. $settings['pingStatus'] .'", ' . "\n"; 
     $query   .= '`defaultLang` 	  	  = "'. $settings['defaultLang'] .'" ' . "\n"; 

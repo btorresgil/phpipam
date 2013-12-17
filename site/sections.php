@@ -158,7 +158,10 @@ $setFields = explode(";", $setFieldsTemp);
 				    	print "	<li "; if($_REQUEST['toolsId'] == "vlan") 		print "class='active'"; print "><a href='tools/vlan/'>"._('VLANs')."</a></li>"; 	
 				    	print "	<li "; if($_REQUEST['toolsId'] == "subnets") 	print "class='active'"; print "><a href='tools/subnets/'>"._('Subnets')."</a></li>"; 
 				    	print "	<li "; if($_REQUEST['toolsId'] == "search") 	print "class='active'"; print "><a href='tools/search/'>"._('Search')."</a></li>"; 
-				    	print "	<li "; if($_REQUEST['toolsId'] == "search") 	print "class='active'"; print "><a href='tools/favourites/'>"._('Favourite networks')."</a></li>"; 
+				    	print "	<li "; if($_REQUEST['toolsId'] == "favourites") print "class='active'"; print "><a href='tools/favourites/'>"._('Favourite networks')."</a></li>"; 
+				    	if($settings['enableChangelog'] == 1) {								# print enableChangelog if enabled
+				    	print "	<li "; if($_REQUEST['toolsId'] == "changelog")  print "class='active'"; print "><a href='tools/changelog/'>"._('Changelog')."</a></li>"; 
+						}
 				    	print "	<li class='divider'></li>";
 				    	print "	<li><a href='tools/'>"._('Show all tools')."</a></li>";	
 	

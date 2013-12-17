@@ -43,9 +43,9 @@ if(isset($_SESSION['ipamlanguage'])) {
 
 
 /* set latest version */
-define("VERSION", "0.91");									//version changes if database structure changes
+define("VERSION", "0.92");									//version changes if database structure changes
 /* set latest revision */
-define("REVISION", "002");									//revision always changes, verision only if database structure changes
+define("REVISION", "001");									//revision always changes, verision only if database structure changes
 /* set last possible upgrade */
 define("LAST_POSSIBLE", "0.8");								//minimum required version to be able to upgrade
 

@@ -26,7 +26,14 @@ $setFields = explode(";", $setFieldsTemp);
 	</li>
 	<li <?php if($_REQUEST['toolsId'] == "instructions") print "class='active'"; ?>>
 		<a href="tools/instructions/"><i class="icon-chevron-right pull-right icon-gray"></i> <?php print _('Instructions'); ?></a>
-	</li>    
+	</li>   
+	</li>
+    <?php # if vrf enabled
+    if($settings['enableChangelog'] == 1) { ?> 
+	<li <?php if($_REQUEST['toolsId'] == "changelog") print "class='active'"; ?>>
+		<a href="tools/changelog/"><i class="icon-chevron-right pull-right icon-gray"></i> <?php print _('Changelog'); ?></a>
+	</li>
+	<?php } ?> 
 	<li <?php if($_REQUEST['toolsId'] == "search") print "class='active'"; ?>>
 		<a href="tools/search/"><i class="icon-chevron-right pull-right icon-gray"></i> <?php print _('Search'); ?></a>
 	</li>

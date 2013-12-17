@@ -859,6 +859,9 @@ span.status-hidden {
 	box-shadow: none !important;
 	width: 16px;
 }
+.status-ip {
+	float: right !important;
+}
 
 
 /* pie graph legend */

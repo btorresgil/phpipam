@@ -1,8 +1,10 @@
-== 0.91.001
+== 0.92.001
 	
 	New features:
 	----------------------------
 	+ Favourite subnets for quick access;
+	+ IP address page with IP address details and IP history (Changelog);
+	+ IP address changelog, subnet and section changelogs with full changelog under tools;
 
 	Bugfixes:
 	--------

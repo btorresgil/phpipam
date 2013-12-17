@@ -4,7 +4,7 @@
 # miha petkovsek <miha.petkovsek@gmail.com>, 2013.
 #
 
-# "Project-Id-Version: 0.91.001\n"
+# "Project-Id-Version: 0.92.001\n"
 # "Report-Msgid-Bugs-To: Miha Petkovsek <miha.petkovsek@gmail.com>\n"
 # "POT-Creation-Date: 2013-04-02 14:33+0200\n"
 # "PO-Revision-Date: 2013-06-28 14:33+0200\n"
@@ -4418,3 +4418,59 @@ msgstr "Napaka pri urejanju priljubljenih omrežij"
 #: site/sections.php
 msgid "Favourite networks"
 msgstr "Priljubljena omrežja"
+
+#: site/ipaddr/ipDetailsChangelog.php
+msgid "Changelog"
+msgstr "Log sprememb"
+
+msgid "No changelogs available"
+msgstr "Ni zabeleženih sprememb"
+
+msgid "No changelog entries are available for this host"
+msgstr "Za ta IP naslov ni zabeleženih nobenih sprememb"
+
+msgid "No changelog entries are available for this subnet"
+msgstr "Za to omrežje ni zabeleženih nobenih sprememb"
+
+msgid "No changelog entries are available for this section"
+msgstr "Za ta razdelek ni zabeleženih nobenih sprememb"
+
+msgid "No changelog entries are available"
+msgstr "Ni zabeleženih sprememb"
+
+#: site/ipaddr/ipDetails.php
+msgid "Avalibility"
+msgstr "Razpoložljivost"
+
+msgid "Last edited"
+msgstr "Nazadnje urejeno"
+
+msgid "Action"
+msgstr "Dejanje"
+
+msgid "Result"
+msgstr "Rezultat"
+
+msgid "Change"
+msgstr "Sprememba"
+
+#: site/tools/changelogPrint.php
+msgid "Output has been limited to last 50 lines"
+msgstr "Rezultat je bil omejen na zadnjih 50 vrstic"
+
+msgid "Output has been limited to last 100 lines"
+msgstr "Rezultat je bil omejen na zadnjih 100 vrstic"
+
+msgid "Output has been limited to last 250 lines"
+msgstr "Rezultat je bil omejen na zadnjih 250 vrstic"
+
+msgid "Output has been limited to last 500 lines"
+msgstr "Rezultat je bil omejen na zadnjih 500 vrstic"
+
+#: site/admin/settings.php
+msgid "Enable changelog"
+msgstr "Omogoči logiranje sprememb"
+
+#: site/tools/changelog.php
+msgid "Change logging is disabled. You can enable it under administration"
+msgstr "Logiranje sprememb ni omogočeno. To lahko spremenite v nastavitvah sistema"

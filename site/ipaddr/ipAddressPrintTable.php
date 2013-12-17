@@ -304,8 +304,8 @@ else {
 					    $hStatus = "hidden";
 					    $hTooltip = "";
 				    }   
-			    
-				    print "	<td class='ipaddress'><span class='status status-$hStatus' $hTooltip></span>".Transform2long( $ipaddress[$n]['ip_addr']);
+				    			    
+				    print "	<td class='ipaddress'><span class='status status-$hStatus' $hTooltip></span><a href='subnets/$_REQUEST[section]/$_REQUEST[subnetId]/ipdetails/".$ipaddress[$n]['id']."/'>".Transform2long( $ipaddress[$n]['ip_addr']);
 				    if(in_array('state', $setFields)) 				{ print reformatIPState($ipaddress[$n]['state']); }	
 				    print "</td>";
 		

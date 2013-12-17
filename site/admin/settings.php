@@ -177,6 +177,17 @@ $langs = getLanguages ();
 	</td>
 </tr>
 
+<!-- changelog -->
+<tr>
+	<td class="title"><?php print _('Changelog'); ?></td>
+	<td>
+		<input type="checkbox" value="1" name="enableChangelog" <?php if($settings['enableChangelog'] == 0) print ''; else print 'checked'; ?>>
+	</td>
+	<td class="info">
+		<?php print _('Enable changelog'); ?>
+	</td>
+</tr>
+
 <!-- Ping status intervals -->
 <tr>
 	<td class="title"><?php print _('Ping status intervals'); ?></td>

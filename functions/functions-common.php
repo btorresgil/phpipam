@@ -1374,7 +1374,39 @@ function getAllSlaves ($subnetId, $multi = false)
 function printBreadcrumbs ($req)
 {
 	# subnets
-	if($req['page'] == "subnets")	{
+	if(isset($req['ipaddrid']))	{
+		if(isset($req['subnetId'])) {
+			# get all parents
+			$parents = getAllParents ($req['subnetId']);
+			print "<ul class='breadcrumb'>";
+			# remove root - 0
+			array_shift($parents);
+			
+			# section details
+			if(is_numeric($req['section']))	{ $section = getSectionDetailsById($req['section']); }					# if id is provided
+			else							{ $section = getSectionDetailsByName($req['section']); }				# if name is provided
+			
+			print "	<li><a href='subnets/$section[id]/'>$section[name]</a> <span class='divider'>/</span></li>";	# section name
+			
+			foreach($parents as $parent) {
+			$subnet = getSubnetDetailsById($parent);
+			if($subnet['isFolder']==1) {
+				print "	<li><a href='subnets/$section[id]/$parent/'><i class='icon-folder-open icon-gray'></i> $subnet[description]</a> <span class='divider'>/</span></li>";								# subnets in between
+			} else {
+				print "	<li><a href='subnets/$section[id]/$parent/'>$subnet[description] (".Transform2long($subnet['subnet']).'/'.$subnet['mask'].")</a> <span class='divider'>/</span></li>";								# subnets in between				
+			}
+			}
+			# parent subnet
+			$subnet = getSubnetDetailsById($req['subnetId']);
+			print "	<li><a href='subnets/$section[id]/$subnet[id]/'>$subnet[description] (".Transform2long($subnet['subnet']).'/'.$subnet['mask'].")</a> <span class='divider'>/</span></li>";																# active subnet
+			# ip
+			$ip = getIpAddrDetailsById($req['ipaddrid']);
+			print "	<li class='active'>$ip[ip_addr]</li>";																# IP address
+			print "</ul>";
+		}
+	}
+	# subnets
+	elseif($req['page'] == "subnets")	{
 		if(isset($req['subnetId'])) {
 			# get all parents
 			$parents = getAllParents ($req['subnetId']);
