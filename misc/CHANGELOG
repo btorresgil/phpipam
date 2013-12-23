@@ -1,4 +1,4 @@
-== 0.92.001
+== 0.92.002
 	
 	New features:
 	----------------------------
@@ -14,6 +14,8 @@
 	+ Fixed subnet displaying as 0.0.0.0/0 in details;
 	+ Fixed links to subnets form vlans and vrfs;
 	+ Fixed search result showing all folders if searched item is not IP address;
+	+ Fixed disapearing section when L2 section was selected as master section;
+	+ Fixed device ID showing in mail notification instead of hostname;
 
 == 0.9
 

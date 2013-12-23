@@ -50,7 +50,7 @@ if($ip) {
 	
 	# save result to $output
 	exec($cmd, $output, $retval);
-	
+		
 	# format result - alive
 	$alive = json_decode(trim($output[0]));
 	

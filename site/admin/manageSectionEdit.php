@@ -63,8 +63,10 @@ $section = getSectionDetailsById ($_POST['sectionId']);
 					<?php
 					$sections = fetchsections(false);
 					foreach($sections as $s) {
-						if($s['id']==$section['masterSection'])	{ print "<option value='$s[id]' selected='selected'>$s[name]</option>"; }
-						else									{ print "<option value='$s[id]'>$s[name]</option>"; }
+						if($s['masterSection']==0) {
+							if($s['id']==$section['masterSection'])	{ print "<option value='$s[id]' selected='selected'>$s[name]</option>"; }
+							else									{ print "<option value='$s[id]'>$s[name]</option>"; }
+						}
 					}
 					?>
 				</select>

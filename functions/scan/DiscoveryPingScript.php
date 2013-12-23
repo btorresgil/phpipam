@@ -5,7 +5,8 @@ require_once( dirname(__FILE__) . '/../functions.php' );
 require_once( dirname(__FILE__) . '/../scripts/Thread.php');
 
 // no error reporting!
-ini_set('display_errors', 0);
+ini_set('display_errors', 1);
+error_reporting(E_ALL ^ E_NOTICE);
 
 // test to see if threading is available
 if( !Thread::available() ) 	{ 
