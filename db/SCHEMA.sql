@@ -373,7 +373,8 @@ VALUES
 	(2, 'sl_SI', 'Slovenščina'),
 	(3, 'fr_FR', 'Français'),
 	(4, 'nl_NL','Nederlands'),
-	(5, 'de_DE','Deutsch');
+	(5, 'de_DE','Deutsch'),
+	(6, 'pt_BR', 'Brazil');
 
 
 
