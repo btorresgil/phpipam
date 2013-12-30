@@ -1,4 +1,4 @@
-== 0.93.001
+== 0.93.002
 	
 	New features:
 	----------------------------
@@ -20,6 +20,7 @@
 	+ Fixed search result showing all folders if searched item is not IP address;
 	+ Fixed disapearing section when L2 section was selected as master section;
 	+ Fixed device ID showing in mail notification instead of hostname;
+	+ Fixed device ID showing in search results and export instead of hostname;	
 
 == 0.9
 

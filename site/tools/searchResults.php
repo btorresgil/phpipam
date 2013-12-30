@@ -111,7 +111,7 @@ $colSpan 	= $fieldSize + $mySize + 4;
 	# mac
 	if(in_array('mac', $setFields)) 										{ print '<th></th>'. "\n"; }
 	# switch
-	if(in_array('switch', $setFields))										{ print '<th>'._('Switch').'</th>'. "\n"; }
+	if(in_array('switch', $setFields))										{ print '<th>'._('Device').'</th>'. "\n"; }
 	# port
 	if(in_array('port', $setFields)) 										{ print '<th>'._('Port').'</th>'. "\n"; }
 	# owner and note
@@ -186,7 +186,15 @@ if(sizeof($result) > 0) {
 			}
 		
 			# switch
-			if(in_array('switch', $setFields)) 										{ print ' <td>'. $line['switch']  .'</td>' . "\n"; }
+			if(in_array('switch', $setFields)) 										{ 
+				if(strlen($line['switch'])>0 && $line['switch']!=0) {
+					# get switch
+					$switch = getSwitchDetailsById($line['switch']);
+					$line['switch'] = $switch['hostname'];
+				}
+				
+				print ' <td>'. $line['switch']  .'</td>' . "\n"; 
+			}
 			# port
 			if(in_array('port', $setFields)) 										{ print ' <td>'. $line['port']  .'</td>' . "\n"; }
 			# owner and note
