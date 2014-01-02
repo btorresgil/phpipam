@@ -165,7 +165,7 @@ function selfUpdateUser ($userModDetails)
     $query .= "`password` = '$userModDetails[password1]',";
     }
     $query .= "`real_name`= '$userModDetails[real_name]', `email` = '$userModDetails[email]', ";
-    $query .= "`lang`= '$userModDetails[lang]', `widgets`='$userModDetails[widgets]' ";
+    $query .= "`lang`= '$userModDetails[lang]' ";
     $query .= "where `id` = '$userModDetails[userId]';";
     
     /* set log file */
@@ -188,6 +188,35 @@ function selfUpdateUser ($userModDetails)
 		return false;
 	}
 }
+
+
+/**
+ * User set dash widgets
+ */
+function setUserDashWidgets ($userId, $widgets)
+{
+    global $db;                                                                      # get variables from config file
+    $database = new database($db['host'], $db['user'], $db['pass'], $db['name']);    # open db connection   
+
+    /* set query */
+    $query  = "update users set `widgets`= '$widgets' where `id` = '$userId';";
+                    
+
+	/* execute */
+    try { $database->executeQuery( $query ); }
+    catch (Exception $e) { $error =  $e->getMessage(); }
+
+	# ok
+	if(!isset($error)) {
+        return true;		
+	}
+	# problem
+	else {
+		print "<div class='alert alert-error'>"._('Cannot update user')."!<br><strong>"._('Error')."</strong>: $error</div>";
+		return false;
+	}
+}
+
 
 
 /**
@@ -1906,7 +1935,7 @@ function getCustomFields($table)
 	
 	/* unset standard fields */
 	if($table == "users") {
-		unset($res['id'], $res['username'], $res['password'], $res['groups'], $res['role'], $res['real_name'], $res['email'], $res['domainUser'], $res['lang'],$res['editDate'],$res['widgets']);
+		unset($res['id'], $res['username'], $res['password'], $res['groups'], $res['role'], $res['real_name'], $res['email'], $res['domainUser'], $res['lang'],$res['editDate'],$res['widgets'],$res['favourite_subnets']);
 	}
 	elseif($table == "switches") {
 		unset($res['id'], $res['hostname'], $res['ip_addr'], $res['type'], $res['vendor'], $res['model'], $res['version'], $res['description'], $res['sections'],$res['editDate']);

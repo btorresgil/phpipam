@@ -83,32 +83,6 @@ if($ipamusername['domainUser'] == "0") {
 	<td class="info"><?php print _('Select language'); ?></td>
 </tr>
 
-<!-- select widgets -->
-<tr>
-	<td style="vertical-align:top"><?php print _('Widgets'); ?></td>
-	<td>
-		<?php
-		$uwidgets = explode(";",$ipamusername['widgets']);	//selected
-		
-		# admin?
-		if($ipamusername['role']=="Administrator") {
-			$widgets  = getAllWidgets(true);
-			foreach($widgets as $k=>$w) {
-				if(@in_array($k, $uwidgets))	{ print "<input type='checkbox' name='widget-$k' value='on' checked> $k<br>"; }
-				else							{ print "<input type='checkbox' name='widget-$k' value='on'> $k<br>"; }
-			}			
-		} else {
-			$widgets  = getAllWidgets(false);
-			foreach($widgets as $k=>$w) {
-				if(@in_array($k, $uwidgets))	{ print "<input type='checkbox' name='widget-$k' value='on' checked> $k<br>"; }
-				else							{ print "<input type='checkbox' name='widget-$k' value='on'> $k<br>"; }
-			}	
-		}
-		?>
-	</td>
-	<td class="info"><?php print _("Select widgets to be displayed on dashboard"); ?></td>
-</tr>
-
 <!-- Submit and hidden values -->
 <tr class="th">
     <td></td> 
@@ -124,4 +98,86 @@ if($ipamusername['domainUser'] == "0") {
 
 
 <!-- result -->
-<div class="userModSelfResult"></div>
+<div class="userModSelfResult" style="margin-bottom:90px;display:none"></div>
+
+
+<!-- test -->
+<h4 style='margin-top:30px;'><?php print _('Widgets'); ?></h4>
+<hr>
+<?php print _("Select widgets to be displayed on dashboard"); ?>
+
+
+<script type="text/javascript" src="js/jquery-ui-1.10.3.custom.min.js"></script>
+<script>
+$(document).ready(function() {
+	// initialize sortable
+	$( "#sortable" ).sortable({
+		start: function( event, ui ) {
+			var iid = $(ui.item).attr('id');
+			$('li#'+ iid).addClass('alert alert-success');
+		},
+		stop: function( event, ui ) {
+			var iid = $(ui.item).attr('id');
+			$('li#'+ iid).removeClass('alert alert-success');
+		}		
+	});
+	
+	//get items
+	$('#submitWidgets').click(function() {
+		//get all ids that are checked
+		var lis = $('#sortable li').map(function(i,n) {
+			//only checked
+			if($(this).find('input').is(':checked')) {
+			return $(n).attr('id');	
+			}
+		}).get().join(';');
+		
+		//post
+		$.post('site/tools/userMenuSetWidgets.php', {widgets: lis}, function(data) {
+			$('.userModSelfResultW').html(data).fadeIn('fast');
+		});
+	});
+});
+</script>
+
+
+<?php
+# show all widgets, sortable
+
+//user widgets form database
+$uwidgets = explode(";",$ipamusername['widgets']);	//selected
+$uwidgets = array_filter($uwidgets);
+
+print "<ul id='sortable'>";
+
+# first selected widgets already in user database
+if(sizeof($uwidgets)>0) {
+	foreach($uwidgets as $k) {
+		print "<li id='$k'><i class='icon icon-move'></i><input type='checkbox' name='widget-$k' value='on' checked> $k</li>";	
+	}
+}
+# than others, based on admin or normal user
+if($ipamusername['role']=="Administrator") {
+	$widgets  = getAllWidgets(true);
+	foreach($widgets as $k=>$w) {
+		if(!in_array($k, $uwidgets))	{ 
+		print "<li id='$k'><i class='icon icon-move'></i><input type='checkbox' name='widget-$k' value='on'> $k</li>"; 
+		}
+	}		
+}
+else {
+	$widgets  = getAllWidgets(false);
+	foreach($widgets as $k=>$w) {
+		if(!in_array($k, $uwidgets))	{ 
+		print "<li id='$k'><i class='icon icon-move'></i><input type='checkbox' name='widget-$k' value='on'> $k</li>"; 
+		}
+	}	
+}
+
+print "</ul>";
+?>
+
+<button class='btn btn-small' id="submitWidgets"><?php print _('Save order'); ?></button>
+
+<!-- result -->
+<div class="userModSelfResultW" style="margin-bottom:90px;display:none"></div>

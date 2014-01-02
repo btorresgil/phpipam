@@ -1,10 +1,14 @@
-== 0.93.002
+== 0.93.003
 	
 	New features:
 	----------------------------
 	+ Favourite subnets for quick access;
 	+ IP address page with IP address details and IP history (Changelog);
 	+ IP address changelog, subnet and section changelogs with full changelog under tools;
+
+	Enhancements:
+	----------------------------
+	+ Widget order can now be set;
 
 	Translations:
 	----------------------------

@@ -1,11 +1,8 @@
 version - 0.9
 
-	+ changelog za ip, subnet, section
 	+ status - available, trash (preveri kako)
 	+ Widget header links to widget;
 	+ IP request widget for admins;
-	+ Reorder widgets;
-	+ Change user ordering under administration, group by group
 
 
 features for next releases:
