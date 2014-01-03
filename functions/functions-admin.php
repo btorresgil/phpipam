@@ -1657,6 +1657,8 @@ function updateSettings($settings)
     $query   .= '`enableChangelog` 	  = "'. isCheckbox($settings['enableChangelog']) .'", ' . "\n"; 
     $query   .= '`subnetOrdering` 	  = "'. $settings['subnetOrdering'] .'", ' . "\n"; 
     $query   .= '`pingStatus` 	  	  = "'. $settings['pingStatus'] .'", ' . "\n"; 
+    $query   .= '`scanPingPath` 	  = "'. $settings['scanPingPath'] .'", ' . "\n"; 
+    $query   .= '`scanMaxThreads` 	  = "'. $settings['scanMaxThreads'] .'", ' . "\n"; 
     $query   .= '`defaultLang` 	  	  = "'. $settings['defaultLang'] .'" ' . "\n"; 
 	$query   .= 'where id = 1;' . "\n"; 
 

@@ -5,8 +5,6 @@ version - 0.9
 	+ Widget header links to widget;
 	
 	+ IP request widget for non-admins;
-	
-	+ move pingpath to settings;
 
 
 features for next releases:

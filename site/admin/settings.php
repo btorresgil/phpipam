@@ -199,6 +199,28 @@ $langs = getLanguages ();
 	</td>
 </tr>
 
+<!-- Ping path -->
+<tr>
+	<td class="title"><?php print _('Ping path'); ?></td>
+	<td>
+		<input type="text" name="scanPingPath" value="<?php print $settings['scanPingPath']; ?>">
+	</td>
+	<td class="info">
+		<?php print _('Set path for ping executable file (default /bin/ping)'); ?>
+	</td>
+</tr>
+
+<!-- Ping threads -->
+<tr>
+	<td class="title"><?php print _('Max scan threads'); ?></td>
+	<td>
+		<input type="text" name="scanMaxThreads" value="<?php print $settings['scanMaxThreads']; ?>">
+	</td>
+	<td class="info">
+		<?php print _('Set maximum nubmer of concurrent ICMP checks (default 128)'); ?>
+	</td>
+</tr>
+
 
 
 <!-- Display -->

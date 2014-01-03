@@ -1,4 +1,4 @@
-== 0.94.001
+== 0.94.002
 	
 	New features:
 	----------------------------
@@ -9,7 +9,8 @@
 	Enhancements:
 	----------------------------
 	+ Widget order can now be set;
-	+ Subnet can now be splitted to max 256 new subnets (16 before)
+	+ Subnet can now be splitted to max 256 new subnets (16 before);
+	+ Scan settings are moved to Administration;
 
 	Translations:
 	----------------------------

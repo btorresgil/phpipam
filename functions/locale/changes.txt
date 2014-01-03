@@ -907,3 +907,20 @@ msgstr ""
 #: site/tools/changelog.php
 msgid "Change logging is disabled. You can enable it under administration"
 msgstr ""
+
+
+
+### 0.94.002 ###
+
+#: site/admin/settings.php
+msgid "Ping path"
+msgstr ""
+
+msgid "Set path for ping executable file (default /bin/ping)"
+msgstr ""
+
+msgid "Max scan threads"
+msgstr ""
+
+msgid "Set maximum nubmer of concurrent ICMP checks (default 128)"
+msgstr ""

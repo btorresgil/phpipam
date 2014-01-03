@@ -6,9 +6,6 @@ require_once( dirname(__FILE__) . '/../config.php' );
 /* @database functions ------------------- */
 require_once( dirname(__FILE__) . '/dbfunctions.php' );
 
-/* @scan configs ------------------- */
-require_once( dirname(__FILE__) . '/scan/config-scan.php' );
-
 /* @debugging functions ------------------- */
 ini_set('display_errors', 1);
 if (!$debugging) { error_reporting(E_ERROR ^ E_WARNING); }
@@ -45,7 +42,7 @@ if(isset($_SESSION['ipamlanguage'])) {
 /* set latest version */
 define("VERSION", "0.94");									//version changes if database structure changes
 /* set latest revision */
-define("REVISION", "001");									//revision always changes, verision only if database structure changes
+define("REVISION", "002");									//revision always changes, verision only if database structure changes
 /* set last possible upgrade */
 define("LAST_POSSIBLE", "0.8");								//minimum required version to be able to upgrade
 
@@ -64,5 +61,8 @@ include_once('functions-admin.php');
 
 /* @upgrade functions ------------------- */
 include_once('functions-upgrade.php');
+
+/* @scan configs ------------------------ */
+require_once('scan/config-scan.php');
 
 ?>

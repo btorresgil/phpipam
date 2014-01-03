@@ -4,7 +4,7 @@
 # miha petkovsek <miha.petkovsek@gmail.com>, 2013.
 #
 
-# "Project-Id-Version: 0.92.001\n"
+# "Project-Id-Version: 0.94.002\n"
 # "Report-Msgid-Bugs-To: Miha Petkovsek <miha.petkovsek@gmail.com>\n"
 # "POT-Creation-Date: 2013-04-02 14:33+0200\n"
 # "PO-Revision-Date: 2013-06-28 14:33+0200\n"
@@ -4474,3 +4474,16 @@ msgstr "Omogoči logiranje sprememb"
 #: site/tools/changelog.php
 msgid "Change logging is disabled. You can enable it under administration"
 msgstr "Logiranje sprememb ni omogočeno. To lahko spremenite v nastavitvah sistema"
+
+#: site/admin/settings.php
+msgid "Ping path"
+msgstr "Ping pot"
+
+msgid "Set path for ping executable file (default /bin/ping)"
+msgstr "Pot do ping izvršne datoteke (privzeto /bin/ping/)"
+
+msgid "Max scan threads"
+msgstr "Max hkratnih sej"
+
+msgid "Set maximum nubmer of concurrent ICMP checks (default 128)"
+msgstr "Maksimalno število hkratnih ICMP preverb ob skeniraju (privzeto 128)"
