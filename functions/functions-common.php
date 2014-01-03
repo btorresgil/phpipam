@@ -336,8 +336,11 @@ function getAllWidgets($admin = false)
 	$widgets['top10_hosts_v4'] 	  = "Top 10 IPv4 subnets by number of hosts";
 	$widgets['top10_hosts_v6'] 	  = "Top 10 IPv6 subnets by number of hosts";
 	$widgets['top10_percentage']  = "Top 10 IPv4 subnets by usage percentage";
+	$widgets['changelog']  		  = "Last 5 change log entries";
+
 	
 	if($admin) {
+	$widgets['requests'] 	  	  = "List of all active IP addresses requests";
 	$widgets['access_logs'] 	  = "Last 5 informational logs";
 	$widgets['error_logs'] 		  = "Last 5 warning / error logs";
 

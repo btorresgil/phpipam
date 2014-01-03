@@ -4,7 +4,7 @@ version - 0.9
 	
 	+ Widget header links to widget;
 	
-	+ IP request widget for non-admins;
+	+ Admin widgets from database;
 
 
 features for next releases:

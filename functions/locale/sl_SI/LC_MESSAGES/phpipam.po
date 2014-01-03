@@ -4487,3 +4487,7 @@ msgstr "Max hkratnih sej"
 
 msgid "Set maximum nubmer of concurrent ICMP checks (default 128)"
 msgstr "Maksimalno število hkratnih ICMP preverb ob skeniraju (privzeto 128)"
+
+#: functions/functions-common.php
+msgid "Last 5 change log entries"
+msgstr "Zadnjih 5 vnosov sprememb"

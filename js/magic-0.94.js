@@ -1420,7 +1420,7 @@ $(document).on("click", "#editVRF", function() {
 /*    edit IP request
 ***********************/
 //show form
-$('table#requestedIPaddresses button').click(function() {
+$(document).on("click",'table#requestedIPaddresses button', function() {
     showSpinner();
     var requestId = $(this).attr('data-requestid');
     $.post('site/admin/manageRequestEdit.php', { requestId: requestId }, function(data) {

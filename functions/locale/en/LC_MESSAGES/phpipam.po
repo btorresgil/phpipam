@@ -4440,3 +4440,7 @@ msgstr ""
 
 msgid "Set maximum nubmer of concurrent ICMP checks (default 128)"
 msgstr ""
+
+#: functions/functions-common.php
+msgid "Last 5 change log entries"
+msgstr ""

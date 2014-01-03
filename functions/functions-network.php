@@ -2823,7 +2823,8 @@ function getIPaddressesBySwitchName ( $name )
  */
 function pingHost ($ip, $count="1", $exit=false)
 {
-	global $pathPing;
+	global $settings;
+	$pathPing = $settings['scanPingPath'];
 	
 	// timeout is set differenylt on FreeBSD (-W in ms), on Linux (-W sec) and win (-I)
 	// so if you must add flag manually here after $count
