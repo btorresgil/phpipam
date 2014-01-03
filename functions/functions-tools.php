@@ -610,7 +610,7 @@ function searchSubnets ($searchterm, $searchTermEdited = "")
     
     /* set query */    
     if($searchTermEdited['low']==0 && $searchTermEdited['high']==0) {
-		$query[] = 'select * from `subnets` where `description` like "%'. $searchterm .'%" and "'. $searchTermEdited['high'] .'" '.$custom.';';
+		$query[] = 'select * from `subnets` where `description` like "%'. $searchterm .'%" '.$custom.';';
     } else {
 		$query[] = 'select * from `subnets` where `description` like "%'. $searchterm .'%" or `subnet` between "'. $searchTermEdited['low'] .'" and "'. $searchTermEdited['high'] .'" '.$custom.';';	    
     }
@@ -631,6 +631,7 @@ function searchSubnets ($searchterm, $searchTermEdited = "")
 			}
 		}
 	}
+	
     /* execute each query */
     foreach($query as $q) {
 	    try { $search[] = $database->getArray( $q ); }
