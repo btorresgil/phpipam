@@ -1777,10 +1777,18 @@ function importCSVline ($line, $subnetId)
     	$import['fieldValue'] = "";
     	$m = 9;
     	foreach($myFields as $field) {
+    		//escape chars
+    		$line[$m] = mysqli_real_escape_string($database, $line[$m]);
+    		
 	    	$import['fieldName']  .= ",`$field[name]`";
 	    	$import['fieldValue'] .= ",'$line[$m]'";
 	    	$m++;
     	}
+    }
+    
+    /* escape chars */
+    foreach($line as $k=>$l) {
+	    $line[$k] = mysqli_real_escape_string($database, $l);
     }
 	
 	/* all ok, set query */
