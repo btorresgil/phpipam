@@ -42,7 +42,7 @@ for($mask=($subnet['mask']+1); $mask<=$maxMask; $mask++) {
 	$n = $n * 2;
 	
 	# max number = 16!
-	if($n > 16) {
+	if($n > 256) {
 		$mask = 1000;
 	}
 }

@@ -24,13 +24,18 @@ $subnetOld = getSubnetDetailsById ($_POST['subnetId']);
 # get number - this tells us to how many subnets we want to split
 $num = $_POST['number'];
 
-# get new mask
+# get new mask - how much we need to add to old mask?
 switch($num) {
-	case "2":  $maskDiff = 1; break;
-	case "4":  $maskDiff = 2; break;
-	case "8":  $maskDiff = 3; break;
-	case "16": $maskDiff = 4; break;
+	case "2":   $maskDiff = 1; break;
+	case "4":   $maskDiff = 2; break;
+	case "8":   $maskDiff = 3; break;
+	case "16":  $maskDiff = 4; break;
+	case "32":  $maskDiff = 5; break;
+	case "64":  $maskDiff = 6; break;
+	case "128": $maskDiff = 7; break;
+	case "256": $maskDiff = 8; break;
 }
+
 $mask = $subnetOld['mask'] + $maskDiff;
 
 # set number of subnets

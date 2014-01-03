@@ -1,4 +1,4 @@
-== 0.93.004
+== 0.93.005
 	
 	New features:
 	----------------------------
@@ -9,6 +9,7 @@
 	Enhancements:
 	----------------------------
 	+ Widget order can now be set;
+	+ Subnet can now be splitted to max 256 new subnets (16 before)
 
 	Translations:
 	----------------------------
