@@ -97,7 +97,7 @@ CREATE TABLE `requests` (
   `description` varchar(32) DEFAULT NULL,
   `dns_name` varchar(32) DEFAULT NULL,
   `owner` varchar(32) DEFAULT NULL,
-  `requester` varchar(32) DEFAULT NULL,
+  `requester` varchar(128) DEFAULT NULL,
   `comment` text,
   `processed` binary(1) DEFAULT NULL,
   `accepted` binary(1) DEFAULT NULL,
@@ -173,6 +173,8 @@ CREATE TABLE `settings` (
   `dhcpCompress` BOOL  NOT NULL  DEFAULT '0',
   `api` BINARY  NOT NULL  DEFAULT '0',
   `enableChangelog` TINYINT(1)  NOT NULL  DEFAULT '1',
+  `scanPingPath` VARCHAR(64)  NULL  DEFAULT '/bin/ping',
+  `scanMaxThreads` INT(4)  NULL  DEFAULT '128',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -454,4 +456,4 @@ CREATE TABLE `changelog` (
 
 # update version
 # ------------------------------------------------------------
-UPDATE `settings` set `version` = '0.92';
+UPDATE `settings` set `version` = '0.94';

@@ -1,4 +1,4 @@
-== 0.93.007
+== 0.94.001
 	
 	New features:
 	----------------------------
@@ -28,6 +28,7 @@
 	+ Fixed device ID showing in search results and export instead of hostname;	
 	+ Fixed search for subnet name returned no results;
 	+ Fixed apostophe in IP address description throws SQL error for scan results and XLS import;
+	+ Fixed requester email gets cut if longer than 32 chars;
 
 == 0.9
 

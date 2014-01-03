@@ -973,9 +973,8 @@ $(document).on("click", "#editSectionSubmit", function() {
         $('div.sectionEditResult').html(data).slideDown('fast');
 
         //reload after 2 seconds if succeeded!
-        if(data.search("error") == -1)     { setTimeout(function (){window.location.reload();}, 1500); }
-        else                             { hideSpinner(); hideSpinner();
-        }
+        if(data.search("error") == -1)   { setTimeout(function (){window.location.reload();}, 1500); }
+        else                             { hideSpinner(); hideSpinner(); }
     }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});
     return false;
 });
@@ -992,18 +991,24 @@ $('button.sectionOrder').click(function() {
 });
 //section ordering save
 $(document).on("click", "#sectionOrderSubmit", function() {
-	showSpinner();
-	var order = $('form#sectionOrder').serialize();
-    $.post('site/admin/manageSectionOrderResult.php', order, function(data) {
-        $('div.sectionOrderResult').html(data).slideDown('fast');
-
+    showSpinner();
+	//get all ids that are checked
+	var m = 0;
+	var lis = $('#sortableSec li').map(function(i,n) {
+	var pindex = $(this).index() +1;
+		return $(n).attr('id')+":"+pindex;	
+	}).get().join(';');
+	
+	//post
+	$.post('site/admin/manageSectionOrderResult.php', {position: lis}, function(data) {
+		$('.sectionOrderResult').html(data).fadeIn('fast');
+		
         //reload after 2 seconds if succeeded!
-        if(data.search("error") == -1)     { setTimeout(function (){window.location.reload();}, 1500); }
-        else                             { hideSpinner(); hideSpinner();
-        }
+        if(data.search("error") == -1)	{ setTimeout(function (){window.location.reload();}, 1500); }
+        else                            { hideSpinner(); hideSpinner(); }
+        
     }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});
-    return false;
-
+	return false;
 });
 
 

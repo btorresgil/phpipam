@@ -1249,7 +1249,7 @@ function printSubnets( $subnets, $actions = true, $vrf = "0", $custom = array() 
 					$html[] = "<tr>";
 					# is folder?
 					if($option['value']['isFolder']==1) {
-					$html[] = "	<td class='level$count'><span class='structure' style='padding-left:$padding; margin-left:$margin;'></span><i class='icon-gray icon-folder-open'></i> <a href='subnets/".$option['value']['sectionId']."/".$option['value']['id']."/'> $description</a></td>";						
+					$html[] = "	<td class='level$count'><span class='structure' style='padding-left:$padding; margin-left:$margin;'></span><i class='icon-gray icon-folder-open'></i> <a href='folder/".$option['value']['sectionId']."/".$option['value']['id']."/'> $description</a></td>";						
 					$html[] = "	<td class='level$count'><span class='structure' style='padding-left:$padding; margin-left:$margin;'></span> $description</td>";						
 
 					}

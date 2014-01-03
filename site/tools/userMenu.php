@@ -148,7 +148,7 @@ $(document).ready(function() {
 $uwidgets = explode(";",$ipamusername['widgets']);	//selected
 $uwidgets = array_filter($uwidgets);
 
-print "<ul id='sortable'>";
+print "<ul id='sortable' class='sortable'>";
 
 # first selected widgets already in user database
 if(sizeof($uwidgets)>0) {
