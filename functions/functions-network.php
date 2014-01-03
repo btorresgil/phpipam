@@ -2266,6 +2266,9 @@ function insertScanResults($res, $subnetId)
     
     # set queries
     foreach($res as $ip) {
+    	//escape strings
+    	$ip['description'] = mysqli_real_escape_string($database, $ip['description']);
+    	
 	    $query[] = "insert into `ipaddresses` (`ip_addr`,`subnetId`,`description`,`dns_name`,`lastSeen`) values ('".transform2decimal($ip['ip_addr'])."', '$subnetId', '$ip[description]', '$ip[dns_name]', NOW()); ";
     }
     # glue
