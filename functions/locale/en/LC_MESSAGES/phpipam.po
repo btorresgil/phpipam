@@ -4,7 +4,7 @@
 # miha petkovsek <miha.petkovsek@gmail.com>, 2013.
 #
 
-# "Project-Id-Version: 0.92.001\n"
+# "Project-Id-Version: 0.95.001\n"
 # "Report-Msgid-Bugs-To: Miha Petkovsek <miha.petkovsek@gmail.com>\n"
 # "POT-Creation-Date: 2013-04-02 14:33+0200\n"
 # "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
@@ -4443,4 +4443,46 @@ msgstr ""
 
 #: functions/functions-common.php
 msgid "Last 5 change log entries"
+msgstr ""
+
+#: site/admin/widgets.php
+msgid "You can manage widgets here"
+msgstr ""
+
+msgid "Create new widget"
+msgstr ""
+
+msgid "No widgets created yet"
+msgstr ""
+
+msgid "Create widget file in directory site/dashboard/widgets/"
+msgstr ""
+
+#: site/admin/widgetEdit.php
+msgid "Add new widget"
+msgstr ""
+
+msgid "Edit widget"
+msgstr ""
+
+msgid "Delete widget"
+msgstr ""
+
+#: site/admin/widgetEditResult.php
+msgid "Widget add error"
+msgstr ""
+
+msgid "Widget edit error"
+msgstr ""
+
+msgid "Widget delete error"
+msgstr ""
+
+msgid "Widget add success"
+msgstr ""
+
+msgid "Widget edit success"
+msgstr ""
+
+msgid "Widget delete success"
 msgstr ""

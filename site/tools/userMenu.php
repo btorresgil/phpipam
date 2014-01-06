@@ -150,29 +150,27 @@ $uwidgets = array_filter($uwidgets);
 
 print "<ul id='sortable' class='sortable'>";
 
+# get all widgets
+if($ipamusername['role']=="Administrator") {
+	$widgets  = getAllWidgets(true, false);
+} else {
+	$widgets  = getAllWidgets(false, false);	
+}
+
 # first selected widgets already in user database
 if(sizeof($uwidgets)>0) {
 	foreach($uwidgets as $k) {
-		print "<li id='$k'><i class='icon icon-move'></i><input type='checkbox' name='widget-$k' value='on' checked> $k</li>";	
+		$wtmp = $widgets[$k];
+		print "<li id='$k'><i class='icon icon-move'></i><input type='checkbox' name='widget-$wtmp[wfile]' value='on' checked> $wtmp[wtitle]</li>";	
 	}
 }
 # than others, based on admin or normal user
-if($ipamusername['role']=="Administrator") {
-	$widgets  = getAllWidgets(true);
-	foreach($widgets as $k=>$w) {
-		if(!in_array($k, $uwidgets))	{ 
-		print "<li id='$k'><i class='icon icon-move'></i><input type='checkbox' name='widget-$k' value='on'> $k</li>"; 
-		}
-	}		
-}
-else {
-	$widgets  = getAllWidgets(false);
-	foreach($widgets as $k=>$w) {
-		if(!in_array($k, $uwidgets))	{ 
-		print "<li id='$k'><i class='icon icon-move'></i><input type='checkbox' name='widget-$k' value='on'> $k</li>"; 
-		}
-	}	
-}
+foreach($widgets as $k=>$w) {
+	if(!in_array($k, $uwidgets))	{ 
+	$wtmp = $widgets[$k];
+	print "<li id='$k'><i class='icon icon-move'></i><input type='checkbox' name='widget-$wtmp[wfile]' value='on'> $wtmp[wtitle]</li>"; 
+	}
+}		
 
 print "</ul>";
 ?>

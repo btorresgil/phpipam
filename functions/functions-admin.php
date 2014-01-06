@@ -246,6 +246,34 @@ function modifyLang ($lang)
 }
 
 
+/**
+ * Modify widget
+ */
+function modifyWidget ($w)
+{
+    global $db;                                                                      # get variables from config file
+    
+    /* set query based on action */
+    if($w['action'] == "add")			{ $query = "insert into `widgets` (`wtitle`,`wdescription`,`wfile`,`whref`,`wadminonly`,`wactive`) values ('$w[wtitle]','$w[wdescription]','$w[wfile]','$w[whref]','$w[wadminonly]','$w[wactive]');"; }
+    elseif($w['action'] == "edit")		{ $query = "update `widgets` set `wtitle`='$w[wtitle]',`wdescription`='$w[wdescription]',`wfile`='$w[wfile]',`wadminonly`='$w[wadminonly]',`wactive`='$w[wactive]',`whref`='$w[whref]' where `wid`='$w[wid]'; "; }
+    elseif($w['action'] == "delete")	{ $query = "delete from `widgets` where `wid`='$w[wid]'; "; }    
+    else								{ return 'false'; }
+    
+    $database = new database($db['host'], $db['user'], $db['pass'], $db['name']);  
+
+    /* execute */
+    try { $details = $database->executeQuery( $query ); }
+    catch (Exception $e) { 
+        $error =  $e->getMessage(); 
+        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        return false;
+    } 
+    
+    return true;
+}
+
+
+
 
 
 

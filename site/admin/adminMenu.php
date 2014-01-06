@@ -43,6 +43,10 @@ $settings = getAllSettings();
 	<li <?php if($_REQUEST['adminId'] == "languages") print "class='active'"; ?>>
 		<a href="administration/languages/"><i class="icon-chevron-right pull-right icon-gray"></i> <?php print _('Languages'); ?></a>
 	</li>	
+	<li <?php if($_REQUEST['adminId'] == "widgets") print "class='active'"; ?>>
+		<a href="administration/widgets/"><i class="icon-chevron-right pull-right icon-gray"></i> <?php print _('Widgets'); ?></a>
+	</li>	
+
 	<li <?php if($_REQUEST['adminId'] == "instructions") print "class='active'"; ?>>
 		<a href="administration/instructions/"><i class="icon-chevron-right pull-right icon-gray"></i> <?php print _('Edit instructions'); ?></a>
 	</li>	

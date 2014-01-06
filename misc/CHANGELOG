@@ -1,4 +1,4 @@
-== 0.94.003
+== 0.95.001
 	
 	New features:
 	----------------------------
@@ -12,6 +12,7 @@
 	+ Widget order can now be set;
 	+ Subnet can now be splitted to max 256 new subnets (16 before);
 	+ Scan settings are moved to Administration;
+	+ Widget management has moved to administration, which allows creation of new widgets;
 	
 	+ Favourite subnets widget;
 	+ IP requests widget;

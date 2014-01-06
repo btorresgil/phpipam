@@ -8,7 +8,7 @@ require_once( dirname(__FILE__) . '/../../../functions/functions.php' );
 /* print last 5 access logs */
 $logs = getAllLogs(5, NULL, NULL, NULL, 1,2,2);
 
-print "<table class='table table-striped table-condensed table-hover table-top'>";
+print "<table class='table table-condensed table-hover table-top'>";
 
 # headers
 print "<tr>";

@@ -1572,6 +1572,34 @@ $(document).on("click", "#langEditSubmit", function() {
 });
 
 
+/* Widgets
+*********/
+//Load edit widget form
+$('button.wedit').click(function() {
+    showSpinner();
+    var wid    = $(this).attr('data-wid');
+    var action = $(this).attr('data-action');
+    $.post('site/admin/widgetEdit.php', {wid:wid, action:action}, function(data) {
+        $('div.popup_w500').html(data);
+        showPopup('popup_w500');
+        hideSpinner();
+    }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});
+    return false;    
+});
+//Edit widgets details
+$(document).on("click", "#widgetEditSubmit", function() {
+    showSpinner();
+    var ldata = $('form#widgetEdit').serialize();
+    $.post('site/admin/widgetEditResult.php', ldata, function(data) {
+        $('div.widgetEditResult').html(data).slideDown('fast');
+        //reload after 2 seconds if succeeded!
+        if(data.search("error") == -1)     	{ setTimeout(function (){window.location.reload();}, 1500); }
+        else                             	{ hideSpinner(); }
+    }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});
+    return false;
+});
+
+
 
 /* API
 *********/

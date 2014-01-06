@@ -4,7 +4,7 @@
 # miha petkovsek <miha.petkovsek@gmail.com>, 2013.
 #
 
-# "Project-Id-Version: 0.94.002\n"
+# "Project-Id-Version: 0.95.001\n"
 # "Report-Msgid-Bugs-To: Miha Petkovsek <miha.petkovsek@gmail.com>\n"
 # "POT-Creation-Date: 2013-04-02 14:33+0200\n"
 # "PO-Revision-Date: 2013-06-28 14:33+0200\n"
@@ -4491,3 +4491,45 @@ msgstr "Maksimalno število hkratnih ICMP preverb ob skeniraju (privzeto 128)"
 #: functions/functions-common.php
 msgid "Last 5 change log entries"
 msgstr "Zadnjih 5 vnosov sprememb"
+
+#: site/admin/widgets.php
+msgid "You can manage widgets here"
+msgstr "Tukaj lahko upravljate z widgeti"
+
+msgid "Create new widget"
+msgstr "Dodaj nov widget"
+
+msgid "No widgets created yet"
+msgstr "Ni razpoložljivih widgetov"
+
+msgid "Create widget file in directory site/dashboard/widgets/"
+msgstr "Datoteko za widget kreirajte v site/dashboard/widgets/"
+
+#: site/admin/widgetEdit.php
+msgid "Add new widget"
+msgstr "Dodaj nov widget"
+
+msgid "Edit widget"
+msgstr "Uredi widget"
+
+msgid "Delete widget"
+msgstr "Izbriši widget"
+
+#: site/admin/widgetEditResult.php
+msgid "Widget add error"
+msgstr "Napaka pri dodajanju widgets"
+
+msgid "Widget edit error"
+msgstr "Napaka pri urejanju widgeta"
+
+msgid "Widget delete error"
+msgstr "Napaka pri izbrisu widgeta"
+
+msgid "Widget add success"
+msgstr "Widget dodan"
+
+msgid "Widget edit success"
+msgstr "Widget urejen"
+
+msgid "Widget delete success"
+msgstr "Widget izbrisan"

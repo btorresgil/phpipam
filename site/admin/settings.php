@@ -19,7 +19,7 @@ $langs = getLanguages ();
 <hr>
 
 <form name="settings" id="settings">
-<table id="settings" class="table table-striped table-condensed table-top">
+<table id="settings" class="table table-hover table-condensed table-top">
 
 <!-- site settings -->
 <tr class="settings-title">

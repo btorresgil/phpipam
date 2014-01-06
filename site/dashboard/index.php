@@ -43,8 +43,8 @@ $uwidgets = array_filter(explode(";",$user['widgets']));
 $uwidgetschunk = array_chunk($uwidgets, 2);		//chunk it into 2
 
 # get all widgets
-if($user['role']=="Administrator") 	{ $widgets = getAllWidgets(true); }
-else								{ $widgets = getAllWidgets(false); } 
+if($user['role']=="Administrator") 	{ $widgets = getAllWidgets(true,  false); }
+else								{ $widgets = getAllWidgets(false, false); } 
 
 # print
 foreach($uwidgetschunk as $w) {
@@ -54,9 +54,9 @@ foreach($uwidgetschunk as $w) {
 	//first
 	$wdet = $widgets[$w[0]];
 	if(array_key_exists($w[0], $widgets)) {
-	print "	<div class='span6' id='w-$w[0]'>";
+	print "	<div class='span6' id='w-$wdet[wfile]'>";
 	print "	<div class='inner'>";
-	print "		<h4>"._($wdet)."</h4>";
+	print "		<h4>"._($wdet['wtitle'])."</h4>";
 	print "		<div class='hContent'>";
 	print "		<div style='text-align:center;padding-top:50px;'><strong>"._('Loading statistics')."</strong><br><img src='css/images/loading_dash.gif'></div>";
 	print "		</div>";
@@ -75,9 +75,9 @@ foreach($uwidgetschunk as $w) {
 	if(isset($w[1])) {
 	$wdet = $widgets[$w[1]];
 	if(array_key_exists($w[1], $widgets)) {
-	print "	<div class='span6' id='w-$w[1]'>";
+	print "	<div class='span6' id='w-$wdet[wfile]'>";
 	print "	<div class='inner'>";
-	print "		<h4>"._($wdet)."</h4>";
+	print "		<h4>"._($wdet['wtitle'])."</h4>";
 	print "		<div class='hContent'>";
 	print "		<div style='text-align:center;padding-top:50px;'><strong>"._('Loading statistics')."</strong><br><img src='css/images/loading_dash.gif'></div>";
 	print "		</div>";

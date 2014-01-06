@@ -1084,9 +1084,6 @@ ul.sortable {
 	list-style: none;
 	margin-left: 5px;
 	
-	width: 200px;
-}
-ul.sortable#sortableSec {
 	width: auto;
 }
 ul.sortable li {
@@ -1120,6 +1117,10 @@ ul.sortable li.alert-success {
 /* @administration ----------- */
 table#settings td {
 	vertical-align: middle;
+}
+table#settings td:nth-child(1) {
+	white-space: nowrap;
+	padding-right: 10px;
 }
 table#settings input[type="text"] {
 	margin-bottom: 0px;

@@ -329,24 +329,69 @@ function getLangById ($id)
 /**
  *	Get all widgets
  */
-function getAllWidgets($admin = false)
+function getAllWidgets($admin = false, $inactive = false)
 {
-	$widgets['statistics'] 		  = "Statistics";
-	$widgets['favourite_subnets'] = "Favourite subnets";
-	$widgets['top10_hosts_v4'] 	  = "Top 10 IPv4 subnets by number of hosts";
-	$widgets['top10_hosts_v6'] 	  = "Top 10 IPv6 subnets by number of hosts";
-	$widgets['top10_percentage']  = "Top 10 IPv4 subnets by usage percentage";
-	$widgets['changelog']  		  = "Last 5 change log entries";
-
-	
-	if($admin) {
-	$widgets['requests'] 	  	  = "List of all active IP addresses requests";
-	$widgets['access_logs'] 	  = "Last 5 informational logs";
-	$widgets['error_logs'] 		  = "Last 5 warning / error logs";
-
+    global $db; 
+    $database = new database($db['host'], $db['user'], $db['pass'], $db['name']); 
+    
+	# inactive also - only for administration
+	if($inactive) 	{ $query = "select * from `widgets`; ";
+	} 
+	else {
+		# admin?
+		if($admin) 	{ $query = "select * from `widgets` where `wactive` = 'yes'; "; }	
+		else		{ $query = "select * from `widgets` where `wadminonly` = 'no' and `wactive` = 'yes'; "; }
 	}
 
-	return $widgets;
+    /* execute */
+    try { $widgets = $database->getArray( $query ); }
+    catch (Exception $e) { 
+        $error =  $e->getMessage(); 
+        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        return false;
+    }     
+    
+    /* reindex */
+    foreach($widgets as $w) {
+	    $wout[$w['wfile']] = $w;
+    }
+
+    /* return results */
+    return $wout;
+}
+
+
+/**
+ *	Get widget by id
+ */
+function getWidgetById($wid)
+{
+    global $db; 
+    $database = new database($db['host'], $db['user'], $db['pass'], $db['name']); 
+	# query
+	$query = "select * from `widgets` where `wid` = '$wid'; ";
+
+    /* execute */
+    try { $widget = $database->getArray( $query ); }
+    catch (Exception $e) { 
+        $error =  $e->getMessage(); 
+        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        return false;
+    }     
+    
+    /* return results */
+    return $widget[0];
+}
+
+
+/**
+ * Verify widget
+ */
+function verifyWidget ($file)
+{
+	//verify that proper files exist
+	if(!file_exists("site/dashboard/widgets/$file.php"))	{ return false; }
+	else													{ return true; }
 }
 
 
