@@ -9,6 +9,11 @@ if(!function_exists('getSubnetStatsDashboard')) {
 require_once( dirname(__FILE__) . '/../../../functions/functions.php' );
 }
 
+/* if direct request that redirect to tools page */
+if($_SERVER['HTTP_X_REQUESTED_WITH']!="XMLHttpRequest")	{ 
+	header("Location: /administration/manageRequests/");
+}
+
 /* get all */
 $allActiveRequests = getAllActiveIPrequests();
 ?>

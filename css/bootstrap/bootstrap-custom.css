@@ -493,7 +493,7 @@ table.nav td.w-unlock {
 	
 	background: white;
 	
-	height: 260px;
+	min-height: 260px;
 }
 #dashboard .welcome {
 	margin-left: 1%; 
@@ -502,6 +502,9 @@ table.nav td.w-unlock {
 }
 #dashboard h4 {
 	margin-bottom: 20px;
+}
+#dashboard a h4  {
+	color: #333;
 }
 #dashboard .inner {
 	overflow: hidden;

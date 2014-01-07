@@ -385,6 +385,29 @@ function getWidgetById($wid)
 
 
 /**
+ *	Get widget by filename
+ */
+function getWidgetByFile($wfile)
+{
+    global $db; 
+    $database = new database($db['host'], $db['user'], $db['pass'], $db['name']); 
+	# query
+	$query = "select * from `widgets` where `wfile` = '$wfile'; ";
+
+    /* execute */
+    try { $widget = $database->getArray( $query ); }
+    catch (Exception $e) { 
+        $error =  $e->getMessage(); 
+        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        return false;
+    }     
+    
+    /* return results */
+    return $widget[0];
+}
+
+
+/**
  * Verify widget
  */
 function verifyWidget ($file)

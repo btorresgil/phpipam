@@ -148,30 +148,36 @@ else								 		{ $url = "http://$_SERVER[SERVER_NAME]".BASE; }
 			print "</div>";
 		}
 		/* upgrade */
-		else if ($_REQUEST['page'] == "upgrade") {
+		elseif ($_REQUEST['page'] == "upgrade") {
 			print "<div id='dashboard'>";
 			include_once("site/upgrade/index.php");
 			print "</div>";			
 		}
 		/* install */
-		else if ($_REQUEST['page'] == "install") {
+		elseif ($_REQUEST['page'] == "install") {
 			print "<div id='dashboard'>";
 			include_once("site/install/index.php");
 			print "</div>";			
 		}
 		/* login, logout, ipRequest */
-		else if($_REQUEST['page'] == "login" || $_REQUEST['page'] == "logout" || $_REQUEST['page'] == "request_ip") {
+		elseif($_REQUEST['page'] == "login" || $_REQUEST['page'] == "logout" || $_REQUEST['page'] == "request_ip") {
 			print "<div id='dashboard'>";
 			include_once("site/login/index.php");
 			print "</div>";			
 		}
 		/* dashboard */
-		else if(!isset($_REQUEST['page']) || $_REQUEST['page'] == "dashboard") {
+		elseif(!isset($_REQUEST['page']) || $_REQUEST['page'] == "dashboard") {
 			print "<div id='dashboard'>";
 			include_once("site/dashboard/index.php");
 			print "</div>";
 		}
-		# side menus
+		/* widgets */
+		elseif(@$_REQUEST['page']=="widgets") {
+			print "<div id='dashboard'>";
+			include_once("site/dashboard/widgets/".$_REQUEST['subpage'].".php");
+			print "</div>";			
+		}
+		/* side menus */
 		else {
 			print "<table id='subnetsMenu'>";
 			print "<tr>";
