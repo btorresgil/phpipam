@@ -423,6 +423,10 @@ table.nav td.instr {
 	border-left: 1px solid #666;
 	border-right: 1px solid #666;
 }
+table.nav td.w-lock,
+table.nav td.w-unlock {
+	border-left: 1px solid #666;
+}
 
 
 
@@ -475,9 +479,13 @@ table.nav td.instr {
 
 	background: #40464a;
 
-	box-shadow: 		0px 0px 6px silver;
-	-webkit-box-shadow: 0px 0px 6px silver;
-	-moz-box-shadow: 	0px 0px 6px silver;
+/*
+	box-shadow: 		0px 0px 4px white;
+	-webkit-box-shadow: 0px 0px 4px white;
+	-moz-box-shadow: 	0px 0px 4px white;
+*/
+
+	border: 1px solid #ddd;
 	
 	margin: 5px;
 	margin-bottom: 15px;
@@ -498,11 +506,28 @@ table.nav td.instr {
 #dashboard .inner {
 	overflow: hidden;
 }
+#dashboard .inner.movable {
+	
+	box-shadow: 		0px 0px 4px #dff0d9;
+	-webkit-box-shadow: 0px 0px 4px #dff0d9;
+	-moz-box-shadow: 	0px 0px 4px #dff0d9;
+}
+#dashboard .inner i.icon-action {
+	cursor: pointer;
+	margin-left: 7px;
+}
 #dashboard .table {
 	margin-bottom: 5px;
 }
 #dashboard .table th,
 #dashboard .table td {
+}
+#dashboard .drag.widget-dash .inner {
+	border: 1px solid #468847;
+	background: #dff0d8;
+}
+#dashboard .inner i.icon-action {
+	display: none;
 }
 .breadcrumb {
 	padding-left: 0px;
@@ -1085,6 +1110,9 @@ ul.sortable {
 	margin-left: 5px;
 	
 	width: auto;
+}
+ul#sortablePopup li {
+	border: none;
 }
 ul.sortable li {
 	vertical-align: middle;

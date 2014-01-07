@@ -142,6 +142,43 @@ if($('#dashboard').length>0) {
 		});
 	});
 }
+//show add widget pupup
+$(document).on('click','.add-new-widget',function() {
+    showSpinner();
+    
+    $.post('site/dashboard/widgetPopup.php', function(data) {
+	    $('div.popup_w700').html(data);
+        showPopup('popup_w700');
+        hideSpinner();
+    }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});
+
+	return false;
+});
+//remove item
+$(document).on('click', "i.remove-widget", function() {
+	$(this).parent().parent().fadeOut('fast').remove();
+});
+//add new widget form popu
+$(document).on('click', '#sortablePopup li a.widget-add', function() {
+	var wid   = $(this).attr('id');
+	var wsize = $(this).attr('data-size');
+	var wtitle= $(this).attr('data-htitle');
+	//create
+	var data = '<div class="row-fluid"><div class="span'+wsize+' widget-dash" id="'+wid+'"><div class="inner movable"><h4>'+wtitle+'</h4><div class="hContent"></div></div></div></div>';
+	$('#dashboard').append(data);
+	//load
+	w = wid.replace("w-", "");
+	$.post('site/dashboard/widgets/'+w+'.php', function(data) {
+		$("#"+wid+' .hContent').html(data);
+	}).fail(function(xhr, textStatus, errorThrown) {
+		$("#"+wid+' .hContent').html('<blockquote style="margin-top:20px;margin-left:20px;">File not found!</blockquote>');
+	});	
+	//remove item
+	$(this).parent().fadeOut('fast');
+	
+	return false;
+});
+
 
 
 

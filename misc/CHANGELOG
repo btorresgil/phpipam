@@ -1,4 +1,4 @@
-== 0.95.001
+== 0.95.002
 	
 	New features:
 	----------------------------
@@ -10,6 +10,7 @@
 	Enhancements:
 	----------------------------
 	+ Widget order can now be set;
+	+ Widgets can be reordered (dragged) directly on dashboard;
 	+ Subnet can now be splitted to max 256 new subnets (16 before);
 	+ Scan settings are moved to Administration;
 	+ Widget management has moved to administration, which allows creation of new widgets;

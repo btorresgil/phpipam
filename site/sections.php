@@ -112,6 +112,16 @@ $setFields = explode(";", $setFieldsTemp);
 		</div>
 	</td>
 
+	<!-- Dash lock/unlock -->
+	<?php if($_REQUEST['page']=="dashboard") { ?>
+	<td class="fixed w-lock">	
+		<ul class="nav nav-tabs" style="margin-right:0px;">
+			<li>
+				<a href="#" rel='tooltip' data-placement='bottom' title="<?php print _('Clik to reorder widgets'); ?>" style='height:20px;'><i class='icon-white icon-move'></i></a>
+			</li>
+		</ul>
+	</td>
+	<?php } ?>
 
 	<?php
 	//check if user has favourite subnets

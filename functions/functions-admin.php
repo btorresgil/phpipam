@@ -254,8 +254,8 @@ function modifyWidget ($w)
     global $db;                                                                      # get variables from config file
     
     /* set query based on action */
-    if($w['action'] == "add")			{ $query = "insert into `widgets` (`wtitle`,`wdescription`,`wfile`,`whref`,`wadminonly`,`wactive`) values ('$w[wtitle]','$w[wdescription]','$w[wfile]','$w[whref]','$w[wadminonly]','$w[wactive]');"; }
-    elseif($w['action'] == "edit")		{ $query = "update `widgets` set `wtitle`='$w[wtitle]',`wdescription`='$w[wdescription]',`wfile`='$w[wfile]',`wadminonly`='$w[wadminonly]',`wactive`='$w[wactive]',`whref`='$w[whref]' where `wid`='$w[wid]'; "; }
+    if($w['action'] == "add")			{ $query = "insert into `widgets` (`wtitle`,`wdescription`,`wfile`,`whref`,`wadminonly`,`wactive`,`wsize`) values ('$w[wtitle]','$w[wdescription]','$w[wfile]','$w[whref]','$w[wadminonly]','$w[wactive]','$w[wsize]');"; }
+    elseif($w['action'] == "edit")		{ $query = "update `widgets` set `wtitle`='$w[wtitle]',`wdescription`='$w[wdescription]',`wfile`='$w[wfile]',`wadminonly`='$w[wadminonly]',`wactive`='$w[wactive]',`whref`='$w[whref]',`wsize`='$w[wsize]' where `wid`='$w[wid]'; "; }
     elseif($w['action'] == "delete")	{ $query = "delete from `widgets` where `wid`='$w[wid]'; "; }    
     else								{ return 'false'; }
     

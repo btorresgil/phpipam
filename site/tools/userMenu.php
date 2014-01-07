@@ -151,11 +151,8 @@ $uwidgets = array_filter($uwidgets);
 print "<ul id='sortable' class='sortable'>";
 
 # get all widgets
-if($ipamusername['role']=="Administrator") {
-	$widgets  = getAllWidgets(true, false);
-} else {
-	$widgets  = getAllWidgets(false, false);	
-}
+if($ipamusername['role']=="Administrator") 	{ $widgets  = getAllWidgets(true, false); } 
+else 										{ $widgets  = getAllWidgets(false, false); }
 
 # first selected widgets already in user database
 if(sizeof($uwidgets)>0) {

@@ -91,6 +91,19 @@ else 									{ print _('Add new widget'); }
 	    	</select>
 	    </td>
     </tr>  
+
+	<!-- Size -->
+	<tr>
+	    <td><?php print _('Widget size'); ?></td> 
+	    <td>
+	    	<select name="wsize" class="input-small">
+	    		<option value="4"  <?php if(@$w['wsize']=='4')  print "selected='selected'"; ?>>25%</option>
+	    		<option value="6"  <?php if(@$w['wsize']=='6')  print "selected='selected'"; ?>>50%</option>
+	    		<option value="8"  <?php if(@$w['wsize']=='8')  print "selected='selected'"; ?>>75%</option>
+	    		<option value="12" <?php if(@$w['wsize']=='12') print "selected='selected'"; ?>>100%</option>
+	    	</select>
+	    </td>
+    </tr> 
   
 </table>
 </form>
