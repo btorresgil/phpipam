@@ -4,7 +4,7 @@
 # miha petkovsek <miha.petkovsek@gmail.com>, 2013.
 #
 
-# "Project-Id-Version: 0.95.001\n"
+# "Project-Id-Version: 0.96.002\n"
 # "Report-Msgid-Bugs-To: Miha Petkovsek <miha.petkovsek@gmail.com>\n"
 # "POT-Creation-Date: 2013-04-02 14:33+0200\n"
 # "PO-Revision-Date: 2013-06-28 14:33+0200\n"
@@ -4533,3 +4533,38 @@ msgstr "Widget urejen"
 
 msgid "Widget delete success"
 msgstr "Widget izbrisan"
+
+#: site/dashboard/widgets/requests.php
+msgid "Active IP address requests"
+msgstr "Aktivni zahtevki za IP naslov"
+
+#: site/sections.php
+msgid "Click to reorder widgets"
+msgstr "Klikni za prerazporeditev widgetov"
+
+msgid "Click to save widgets order"
+msgstr "Shrani vrstni red widgetov"
+
+#: site/dashboard/widgetPopup.php
+msgid "Add new widget to dashboard"
+msgstr "Dodaj nov widget na dashboard"
+
+msgid "All available widgets are already on dashboard"
+msgstr "Vsi razpoložljivi widgeti so že na dashboardu"
+
+#: site/tools/userMenu.php
+msgid "Save order"
+msgstr "Shrani vrstni red"
+
+#: site/admin/widgets.php
+msgid "File"
+msgstr "Datoteka"
+
+msgid "Admin only"
+msgstr "Samo za administratorje"
+
+msgid "Link to page"
+msgstr "Povezava na stran"
+
+msgid "Widget size"
+msgstr "Velikost"

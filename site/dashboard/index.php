@@ -78,8 +78,8 @@ $(document).ready(function() {
 <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="js/flot/excanvas.min.js"></script><![endif]-->
 
 
-<div class="welcome">
-<b><?php $user = getActiveUserDetails(); print_r($user['real_name']); ?></b>, <?php print _('welcome to your IPAM dashboard'); ?>. <span class="jclock pull-right"></span>
+<div class="welcome" style="text-align:right">
+	<span class="jclock"></span>
 </div>
 
 <?php

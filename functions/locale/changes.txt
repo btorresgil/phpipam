@@ -976,3 +976,41 @@ msgstr ""
 
 msgid "Widget delete success"
 msgstr ""
+
+
+### 0.96.002 ###
+
+#: site/dashboard/widgets/requests.php
+msgid "Active IP address requests"
+msgstr ""
+
+#: site/sections.php
+msgid "Click to reorder widgets"
+msgstr ""
+
+msgid "Click to save widgets order"
+msgstr ""
+
+#: site/dashboard/widgetPopup.php
+msgid "Add new widget to dashboard"
+msgstr ""
+
+msgid "All available widgets are already on dashboard"
+msgstr ""
+
+#: site/tools/userMenu.php
+msgid "Save order"
+msgstr ""
+
+#: site/admin/widgets.php
+msgid "File"
+msgstr ""
+
+msgid "Admin only"
+msgstr ""
+
+msgid "Link to page"
+msgstr ""
+
+msgid "Widget size"
+msgstr ""

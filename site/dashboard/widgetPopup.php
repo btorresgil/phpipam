@@ -27,7 +27,7 @@ else 										{ $widgets  = getAllWidgets(false, false); }
 	<?php
 	print "<ul id='sortablePopup' class='sortable'>";
 	# print widghets that are not yet selected
-	$w = 0;
+	$m = 0;
 	foreach($widgets as $k=>$w) {
 		if(!in_array($k, $uwidgets))	{ 
 			$wtmp = $widgets[$k];
@@ -41,9 +41,9 @@ else 										{ $widgets  = getAllWidgets(false, false); }
 		}
 	}	
 	print "</ul>";
-	
+		
 	# print empty
-	if($w==0)	{ print _("<div class='alert alert-info'>All widgets are already on dashboard")."!</div>"; }
+	if($m==0)	{ print "<div class='alert alert-info'>"._("All available widgets are already on dashboard")."!</div>"; }
 	?>
 </div>
 
