@@ -2819,7 +2819,7 @@ function getIPaddressesBySwitchName ( $name )
 
 
 /**
- * Ping host - PEAR
+ * Ping host
  */
 function pingHost ($ip, $count="1", $exit=false)
 {
@@ -2855,7 +2855,7 @@ function pingHostPear ($ip, $count="1", $exit=false)
 		echo $ping->getMessage();
 	} 
 	else {
-		$ping->setArgs(array('count' => $count, 'timeout' => 2));
+		$ping->setArgs(array('count' => $count, 'timeout' => 1));
 	
 		$pRes = $ping->ping($ip);
 	
@@ -2875,7 +2875,7 @@ function pingHostPear ($ip, $count="1", $exit=false)
 				$result['code'] = 1;
 				$result['text'] = "Offline";
 			}
-			//faile
+			//failed
 			else {
 				$result['code'] = 3;
 				$result['text'] = "Unknown error";
@@ -2891,7 +2891,7 @@ function pingHostPear ($ip, $count="1", $exit=false)
         
 	//return result for web or cmd
 	if(!$exit) 	{ return $result; }
-	else	  	{ exit	($result); }
+	else	  	{ exit	($result['code']); }
 }
 
 

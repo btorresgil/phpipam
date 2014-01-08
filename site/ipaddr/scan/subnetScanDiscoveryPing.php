@@ -45,7 +45,7 @@ if($ip) {
 		die('<div class="alert alert-error">Cannot access php executable!</div>');
 	}
 	# set script
-	$script = dirname(__FILE__) . '/../../../functions/scan/'.$_REQUEST['pingType'].'Script.php';
+	$script = dirname(__FILE__) . '/../../../functions/scan/scanIPAddressesScript.php';
 	
 	# invoke CLI with threading support
 	$cmd = "$phpPath $script '$ip'";
@@ -57,9 +57,10 @@ if($ip) {
 	if($retval != 0) {
 		die("<div class='alert alert-error'>Error executing scan! Error code - $retval</div>");
 	}
-		
+			
 	# format result - alive
-	$alive = json_decode(trim($output[0]));
+	$alive = json_decode(trim($output[0]), true);
+	$alive = $alive['alive'];
 	
 	# if not numeric means error, print it!
 	if(!is_numeric($alive[0]))	{

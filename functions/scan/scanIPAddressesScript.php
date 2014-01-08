@@ -1,12 +1,18 @@
 <?php
 
+/* Script to check status of IP addresses provided in $argv in decimal, returns alive and dead */
+
+//it can only be run from cmd!
+$sapi_type = php_sapi_name();
+if($sapi_type != "cli") { die(); }
+
 // include required scripts
 require_once( dirname(__FILE__) . '/../functions.php' );
 require_once( dirname(__FILE__) . '/../scripts/Thread.php');
 
 // no error reporting!
 ini_set('display_errors', 1);
-error_reporting(E_ALL ^ E_NOTICE);
+error_reporting(E_ALL ^ E_NOTICE ^ E_STRICT);
 
 // test to see if threading is available
 if( !Thread::available() ) 	{ 
@@ -40,7 +46,7 @@ for ($m=0; $m<=$size; $m += $MAX_THREADS) {
     	//only if index exists!
     	if(isset($addresses[$z])) {      	
 			//start new thread
-            $threads[$z] = new Thread( 'pingHost' );
+            $threads[$z] = new Thread( 'pingHostPear' );
             $threads[$z]->start( Transform2long($addresses[$z]), $count, true );
             $z++;				//next index
 		}
@@ -54,10 +60,10 @@ for ($m=0; $m<=$size; $m += $MAX_THREADS) {
             	$exitCode = $thread->getExitCode();
             	//online, save to array
             	if($exitCode == 0) {
-            		$alive[] = $addresses[$index];
+            		$out['alive'][] = $addresses[$index];
             	}
             	else {
-	            	$dead[]  = $addresses[$index];
+	            	$out['dead'][]  = $addresses[$index];
             	}
                 //remove thread
                 unset( $threads[$index] );
@@ -69,8 +75,8 @@ for ($m=0; $m<=$size; $m += $MAX_THREADS) {
 }
 
 # save to json
-$alive = json_encode($alive);
+$out = json_encode($out);
 
 # print result
-print_r($alive);
+print_r($out);
 ?>
