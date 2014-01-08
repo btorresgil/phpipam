@@ -34,8 +34,8 @@ else 										{ $widgets  = getAllWidgets(false, false); }
 			//size fix
 			if(strlen($wtmp['wsize'])==0)	{ $wtmp['wsize']=6; }
 			print "<li id='$k'>";
-			print "	<a href='' class='btn btn-small widget-add' id='w-$wtmp[wfile]' data-size='$wtmp[wsize]' data-htitle='$wtmp[wtitle]'><i class='icon icon-plus'></i></a> $wtmp[wtitle]";
-			print "	<div class='muted' style='margin-left:40px;'>$wtmp[wdescription]</div>";
+			print "	<a href='' class='btn btn-small widget-add' id='w-$wtmp[wfile]' data-size='$wtmp[wsize]' data-htitle='$wtmp[wtitle]'><i class='icon icon-plus'></i></a>"._($wtmp['wtitle']);
+			print "	<div class='muted' style='margin-left:40px;'>"._($wtmp['wdescription'])."</div>";
 			print "</li>"; 
 			$w++;
 		}

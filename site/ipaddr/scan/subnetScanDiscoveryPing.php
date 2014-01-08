@@ -41,7 +41,9 @@ if($ip) {
 	$ip = implode(";", $ip);
 	
 	# get php exec path
-	$phpPath = getPHPExecutableFromPath();
+	if(!$phpPath = getPHPExecutableFromPath()) {
+		die('<div class="alert alert-error">Cannot access php executable!</div>');
+	}
 	# set script
 	$script = dirname(__FILE__) . '/../../../functions/scan/'.$_REQUEST['pingType'].'Script.php';
 	
@@ -50,6 +52,11 @@ if($ip) {
 	
 	# save result to $output
 	exec($cmd, $output, $retval);
+	
+	# die of error
+	if($retval != 0) {
+		die("<div class='alert alert-error'>Error executing scan! Error code - $retval</div>");
+	}
 		
 	# format result - alive
 	$alive = json_decode(trim($output[0]));

@@ -63,7 +63,7 @@ for ($m=0; $m<=$size; $m += $MAX_THREADS) {
                 unset( $threads[$index] );
             }
         }
-        usleep(500);
+        usleep(200);
     }
 
 }
