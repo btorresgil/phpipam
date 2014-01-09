@@ -2821,7 +2821,7 @@ function getIPaddressesBySwitchName ( $name )
 /**
  * Ping host
  */
-function pingHost ($ip, $count="1", $exit=false)
+function pingHost ($ip, $count="1", $timeout = 1, $exit=false)
 {
 	global $settings;
 	$pathPing = $settings['scanPingPath'];
@@ -2836,6 +2836,9 @@ function pingHost ($ip, $count="1", $exit=false)
     //exit codes
     //	0 = online
     //	1,2 = offline
+    
+    //other exit codes
+    //http://www.freebsd.org/cgi/man.cgi?query=sysexits&apropos=0&sektion=0&manpath=FreeBSD+4.3-RELEASE&arch=default&format=ascii
         
 	//return result for web or cmd
 	if(!$exit) 	{ return $retval; }
@@ -2846,7 +2849,7 @@ function pingHost ($ip, $count="1", $exit=false)
 /**
  * Ping host - PEAR
  */
-function pingHostPear ($ip, $count="1", $exit=false)
+function pingHostPear ($ip, $count="1", $timeout = 1, $exit=false)
 {
 	require_once "PEAR/Net/Ping.php";
 	$ping = Net_Ping::factory();
@@ -2863,6 +2866,7 @@ function pingHostPear ($ip, $count="1", $exit=false)
 		if(PEAR::isError($pRes)) {
 			$result['code'] = 2;
 			$result['text'] = $pRes->message;
+			$result['text'] = $pRes->getMessage();
 		}
 		else {
 			//all good
@@ -2892,6 +2896,28 @@ function pingHostPear ($ip, $count="1", $exit=false)
 	//return result for web or cmd
 	if(!$exit) 	{ return $result; }
 	else	  	{ exit	($result['code']); }
+}
+
+
+/**
+ *	get ping exit code explanation
+ */
+function explainPingExit($code)
+{
+	//http://www.freebsd.org/cgi/man.cgi?query=sysexits&apropos=0&sektion=0&manpath=FreeBSD+4.3-RELEASE&arch=default&format=ascii
+	switch($code) {
+		case 64:	$cName = "EX_USAGE";		break;
+		case 65:	$cName = "EX_DATAERR";		break;
+		case 68:	$cName = "EX_NOHOST";		break;
+		case 70:	$cName = "EX_SOFTWARE";		break;
+		case 71:	$cName = "EX_OSERR";		break;
+		case 72:	$cName = "EX_OSFILE";		break;
+		case 73:	$cName = "EX_CANTCREAT";	break;
+		case 74:	$cName = "EX_IOERR";		break;
+		case 75:	$cName = "EX_TEMPFAIL";		break;
+		case 77:	$cName = "EX_NOPERM";		break;
+	}
+	return $cName;
 }
 
 

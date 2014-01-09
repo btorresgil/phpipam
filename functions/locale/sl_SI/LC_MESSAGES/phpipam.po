@@ -4,7 +4,7 @@
 # miha petkovsek <miha.petkovsek@gmail.com>, 2013.
 #
 
-# "Project-Id-Version: 0.96.002\n"
+# "Project-Id-Version: 0.96.005\n"
 # "Report-Msgid-Bugs-To: Miha Petkovsek <miha.petkovsek@gmail.com>\n"
 # "POT-Creation-Date: 2013-04-02 14:33+0200\n"
 # "PO-Revision-Date: 2013-06-28 14:33+0200\n"
@@ -4568,3 +4568,13 @@ msgstr "Povezava na stran"
 
 msgid "Widget size"
 msgstr "Velikost"
+
+#: site/ipaddr/scan/subnetScanDiscoveryPing.php
+msgid "No alive host found"
+msgstr "Nisem našel razpoložljivih naprav"
+
+msgid "Errors occured during scan"
+msgstr "Pri skeniranju je prišlo do napake"
+
+msgid "Excluded from check"
+msgstr "Preverjanje izklopljeno"

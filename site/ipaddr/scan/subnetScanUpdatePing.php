@@ -41,7 +41,7 @@ foreach($addresses as $m=>$ipaddr) {
 		$excluded[$ipa]['status'] = "Excluded from check";
 	
 		//remove
-		unset($addresses[$m]);
+		//unset($addresses[$m]);
 		//next
 		$n++;
 	}	
@@ -73,11 +73,11 @@ if($ip) {
 	# die of error
 	if($retval != 0) {
 		die("<div class='alert alert-error'>Error executing scan! Error code - $retval</div>");
-	}	
+	}
 			
 	# format result - alive
 	$result = json_decode(trim($output[0]), true);
-	
+		
 	# if not numeric means error, print it!
 	if(!is_numeric($result[0]))	{
 		$error = $result[0];
@@ -92,13 +92,19 @@ foreach($result as $k=>$r) {
 		# format output
 		$res[$ip]['ip_addr'] = $ip;
 		
-		if($k=="dead")	{ 
+		//online
+		if($k=="alive")	{ 
+			$res[$ip]['status'] = "Online";			
+			$res[$ip]['code']=0; 
+		}		
+		//offline
+		elseif($k=="dead")	{ 
 			$res[$ip]['status'] = "Offline";			
 			$res[$ip]['code']=1; 
 		}
 		else { 
-			$res[$ip]['status'] = "Online";
-			$res[$ip]['code']=0; 
+			$res[$ip]['status'] = "Error";
+			$res[$ip]['code']=2; 
 		}			
 		$m++;
 	}

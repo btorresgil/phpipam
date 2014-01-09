@@ -915,6 +915,10 @@ function sec2hms($sec, $padHours = false)
  */
 function getPHPExecutableFromPath() 
 {
+	/*
+	not used anymore as it is not reliable, using PHP_BINDIR instead
+	*/
+/*
 	$paths = explode(PATH_SEPARATOR, getenv('PATH'));
 	foreach ($paths as $path) {
 		// we need this for XAMPP (Windows)
@@ -928,6 +932,13 @@ function getPHPExecutableFromPath()
 			}
 		}
 	}
+*/
+
+	$php_executable = PHP_BINDIR."/php";
+	if (file_exists($php_executable) && is_file($php_executable)) {
+		return $php_executable;
+	}	
+	
 	return FALSE; // not found
 }
 

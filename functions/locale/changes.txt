@@ -1014,3 +1014,16 @@ msgstr ""
 
 msgid "Widget size"
 msgstr ""
+
+
+### 0.96.005 ###
+
+#: site/ipaddr/scan/subnetScanDiscoveryPing.php
+msgid "No alive host found"
+msgstr ""
+
+msgid "Errors occured during scan"
+msgstr ""
+
+msgid "Excluded from check"
+msgstr ""

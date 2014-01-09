@@ -59,8 +59,10 @@ if($ip) {
 	}
 			
 	# format result - alive
-	$alive = json_decode(trim($output[0]), true);
-	$alive = $alive['alive'];
+	$result = json_decode(trim($output[0]), true);
+	$alive = $result['alive'];
+	$dead  = @$result['dead'];
+	$serr  = @$result['error'];
 	
 	# if not numeric means error, print it!
 	if(!is_numeric($alive[0]))	{
@@ -80,7 +82,7 @@ if($ip) {
 <?php
 # error?
 if(isset($error)) {
-	print "<div class='alert alert-error'><strong>Error: </strong>$error</div>";
+	print "<div class='alert alert-error'><strong>"._("Error").": </strong>$error</div>";
 }
 # wrong ping path
 elseif($pingError) {
@@ -88,7 +90,11 @@ elseif($pingError) {
 }
 # empty
 elseif(sizeof($alive)==0) {
-	print "<div class='alert alert-info'>No alive host found!</div>";
+	print "<div class='alert alert-info'>"._("No alive host found")."!</div>";
+	# errors?
+	if(isset($serr) && sizeof(@$serr)>0) {
+		print "<div class='alert alert-error'>"._("Errors occured during scan")."! (".sizeof($serr)." errors)</div>";
+	}
 }
 # found alive
 else {

@@ -1,4 +1,4 @@
-== 0.95.002
+== 0.96.005
 	
 	New features:
 	----------------------------
@@ -14,6 +14,7 @@
 	+ Subnet can now be splitted to max 256 new subnets (16 before);
 	+ Scan settings are moved to Administration;
 	+ Widget management has moved to administration, which allows creation of new widgets;
+	+ Improved ICMP error detection;
 	
 	+ Favourite subnets widget;
 	+ IP requests widget;

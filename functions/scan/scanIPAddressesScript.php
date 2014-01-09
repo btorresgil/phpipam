@@ -22,6 +22,7 @@ if( !Thread::available() ) 	{
 }
 
 $count = 1;						// number of pings
+$timeout = 1;					//timeout in seconds
 
 // set result arrays
 $alive = array();				// alive hosts
@@ -46,8 +47,8 @@ for ($m=0; $m<=$size; $m += $MAX_THREADS) {
     	//only if index exists!
     	if(isset($addresses[$z])) {      	
 			//start new thread
-            $threads[$z] = new Thread( 'pingHostPear' );
-            $threads[$z]->start( Transform2long($addresses[$z]), $count, true );
+            $threads[$z] = new Thread( 'pingHost' );
+            $threads[$z]->start( Transform2long($addresses[$z]), $count, $timeout, true );
             $z++;				//next index
 		}
     }
@@ -62,9 +63,15 @@ for ($m=0; $m<=$size; $m += $MAX_THREADS) {
             	if($exitCode == 0) {
             		$out['alive'][] = $addresses[$index];
             	}
-            	else {
+            	//ok, but offline
+            	elseif($exitCode == 1 || $exitCode == 2) {
 	            	$out['dead'][]  = $addresses[$index];
             	}
+            	//error
+            	else {
+	            	$out["error"][] = $addresses[$index];
+            	}
+            	//$out['exitcodes'][] = $exitCode;
                 //remove thread
                 unset( $threads[$index] );
             }
