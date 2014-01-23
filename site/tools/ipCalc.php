@@ -14,7 +14,7 @@ isUserAuthenticated ();
     <tr>
         <td><?php print _('IP address');?> / <?php print _('mask');?></td>
         <td>
-            <input type="text" name="cidr" size="40">
+            <input type="text" name="cidr" size="40" autofocus="autofocus">
         </td>
         <td>
             <div class="alert alert-warn" style="margin-bottom:0px;"><?php print _('Please enter IP address and mask in CIDR format');?></div>

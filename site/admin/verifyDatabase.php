@@ -24,7 +24,7 @@ $fields['ipaddresses'] 	  = array("subnetId", "ip_addr", "description", "dns_nam
 $fields['logs']			  = array("severity", "date", "username", "ipaddr", "command", "details");
 $fields['requests']		  = array("subnetId", "ip_addr", "description", "dns_name", "owner", "requester", "comment", "processed", "accepted", "adminComment");
 $fields['sections']		  = array("name", "description", "permissions", "strictMode", "subnetOrdering", "order", "showVLAN", "showVRF", "masterSection");
-$fields['settings']		  = array("siteTitle", "siteAdminName", "siteAdminMail", "siteDomain", "siteURL", "domainAuth", "showTooltips", "enableIPrequests", "enableVRF", "enableDNSresolving", "version", "donate", "IPfilter", "printLimit", "visualLimit", "vlanDuplicate", "htmlMail", "subnetOrdering", "pingStatus", "defaultLang", "api", "dhcpCompress", "enableChangelog");
+$fields['settings']		  = array("siteTitle", "siteAdminName", "siteAdminMail", "siteDomain", "siteURL", "domainAuth", "showTooltips", "enableIPrequests", "enableVRF", "enableDNSresolving", "version", "donate", "IPfilter", "printLimit", "visualLimit", "vlanDuplicate", "htmlMail", "subnetOrdering", "pingStatus", "defaultLang", "api", "dhcpCompress", "enableChangelog", "scanPingPath", "scanMaxThreads");
 $fields['settingsDomain'] = array("account_suffix", "base_dn", "domain_controllers", "use_ssl", "use_tls", "ad_port", "adminUsername", "adminPassword");
 $fields['subnets'] 		  = array("subnet", "mask", "sectionId", "description", "masterSubnetId", "vrfId", "allowRequests", "vlanId", "showName", "permissions", "pingSubnet", "isFolder");
 $fields['switches'] 	  = array("hostname", "ip_addr", "type", "vendor", "model", "version", "description", "sections");
@@ -34,6 +34,8 @@ $fields['vlans']   	  	  = array("vlanId", "name", "number", "description");
 $fields['userGroups']     = array("g_id", "g_name", "g_descr");
 $fields['lang']     	  = array("l_id", "l_code", "l_name");
 $fields['api']			  = array("app_id", "app_code", "app_permissions");
+$fields['changelog']	  = array("cid", "ctype", "coid", "cuser", "caction", "cresult", "cdate", "cdiff");
+$fields['widgets']		  = array("wid", "wtitle", "wdescription", "wfile", "wparams", "whref", "wsize", "wadminonly", "wactive");
 
 /**
  * check that each database exist - if it does check also fields

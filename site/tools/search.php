@@ -14,7 +14,7 @@ else				{ $searchTerm = ""; }
 <!-- search form -->
 <form id="search" name="search">
 	<div class="input-append">
-		<input class="span2 search" id="appendedInputButton" name="ip" value="<?php print $searchTerm; ?>" size="16" type="text"><input type="submit" class="btn" value="<?php print _('search');?>">
+		<input class="span2 search" id="appendedInputButton" name="ip" value="<?php print $searchTerm; ?>" size="16" type="text" autofocus="autofocus"><input type="submit" class="btn" value="<?php print _('search');?>">
 	</div>
 </form>
 

@@ -10,7 +10,7 @@
 		<tr>
 			<th><?php print _('Username'); ?></th>
             <td>
-            	<input type="text" id="username" name="ipamusername" class="login" placeholder="<?php print _('Username'); ?>"></input>
+            	<input type="text" id="username" name="ipamusername" class="login" placeholder="<?php print _('Username'); ?>" autofocus="autofocus"></input>
             </td>
         </tr>
             
