@@ -923,6 +923,7 @@ function getPHPExecutableFromPath()
 		// we need this for XAMPP (Windows)
 		if (strstr($path, 'php.exe') && isset($_SERVER["WINDIR"]) && file_exists($path) && is_file($path)) {
 			return $path;
+		}
 	}
 
 	//unix
