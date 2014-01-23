@@ -16,6 +16,7 @@ $email = true;							//set mail with status diff to admins
 $emailText = false;						//format to send mail via text or html
 //$wait = 500;							//time to wait for response in ms
 $count = 1;								//number of pings to send
+$timeout = 1;							//timeut in seconds
 
 // response
 $stateDiff = array();					//Array with differences, can be used to email to admins
@@ -54,7 +55,7 @@ elseif(!$threads) {
 		if($tDiff < $statuses[1])	{ $addresses[$m]['oldStatus'] = 0; }	//old online
 		else						{ $addresses[$m]['oldStatus'] = 2; }	//old offline
 		//get status
-		$code = pingHost (transform2long($ip['ip_addr']), $count, false);
+		$code = pingHost (transform2long($ip['ip_addr']), $count, $timeout, false);
 		//Online
 		if($code == "0") {
 			//update IP status

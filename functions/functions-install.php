@@ -21,6 +21,39 @@ else{
 
 
 /**
+ *	Sanitize user's input
+ */
+function cleanInput($input) {
+ 
+	$search = array(
+		'@<script[^>]*?>.*?</script>@si',   // Strip out javascript
+		'@<[\/\!]*?[^<>]*?>@si',            // Strip out HTML tags
+		'@<style[^>]*?>.*?</style>@siU',    // Strip style tags properly
+		'@<![\s\S]*?--[ \t\n\r]*>@'         // Strip multi-line comments
+	);
+ 
+    $output = preg_replace($search, '', $input);
+    return $output;
+}
+function sanitize($input) {
+
+	if (is_array($input)) {
+	    foreach($input as $var=>$val) {
+	        $output[$var] = sanitize($val);
+	    }
+	}
+	else {
+	    if (get_magic_quotes_gpc()) {
+	        $input = stripslashes($input);
+	    }
+	    $input  = cleanInput($input);
+	    $output = mysql_real_escape_string($input);
+	}
+	return $output;
+}
+
+
+/**
  * Update log table
  */
 function updateLogTable ($command, $details = NULL, $severity = 0)
@@ -273,6 +306,11 @@ function checkLogin ($username, $md5password, $rawpassword)
     
     /* check if user exists in local database */
     $database 	= new database($db['host'], $db['user'], $db['pass'], $db['name']);
+    
+    //escape strings
+    $username   	= mysqli_real_escape_string($database, $username);
+    $$md5password   = mysqli_real_escape_string($database, $md5password);
+    
     $query 		= 'select * from `users` where `username` = binary "'. $username .'" and `password` = BINARY "'. $md5password .'" and `domainUser` = "0" limit 1;';
 
     /* execute */

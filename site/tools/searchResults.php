@@ -22,6 +22,8 @@ ini_set('display_errors', 0);
 
 /* change * to % for database wildchar */
 $searchTerm = str_replace("*", "%", $searchTerm);
+// sanitize
+$searchTerm = sanitize($searchTerm);
 
 
 /* check if mac address */

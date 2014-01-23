@@ -1016,7 +1016,7 @@ msgid "Widget size"
 msgstr ""
 
 
-### 0.96.005 ###
+### 0.96.007 ###
 
 #: site/ipaddr/scan/subnetScanDiscoveryPing.php
 msgid "No alive host found"
@@ -1026,4 +1026,14 @@ msgid "Errors occured during scan"
 msgstr ""
 
 msgid "Excluded from check"
+msgstr ""
+
+
+### 0.97.001 ###
+
+#: site/login/loginCheck.php
+msgid "Invalid characters in username"
+msgstr ""
+
+msgid "Invalid characters in password"
 msgstr ""

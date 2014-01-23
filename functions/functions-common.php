@@ -918,28 +918,53 @@ function getPHPExecutableFromPath()
 	/*
 	not used anymore as it is not reliable, using PHP_BINDIR instead
 	*/
-/*
 	$paths = explode(PATH_SEPARATOR, getenv('PATH'));
 	foreach ($paths as $path) {
 		// we need this for XAMPP (Windows)
 		if (strstr($path, 'php.exe') && isset($_SERVER["WINDIR"]) && file_exists($path) && is_file($path)) {
 			return $path;
 	}
-	else {
-		$php_executable = $path . DIRECTORY_SEPARATOR . "php" . (isset($_SERVER["WINDIR"]) ? ".exe" : "");
-			if (file_exists($php_executable) && is_file($php_executable)) {
-				return $php_executable;
-			}
-		}
-	}
-*/
 
+	//unix
 	$php_executable = PHP_BINDIR."/php";
 	if (file_exists($php_executable) && is_file($php_executable)) {
 		return $php_executable;
 	}	
 	
 	return FALSE; // not found
+}
+
+
+/**
+ *	Sanitize user's input
+ */
+function cleanInput($input) {
+ 
+	$search = array(
+		'@<script[^>]*?>.*?</script>@si',   // Strip out javascript
+		'@<[\/\!]*?[^<>]*?>@si',            // Strip out HTML tags
+		'@<style[^>]*?>.*?</style>@siU',    // Strip style tags properly
+		'@<![\s\S]*?--[ \t\n\r]*>@'         // Strip multi-line comments
+	);
+ 
+    $output = preg_replace($search, '', $input);
+    return $output;
+}
+function sanitize($input) {
+
+	if (is_array($input)) {
+	    foreach($input as $var=>$val) {
+	        $output[$var] = sanitize($val);
+	    }
+	}
+	else {
+	    if (get_magic_quotes_gpc()) {
+	        $input = stripslashes($input);
+	    }
+	    $input  = cleanInput($input);
+	    $output = mysql_real_escape_string($input);
+	}
+	return $output;
 }
 
 
