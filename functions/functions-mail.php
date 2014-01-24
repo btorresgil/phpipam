@@ -69,6 +69,20 @@ $mail['footerAlt'] = "\r\n------------------------------\r\n$settings[siteAdminN
 
 
 
+/** 
+ *	phpMAiler initialize 
+ *	--------------------
+ *
+ *	Change mail settings here if you whish to use SMTP etc.
+ *	You can find documentation here: https://github.com/PHPMailer/PHPMailer
+ *
+ */
+require_once 'phpMailer/class.phpmailer.php';
+$pmail = new PHPMailer(true);				//true = default
+$pmail->CharSet="UTF-8";					//set utf8
+
+
+
 
 /**
  *	Send IP address details mail
@@ -78,6 +92,7 @@ function sendIPnotifEmail($to, $subject, $content)
 	# get settings
 	global $settings;
 	global $mail;
+	global $pmail;
 	
 	# reformat \n to breaks
 	$content = str_replace("\n", "<br>", $content);
@@ -102,11 +117,6 @@ function sendIPnotifEmail($to, $subject, $content)
 	$mail['contentAlt'] .= "$mail[contentAltt]";
 	$mail['contentAlt'] .= "\r\n\r\n"._("Sent by user")." ".$mail['sender']['real_name']." at ".date('Y/m/d H:i');
 	$mail['contentAlt'] .= $mail['footerAlt'];	
-	
-	# php mailer class
-	require_once 'phpMailer/class.phpmailer.php';
-	$pmail = new PHPMailer(true);				//true = default
-	$pmail->CharSet="UTF-8";					//set utf8
 
 	# set mail parameters
 	try {
@@ -146,6 +156,7 @@ function sendUserAccDetailsEmail($userDetails, $subject)
 	# get settings
 	global $settings;
 	global $mail;
+	global $pmail;
 	
 	# get active user name */
 	$sender = getActiveUserDetails();
@@ -194,11 +205,6 @@ function sendUserAccDetailsEmail($userDetails, $subject)
 	$mail['contentAlt'] .= "\r\n"._("Sent by user")." ".$mail['sender']['real_name']." at ".date('Y/m/d H:i');
 	$mail['contentAlt'] .= $mail['footerAlt'];		
 
-	# php mailer class
-	require_once 'phpMailer/class.phpmailer.php';
-	$pmail = new PHPMailer(true);				//true = default
-	$pmail->CharSet="UTF-8";					//set utf8
-
 	# set mail parameters
 	try {
 		$pmail->SetFrom("ipam@$settings[siteDomain]", $settings['siteTitle']);
@@ -240,7 +246,8 @@ function sendIPReqEmail($request)
 	# get settings
 	global $settings;
 	global $mail;
-	
+	global $pmail;
+		
 	# get active user name */
 	$sender = getActiveUserDetails();
 
@@ -284,11 +291,6 @@ function sendIPReqEmail($request)
 	$mail['contentAlt'] .= _("Comment").": $request[comment]\r\n";	
 	$mail['contentAlt'] .= "\r\n"._("Sent at")." ".date('Y/m/d H:i');
 	$mail['contentAlt'] .= $mail['footerAlt'];		
-
-	# php mailer class
-	require_once 'phpMailer/class.phpmailer.php';
-	$pmail = new PHPMailer(true);				//true = default
-	$pmail->CharSet="UTF-8";					//set utf8
 
 	# set mail parameters
 	try {
@@ -334,6 +336,7 @@ function sendIPResultEmail($request)
 	# get settings
 	global $settings;
 	global $mail;
+	global $pmail;
 
 	# set subject based on action
 	if($request['action'] == "accept")  { $subject	= _("IP address request")." (".Transform2long($request['ip_addr']).") "._("$request[action]ed"); }
@@ -393,11 +396,6 @@ function sendIPResultEmail($request)
 		$mail['content'] .= $mail['footerAlt'];		
 	}
 
-	# php mailer class
-	require_once 'phpMailer/class.phpmailer.php';
-	$pmail = new PHPMailer(true);				//true = default
-	$pmail->CharSet="UTF-8";					//set utf8
-
 	# set mail parameters
 	try {
 		$pmail->SetFrom("ipam@$settings[siteDomain]", $settings['siteTitle']);
@@ -442,11 +440,7 @@ function sendStatusUpdateMail($content, $subject)
 	# get settings
 	global $settings;
 	global $mail;
-
-	# php mailer class
-	require_once 'phpMailer/class.phpmailer.php';
-	$pmail = new PHPMailer(true);				//true = default
-	$pmail->CharSet="UTF-8";					//set utf8
+	global $pmail;
 	
 	# add plain text
 	$contentAlt = str_replace("<th style='padding:3px 8px;border:1px solid silver;border-bottom:2px solid gray;'>", " | ", $content);	//replace th
