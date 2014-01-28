@@ -10,8 +10,6 @@ features for next releases:
 	
 		+ Import form IPPlan
 		
-		+ Mail settings in db
-		
 		+ Scan subnet for alive hosts and import
 			SNMP router table fetching
 			NMAP scan

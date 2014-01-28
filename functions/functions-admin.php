@@ -1676,7 +1676,6 @@ function updateSettings($settings)
 	$query   .= '`enableVRF`   		  = "'. isCheckbox($settings['enableVRF']) .'", ' . "\n";
 	$query   .= '`donate`   		  = "'. isCheckbox($settings['donate']) .'", ' . "\n";
 	$query   .= '`enableDNSresolving` = "'. isCheckbox($settings['enableDNSresolving']) .'", ' . "\n";  
-	$query   .= '`htmlMail` 		  = "'. isCheckbox($settings['htmlMail']) .'", ' . "\n";  
 	$query   .= '`dhcpCompress` 	  = "'. isCheckbox($settings['dhcpCompress']) .'", ' . "\n";  
     $query   .= '`printLimit` 	      = "'. $settings['printLimit'] .'", ' . "\n"; 
     $query   .= '`visualLimit` 	      = "'. $settings['visualLimit'] .'", ' . "\n"; 
@@ -1688,6 +1687,49 @@ function updateSettings($settings)
     $query   .= '`scanPingPath` 	  = "'. $settings['scanPingPath'] .'", ' . "\n"; 
     $query   .= '`scanMaxThreads` 	  = "'. $settings['scanMaxThreads'] .'", ' . "\n"; 
     $query   .= '`defaultLang` 	  	  = "'. $settings['defaultLang'] .'" ' . "\n"; 
+	$query   .= 'where id = 1;' . "\n"; 
+
+	/* set log file */
+	foreach($settings as $key=>$setting) {
+		$log .= " ". $key . ": " . $setting . "<br>";
+	}
+ 
+ 	/* execute */
+    try {
+    	$database->executeQuery( $query );
+    }
+    catch (Exception $e) {
+    	$error =  $e->getMessage();
+    	print '<div class="alert alert-error">'._('Update settings error').':<hr>'. $error .'</div>';
+    	updateLogTable ('Failed to update settings', $log, 2);
+    	return false;
+	}
+	
+	if(!isset($e)) {
+    	updateLogTable ('Settings updated', $log, 1);
+        return true;
+	}
+}
+
+
+/**
+ * update mail settings
+ */
+function updateMailSettings($settings)
+{
+    global $db;                                                                      # get variables from config file
+    $database = new database($db['host'], $db['user'], $db['pass'], $db['name']); 
+    
+    /* first update request */
+    $query    = 'update `settingsMail` set ' . "\n";
+    $query   .= '`mtype` 		  	= "'. $settings['mtype'] .'", ' . "\n";
+    $query   .= '`mserver` 		  	= "'. $settings['mserver'] .'", ' . "\n";
+    $query   .= '`mport` 		  	= "'. $settings['mport'] .'", ' . "\n";
+    $query   .= '`mauth` 		  	= "'. $settings['mauth'] .'", ' . "\n";
+    $query   .= '`muser` 		  	= "'. $settings['muser'] .'", ' . "\n";
+    $query   .= '`mpass` 		  	= "'. $settings['mpass'] .'", ' . "\n";
+    $query   .= '`mAdminName` 	  	= "'. $settings['mAdminName'] .'", ' . "\n";
+    $query   .= '`mAdminMail` 	  	= "'. $settings['mAdminMail'] .'" ' . "\n";
 	$query   .= 'where id = 1;' . "\n"; 
 
 	/* set log file */

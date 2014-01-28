@@ -812,6 +812,44 @@ function getAllSettings()
 
 
 /**
+ * Get all mail settings
+ */
+function getAllMailSettings()
+{
+    global $db;                                                                      # get variables from config file
+    $database    = new database($db['host'], $db['user'], $db['pass']); 
+
+    /* first check if table settings exists */
+    $query    = 'SELECT COUNT(*) AS count FROM information_schema.tables WHERE table_schema = "'. $db['name'] .'" AND table_name = "settingsMail";';
+
+    /* execute */
+    try { $count = $database->getArray( $query ); }
+    catch (Exception $e) { 
+        $error =  $e->getMessage(); 
+        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        return false;
+    } 
+  
+	/* return true if it exists */
+	if($count[0]['count'] == 1) {
+	
+		/* select database */
+		$database->selectDatabase($db['name']);
+	
+	    /* first update request */
+	    $query    = 'select * from `settingsMail` where id = 1';
+	    $settings = $database->getArray($query); 
+  
+		/* return settings */
+		return($settings[0]);
+	}
+	else {
+		return false;
+	}
+}
+
+
+/**
  * Get SVN version
  */
 function getSVNversion() {
@@ -963,7 +1001,6 @@ function sanitize($input) {
 	        $input = stripslashes($input);
 	    }
 	    $input  = cleanInput($input);
-	    $output = mysql_real_escape_string($input);
 	}
 	return $output;
 }

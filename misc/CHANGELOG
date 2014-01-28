@@ -1,4 +1,4 @@
-== 0.96.005
+== 0.97.001
 	
 	New features:
 	----------------------------
@@ -15,6 +15,7 @@
 	+ Scan settings are moved to Administration;
 	+ Widget management has moved to administration, which allows creation of new widgets;
 	+ Improved ICMP error detection;
+	+ Mail settings can now be set on gui (localhost / smtp);
 	
 	+ Favourite subnets widget;
 	+ IP requests widget;

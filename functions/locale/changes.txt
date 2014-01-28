@@ -1037,3 +1037,62 @@ msgstr ""
 
 msgid "Invalid characters in password"
 msgstr ""
+
+#: site/admin/adminMenu.php
+msgid "Mail settings"
+msgstr ""
+
+msgid "Mail server settings"
+msgstr ""
+
+msgid "Server type"
+msgstr ""
+
+msgid "Localhost"
+msgstr ""
+
+msgid "SMTP"
+msgstr ""
+
+msgid "Select server type for sending mail messages"
+msgstr ""
+
+msgid "Server authentication"
+msgstr ""
+
+msgid "Select yes if authentication is required"
+msgstr ""
+
+msgid "Set username for SMTP authentication"
+msgstr ""
+
+msgid "Set password for SMTP authentication"
+msgstr ""
+
+msgid "Mail sender settings"
+msgstr ""
+
+msgid "Send test email"
+msgstr ""
+
+msgid "Mail server type"
+msgstr ""
+
+msgid "SMTP settings"
+msgstr ""
+
+msgid "Server address"
+msgstr ""
+
+msgid "Sender name"
+msgstr ""
+
+msgid "Sender mail"
+msgstr ""
+
+#: site/admin.settings.php
+msgid "Set administrator name"
+msgstr ""
+
+msgid "Set administrator email"
+msgstr ""

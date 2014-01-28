@@ -4,7 +4,7 @@
 # miha petkovsek <miha.petkovsek@gmail.com>, 2013.
 #
 
-# "Project-Id-Version: 0.96.005\n"
+# "Project-Id-Version: 0.97.001\n"
 # "Report-Msgid-Bugs-To: Miha Petkovsek <miha.petkovsek@gmail.com>\n"
 # "POT-Creation-Date: 2013-04-02 14:33+0200\n"
 # "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
@@ -4530,4 +4530,70 @@ msgid "Errors occured during scan"
 msgstr ""
 
 msgid "Excluded from check"
+msgstr ""
+
+#: site/login/loginCheck.php
+msgid "Invalid characters in username"
+msgstr ""
+
+msgid "Invalid characters in password"
+msgstr ""
+
+#: site/admin/adminMenu.php
+msgid "Mail settings"
+msgstr ""
+
+msgid "Mail server settings"
+msgstr ""
+
+msgid "Server type"
+msgstr ""
+
+msgid "Localhost"
+msgstr ""
+
+msgid "SMTP"
+msgstr ""
+
+msgid "Select server type for sending mail messages"
+msgstr ""
+
+msgid "Server authentication"
+msgstr ""
+
+msgid "Select yes if authentication is required"
+msgstr ""
+
+msgid "Set username for SMTP authentication"
+msgstr ""
+
+msgid "Set password for SMTP authentication"
+msgstr ""
+
+msgid "Mail sender settings"
+msgstr ""
+
+msgid "Send test email"
+msgstr ""
+
+msgid "Mail server type"
+msgstr ""
+
+msgid "SMTP settings"
+msgstr ""
+
+msgid "Server address"
+msgstr ""
+
+msgid "Sender name"
+msgstr ""
+
+msgid "Sender mail"
+msgstr ""
+
+#: site/admin.settings.php
+msgid "Set administrator name"
+msgstr ""
+
+msgid "Set administrator email"
 msgstr ""

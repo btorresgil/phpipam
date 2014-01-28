@@ -6,9 +6,10 @@
  */
 
 /**
- *	Get all settings / needed for footer
+ *	Get all settings / needed for footer and mail settings
  */
-$settings = getAllSettings();
+$settings 		= getAllSettings();
+$mailsettings 	= getAllMailSettings();
 
 # get active user name */
 $mail['sender'] = getActiveUserDetails();
@@ -16,7 +17,7 @@ $mail['sender'] = getActiveUserDetails();
 # set html header
 $mail['header'] = "<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN' 'http://www.w3.org/TR/html4/loose.dtd'>
 <html>
-<head></head>
+<head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'></head>
 <body style='margin:0px;padding:0px;background:#f9f9f9;border-collapse:collapse;'>
 <table style='margin-left:10px;margin-top:5px;width:auto;padding:0px;border-collapse:collapse;'>";
 
@@ -72,14 +73,30 @@ $mail['footerAlt'] = "\r\n------------------------------\r\n$settings[siteAdminN
 /** 
  *	phpMAiler initialize 
  *	--------------------
- *
- *	Change mail settings here if you whish to use SMTP etc.
- *	You can find documentation here: https://github.com/PHPMailer/PHPMailer
- *
  */
 require_once 'phpMailer/class.phpmailer.php';
-$pmail = new PHPMailer(true);				//true = default
+// initialize
+$pmail = new PHPMailer(true);				//localhost
 $pmail->CharSet="UTF-8";					//set utf8
+$pmail->SMTPDebug = 0;						//debugging
+$pmail->Debugoutput = 'html';				//debug type
+
+//set smtp if required
+if($mailsettings['mtype']=="smtp") {
+	//set smtp
+	$pmail->isSMTP();
+	//server
+	$pmail->Host = $mailsettings['mserver'];
+	$pmail->Port = $mailsettings['mport'];
+	//auth or not?
+	if($mailsettings['mauth']=="yes") {
+		$pmail->SMTPAuth = true;
+		$pmail->Username = $mailsettings['muser'];
+		$pmail->Username = $mailsettings['mpass'];
+	} else {
+		$pmail->SMTPAuth = false;	
+	}
+}
 
 
 
@@ -91,6 +108,7 @@ function sendIPnotifEmail($to, $subject, $content)
 {
 	# get settings
 	global $settings;
+	global $mailsettings;
 	global $mail;
 	global $pmail;
 	
@@ -120,7 +138,7 @@ function sendIPnotifEmail($to, $subject, $content)
 
 	# set mail parameters
 	try {
-		$pmail->SetFrom("ipam@$settings[siteDomain]", $settings['siteTitle']);
+		$pmail->SetFrom($mailsettings['mAdminMail'], $mailsettings['mAdminName']);
 		$pmail->AddAddress($to);
 		$pmail->ClearReplyTos();
 		$pmail->AddReplyTo($sender['email'], $sender['real_name']);
@@ -155,6 +173,7 @@ function sendUserAccDetailsEmail($userDetails, $subject)
 {
 	# get settings
 	global $settings;
+	global $mailsettings;
 	global $mail;
 	global $pmail;
 	
@@ -207,7 +226,7 @@ function sendUserAccDetailsEmail($userDetails, $subject)
 
 	# set mail parameters
 	try {
-		$pmail->SetFrom("ipam@$settings[siteDomain]", $settings['siteTitle']);
+		$pmail->SetFrom($mailsettings['mAdminMail'], $mailsettings['mAdminName']);
 		$pmail->AddAddress($userDetails['email'], $userDetails['real_name']);
 		$pmail->ClearReplyTos();
 		$pmail->AddReplyTo($sender['email'], $sender['real_name']);
@@ -245,6 +264,7 @@ function sendIPReqEmail($request)
 {
 	# get settings
 	global $settings;
+	global $mailsettings;
 	global $mail;
 	global $pmail;
 		
@@ -294,7 +314,7 @@ function sendIPReqEmail($request)
 
 	# set mail parameters
 	try {
-		$pmail->SetFrom("ipam@$settings[siteDomain]", $settings['siteTitle']);
+		$pmail->SetFrom($mailsettings['mAdminMail'], $mailsettings['mAdminName']);
 
 		// add admins to TO
 		$admins = getAllAdminUsers ();
@@ -302,7 +322,7 @@ function sendIPReqEmail($request)
 			$pmail->AddAddress($admin['email']);
 		}
 		$pmail->ClearReplyTos();
-		$pmail->AddReplyTo($settings['siteAdminMail'], $settings['siteAdminName']);
+		$pmail-> AddReplyTo($mailsettings['mAdminMail'], $mailsettings['mAdminName']);
 		// send copy to requester
 		$pmail->AddCC($request['requester']);
 
@@ -335,6 +355,7 @@ function sendIPResultEmail($request)
 {
 	# get settings
 	global $settings;
+	global $mailsettings;
 	global $mail;
 	global $pmail;
 
@@ -398,7 +419,7 @@ function sendIPResultEmail($request)
 
 	# set mail parameters
 	try {
-		$pmail->SetFrom("ipam@$settings[siteDomain]", $settings['siteTitle']);
+		$pmail->SetFrom($mailsettings['mAdminMail'], $mailsettings['mAdminName']);
 		// send to requester
 		$pmail->AddAddress($request['requester']);
 		// add admins to CC
@@ -407,7 +428,7 @@ function sendIPResultEmail($request)
 			$pmail->AddCC($admin['email']);
 		}
 		$pmail->ClearReplyTos();
-		$pmail->AddReplyTo($settings['siteAdminMail'], $settings['siteAdminName']);
+		$pmail-> AddReplyTo($mailsettings['mAdminMail'], $mailsettings['mAdminName']);
 
 		// content
 		$pmail->Subject = $subject;
@@ -439,6 +460,7 @@ function sendStatusUpdateMail($content, $subject)
 {
 	# get settings
 	global $settings;
+	global $mailsettings;
 	global $mail;
 	global $pmail;
 	
@@ -450,7 +472,7 @@ function sendStatusUpdateMail($content, $subject)
 
 	# set mail parameters
 	try {
-		$pmail->SetFrom("ipam@$settings[siteDomain]", $settings['siteTitle']);
+		$pmail->SetFrom($mailsettings['mAdminMail'], $mailsettings['mAdminName']);
 		// add admins to CC
 		$admins = getAllAdminUsers ();
 		foreach($admins as $admin) {

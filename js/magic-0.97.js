@@ -714,6 +714,40 @@ $('#settings').submit(function() {
     return false;
 });
 
+/* save mail settings */
+$('#mailsettings').submit(function() {
+    showSpinner();
+    var settings = $(this).serialize();
+    //load submit results
+    $.post('site/admin/mailSettingsEdit.php', settings, function(data) {
+        $('div.settingsMailEdit').html(data).slideDown('fast');
+        //reload after 1 second if all is ok!
+        if(data.search("error") == -1)   { setTimeout(function (){window.location.reload();}, 1000); }
+        else                             { hideSpinner(); }
+    }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});
+    return false;
+});
+
+/* show/hide smtp body */
+$('select#mtype').change(function() {
+	var type = $(this).find(":selected").val();
+	//if localhost hide, otherwise show
+	if(type === "localhost") 	{ $('#mailsettingstbl tbody#smtp').hide(); } 
+	else 						{ $('#mailsettingstbl tbody#smtp').show(); }
+});
+
+/* test mail */
+$('.sendTestMail').click(function() {
+    showSpinner();
+    var settings = $('form#mailsettings').serialize();
+   //send mail
+    $.post('site/admin/mailSettingsTestMail.php', settings, function(data) {
+        $('div.settingsMailEdit').html(data).slideDown('fast');
+        hideSpinner();
+    }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});
+    return false;	
+});
+
 
 /*    Edit users
 ***************************/

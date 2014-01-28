@@ -4,7 +4,7 @@
 # miha petkovsek <miha.petkovsek@gmail.com>, 2013.
 #
 
-# "Project-Id-Version: 0.96.005\n"
+# "Project-Id-Version: 0.97.001\n"
 # "Report-Msgid-Bugs-To: Miha Petkovsek <miha.petkovsek@gmail.com>\n"
 # "POT-Creation-Date: 2013-04-02 14:33+0200\n"
 # "PO-Revision-Date: 2013-06-28 14:33+0200\n"
@@ -4578,3 +4578,69 @@ msgstr "Pri skeniranju je prišlo do napake"
 
 msgid "Excluded from check"
 msgstr "Preverjanje izklopljeno"
+
+#: site/login/loginCheck.php
+msgid "Invalid characters in username"
+msgstr "Neveljavni znaki v uporabniškem imenu"
+
+msgid "Invalid characters in password"
+msgstr "Neveljavni znaki v geslu"
+
+#: site/admin/adminMenu.php
+msgid "Mail settings"
+msgstr "Mail nastavitve"
+
+msgid "Mail server settings"
+msgstr "Nastavitve mail strežnika"
+
+msgid "Server type"
+msgstr "Tip strežnika"
+
+msgid "Localhost"
+msgstr "Lokalen strežnik"
+
+msgid "SMTP"
+msgstr "SMTP"
+
+msgid "Select server type for sending mail messages"
+msgstr "Izberite tip strežnika za pošiljanje email sporočil"
+
+msgid "Server authentication"
+msgstr "Avtentikacija"
+
+msgid "Select yes if authentication is required"
+msgstr "Izberite da, če strežnik zahteva avtentikacijo"
+
+msgid "Set username for SMTP authentication"
+msgstr "Vpišite uporabniško ime za SMTP"
+
+msgid "Set password for SMTP authentication"
+msgstr "Vpišite geslo za SMTP"
+
+msgid "Mail sender settings"
+msgstr "Nastavitve pošiljatelja"
+
+msgid "Send test email"
+msgstr "Pošljite testno sporočilo"
+
+msgid "Mail server type"
+msgstr "Tip mail strežnika"
+
+msgid "SMTP settings"
+msgstr "SMTP nastavitve"
+
+msgid "Server address"
+msgstr "Naslov strežnika"
+
+msgid "Sender name"
+msgstr "Ime pošiljatelja"
+
+msgid "Sender mail"
+msgstr "Email pošiljatelja"
+
+#: site/admin.settings.php
+msgid "Set administrator name"
+msgstr "Vpišite ime administratorja"
+
+msgid "Set administrator e-mail"
+msgstr "Vpišite email administratorja"

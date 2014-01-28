@@ -166,7 +166,6 @@ CREATE TABLE `settings` (
   `vlanDuplicate` int(1) DEFAULT '0',
   `subnetOrdering` varchar(16) DEFAULT 'subnet,asc',
   `visualLimit` int(2) NOT NULL DEFAULT '0',
-  `htmlMail` binary(1) NOT NULL DEFAULT '1',
   `pingStatus` VARCHAR(12)  NOT NULL  DEFAULT '1800;3600',
   `defaultLang` INT(3)  NULL  DEFAULT NULL,
   `editDate` TIMESTAMP  NULL  ON UPDATE CURRENT_TIMESTAMP,
@@ -183,7 +182,7 @@ LOCK TABLES `settings` WRITE;
 
 INSERT INTO `settings` (`id`, `siteTitle`, `siteAdminName`, `siteAdminMail`, `siteDomain`, `siteURL`, `domainAuth`, `showTooltips`, `enableIPrequests`, `enableVRF`, `enableDNSresolving`, `version`, `donate`, `IPfilter`, `printLimit`, `vlanDuplicate`, `subnetOrdering`, `visualLimit`, `htmlMail`)
 VALUES
-	(1, 'phpipam IP address management', 'Sysadmin', 'admin@domain.local', 'domain.local', 'http://yourpublicurl.com', 0, 1, 1, 1, 0, '0.9', 0, 'mac;owner;state;switch;note', 50, 1, 'subnet,asc', 24, X'31');
+	(1, 'phpipam IP address management', 'Sysadmin', 'admin@domain.local', 'domain.local', 'http://yourpublicurl.com', 0, 1, 1, 1, 0, '0.9', 0, 'mac;owner;state;switch;note', 50, 1, 'subnet,asc', 24);
 	
 /*!40000 ALTER TABLE `settings` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -217,6 +216,36 @@ VALUES
 
 /*!40000 ALTER TABLE `settingsDomain` ENABLE KEYS */;
 UNLOCK TABLES;
+
+
+# Dump of table settingsMail
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `settingsMail`;
+
+CREATE TABLE `settingsMail` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `mtype` set('localhost','smtp') NOT NULL DEFAULT 'localhost',
+  `mauth` set('yes','no') NOT NULL DEFAULT 'no',
+  `mserver` varchar(128) DEFAULT NULL,
+  `mport` int(5) DEFAULT '25',
+  `muser` varchar(64) DEFAULT NULL,
+  `mpass` varchar(64) DEFAULT NULL,
+  `mAdminName` varchar(64) DEFAULT NULL,
+  `mAdminMail` varchar(64) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+LOCK TABLES `settingsMail` WRITE;
+/*!40000 ALTER TABLE `settingsDomain` DISABLE KEYS */;
+
+INSERT INTO `settingsMail` (`id`, `mtype`, `mauth`)
+VALUES
+	(1, 'localhost', 'no');
+
+/*!40000 ALTER TABLE `settingsMail` ENABLE KEYS */;
+UNLOCK TABLES;
+
 
 
 # Dump of table subnets

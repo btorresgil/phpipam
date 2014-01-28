@@ -85,7 +85,7 @@ $langs = getLanguages ();
 		<input type="text" size="50" name="siteAdminName" value="<?php print $settings['siteAdminName']; ?>">
 	</td>
 	<td class="info">
-		<?php print _('Set administrator name to display when sending mails and for contact info'); ?>
+		<?php print _('Set administrator name'); ?>
 	</td>
 </tr>
 
@@ -96,7 +96,7 @@ $langs = getLanguages ();
 		<input type="text" size="50" name="siteAdminMail" value="<?php print $settings['siteAdminMail']; ?>">
 	</td>
 	<td class="info">
-		<?php print _('Set administrator e-mail to display when sending mails and for contact info'); ?>
+		<?php print _('Set administrator e-mail'); ?>
 	</td>
 </tr>
 
@@ -247,17 +247,6 @@ $langs = getLanguages ();
 	</td>
 	<td class="info">
 		<?php print _('Enable or disable tooltips'); ?>
-	</td>
-</tr>
-
-<!-- HTML email -->
-<tr>
-	<td class="title"><?php print _('HTML email'); ?></td>
-	<td>
-		<input type="checkbox" value="1" name="htmlMail" <?php if($settings['htmlMail'] == 1) print 'checked'; ?>>
-	</td>
-	<td class="info">
-		<?php print _('Send html mail instead of plain text'); ?>
 	</td>
 </tr>
 

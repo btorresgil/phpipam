@@ -34,6 +34,9 @@ $settings = getAllSettings();
 		<a href="administration/manageAD/"><i class="icon-chevron-right pull-right icon-gray"></i> <?php print _('OpenLDAP connection settings'); ?></a>
 	</li>
 	<?php } ?>
+	<li <?php if($_REQUEST['adminId'] == "mailSettings") print "class='active'"; ?>>
+		<a href="administration/mailSettings/"><i class="icon-chevron-right pull-right icon-gray"></i> <?php print _('Mail settings'); ?></a>
+	</li>
     <?php # show API settings if enabled in config!
     if($settings['api'] == 1) { ?>
 	<li <?php if($_REQUEST['adminId'] == "api") print "class='active'"; ?>>
