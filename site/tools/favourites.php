@@ -41,48 +41,51 @@ else {
 	
 	# logs
 	foreach($favs as $f) {
-		print "<tr class='favSubnet-$f[subnetId]'>";
-		
-		if($f['isFolder']==1) {
-			print "	<td><a href='subnets/$f[sectionId]/$f[subnetId]/'><i class='icon-folder-close icon-gray'></i> $f[description]</a></td>";
-		}
-		else {
-			print "	<td><a href='subnets/$f[sectionId]/$f[subnetId]/'>".transform2long($f['subnet'])."/$f[mask]</a></td>";		
-		}
-		
-		print "	<td>$f[description]</td>";
-		print "	<td><a href='subnets/$f[sectionId]/'>$f[section]</a></td>";
-		if(strlen($f['vlanId'])>0) {
-		# get vlan info
-		$vlan = getVlanById($f['vlanId']);
-		print "	<td>$vlan[number]</td>";
-		} else {
-		print "	<td>/</td>";
-		}
-		
-		# used
-		
-		# masterSubnet
-		if( $f['masterSubnetId']==0 || empty($f['masterSubnetId']))  	{ $masterSubnet = true; }		# check if it is master
-		else 														 	{ $masterSubnet = false; }
-
-		if($f['isFolder']==1) {
-			print  '<td></td>';
-		}
-		elseif( (!$masterSubnet) || (!subnetContainsSlaves($f['subnetId']))) {
-    		$ipCount = countIpAddressesBySubnetId ($f['subnetId']);
-    		$calculate = calculateSubnetDetails ( gmp_strval($ipCount), $f['mask'], $f['subnet'] );
-
-    		print ' <td class="used">'. reformatNumber($calculate['used']) .'/'. reformatNumber($calculate['maxhosts']) .' ('.reformatNumber($calculate['freehosts_percent']) .' %)</td>';
-    	}
-    	else {
-			print '<td></td>'. "\n";
-		}	
-		
-		# remove
-		print "	<td><a class='btn btn-small editFavourite' data-subnetId='$f[subnetId]' data-action='remove' data-from='widget'><i class='icon-star favourite-$f[subnetId]' rel='tooltip' title='"._('Click to remove from favourites')."'></i></a></td>";
+		# if subnet already removed (doesnt exist) dont print it!
+		if(sizeof($f)>0) {
+			print "<tr class='favSubnet-$f[subnetId]'>";
+			
+			if($f['isFolder']==1) {
+				print "	<td><a href='folder/$f[sectionId]/$f[subnetId]/'><i class='icon-folder-close icon-gray'></i> $f[description]</a></td>";
+			}
+			else {
+				print "	<td><a href='subnets/$f[sectionId]/$f[subnetId]/'>".transform2long($f['subnet'])."/$f[mask]</a></td>";		
+			}
+			
+			print "	<td>$f[description]</td>";
+			print "	<td><a href='subnets/$f[sectionId]/'>$f[section]</a></td>";
+			if(strlen($f['vlanId'])>0) {
+			# get vlan info
+			$vlan = getVlanById($f['vlanId']);
+			print "	<td>$vlan[number]</td>";
+			} else {
+			print "	<td>/</td>";
+			}
+			
+			# used
+			
+			# masterSubnet
+			if( $f['masterSubnetId']==0 || empty($f['masterSubnetId']))  	{ $masterSubnet = true; }		# check if it is master
+			else 														 	{ $masterSubnet = false; }
 	
-		print "</tr>";
+			if($f['isFolder']==1) {
+				print  '<td></td>';
+			}
+			elseif( (!$masterSubnet) || (!subnetContainsSlaves($f['subnetId']))) {
+	    		$ipCount = countIpAddressesBySubnetId ($f['subnetId']);
+	    		$calculate = calculateSubnetDetails ( gmp_strval($ipCount), $f['mask'], $f['subnet'] );
+	
+	    		print ' <td class="used">'. reformatNumber($calculate['used']) .'/'. reformatNumber($calculate['maxhosts']) .' ('.reformatNumber($calculate['freehosts_percent']) .' %)</td>';
+	    	}
+	    	else {
+				print '<td></td>'. "\n";
+			}	
+			
+			# remove
+			print "	<td><a class='btn btn-small editFavourite' data-subnetId='$f[subnetId]' data-action='remove' data-from='widget'><i class='icon-star favourite-$f[subnetId]' rel='tooltip' title='"._('Click to remove from favourites')."'></i></a></td>";
+		
+			print "</tr>";
+		}
 	}
 	
 	print "</table>";	

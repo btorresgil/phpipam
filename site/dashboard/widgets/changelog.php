@@ -57,7 +57,10 @@ else {
 				# format type
 				switch($l['ctype']) {
 					case "ip_addr":	$l['ctype'] = "IP address";	break;
-					case "subnet":	$l['ctype'] = "Subnet";		break;
+					case "subnet":  if($l['isFolder']==1) 	{ $l['ctype'] = "Folder"; } 
+									else 					{ $l['ctype'] = "Subnet"; }
+					break;
+					
 					case "section":	$l['ctype'] = "Section";	break;
 				}
 			
@@ -69,7 +72,10 @@ else {
 					print "	<td><a href='subnets/$l[sectionId]/$l[subnetId]/ipdetails/$l[tid]/'>".transform2long($l['ip_addr'])."</a></td>";			
 				} 
 				elseif($l['ctype']=="Subnet")   {
-					print "	<td><a href='subnets/$l[sectionId]/$l[tid]/'>".transform2long($l['ip_addr'])."/$l[mask]</a></td>";		
+					print "	<td><a href='subnets/$l[sectionId]/$l[tid]/'>".transform2long($l['ip_addr'])."/$l[mask]</a></td>";							
+				}
+				elseif($l['ctype']=="Folder")   {
+					print "	<td><a href='folder/$l[sectionId]/$l[tid]/'>$l[sDescription]</a></td>";						
 				}
 				
 				print "	<td>$l[cdate]</td>";

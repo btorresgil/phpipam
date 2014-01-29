@@ -156,6 +156,10 @@ if($permission == "0")	{ die("<div class='alert alert-error'>"._('You do not hav
 		print "<a class='btn btn-small disabled' 					href='' rel='tooltip' title='"._('Add new nested subnet')."'> 			<i class='icon-plus-sign'></i></a> ";			# add new child subnet
 		print "<a class='btn btn-small disabled'					href='' rel='tooltip' title='"._('Add new nested folder')."'>			<i class='icon-folder-close'></i></a> ";		# add new child folder
 		}	
+		// changelog
+		if($settings['enableChangelog']==1) {
+		print "<a class='sChangelog btn btn-small'     				href='subnets/$SubnetDetails[sectionId]/$SubnetDetails[id]/changelog/' rel='tooltip' title='"._('Changelog')."'>																<i class='icon-time'></i></a>";				
+		}
 	}
 	
 	print "	</div>";

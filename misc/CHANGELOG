@@ -1,4 +1,4 @@
-== 0.97.001
+== 0.97.002
 	
 	New features:
 	----------------------------
@@ -39,6 +39,7 @@
 	+ Fixed search for subnet name returned no results;
 	+ Fixed apostophe in IP address description throws SQL error for scan results and XLS import;
 	+ Fixed requester email gets cut if longer than 32 chars;
+	+ Fixed admin folder edit appearing as subnet;
 
 == 0.9
 

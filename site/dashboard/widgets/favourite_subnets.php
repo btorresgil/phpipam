@@ -40,30 +40,36 @@ else {
 	print "	<th style='width:5px;'></th>";
 	print "</tr>";
 	
-	# logs
+	# subnets
 	foreach($favs as $f) {
-		print "<tr class='favSubnet-$f[subnetId]'>";
-		
-		if($f['isFolder']==1) {
-			print "	<td><a href='folder/$f[sectionId]/$f[subnetId]/'><i class='icon-folder-close icon-gray'></i> $f[description]</a></td>";
-		}
-		else {
-			print "	<td><a href='subnets/$f[sectionId]/$f[subnetId]/'>".transform2long($f['subnet'])."/$f[mask]</a></td>";		
-		}
-		print "	<td>$f[description]</td>";
-		print "	<td>$f[section]</td>";
-		if(strlen($f['vlanId'])>0) {
-		# get vlan info
-		$vlan = getVlanById($f['vlanId']);
-		print "	<td>$vlan[number]</td>";
-		} else {
-		print "	<td>/</td>";
-		}
-		
-		# remove
-		print "	<td><a class='btn btn-small editFavourite' data-subnetId='$f[subnetId]' data-action='remove' data-from='widget'><i class='icon-star favourite-$f[subnetId]' rel='tooltip' title='"._('Click to remove from favourites')."'></i></a></td>";
 	
-		print "</tr>";
+		//must be either subnet or folder
+		if(sizeof($f)>0) {
+		
+			print "<tr class='favSubnet-$f[subnetId]'>";
+			
+			if($f['isFolder']==1) {
+				print "	<td><a href='folder/$f[sectionId]/$f[subnetId]/'><i class='icon-folder-close icon-gray'></i> $f[description]</a></td>";
+			}
+			else {
+				print "	<td><a href='subnets/$f[sectionId]/$f[subnetId]/'>".transform2long($f['subnet'])."/$f[mask]</a></td>";		
+			}
+			print "	<td>$f[description]</td>";
+			print "	<td>$f[section]</td>";
+			if(strlen($f['vlanId'])>0) {
+			# get vlan info
+			$vlan = getVlanById($f['vlanId']);
+			print "	<td>$vlan[number]</td>";
+			} else {
+			print "	<td>/</td>";
+			}
+			
+			# remove
+			print "	<td><a class='btn btn-small editFavourite' data-subnetId='$f[subnetId]' data-action='remove' data-from='widget'><i class='icon-star favourite-$f[subnetId]' rel='tooltip' title='"._('Click to remove from favourites')."'></i></a></td>";
+		
+			print "</tr>";
+	
+		}
 	}
 	
 	print "</table>";	

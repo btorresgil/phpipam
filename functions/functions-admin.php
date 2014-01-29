@@ -1012,9 +1012,15 @@ function printAdminSubnets( $subnets, $actions = true, $vrf = "0" )
 				if($actions) {
 				$html[] = "	<td class='actions' style='padding:0px;'>";
 				$html[] = "	<div class='btn-group'>";
-				$html[] = "		<button class='btn btn-small editSubnet'     data-action='edit'   data-subnetid='".$option['value']['id']."'  data-sectionid='".$option['value']['sectionId']."'><i class='icon-gray icon-pencil'></i></button>";
+				if($option['value']['isFolder']==1) {
+				$html[] = "		<button class='btn btn-small add_folder'     data-action='edit'   data-subnetid='".$option['value']['id']."'  data-sectionid='".$option['value']['sectionId']."'><i class='icon-gray icon-pencil'></i></button>";
+				$html[] = "		<button class='btn btn-small showSubnetPerm' data-action='show'   data-subnetid='".$option['value']['id']."'  data-sectionid='".$option['value']['sectionId']."'><i class='icon-gray icon-tasks'></i></button>";
+				$html[] = "		<button class='btn btn-small add_folder'     data-action='delete' data-subnetid='".$option['value']['id']."'  data-sectionid='".$option['value']['sectionId']."'><i class='icon-gray icon-remove'></i></button>";
+				} else {
+				$html[] = "		<button class='btn btn-small editSubnet'     data-action='edit'   data-subnetid='".$option['value']['id']."'  data-sectionid='".$option['value']['sectionId']."'><i class='icon-gray icon-pencil'></i></button>";					
 				$html[] = "		<button class='btn btn-small showSubnetPerm' data-action='show'   data-subnetid='".$option['value']['id']."'  data-sectionid='".$option['value']['sectionId']."'><i class='icon-gray icon-tasks'></i></button>";
 				$html[] = "		<button class='btn btn-small editSubnet'     data-action='delete' data-subnetid='".$option['value']['id']."'  data-sectionid='".$option['value']['sectionId']."'><i class='icon-gray icon-remove'></i></button>";
+				}
 				$html[] = "	</div>";
 				$html[] = "	</td>";
 				}

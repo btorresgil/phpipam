@@ -10,6 +10,9 @@ isUserAuthenticated ();
 # get clog entries
 $clogs = getChangelogEntries("subnet", $_REQUEST['subnetId']);
 
+# get subnet
+$subnetDetails = getSubnetDetailsById ($_REQUEST['subnetId']);
+
 # permissions
 $permission = checkSubnetPermission ($_REQUEST['subnetId']);
 if($permission == "0")	{ die("<div class='alert alert-error'>"._('You do not have permission to access this network')."!</div>"); }
@@ -18,7 +21,11 @@ if($permission == "0")	{ die("<div class='alert alert-error'>"._('You do not hav
 print "<h4>"._('Subnet')." - "._('Changelog')."</h4><hr>";
 
 # back
-print "<a class='btn btn-small' href='subnets/$_REQUEST[section]/$_REQUEST[subnetId]/'><i class='icon-chevron-left'></i> "._('Back to subnet')."</a>";
+if($subnetDetails['isFolder']==1) {
+	print "<a class='btn btn-small' href='folder/$_REQUEST[section]/$_REQUEST[subnetId]/'><i class='icon-chevron-left'></i> "._('Back to subnet')."</a>";
+} else {
+	print "<a class='btn btn-small' href='subnets/$_REQUEST[section]/$_REQUEST[subnetId]/'><i class='icon-chevron-left'></i> "._('Back to subnet')."</a>";
+}
 
 
 # empty

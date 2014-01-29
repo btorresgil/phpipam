@@ -181,6 +181,10 @@ if($permission == "0")	{ die("<div class='alert alert-error'>"._('You do not hav
 		else {
 		print "<a class='btn btn-small disabled' 					href=''> 			<i class='icon-plus-sign'></i></a> ";			# add new child subnet
 		}	
+		// changelog
+		if($settings['enableChangelog']==1) {
+		print "<a class='sChangelog btn btn-small'     			href='subnets/$SubnetDetails[sectionId]/$SubnetDetails[id]/changelog/' rel='tooltip' title='"._('Changelog')."'>																<i class='icon-time'></i></a>";				
+		}
 	}
 	
 	print "	</div>";
