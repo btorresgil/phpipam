@@ -2922,6 +2922,47 @@ function explainPingExit($code)
 
 
 /**
+ * Telnet host check on specified port
+ */
+function telnetHost ($ip, $ports, $timeout = 2, $exit = false)
+{
+	/* @debugging functions ------------------- */
+	ini_set('display_errors', 0);
+	error_reporting(E_ERROR ^ E_WARNING);
+
+	//save ports to array
+	$ports = explode(";", $ports);
+	
+	//default response is dead
+	$retval = 1;
+	
+	//try each port untill one is alive
+	foreach($ports as $p) {
+		// open socket
+		$conn = fsockopen($ip, $p, $errno, $errstr, $timeout);
+		//failed
+		if (!$conn) {
+			//fclose($conn);
+		} 
+		//success
+		else 		{ 
+			$retval = 0;	//set return as port if alive
+			fclose($conn);
+			break;			//end foreach if success
+		}
+	}
+    
+    //exit codes
+    //	0 = offline
+    //	everything else = online (port where available)
+            
+	//return result for web or cmd
+	if(!$exit) 	{ return $retval; }
+	else	  	{ exit($retval); }
+}
+
+
+/**
  * Update host lastSeen
  */
 function updateLastSeen($ip_id)

@@ -47,10 +47,11 @@ $ip_addr = getIpAddressesBySubnetId ($_POST['subnetId']) ;
     <tr>
     	<td><?php print _('Select Scan type'); ?></td>
     	<td>
-    		<select name="scanType">
+    		<select name="scanType" id="scanType">
     			<!-- Discovery scans -->
 	    		<optgroup label="<?php print _('Discovery scans');?>">
 		    		<option value="DiscoveryPing">Ping <?php print _('scan');?></option>
+		    		<option value="DiscoveryTelnet">Telnet <?php print _('scan');?></option>
 <!-- 		    		<option value="DiscoveryNmap">NMap <?php print _('scan');?></option> -->
 <!-- 		    		<option value="DiscoverySnmp">SNMP <?php print _('scan');?></option> -->
 	    		</optgroup>
@@ -63,6 +64,16 @@ $ip_addr = getIpAddressesBySubnetId ($_POST['subnetId']) ;
 			</select>
     	</td>
     </tr>
+    
+    <!-- telnet ports -->
+    <tbody id="telnetPorts" style="border-top:0px;display:none;">
+    <tr>
+    	<td><?php print _('Ports'); ?></td>
+    	<td>
+	    	<input type="text" name="telnetports" placeholder="<?php print _("Separate multiple ports with ;"); ?>">
+    	</td>
+    </tr>
+    </tbody>
         
     </table>
 

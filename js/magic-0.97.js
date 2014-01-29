@@ -392,13 +392,21 @@ $('a.scan_subnet').click(function() {
     }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});
 	return false;
 });
+//show telnet port
+$(document).on('change', "select#scanType", function() {
+	var pingType = $('select[name=scanType]').find(":selected").val();
+	if(pingType=="DiscoveryTelnet") { $('tbody#telnetPorts').show(); } 
+	else 							{ $('tbody#telnetPorts').hide(); }
+});
+
 //start scanning
 $(document).on('click','#subnetScanSubmit', function() {
 	showSpinner();
 	var subnetId = $(this).attr('data-subnetId');
 	var pingType = $('select[name=scanType]').find(":selected").val();
+	var port     = $('input[name=telnetports]').val();
 	$('#alert-scan').slideUp('fast');
-	$.post('site/ipaddr/scan/subnetScan'+pingType+".php", {subnetId:subnetId, pingType:pingType}, function(data) {
+	$.post('site/ipaddr/scan/subnetScan'+pingType+".php", {subnetId:subnetId, pingType:pingType, port:port}, function(data) {
         $('#subnetScanResult').html(data);
 		hideSpinner();
     }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});

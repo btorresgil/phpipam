@@ -1096,3 +1096,18 @@ msgstr ""
 
 msgid "Set administrator email"
 msgstr ""
+
+
+
+### 0.97.003 ###
+
+#: site/ipaddr/scan/subnetScan.php
+msgid "Separate multiple ports with ;"
+msgstr ""
+
+#: site/ipaddr/scan/subnetScanDiscoveryTelnet.php
+msgid "Please enter ports to scan"
+msgstr ""
+
+msgid "Invalid port"
+msgstr ""
