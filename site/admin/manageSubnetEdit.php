@@ -63,6 +63,10 @@ else {
 /* get custom subnet fields */
 $customSubnetFields = getCustomFields('subnets');
 
+/* vlan result on the fly */
+if(isset($_POST['vlanId'])) {
+	$subnetDataOld['vlanId'] = $_POST['vlanId'];
+}
 
 # set readonly flag
 if($_POST['action'] == "edit" || $_POST['action'] == "delete")	{ $readonly = true; }
@@ -134,36 +138,8 @@ else															{ $readonly = false; }
     <tr>
         <td class="middle"><?php print _('VLAN'); ?></td>
         <td id="vlanDropdown"> 
-            <select name="vlanId">
-            	<option disabled="disabled"><?php print _('Select VLAN'); ?>:</option>
-            	<?php
-           		$vlans = getAllVLANs();
-           		
-           		if($_POST['action'] == "add") { $vlan['vlanId'] = 0; }
-
-           		$tmp[0]['vlanId'] = 0;
-           		$tmp[0]['number'] = _('No VLAN');
-           		
-           		# on-the-fly
-	          	$tmp[1]['vlanId'] = 'Add';
-	           	$tmp[1]['number'] = _('+ Add new VLAN');	
-           		
-           		array_unshift($vlans, $tmp[0]);
-           		array_unshift($vlans, $tmp[1]);
-            
-            	foreach($vlans as $vlan) {
-            		/* set structure */
-            		$printVLAN = $vlan['number'];
-            		
-            		if(!empty($vlan['name'])) { $printVLAN .= " ($vlan[name])"; }
-            		
-            		/* selected? */
-            		if($subnetDataOld['vlanId'] == $vlan['vlanId']) { print '<option value="'. $vlan['vlanId'] .'" selected>'. $printVLAN .'</option>'. "\n"; }
-            		else 											{ print '<option value="'. $vlan['vlanId'] .'">'. $printVLAN .'</option>'. "\n"; }
-            	}
-            ?>
-            </select>
-        </td>
+			<?php include('manageSubnetEditPrintVlanDropdown.php'); ?>
+         </td>
         <td class="info"><?php print _('Select VLAN'); ?></td>
     </tr>
 

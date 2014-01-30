@@ -13,9 +13,6 @@ features for next releases:
 		+ Imports
 			+ Import from IPPlan
 			+ Import from 
-			
-		+ Add new vlan should be selected
-		+ kliknes na free space pa samodejno naredi subnet v popupu
 		
 		+ Scan subnet for alive hosts and import
 			SNMP router table fetching

@@ -1355,19 +1355,16 @@ $(document).on("change", "select[name=vlanId]", function() {
 //    Submit new VLAN on the fly
 $(document).on("click", ".vlanManagementEditFromSubnetButton", function() {
     showSpinner();
-    var postData = $('form#vlanManagementEditFromSubnet').serialize();    
-    var parameter;
+    //get new vlan details
+    var postData = $('form#vlanManagementEditFromSubnet').serialize();
+	//add to save script
     $.post('site/admin/manageVLANEditResult.php', postData, function(data) {
         $('div.vlanManagementEditFromSubnetResult').html(data).show();
         // ok
         if(data.search("error") == -1) {
-            //reload add subnet
-            var sectionId = $('#editSubnetDetails input[name=sectionId]').val(); 
-            var subnetId  = $('#editSubnetDetails input[name=subnetId]').val(); 
-            var sAction   = $('#editSubnetDetails input[name=action]').val();
-            var postdata2 = "sectionId="+sectionId+"&subnetId="+subnetId+"&action="+sAction;
-            $.post('site/admin/manageSubnetEdit.php', postdata2 , function(data) {
-                $('div.popup_w700').html(data);
+            var vlanId	  = $('#vlanidforonthefly').html();
+            $.post('site/admin/manageSubnetEditPrintVlanDropdown.php', {vlanId:vlanId} , function(data) {
+                $('.editSubnetDetails td#vlanDropdown').html(data);
                 //bring to front
                 $('.popup_w700').delay(1000).css("z-index", "101");        //bring to front
                 hideSpinner();

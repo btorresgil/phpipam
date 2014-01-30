@@ -1573,7 +1573,7 @@ function updateVRFDetails($vrf)
 /**
  * Update VLAN details
  */
-function updateVLANDetails($vlan)
+function updateVLANDetails($vlan, $lastId = false)
 {
     global $db;                                                                      # get variables from config file
     $database = new database($db['host'], $db['user'], $db['pass'], $db['name']); 
@@ -1622,7 +1622,7 @@ function updateVLANDetails($vlan)
     }
     
     /* execute */
-    try { $res = $database->executeQuery( $query ); }
+    try { $res = $database->executeQuery( $query, true ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
         print ("<div class='alert alert-error'>"._('Error').": $error</div>");
@@ -1646,7 +1646,10 @@ function updateVLANDetails($vlan)
     
     /* return success */
     updateLogTable ('VLAN ' . $vlan['action'] .' success ('. $vlan['name'] . ')', $log, 0);
-    return true;
+    
+    /* response */
+    if($lastId)	{ return $res; }
+    else		{ return true; }
 }
 
 

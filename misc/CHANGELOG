@@ -1,4 +1,4 @@
-== 0.97.007
+== 0.97.008
 	
 	New features:
 	----------------------------
@@ -17,6 +17,7 @@
 	+ Improved ICMP error detection;
 	+ Mail settings can now be set on gui (localhost / smtp);
 	+ Popup windows are now draggable;
+	+ VLAN adding in the fly enhancements;
 	
 	+ Favourite subnets widget;
 	+ IP requests widget;
