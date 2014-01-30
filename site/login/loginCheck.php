@@ -16,7 +16,7 @@ require_once('../../functions/functions-install.php');
 if( !empty($_POST['ipamusername']) && !empty($_POST['ipampassword']) )  {
 
 	// sanitize inputs
-	$_POST = sanitize($_POST);
+	//$_POST['ipamusername'] = sanitize($_POST['ipamusername']);	
 
 	$ipamusername = $_POST['ipamusername'];
 	$ipampassword['raw'] = $_POST['ipampassword'];

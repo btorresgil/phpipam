@@ -17,7 +17,7 @@ $(function($) {
 </script>
 
 
-<script type="text/javascript" src="js/jquery-ui-1.10.3.custom.min.js"></script>
+<!-- <script type="text/javascript" src="js/jquery-ui-1.10.4.custom.min.js"></script> -->
 <script>
 $(document).ready(function() {
 	// initialize sortable

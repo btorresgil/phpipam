@@ -118,7 +118,10 @@ function readCookie(name) {
     return null;
 }
 
-
+/* draggeable elements */
+$(function() {
+	$( ".popup" ).draggable();
+});
 
 
 
