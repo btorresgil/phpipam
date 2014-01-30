@@ -1418,9 +1418,15 @@ function printSubnets( $subnets, $actions = true, $vrf = "0", $custom = array() 
 					if($actions) {
 					$html[] = "	<td class='actions' style='padding:0px;'>";
 					$html[] = "	<div class='btn-group'>";
-					$html[] = "		<button class='btn btn-mini editSubnet'     data-action='edit'   data-subnetid='".$option['value']['id']."'  data-sectionid='".$option['value']['sectionId']."'><i class='icon-gray icon-pencil'></i></button>";
-					$html[] = "		<button class='btn btn-mini showSubnetPerm' data-action='show'   data-subnetid='".$option['value']['id']."'  data-sectionid='".$option['value']['sectionId']."'><i class='icon-gray icon-tasks'></i></button>";
-					$html[] = "		<button class='btn btn-mini editSubnet'     data-action='delete' data-subnetid='".$option['value']['id']."'  data-sectionid='".$option['value']['sectionId']."'><i class='icon-gray icon-remove'></i></button>";
+					if($option['value']['isFolder']==1) {
+						$html[] = "		<button class='btn btn-mini add_folder'     data-action='edit'   data-subnetid='".$option['value']['id']."'  data-sectionid='".$option['value']['sectionId']."'><i class='icon-gray icon-pencil'></i></button>";
+						$html[] = "		<button class='btn btn-mini showSubnetPerm' data-action='show'   data-subnetid='".$option['value']['id']."'  data-sectionid='".$option['value']['sectionId']."'><i class='icon-gray icon-tasks'></i></button>";
+						$html[] = "		<button class='btn btn-mini add_folder'     data-action='delete' data-subnetid='".$option['value']['id']."'  data-sectionid='".$option['value']['sectionId']."'><i class='icon-gray icon-remove'></i></button>";
+					} else {
+						$html[] = "		<button class='btn btn-mini editSubnet'     data-action='edit'   data-subnetid='".$option['value']['id']."'  data-sectionid='".$option['value']['sectionId']."'><i class='icon-gray icon-pencil'></i></button>";
+						$html[] = "		<button class='btn btn-mini showSubnetPerm' data-action='show'   data-subnetid='".$option['value']['id']."'  data-sectionid='".$option['value']['sectionId']."'><i class='icon-gray icon-tasks'></i></button>";
+						$html[] = "		<button class='btn btn-mini editSubnet'     data-action='delete' data-subnetid='".$option['value']['id']."'  data-sectionid='".$option['value']['sectionId']."'><i class='icon-gray icon-remove'></i></button>";						
+					}
 					$html[] = "	</div>";
 					$html[] = "	</td>";
 					}
