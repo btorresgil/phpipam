@@ -799,6 +799,10 @@ ul#subnets li.leaf.active i {
 table.ipaddresses tr[class*="hidden-"] {
 /* 	display: none; */
 }
+a.createfromfree {
+	padding: 1px 4px;
+	margin-top: -2px;
+}
 
 div.ip_vis {
 /* 	display: none; */

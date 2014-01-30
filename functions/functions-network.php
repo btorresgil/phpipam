@@ -108,6 +108,40 @@ function reformatIPStateText ($state)
 
 
 /**
+ *	Function, that calculates first possible subnet from provided subnet and number of next free IP addresses
+ */
+function getFirstPossibleSubnet($subnet, $free, $print = true)
+{
+	// check IP address type (v4/v6)
+	$type = IdentifyAddress( $subnet );
+	
+	// set max possible mask for IP range
+	if($type == "IPv6")	{ $maxmask = 128; }
+	else				{ $maxmask = 32; }
+	
+	// calculate maximum possible IP mask
+	$mask = floor(log($free)/log(2));
+	$mask = $maxmask - $mask;
+	
+	// we have now maximum mask. We need to verify if subnet is valid
+	// otherwise add 1 to $mask and go to $maxmask
+	for($m=$mask; $m<=$maxmask; $m++) {
+		//validate
+		$err = verifyCidr( $subnet."/".$m , 1 );
+		if(sizeof($err)==0) {
+			//ok, it is possible!
+			$result = $subnet."/".$m;
+			break;
+		}
+	}
+
+	//print or return?
+	if($print)	print $result;
+	else		return $result;
+}
+
+
+/**
  * Verify that switch exists
  */
 function verifySwitchByName ($hostname)

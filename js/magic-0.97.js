@@ -1205,7 +1205,7 @@ $(document).on("click", ".editSubnetSubmit", function() {
     //load results
     $.post("site/admin/manageSubnetEditResult.php", subnetData, function(data) {
         $('div.manageSubnetEditResult').html(data).slideDown('fast');
-
+        
         //reload after 2 seconds if all is ok!
         if(data.search("error") == -1) {
             showSpinner();
@@ -1218,6 +1218,10 @@ $(document).on("click", ".editSubnetSubmit", function() {
                 sectionId = $('form#editSubnetDetails input[name=sectionId]').val();
                 subnetId  = $('form#editSubnetDetails input[name=subnetId]').val();
                 setTimeout(function (){window.location.reload();}, 1500);
+            }
+            //from free space 
+            else if(subnetData.search("freespace") != -1) {
+	            setTimeout(function (){window.location.reload();}, 1500);
             }
             //from ipcalc - ignore
             else if (subnetData.search("ipcalc") != -1) {
@@ -1295,6 +1299,23 @@ $(document).on("change", "select#selectSectionfromIPCalc", function() {
         showPopup('popup_w700');
         hideSpinner();
     }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});
+});
+$(document).on("click", ".createfromfree", function() {
+    //get details - we need Section, network and subnet bitmask
+    var sectionId = $(this).attr('data-sectionId');
+    var cidr      = $(this).attr('data-cidr');
+    var freespaceMSISD = $(this).attr('data-masterSubnetId');
+    var cidrArr   = cidr.split('/');
+    var subnet    = cidrArr[0];
+    var bitmask   = cidrArr[1];
+    var postdata  = "sectionId=" + sectionId + "&subnet=" + subnet + "&bitmask=" + bitmask + "&freespaceMSID=" + freespaceMSISD + "&action=add&location=ipcalc";
+    //load add Subnet form / popup
+    $.post('site/admin/manageSubnetEdit.php', postdata , function(data) {
+        $('div.popup_w700').html(data);
+        showPopup('popup_w700');
+        hideSpinner();
+    }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});
+    return false;
 });
 
 /*    Edit subnet from ip address list

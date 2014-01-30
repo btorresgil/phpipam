@@ -1,11 +1,11 @@
-== 0.97.006
+== 0.97.007
 	
 	New features:
 	----------------------------
 	+ IP address page with IP address details and IP history (Changelog);
 	+ IP address changelog, subnet and section changelogs with full changelog under tools;
 	+ Favourite subnets for quick access;
-
+	+ Adding subnets from free space with automatic mask provided;
 
 	Enhancements:
 	----------------------------

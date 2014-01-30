@@ -53,6 +53,11 @@ else {
     	$subnetDataOld['vrfId'] 		 = $tempData['vrfId'];		// same default vrf for nested
 	}
 	$sectionName = getSectionDetailsById ($_POST['sectionId']);
+	
+	# set master if it came from free space!
+	if(isset($_POST['freespaceMSID'])) {
+		$subnetDataOld['masterSubnetId'] = $_POST['freespaceMSID'];		// dump name, but it will do :)
+	}
 }
 
 /* get custom subnet fields */
@@ -271,7 +276,10 @@ else															{ $readonly = false; }
             <input type="hidden" name="sectionId"       value="<?php print $_POST['sectionId'];    ?>">
             <input type="hidden" name="subnetId"        value="<?php print $_POST['subnetId'];     ?>">       
             <input type="hidden" name="action"    		value="<?php print $_POST['action']; ?>">
-            <input type="hidden" name="location"    	value="<?php print $_POST['location']; ?>">        
+            <input type="hidden" name="location"    	value="<?php print $_POST['location']; ?>">   
+            <?php if(isset($_POST['freespaceMSID'])) { ?>     
+            <input type="hidden" name="freespace"    	value="true">  
+            <?php } ?>
             <input type="hidden" name="vrfIdOld"        value="<?php print $subnetDataOld['vrfId'];    ?>">
 
         <?php

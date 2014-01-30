@@ -57,7 +57,7 @@ foreach ($slaves as $slave) {
 			
 			print "<tr class='success'>";
 			print "	<td></td>";
-			print "	<td class='small description'>"._('Free space')."</td>";
+			print "	<td class='small description'><a href='#' data-sectionId='$section[id]' data-masterSubnetId='$subnetId' class='btn btn-small createfromfree' data-cidr='".getFirstPossibleSubnet(transform2long($master['subnet']) , $diff, false)."'><i class='icon-plus'></i></a> "._('Free space')."</td>";
 			print "	<td colspan='5'>". transform2long($master['subnet']) ." - ". transform2long(gmp_strval(gmp_add($master['subnet'], gmp_sub($diff,1)))) ." ( ".$diff." )</td>";
 			print "</tr>";
 		}
@@ -142,7 +142,7 @@ foreach ($slaves as $slave) {
 		if($diff > 0) {
 			print "<tr class='success'>";
 			print "	<td></td>";
-			print "	<td class='small description'>"._('Free space')."</td>";
+			print "	<td class='small description'><a href='#' data-sectionId='$section[id]' data-masterSubnetId='$subnetId' class='btn btn-small createfromfree' data-cidr='".getFirstPossibleSubnet(transform2long(gmp_strval(gmp_add($slave['maxip'], $slave['subnet']))) , $diff, false)."'><i class='icon-plus'></i></a> "._('Free space')."</td>";
 			print "	<td colspan='5'>". transform2long(gmp_strval(gmp_add($slave['maxip'], $slave['subnet']))) ." - ". transform2long(gmp_strval(gmp_add(gmp_add($slave['maxip'], $slave['subnet']), gmp_sub($diff,1)))) ." ( ".$diff." )</td>";
 			print "</tr>";			
 		}		
@@ -175,7 +175,7 @@ foreach ($slaves as $slave) {
 		if($max_m > $max_s) {			
 			print "<tr class='success'>";
 			print "	<td></td>";
-			print "	<td class='small description'>"._('Free space')."</td>";
+			print "	<td class='small description'><a href='#' data-sectionId='$section[id]' data-masterSubnetId='$subnetId' class='btn btn-small createfromfree' data-cidr='".getFirstPossibleSubnet(transform2long(gmp_strval(gmp_sub($max_m, $diff))) , $diff, false)."'><i class='icon-plus'></i></a> "._('Free space')."</td>";
 			print "	<td colspan='5'>". transform2long(gmp_strval(gmp_sub($max_m, $diff))) ." - ". transform2long(gmp_strval(gmp_sub($max_m, 1))) ." ( $diff )</td>";
 			print "</tr>";
 		}	
