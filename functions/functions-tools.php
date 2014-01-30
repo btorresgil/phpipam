@@ -631,7 +631,7 @@ function searchSubnets ($searchterm, $searchTermEdited = "")
 			}
 		}
 	}
-	
+		
     /* execute each query */
     foreach($query as $q) {
 	    try { $search[] = $database->getArray( $q ); }
