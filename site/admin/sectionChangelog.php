@@ -17,7 +17,7 @@ if (!checkAdmin()) die('');
 print "<h4>"._('Section')." - "._('Changelog')."</h4><hr>";
 
 # back
-print "<a class='btn btn-small' href='administration/manageSection/'><i class='icon-chevron-left'></i> "._('Back to section')."</a>";
+print "<a class='btn btn-sm btn-default' href='administration/manageSection/'><i class='fa fa-angle-left'></i> "._('Back to section')."</a>";
 
 
 # empty

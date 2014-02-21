@@ -53,7 +53,7 @@ $(document).ready(function() {
 	<ul id='sortableSec' class='sortable'>
 	<?php
 	foreach($sections as $s) {
-		print "<li id='$s[id]'><i class='icon icon-move'></i> <strong>$s[name]</strong> ($s[description])</li>";	
+		print "<li id='$s[id]'><i class='fa fa-arrows'></i> <strong>$s[name]</strong> <span class='info2'>( $s[description] )</span></li>";	
 	}
 	?>
 	</ul>
@@ -63,8 +63,8 @@ $(document).ready(function() {
 <!-- footer -->
 <div class="pFooter">
 	<div class="btn-group">
-		<button class="btn btn-small hidePopups"><?php print _('Cancel'); ?></button>
-		<button class="btn btn-small btn-success" id="sectionOrderSubmit"><i class="icon-white icon-ok"></i> <?php print _('Save'); ?></button>
+		<button class="btn btn-sm btn-default hidePopups"><?php print _('Cancel'); ?></button>
+		<button class="btn btn-sm btn-default btn-success" id="sectionOrderSubmit"><i class="fa fa-check"></i> <?php print _('Save'); ?></button>
 	</div>
 	<!-- result holder -->
 	<div class="sectionOrderResult"></div>

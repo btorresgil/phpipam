@@ -37,17 +37,17 @@ if($pingRes==0) { @updateLastSeen($_POST['id']); }
 	<?php
 	# online
 	if($pingRes==0) { 
-		print "<div class='alert alert-success'>"._("IP address")." $ip[ip_addr] "._("is alive")."<hr>$pingRes[text]</div>";
+		print "<div class='alert alert-success'>"._("IP address")." $ip[ip_addr] "._("is alive")."</div>";
 	}
 	# offline
 	elseif ($pingRes==1 || $pingRes==2) {
-		print "<div class='alert alert-error'  >"._("IP address")." $ip[ip_addr] "._("is not alive")."</div>";
+		print "<div class='alert alert-danger'  >"._("IP address")." $ip[ip_addr] "._("is not alive")."</div>";
 	}
 	# error
 	else {
 		//get error code
 		$ecode = explainPingExit($pingRes);
-		print "<div class='alert alert-error'>"._("Error").": $ecode ($pingRes)</div>";		
+		print "<div class='alert alert-danger'>"._("Error").": $ecode ($pingRes)</div>";		
 	}
 	
 	?>
@@ -55,5 +55,5 @@ if($pingRes==0) { @updateLastSeen($_POST['id']); }
 
 <!-- footer -->
 <div class="pFooter">
-	<button class="btn btn-small hidePopups"><?php print _('Close window'); ?></button>
+	<button class="btn btn-sm btn-default hidePopups"><?php print _('Close window'); ?></button>
 </div>

@@ -114,7 +114,7 @@ function getUserDetailsByName ($username)
     try { $details = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     } 
     
@@ -156,7 +156,7 @@ function getUserLang ($username)
     try { $details = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     } 
     
@@ -179,7 +179,7 @@ function getLangById ($id)
     try { $details = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     } 
     
@@ -208,7 +208,7 @@ function getAllSettings()
     try { $count = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     } 
   
@@ -225,7 +225,7 @@ function getAllSettings()
 	    try { $settings = $database->getArray( $query ); }
 	    catch (Exception $e) { 
         	$error =  $e->getMessage(); 
-        	print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        	print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         	return false;
         }   
 		/* return settings */
@@ -257,7 +257,7 @@ function getADSettings()
     try { $count = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     }  
   
@@ -274,7 +274,7 @@ function getADSettings()
 	    try { $settings = $database->getArray( $query ); }
 	    catch (Exception $e) { 
         	$error =  $e->getMessage(); 
-        	print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        	print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         	return false;
         } 
 	    
@@ -316,7 +316,7 @@ function checkLogin ($username, $md5password, $rawpassword)
     try { $result = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     } 
 
@@ -356,7 +356,7 @@ function checkLogin ($username, $md5password, $rawpassword)
     		try { $result = $database->getArray( $query ); }
     		catch (Exception $e) { 
 	    		$error =  $e->getMessage(); 
-	    		print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+	    		print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
 	    		return false;
 	    	} 
     		
@@ -392,11 +392,11 @@ function checkLogin ($username, $md5password, $rawpassword)
 		    	else if ($authAD == 'Failed to connect to AD!') {
 					# print error
 					if($settings['domainAuth'] == "1") {
-					    print('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">×</button>'._('Failed to connect to AD server').'!</div>');	
+					    print('<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert">×</button>'._('Failed to connect to AD server').'!</div>');	
 					    updateLogTable ('Failed to connect to AD!', "", 2); 	
 					}
 					else {
-				    	print('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">×</button>'._('Failed to connect to LDAP server').'!</div>');	
+				    	print('<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert">×</button>'._('Failed to connect to LDAP server').'!</div>');	
 				    	updateLogTable ('Failed to connect to LDAP!', "", 2); 						
 				    }
 				}
@@ -404,11 +404,11 @@ function checkLogin ($username, $md5password, $rawpassword)
 				else if ($authAD == 'Failed to authenticate user via AD!') {
 					# print error
 					if($settings['domainAuth'] == "1") {
-					    print('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">×</button>'._('Failed to authenticate user against AD').'!</div>');	
+					    print('<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert">×</button>'._('Failed to authenticate user against AD').'!</div>');	
 					    updateLogTable ('User '. $username .' failed to authenticate against AD.', "", 2); 	
 					}
 					else {
-				    	print('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">×</button>'._('Failed to authenticate user against LDAP').'!</div>');	
+				    	print('<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert">×</button>'._('Failed to authenticate user against LDAP').'!</div>');	
 				    	updateLogTable ('User '. $username .' failed to authenticate against LDAP.', "", 2); 					
 				    }
 				}
@@ -416,11 +416,11 @@ function checkLogin ($username, $md5password, $rawpassword)
 				else {
 					# print error
 					if($settings['domainAuth'] == "1") {
-					    print('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">×</button>'._('Wrong username or password').'!</div>');
+					    print('<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert">×</button>'._('Wrong username or password').'!</div>');
 					    updateLogTable ('User '. $username .' failed to authenticate against AD.', "", 2); 
 					}
 					else {
-				    	print('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">×</button>'._('Wrong username or password').'!</div>');
+				    	print('<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert">×</button>'._('Wrong username or password').'!</div>');
 				    	updateLogTable ('User '. $username .' failed to authenticate against LDAP.', "", 2); 					
 				    }
 				}
@@ -429,11 +429,11 @@ function checkLogin ($username, $md5password, $rawpassword)
 			else {
 				# print error
 				if($settings['domainAuth'] == "1") {
-				    print('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">×</button>'._('Wrong username or password').'!</div>');
+				    print('<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert">×</button>'._('Wrong username or password').'!</div>');
 				    updateLogTable ('User '. $username .' failed to authenticate against AD.', "", 2); 
 				}
 				else {
-				    print('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">×</button>'._('Wrong username or password').'!</div>');
+				    print('<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert">×</button>'._('Wrong username or password').'!</div>');
 				    updateLogTable ('User '. $username .' failed to authenticate against LDAP.', "", 2); 					
 				}				
 			}
@@ -441,7 +441,7 @@ function checkLogin ($username, $md5password, $rawpassword)
     	/* only local set, print error! */
     	else {
     		# print error
-			print('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">×</button>'._('Failed to log in').'!</div>');	
+			print('<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert">×</button>'._('Failed to log in').'!</div>');	
 			# write log file
 	    	updateLogTable ('User '. $username .' failed to log in.', "", 2);
     	}   
@@ -467,7 +467,7 @@ function checkADLogin ($username, $password)
     try { $result = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     } 
 
@@ -498,7 +498,7 @@ function checkADLogin ($username, $password)
 	    	
 		}
 		catch (adLDAPException $e) {
-			die('<div class="alert alert-error">'. $e .'</div>');
+			die('<div class="alert alert-danger">'. $e .'</div>');
 		}
 
 		//user authentication
@@ -511,7 +511,7 @@ function checkADLogin ($username, $password)
 		else { 
 			updateLogTable ('User '. $username .' failed to authenticate against AD.', "", 2);
 			$err = $adldap->getLastError();
-			print "<div class='alert alert-error'>$err</div>";
+			print "<div class='alert alert-danger'>$err</div>";
 			return 'Failed to authenticate user via AD!'; 
 		}
     }
@@ -542,7 +542,7 @@ function checkAdmin ($die = true)
     try { $role = $database->getRow( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     } 
 
@@ -555,7 +555,7 @@ function checkAdmin ($die = true)
     }
     else {
     	//die
-    	if($die == true) { die('<div class="alert alert-error">'._('Administrator level privileges are required to access this site').'!</div>'); }
+    	if($die == true) { die('<div class="alert alert-danger">'._('Administrator level privileges are required to access this site').'!</div>'); }
     	//return false if called
     	else 			 { return false; }
     	//update log
@@ -584,7 +584,7 @@ function getAllTables()
     try { $tables = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     } 
   
@@ -613,7 +613,7 @@ function tableExists($table)
     try { $count = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     } 
   
@@ -638,7 +638,7 @@ function fieldExists($table, $fieldName)
     try { $count = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     } 
   
@@ -661,7 +661,7 @@ function installDatabase($root)
     
     /* Check connection */
     if ($databaseRoot->connect_error) {
-    	die('<div class="alert alert-error">Connect Error (' . $databaseRoot->connect_errno . '): '. $databaseRoot->connect_error). "</div>";
+    	die('<div class="alert alert-danger">Connect Error (' . $databaseRoot->connect_errno . '): '. $databaseRoot->connect_error). "</div>";
 	}
     
  	/* first create database */
@@ -673,7 +673,7 @@ function installDatabase($root)
     }
     catch (Exception $e) {
     	$error =  $e->getMessage();
-    	die('<div class="alert alert-error">'. $error .'</div>');
+    	die('<div class="alert alert-danger">'. $error .'</div>');
 	} 
     
     /* select database */
@@ -688,7 +688,7 @@ function installDatabase($root)
     }
     catch (Exception $e) {
     	$error =  $e->getMessage();
-    	die('<div class="alert alert-error">Cannot set permissions for user '. $db['user'] .': '. $error. '</div>');
+    	die('<div class="alert alert-danger">Cannot set permissions for user '. $db['user'] .': '. $error. '</div>');
 	}
     
     /* try importing SCHEMA file */
@@ -700,7 +700,7 @@ function installDatabase($root)
     }
     catch (Exception $e) {
     	$error =  $e->getMessage();
-    	die('<div class="alert alert-error">Cannot install sql SCHEMA file: '. $error. '</div>');
+    	die('<div class="alert alert-danger">Cannot install sql SCHEMA file: '. $error. '</div>');
 	}
 	    
     /* return true, if some errors occured script already died! */

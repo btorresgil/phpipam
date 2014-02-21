@@ -21,7 +21,7 @@ print "</p>";
 ?>
 
 <!-- Add new -->
-<button class="btn bnt-small wedit" data-action='add' style="margin-bottom:10px;"><i class="icon-plus"></i></button> <span class="muted"><?php print _("Create new widget"); ?></span>
+<button class="btn btn-sm btn-default wedit" data-action='add' style="margin-bottom:10px;"><i class="fa fa-plus"></i> <?php print _("Create new widget"); ?></button>
 
 <table class="table table-striped table-auto table-top" style="min-width:400px;">
 
@@ -51,7 +51,7 @@ print "</p>";
 			$valid = verifyWidget($w['wfile']);
 			
 			if($valid)  { $vPrint = "<span class='alert alert-success'>"._('Valid')."</span>"; }
-			else		{ $vPrint = "<span class='alert alert-error'>"._('Invalid')."</span>"; }
+			else		{ $vPrint = "<span class='alert alert-danger'>"._('Invalid')."</span>"; }
 		
 			print "<tr>";
 			print "	<td>"._($w['wtitle'])."</td>";
@@ -62,8 +62,8 @@ print "</p>";
 			print "	<td>$vPrint</td>";
 			print "	<td>";
 			print "	<div class='btn-group'>";
-			print "		<button class='btn btn-small wedit' data-action='edit' data-wid='$w[wid]'><i class='icon-pencil'></i></button>";
-			print "		<button class='btn btn-small wedit' data-action='delete' data-wid='$w[wid]'><i class='icon-remove'></i></button>";
+			print "		<button class='btn btn-xs btn-default wedit' data-action='edit' data-wid='$w[wid]'><i class='fa fa-pencil'></i></button>";
+			print "		<button class='btn btn-xs btn-default wedit' data-action='delete' data-wid='$w[wid]'><i class='fa fa-times'></i></button>";
 			print "	</div>";
 			print "	</td>";
 			print "</tr>";

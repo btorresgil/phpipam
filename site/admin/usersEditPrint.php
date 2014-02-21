@@ -34,7 +34,7 @@ if (!$action) {
     //fetch all requested userdetails
     $user = getUserDetailsById($id);
     
-    if(!empty($user['real_name'])) 	{ print _("$action user").' '. $user['real_name']; }
+    if(!empty($user['real_name'])) 	{ print _(ucwords($action)." user").' '. $user['real_name']; }
     else 							{ print _('Add new user'); }
 }
 else {
@@ -64,16 +64,16 @@ if(isset($settings['defaultLang']) && !is_null($settings['defaultLang']) && $act
 	<!-- real name -->
 	<tr>
 	    <td><?php print _('Real name'); ?></td> 
-	    <td><input type="text" name="real_name" value="<?php print $user['real_name']; ?>"></td>
-       	<td class="info"><?php print _('Enter users real name'); ?></td>
+	    <td><input type="text" class="form-control input-sm" name="real_name" value="<?php print $user['real_name']; ?>"></td>
+       	<td class="info2"><?php print _('Enter users real name'); ?></td>
     </tr>
 
     <!-- username -->
     <tr>
     	<td><?php print _('Username'); ?></td> 
-    	<td><input type="text" name="username" value="<?php print $user['username']; ?>" <?php if($action == "edit" || $action == "delete") print 'readonly'; ?>></td>   
-    	<td class="info">
-    		<a class='btn btn-small adsearchuser' rel='tooltip' title='Search AD for user details'><i class='icon-gray icon-search'></i></a>
+    	<td><input type="text" class="form-control input-sm" name="username" value="<?php print $user['username']; ?>" <?php if($action == "edit" || $action == "delete") print 'readonly'; ?>></td>   
+    	<td class="info2">
+    		<a class='btn btn-xs btn-default adsearchuser' rel='tooltip' title='Search AD for user details'><i class='fa fa-search'></i></a>
 			<?php print _('Enter username'); ?>
 		</td>
     </tr>
@@ -81,8 +81,8 @@ if(isset($settings['defaultLang']) && !is_null($settings['defaultLang']) && $act
     <!-- email -->
     <tr>
     	<td><?php print _('e-mail'); ?></td> 
-    	<td><input type="text" name="email" value="<?php print $user['email']; ?>"></td>
-    	<td class="info"><?php print _('Enter users email address'); ?></td>
+    	<td><input type="text" class="form-control input-sm input-w-250" name="email" value="<?php print $user['email']; ?>"></td>
+    	<td class="info2"><?php print _('Enter users email address'); ?></td>
     </tr>
 
 <!-- type -->
@@ -97,7 +97,7 @@ else {
 	print '<tr>'. "\n";
     print '	<td>'._('User Type').'</td> '. "\n";
     print '	<td>'. "\n";
-    print '	<select name="domainUser" id="domainUser">'. "\n";
+    print '	<select name="domainUser" class="form-control input-sm input-w-auto" id="domainUser">'. "\n";
     print '	<option value="0" '. "\n";
     		if ($user['domainUser'] == "0") print "selected"; 
     print '	>'._('Local user').'</option>'. "\n";
@@ -106,7 +106,7 @@ else {
     print '	>'._('Domain user').'</option> '. "\n";
     print '	</select>'. "\n";
     print '	</td> '. "\n";
-    print '	<td class="info">';
+    print '	<td class="info2">';
     print _('Set user type').''. "\n";
     print '	<ul>'. "\n";
     print '		<li>'._('Local authenticates here').'</li>'. "\n";
@@ -124,7 +124,7 @@ else {
 	<tr>
 		<td><?php print _('Language'); ?></td>
 		<td>
-			<select name="lang">
+			<select name="lang" class="form-control input-sm input-w-auto">
 				<?php
 				foreach($langs as $lang) {
 					if($lang['l_id']==$user['lang'])	{ print "<option value='$lang[l_id]' selected>$lang[l_name] ($lang[l_code])</option>"; }
@@ -133,35 +133,35 @@ else {
 				?>
 			</select>
 		</td>
-		<td class="info"><?php print _('Select language'); ?></td>
+		<td class="info2"><?php print _('Select language'); ?></td>
 	</tr>
 
     <!-- password -->
     <tr class="password">
     	<td><?php print _('Password'); ?></td> 
-    	<td><input type="password" class="userPass" name="password1" <?php print $disabled; ?>></td>
-    	<td class="info"><?php print _("User's password"); ?> (<a href="#" id="randomPass"><?php print _('click to generate random'); ?>!</a>)</td>
+    	<td><input type="password" class="userPass form-control input-sm" name="password1" <?php print $disabled; ?>></td>
+    	<td class="info2"><?php print _("User's password"); ?> (<a href="#" id="randomPass"><?php print _('click to generate random'); ?>!</a>)</td>
     </tr>
 
     <!-- password repeat -->
     <tr class="password">
     	<td><?php print _('Password'); ?></td> 
-    	<td><input type="password" class="userPass" name="password2" <?php print $disabled; ?>></td>   
-    	<td class="info"><?php print _('Re-type password'); ?></td>
+    	<td><input type="password" class="userPass form-control input-sm" name="password2" <?php print $disabled; ?>></td>   
+    	<td class="info2"><?php print _('Re-type password'); ?></td>
     </tr>
 
     <!-- send notification mail -->
     <tr>
     	<td><?php print _('Notification'); ?></td> 
     	<td><input type="checkbox" name="notifyUser" <?php if($action == "add") { print 'checked'; } else if($action == "delete") { print 'disabled="disabled"';} ?>></td>   
-    	<td class="info"><?php print _('Send notification email to user with account details'); ?></td>
+    	<td class="info2"><?php print _('Send notification email to user with account details'); ?></td>
     </tr>
 
     <!-- role -->
     <tr>
     	<td><?php print _('User role'); ?></td> 
     	<td>
-        <select name="role">
+        <select name="role" class="form-control input-sm input-w-auto">
             <option value="Administrator"   <?php if ($user['role'] == "Administrator") print "selected"; ?>><?php print _('Administrator'); ?></option>
             <option value="User" 			<?php if ($user['role'] == "User" || $_POST['action'] == "add") print "selected"; ?>><?php print _('Normal User'); ?></option>
         </select>
@@ -171,7 +171,7 @@ else {
         <input type="hidden" name="action" value="<?php print $action; ?>">
         
         </td> 
-        <td class="info"><?php print _('Select user role'); ?>
+        <td class="info2"><?php print _('Select user role'); ?>
 	    	<ul>
 		    	<li><?php print _('Administrator is almighty'); ?></li>
 		    	<li><?php print _('Users have access defined based on groups'); ?></li>
@@ -206,7 +206,7 @@ else {
 		
 		?>
 		</td>
-		<td class="info"><?php print _('Select to which groups the user belongs to'); ?></td>
+		<td class="info2"><?php print _('Select to which groups the user belongs to'); ?></td>
 	</tr>
 
 	<!-- Custom -->
@@ -224,7 +224,7 @@ else {
 			print "<tr>";
 			print "	<td>$field[name]</td>";
 			print "	<td colspan='2'>";
-			print "		<input type='text' class='input-xlarge' name='$field[nameNew]' value='".$user[$field['name']]."' $readonly>";
+			print "		<input type='text' class='form-control input-sm' name='$field[nameNew]' value='".$user[$field['name']]."' $readonly>";
 			print "	</td>";
 			print "</tr>";
 		}
@@ -244,8 +244,8 @@ else {
 <!-- footer -->
 <div class="pFooter">
 	<div class="btn-group">
-		<button class="btn btn-small hidePopups"><?php print _('Cancel'); ?></button>
-		<button class="btn btn-small <?php if($_POST['action']=="delete") { print "btn-danger"; } else { print "btn-success"; } ?>" id="editUserSubmit"><i class="icon-white <?php if($_POST['action']=="add") { print "icon-plus"; } else if ($_POST['action']=="delete") { print "icon-trash"; } else { print "icon-ok"; } ?>"></i> <?php print ucwords(_($_POST['action'])); ?></button>
+		<button class="btn btn-sm btn-default hidePopups"><?php print _('Cancel'); ?></button>
+		<button class="btn btn-sm btn-default <?php if($_POST['action']=="delete") { print "btn-danger"; } else { print "btn-success"; } ?>" id="editUserSubmit"><i class="fa <?php if($_POST['action']=="add") { print "fa-plus"; } else if ($_POST['action']=="delete") { print "fa-trash-o"; } else { print "fa-check"; } ?>"></i> <?php print ucwords(_($_POST['action'])); ?></button>
 	</div>
 
 	<!-- Result -->

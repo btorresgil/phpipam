@@ -4,7 +4,7 @@
 # miha petkovsek <miha.petkovsek@gmail.com>, 2013.
 #
 
-# "Project-Id-Version: 0.97.001\n"
+# "Project-Id-Version: 0.98.001\n"
 # "Report-Msgid-Bugs-To: Miha Petkovsek <miha.petkovsek@gmail.com>\n"
 # "POT-Creation-Date: 2013-04-02 14:33+0200\n"
 # "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
@@ -4596,4 +4596,28 @@ msgid "Set administrator name"
 msgstr ""
 
 msgid "Set administrator email"
+msgstr ""
+
+#: site/admin/verifyDatabase.php
+msgid "Cannot get fix for table"
+msgstr ""
+
+msgid "Fix table"
+msgstr ""
+
+msgid "Fix field"
+msgstr ""
+
+#: site/admin/verifyDatabaseFix.php
+msgid "Wrong parameters"
+msgstr ""
+
+msgid "Table fixed"
+msgstr ""
+
+msgid "Field fixed"
+msgstr ""
+
+#: site/sections.php
+msgid "Database errors detected"
 msgstr ""

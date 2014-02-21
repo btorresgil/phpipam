@@ -155,7 +155,7 @@ function verifySwitchByName ($hostname)
     try { $role = $database->getRow( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     } 
 
@@ -181,7 +181,7 @@ function verifySwitchById ($id)
     try { $role = $database->getRow( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     } 
 
@@ -207,7 +207,7 @@ function getSwitchById ($switchId)
     try { $switch = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     } 
 
@@ -245,7 +245,7 @@ function getAllVlansInSection ($sectionId)
     try { $vlans = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     } 	
     
@@ -289,7 +289,7 @@ function getAllSubnetsInSectionVlan ($vlanId, $sectionId, $orderType = "subnet",
     try { $subnets = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     } 	
     
@@ -313,7 +313,7 @@ function isSubnetIdVlan ($subnetId, $vlanId)
     try { $subnets = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     } 	
     
@@ -354,7 +354,7 @@ function getVLANbyNumber ($number)
     try { $vlan = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     } 
    	
@@ -378,7 +378,7 @@ function getVLANbyId ($id)
     try { $vlan = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     } 
    	
@@ -413,7 +413,7 @@ function getAllVRFs ()
     try { $vrfs = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     } 
    	
@@ -437,7 +437,7 @@ function getVRFDetailsById ($vrfId)
     try { $vrf = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     } 
    	
@@ -461,7 +461,7 @@ function getAllVrfsInSection ($sectionId)
     try { $vrfs = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     } 	
     
@@ -505,7 +505,7 @@ function getAllSubnetsInSectionVRF ($vrfId, $sectionId, $orderType = "subnet", $
     try { $vrfs = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     } 	
     
@@ -529,7 +529,7 @@ function isSubnetIdVrf ($subnetId, $vrfId)
     try { $subnets = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     } 	
     
@@ -566,7 +566,7 @@ function fetchSections ($all = true)
     try { $sections = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     } 
     $database->close();
@@ -590,7 +590,7 @@ function getNumberOfSections ()
     try { $sections = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     } 
     $database->close();
@@ -614,7 +614,7 @@ function getSectionDetailsById ($id)
     try { $subnets = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     } 
     $database->close();
@@ -638,7 +638,7 @@ function getSectionDetailsByName ($name)
     try { $subnets = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     } 
     $database->close();
@@ -662,7 +662,7 @@ function getAllSubSections($sectionId)
     try { $sections = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     } 
     $database->close();
@@ -697,7 +697,7 @@ function fetchAllSubnets ()
     try { $sections = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     }  
     $database->close();
@@ -721,7 +721,7 @@ function getNumberOfSubnets ()
     try { $subnets = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     } 
     $database->close();
@@ -766,7 +766,7 @@ function fetchSubnets ($sectionId, $orderType = "subnet", $orderBy = "asc" )
     try { $subnets = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     } 
     $database->close();
@@ -790,7 +790,7 @@ function fetchMasterSubnets ($sectionId)
     try { $subnets = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     } 
     $database->close();
@@ -814,7 +814,7 @@ function getAllSlaveSubnetsBySubnetId ($subnetId)
     try { $subnets = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     } 
     $database->close();
@@ -838,7 +838,7 @@ function getIpAddressesBySubnetId ($subnetId)
     try { $ipaddresses = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     } 
     $database->close();
@@ -862,7 +862,7 @@ function getIpAddressesBySubnetIdSort ($subnetId, $fieldName, $direction)
     try { $ipaddresses = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     } 
     $database->close();
@@ -898,7 +898,7 @@ function getIpAddressesBySubnetIdslavesSort ($subnetId, $fieldName = "subnetId",
     try { $ipaddresses = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     } 
     $database->close();
@@ -922,7 +922,7 @@ function getIpAddressesForVisual ($subnetId)
     try { $ipaddresses = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     } 
     $database->close();
@@ -1015,7 +1015,7 @@ function countIpAddressesBySubnetId ($subnetId)
     try { $count = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     } 
     $database->close();
@@ -1044,7 +1044,7 @@ function getSubnetDetails ($subnetId)
     try { $SubnetDetails = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     } 
     $database->close();
@@ -1068,7 +1068,7 @@ function getSubnetDetailsById ($id)
     try { $SubnetDetails = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     } 
     $database->close();
@@ -1179,7 +1179,7 @@ function verifySubnetOverlapping ($sectionId, $subnetNew, $vrfId = 0)
     try { $allSubnets = $database->getArray( $querySubnets ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     }   
 
@@ -1250,7 +1250,7 @@ function verifyNestedSubnetOverlapping ($sectionId, $subnetNew, $vrfId, $masterS
     try { $allSubnets = $database->getArray( $querySubnets ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     }      
 
@@ -1333,7 +1333,7 @@ function subnetContainsSlaves($subnetId)
     try { $slaveSubnets = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     }    
 	
@@ -1561,7 +1561,7 @@ function printDropdownMenuBySection($sectionId, $subnetMasterId = "0")
 		
 		
 		# structure
-		$html[] = "<select name='masterSubnetId'>";
+		$html[] = "<select name='masterSubnetId' class='form-control input-sm input-w-auto input-max-200'>";
 				
 		# folders
 		if(sizeof($folders)>0) {		
@@ -1657,7 +1657,7 @@ function subnetGetVLANdetailsById($vlanId)
     try { $vlan = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     }   
   
@@ -1694,7 +1694,7 @@ function getAllVlans($tools = false)
     try { $vlan = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     }  
   
@@ -1718,7 +1718,7 @@ function getSubnetsByVLANid ($id)
     try { $SubnetDetails = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     }  
     $database->close();
@@ -1771,7 +1771,7 @@ function getAllSubnetsInVRF($vrfId)
     try { $vrf = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     }  
    	
@@ -1831,7 +1831,7 @@ function getSubnetStatsDashboard($type, $limit = "10", $perc = false)
     try { $stats = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     } 
    	
@@ -1886,7 +1886,7 @@ function fetchFolders ($sectionId, $orderType = "subnet", $orderBy = "asc" )
     try { $subnets = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     } 
     $database->close();
@@ -1922,7 +1922,7 @@ function printDropdownMenuBySectionFolders($sectionId, $subnetMasterId = "0")
 		$allParents = getAllParents ($_REQUEST['subnetId']);
 		
 		# structure
-		$html[] = "<select name='masterSubnetId'>";
+		$html[] = "<select name='masterSubnetId' class='form-control input-w-auto input-sm'>";
 		# root
 		$html[] = "<option disabled>"._("Select Master folder")."</option>";
 		$html[] = "<option value='0'>"._("Root folder")."</option>";
@@ -1993,7 +1993,7 @@ function fetchAllIPAddresses ($hostnameSort = false)
     try { $ipaddresses = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     } 
 
@@ -2020,7 +2020,7 @@ function getNuberOfIPv4Addresses ()
     try { $ipaddresses = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     } 
     $database->close();
@@ -2045,7 +2045,7 @@ function getNuberOfIPv6Addresses ()
     try { $ipaddresses = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     } 
     $database->close();
@@ -2069,7 +2069,7 @@ function fetchAllIPAddressesByName ($hostname)
     try { $ipaddresses = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     } 
 
@@ -2095,7 +2095,7 @@ function getSectionIdFromSectionName ($sectionName)
     try { $SubnetDetails = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     }     
     $database->close();
@@ -2123,7 +2123,7 @@ function checkDuplicate ($ip, $subnetId)
     try { $unique = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     } 
     $database->close();
@@ -2157,7 +2157,7 @@ function modifyIpAddress ($ip)
     try { $id = $database->executeQuery( $query, true ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         //save changelog
 		writeChangelog('ip_addr', $ip['action'], 'error', $old, $new);
         return false;
@@ -2279,7 +2279,7 @@ function moveIPAddress ($id, $subnetId)
 	# ok
 	if(!isset($error)) {
         updateLogTable ('IP address move ok', "id: $id\nsubnetId: $subnetId", 0);			# write success log
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return true;		
 	}
 	# problem
@@ -2312,7 +2312,7 @@ function insertScanResults($res, $subnetId)
     try { $database->executeMultipleQuerries($query); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print "<div class='alert alert-error'>$error</div>";
+        print "<div class='alert alert-danger'>$error</div>";
         return false;
     }
     # default ok
@@ -2334,7 +2334,7 @@ function getIpAddrDetailsById ($id)
     try { $details = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     } 
     
@@ -2652,7 +2652,7 @@ function getFirstAvailableIPAddress ($subnetId)
     try { $ipAddresses = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     } 
 
@@ -2761,7 +2761,7 @@ function isHostUnique($host)
     try { $res = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     } 
     
@@ -2831,7 +2831,7 @@ function getIPaddressesBySwitchName ( $name )
     try { $ip = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     }   
     
@@ -3011,7 +3011,7 @@ function updateLastSeen($ip_id)
     try { $res = $database->executeQuery( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     } 	
     
@@ -3037,7 +3037,7 @@ function getAllIPsforScan($cli = false)
         $error =  $e->getMessage();
         	//output error
         	if($cli) 	{ print ("Error:$error"); }
-			else		{ print ("<div class='alert alert-error'>"._('Error').": $error</div>"); } 
+			else		{ print ("<div class='alert alert-danger'>"._('Error').": $error</div>"); } 
         return false;
     } 
     //return
@@ -3144,7 +3144,7 @@ function getChangelogEntries($ctype, $coid, $long = false)
     try { $res = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     } 
     
@@ -3197,7 +3197,7 @@ function getAllChangelogs($filter = false, $expr, $limit = 100)
     try { $res = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-        print ("<div class='alert alert-error'>"._('Error').": $error</div>");
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     } 
     

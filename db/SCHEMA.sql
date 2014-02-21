@@ -160,6 +160,7 @@ CREATE TABLE `settings` (
   `enableVRF` tinyint(1) DEFAULT '1',
   `enableDNSresolving` tinyint(1) DEFAULT NULL,
   `version` varchar(5) DEFAULT NULL,
+  `dbverified` BINARY(1)  NOT NULL  DEFAULT '0',
   `donate` tinyint(1) DEFAULT '0',
   `IPfilter` varchar(128) DEFAULT NULL,
   `printLimit` int(4) unsigned DEFAULT '25',
@@ -483,7 +484,7 @@ CREATE TABLE `changelog` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
-# Dump of table vrf
+# Dump of table widgets
 # ------------------------------------------------------------
 
 DROP TABLE IF EXISTS `widgets`;
@@ -517,4 +518,4 @@ VALUES
 
 # update version
 # ------------------------------------------------------------
-UPDATE `settings` set `version` = '0.96';
+UPDATE `settings` set `version` = '0.98';

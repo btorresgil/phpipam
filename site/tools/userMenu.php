@@ -30,18 +30,18 @@ print "<hr><br>";
 <tr>
     <td><?php print _('Real name'); ?></td> 
     <td>
-        <input type="text" name="real_name" value="<?php print $ipamusername['real_name']; ?>">
+        <input type="text" class="form-control input-sm" name="real_name" value="<?php print $ipamusername['real_name']; ?>">
     </td>
-    <td class="info"><?php print _('Display name'); ?></td>
+    <td class="info2"><?php print _('Display name'); ?></td>
 </tr>
 
 <!-- username -->
 <tr>
     <td><?php print _('E-mail'); ?></td> 
     <td>
-        <input type="text" name="email" value="<?php print $ipamusername['email']; ?>">
+        <input type="text" class="form-control input-sm"  name="email" value="<?php print $ipamusername['email']; ?>">
     </td>
-    <td class="info"><?php print _('Email address'); ?></td>
+    <td class="info2"><?php print _('Email address'); ?></td>
 </tr>
 
 <?php
@@ -52,18 +52,18 @@ if($ipamusername['domainUser'] == "0") {
 <tr>
     <td><?php print _('Password'); ?></td> 
     <td>
-        <input type="password" class="userPass" name="password1">
+        <input type="password" class="userPass form-control input-sm" name="password1">
     </td style="white-space:nowrap">   
-    <td class="info"><?php print _('Password'); ?> <button id="randomPassSelf" class="btn btn-small"><i class="icon-gray icon-random"></i> <?php print _('Random'); ?></button><span id="userRandomPass" style="padding-left:15px;"></span></td>
+    <td class="info2"><?php print _('Password'); ?> <button id="randomPassSelf" class="btn btn-xs btn-default"><i class="fa fa-gray fa-random"></i></button><span id="userRandomPass" style="padding-left:15px;"></span></td>
 </tr>
 
 <!-- password repeat -->
 <tr>
     <td><?php print _('Password'); ?> (<?php print _('repeat'); ?>)</td> 
     <td>
-        <input type="password" class="userPass" name="password2">
+        <input type="password" class="userPass form-control input-sm" name="password2">
     </td>   
-    <td class="info"><?php print _('Re-type password'); ?></td>
+    <td class="info2"><?php print _('Re-type password'); ?></td>
 </tr>
 <?php } ?>
 
@@ -71,7 +71,7 @@ if($ipamusername['domainUser'] == "0") {
 <tr>
 	<td><?php print _('Language'); ?></td>
 	<td>
-		<select name="lang">
+		<select name="lang" class="form-control input-sm">
 			<?php
 			foreach($langs as $lang) {
 				if($lang['l_id']==$ipamusername['lang'])	{ print "<option value='$lang[l_id]' selected>$lang[l_name] ($lang[l_code])</option>"; }
@@ -80,7 +80,7 @@ if($ipamusername['domainUser'] == "0") {
 			?>
 		</select>
 	</td>
-	<td class="info"><?php print _('Select language'); ?></td>
+	<td class="info2"><?php print _('Select language'); ?></td>
 </tr>
 
 <!-- Submit and hidden values -->
@@ -88,7 +88,7 @@ if($ipamusername['domainUser'] == "0") {
     <td></td> 
     <td class="submit">
         <input type="hidden" name="userId"     value="<?php print $ipamusername['id']; ?>">
-        <input type="submit" class="btn btn-small" value="<?php print _('Save changes'); ?>">
+        <input type="submit" class="btn btn-sm btn-default pull-right" value="<?php print _('Save changes'); ?>">
     </td>   
     <td></td>
 </tr>
@@ -104,7 +104,7 @@ if($ipamusername['domainUser'] == "0") {
 <!-- test -->
 <h4 style='margin-top:30px;'><?php print _('Widgets'); ?></h4>
 <hr>
-<?php print _("Select widgets to be displayed on dashboard"); ?>
+<span class="info2"><?php print _("Select widgets to be displayed on dashboard"); ?></span>
 
 
 <script type="text/javascript" src="js/jquery-ui-1.10.3.custom.min.js"></script>
@@ -172,7 +172,7 @@ foreach($widgets as $k=>$w) {
 print "</ul>";
 ?>
 
-<button class='btn btn-small' id="submitWidgets"><?php print _('Save order'); ?></button>
+<button class='btn btn-sm btn-default' id="submitWidgets"><i class="fa fa-check"></i> <?php print _('Save order'); ?></button>
 
 <!-- result -->
 <div class="userModSelfResultW" style="margin-bottom:90px;display:none"></div>

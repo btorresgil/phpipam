@@ -1111,3 +1111,31 @@ msgstr ""
 
 msgid "Invalid port"
 msgstr ""
+
+
+
+### 0.98.001 ###
+
+#: site/admin/verifyDatabase.php
+msgid "Cannot get fix for table"
+msgstr ""
+
+msgid "Fix table"
+msgstr ""
+
+msgid "Fix field"
+msgstr ""
+
+#: site/admin/verifyDatabaseFix.php
+msgid "Wrong parameters"
+msgstr ""
+
+msgid "Table fixed"
+magstr ""
+
+msgid "Field fixed"
+magstr ""
+
+#: site/sections.php
+msgid "Database errors detected"
+msgstr ""

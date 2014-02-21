@@ -16,7 +16,7 @@ $allActiveRequests = getAllActiveIPrequests();
 <hr><br>
 
 
-<table id="requestedIPaddresses" class="table table-striped table-condensed table-hover table-top">
+<table id="requestedIPaddresses" class="table table-striped table-condensed table-hover table-top table-auto">
 
 <!-- headers -->
 <tr>
@@ -36,7 +36,7 @@ $allActiveRequests = getAllActiveIPrequests();
 	$subnet = getSubnetDetailsById ($request['subnetId']);
 	
 	print '<tr>'. "\n";
-	print "	<td><button class='btn btn-small' data-requestid='$request[id]'><i class='icon-gray icon-edit'></i> "._('Edit')."</button></td>";
+	print "	<td><button class='btn btn-xs btn-default' data-requestid='$request[id]'><i class='fa fa-pencil'></i> "._('Process')."</button></td>";
 	print '	<td>'. Transform2long($subnet['subnet']) .'/'. $subnet['mask'] .' ('. $subnet['description'] .')</td>'. "\n";
 	print '	<td>'. $request['dns_name'] .'</td>'. "\n";
 	print '	<td>'. $request['description'] .'</td>'. "\n";

@@ -38,7 +38,7 @@ if(sizeof($temp) > 0) {
 
 /* Hostname must be present! */
 if($device['hostname'] == "") {
-	die('<div class="alert alert-error">'._('Hostname is mandatory').'!</div>');
+	die('<div class="alert alert alert-danger">'._('Hostname is mandatory').'!</div>');
 }
 
 # we need old hostname
@@ -67,7 +67,7 @@ if(sizeof($myFields) > 0) {
 
 /* update details */
 if(!updateSwitchDetails($device)) {
-	print('<div class="alert alert-error">'._("Failed to $device[action] device").'!</div>');
+	print('<div class="alert alert alert-danger">'._("Failed to $device[action] device").'!</div>');
 }
 else {
 	print('<div class="alert alert-success">'._("Device $device[action] successfull").'!</div>');

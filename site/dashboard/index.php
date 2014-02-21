@@ -21,10 +21,11 @@ $(function($) {
 <script>
 $(document).ready(function() {
 	// initialize sortable
-	$(document).on("click",'td.w-lock', function() {
+	$(document).on("click",'.w-lock', function() {
 		//remove class
 		$(this).removeClass('w-lock').addClass('w-unlock');
-		$(this).find('i').removeClass('icon-move').addClass('icon-ok');	//change icon
+		$(this).find('i').removeClass('fa fa-dashboard').addClass('fa fa-check');	//change icon
+		$(this).find('a').addClass('btn-success');	//add success class
 		$(this).find('a').attr('data-original-title','Click to save widgets order');
 		$('#dashboard .inner i').fadeIn('fast');
 		$('#dashboard .add-widgets').fadeIn('fast');
@@ -44,10 +45,11 @@ $(document).ready(function() {
 		return false;
 	});
 	//lock sortable back
-	$(document).on("click",'td.w-unlock', function() {
+	$(document).on("click",'.w-unlock', function() {
 		//remove class
 		$(this).removeClass('w-unlock').addClass('w-lock');
-		$(this).find('i').removeClass('icon-move').addClass('icon-move');	//change icon
+		$(this).find('i').removeClass('fa fa-check').addClass('fa fa-dashboard');	//change icon
+		$(this).find('a').removeClass('btn-success');	//remove success class
 		$(this).find('a').attr('data-original-title','Clik to reorder widgets');	
 		$('#dashboard .inner .icon-action').fadeOut('fast');
 		$('#dashboard .add-widgets').fadeOut('fast');
@@ -83,15 +85,6 @@ $(document).ready(function() {
 </div>
 
 <?php
-/* print number of requests if admin and if they exist */
-$requestNum = countRequestedIPaddresses();
-if( ($requestNum != 0) && (checkAdmin(false,false))) {
-	print '<div class="alert alert-info">'._('There are').' <b><a href="administration/manageRequests/" id="adminRequestNotif">'. $requestNum .' '._('requests').'</a></b> '._('for IP address waiting for your approval').'!</div>';
-}
-?>
-
-
-<?php
 
 # get all widgets
 if($user['role']=="Administrator") 	{ $widgets = getAllWidgets(true,  false); }
@@ -125,14 +118,15 @@ foreach($uwidgets as $uk=>$uv) {
 
 
 # print
-print "<div class='add-widgets' style='display:none'>";
-print "	<a href='' class='btn btn-small btn-success add-new-widget'><i class='icon-plus icon-white'></i> Add new widget</a>";
+print "<div class='add-widgets' style='display:none;padding-left:20px;'>";
+print "	<a href='' class='btn btn-sm btn-default btn-success add-new-widget'><i class='fa fa-plus'></i> Add new widget</a>";
 print "</div>";
 
 if(sizeof($uwidgets)>1) {
+
+	print '<div class="row-fluid">';
+
 	foreach($uwidgetschunk as $w) {
-	
-		print '<div class="row-fluid">';
 	
 		# print itams in a row
 		foreach($w as $c) {
@@ -143,13 +137,13 @@ if(sizeof($uwidgets)>1) {
 				//reset size if not set
 				if(strlen($wdet['wsize'])==0)	{ $wdet['wsize'] = 6; }
 			
-				print "	<div class='span$wdet[wsize] widget-dash' id='w-$wdet[wfile]'>";
-				print "	<div class='inner'><i class='icon-remove remove-widget icon-action icon-gray pull-right'></i>";
+				print "	<div class='col-xs-12 col-sm-12 col-md-12 col-lg-$wdet[wsize] widget-dash' id='w-$wdet[wfile]'>";
+				print "	<div class='inner'><i class='fa fa-times remove-widget icon-action fa-gray pull-right'></i>";
 				// href?
-				if($wdet['whref']=="yes")	{ print "<a href='widgets/$wdet[wfile]/'> <h4>"._($wdet['wtitle'])."</h4></a>"; }
+				if($wdet['whref']=="yes")	{ print "<a href='widgets/$wdet[wfile]/'> <h4>"._($wdet['wtitle'])."<i class='fa fa-external-link fa-gray pull-right'></i></h4></a>"; }
 				else						{ print "<h4>"._($wdet['wtitle'])."</h4>"; }
 				print "		<div class='hContent'>";
-				print "			<div style='text-align:center;padding-top:50px;'><strong>"._('Loading statistics')."</strong><br><img src='css/images/loading_dash.gif'></div>";
+				print "			<div style='text-align:center;padding-top:50px;'><strong>"._('Loading statistics')."</strong><br><i class='fa fa-spinner fa-spin'></i></div>";
 				print "		</div>";
 				print "	</div>";
 				print "	</div>";
@@ -157,7 +151,7 @@ if(sizeof($uwidgets)>1) {
 			}
 			# invalid widget
 			else {
-				print "	<div class='span6' id='w-$c'>";
+				print "	<div class='col-xs-12 col-sm-12 col-md-12 col-lg-6' id='w-$c'>";
 				print "	<div class='inner'>";
 				print "		<blockquote style='margin-top:20px;margin-left:20px;'><p>Invalid widget $c</p></blockquote>";
 				print "	</div>";
@@ -165,9 +159,9 @@ if(sizeof($uwidgets)>1) {
 			}
 		
 		}	
-		
-		print "</div>";
 	}
+	
+	print "</div>";
 }
 # empty
 else {

@@ -27,7 +27,7 @@ if(sizeof($clogs)==0) {
 else {
 	# if more that configured print it!
 	if(sizeof($clogs)==$_REQUEST['climit']) {
-		print "<div class='alert alert-warnign alert-absolute'>"._("Output has been limited to last $_REQUEST[climit] lines")."!</div>";
+		print "<div class='alert alert-warning alert-absolute'>"._("Output has been limited to last $_REQUEST[climit] lines")."!</div>";
 	}
 	
 	# printout

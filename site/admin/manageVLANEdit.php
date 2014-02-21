@@ -41,7 +41,7 @@ else 							{ $formId = "vlanManagementEdit"; }
 	<tr>
 		<td><?php print _('Number'); ?></td>
 		<td>
-			<input type="text" class="number" name="number" placeholder="<?php print _('VLAN number'); ?>" value="<?php if(isset($vlan['number'])) print $vlan['number']; ?>" <?php print $readonly; ?>>
+			<input type="text" class="number form-control input-sm" name="number" placeholder="<?php print _('VLAN number'); ?>" value="<?php if(isset($vlan['number'])) print $vlan['number']; ?>" <?php print $readonly; ?>>
 		</td>
 	</tr>
 
@@ -49,7 +49,7 @@ else 							{ $formId = "vlanManagementEdit"; }
 	<tr>
 		<td><?php print _('Name'); ?></td>
 		<td>
-			<input type="text" class="name" name="name" placeholder="<?php print _('VLAN name'); ?>" value="<?php if(isset($vlan['name'])) print $vlan['name']; ?>" <?php print $readonly; ?>>
+			<input type="text" class="name form-control input-sm" name="name" placeholder="<?php print _('VLAN name'); ?>" value="<?php if(isset($vlan['name'])) print $vlan['name']; ?>" <?php print $readonly; ?>>
 		</td>
 	</tr>
 
@@ -57,7 +57,7 @@ else 							{ $formId = "vlanManagementEdit"; }
 	<tr>
 		<td><?php print _('Description'); ?></td>
 		<td>
-			<input type="text" class="description" name="description" placeholder="<?php print _('Description'); ?>" value="<?php if(isset($vlan['description'])) print $vlan['description']; ?>" <?php print $readonly; ?>>
+			<input type="text" class="description form-control input-sm" name="description" placeholder="<?php print _('Description'); ?>" value="<?php if(isset($vlan['description'])) print $vlan['description']; ?>" <?php print $readonly; ?>>
 			<?php
 			if( ($_POST['action'] == "edit") || ($_POST['action'] == "delete") ) { print '<input type="hidden" name="vlanId" value="'. $_POST['vlanId'] .'">'. "\n"; }
 			?>
@@ -81,7 +81,7 @@ else 							{ $formId = "vlanManagementEdit"; }
 			print "<tr>";
 			print "	<td>$field[name]</td>";
 			print "	<td>";
-			print "		<input type='text' name='$field[nameNew]' value='".$vlan[$field['name']]."' $readonly>";
+			print "		<input type='text' class='form-control input-sm' name='$field[nameNew]' value='".$vlan[$field['name']]."' $readonly>";
 			print "	</td>";
 			print "</tr>";
 		}
@@ -94,7 +94,7 @@ else 							{ $formId = "vlanManagementEdit"; }
 
 	<?php
 	//print delete warning
-	if($_POST['action'] == "delete")	{ print "<div class='alert alert-warn'><strong>"._('Warning').':</strong> '._('removing VLAN will also remove VLAN reference from belonging subnets')."!</div>"; }
+	if($_POST['action'] == "delete")	{ print "<div class='alert alert-warning'><strong>"._('Warning').':</strong> '._('removing VLAN will also remove VLAN reference from belonging subnets')."!</div>"; }
 	?>
 </div>
 
@@ -102,8 +102,8 @@ else 							{ $formId = "vlanManagementEdit"; }
 <!-- footer -->
 <div class="pFooter">
 	<div class="btn-group">
-		<button class="btn btn-small hidePopups"><?php print _('Cancel'); ?></button>
-		<button class="btn btn-small <?php if($_POST['action']=="delete") { print "btn-danger"; } else { print "btn-success"; } ?> vlanManagementEditFromSubnetButton" id="editVLANsubmit"><i class="icon-white <?php if($_POST['action']=="add") { print "icon-plus"; } else if ($_POST['action']=="delete") { print "icon-trash"; } else { print "icon-ok"; } ?>"></i> <?php print ucwords(_($_POST['action'])); ?></button>
+		<button class="btn btn-sm btn-default hidePopups"><?php print _('Cancel'); ?></button>
+		<button class="btn btn-sm btn-default <?php if($_POST['action']=="delete") { print "btn-danger"; } else { print "btn-success"; } ?> vlanManagementEditFromSubnetButton" id="editVLANsubmit"><i class="fa <?php if($_POST['action']=="add") { print "fa-plus"; } else if ($_POST['action']=="delete") { print "fa-trash-o"; } else { print "fa-check"; } ?>"></i> <?php print ucwords(_($_POST['action'])); ?></button>
 	</div>
 
 	<!-- result -->

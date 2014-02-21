@@ -12,7 +12,7 @@ isUserAuthenticated(true);
 
 /* verify that user has write permissions for subnet */
 $subnetPerm = checkSubnetPermission ($_REQUEST['subnetId']);
-if($subnetPerm < 2) 	{ die('<div class="alert alert-error">'._('You do not have permissions to modify hosts in this subnet').'!</div>'); }
+if($subnetPerm < 2) 	{ die('<div class="alert alert-danger">'._('You do not have permissions to modify hosts in this subnet').'!</div>'); }
 
 /* verify post */
 CheckReferrer();
@@ -59,7 +59,7 @@ if($ip) {
 	
 	# get php exec path
 	if(!$phpPath = getPHPExecutableFromPath()) {
-		die('<div class="alert alert-error">Cannot access php executable!</div>');
+		die('<div class="alert alert-danger">Cannot access php executable!</div>');
 	}
 	# set script
 	$script = dirname(__FILE__) . '/../../../functions/scan/scanIPAddressesScript.php';
@@ -72,7 +72,7 @@ if($ip) {
 		
 	# die of error
 	if($retval != 0) {
-		die("<div class='alert alert-error'>Error executing scan! Error code - $retval</div>");
+		die("<div class='alert alert-danger'>Error executing scan! Error code - $retval</div>");
 	}
 			
 	# format result - alive
@@ -127,7 +127,7 @@ if(!isset($res)) {
 }
 else {
 	//table
-	print "<table class='table table-condensed'>";
+	print "<table class='table table-condensed table-top'>";
 	
 	//headers
 	print "<tr>";

@@ -27,11 +27,11 @@ print ' <th>'._('Name').'</th>' . "\n";
 print ' <th>'._('Description').'</th>' . "\n";
 print ' <th>'._('Belonging subnets').'</th>' . "\n";
 print ' <th>'._('Section').'</th>' . "\n";
-print ' <th>'._('Used').'</th>' . "\n";
-print ' <th>'._('free').' [%]</th>' . "\n";
+print ' <th class="hidden-xs hidden-sm">'._('Used').'</th>' . "\n";
+print ' <th class="hidden-xs hidden-sm">'._('free').' [%]</th>' . "\n";
 if(sizeof($custom) > 0) {
 	foreach($custom as $field) {
-		print "	<th>$field[name]</th>";
+		print "	<th class='hidden-xs hidden-sm hidden-md'>$field[name]</th>";
 	}
 }
 print '</tr>' . "\n";
@@ -90,26 +90,26 @@ foreach ($vlans as $vlan) {
         		$ipCount = countIpAddressesBySubnetId ($vlan['subnetId']);
         		$calculate = calculateSubnetDetails ( gmp_strval($ipCount), $vlan['mask'], $vlan['subnet'] );
 
-        		print ' <td class="used">'. reformatNumber($calculate['used']) .'/'. reformatNumber($calculate['maxhosts']) .'</td>'. "\n";
-        		print ' <td class="free">'. reformatNumber($calculate['freehosts_percent']) .' %</td>';
+        		print ' <td class="used hidden-xs hidden-sm">'. reformatNumber($calculate['used']) .'/'. reformatNumber($calculate['maxhosts']) .'</td>'. "\n";
+        		print ' <td class="free hidden-xs hidden-sm">'. reformatNumber($calculate['freehosts_percent']) .' %</td>';
         	}
         	else {
-        		print '	<td class="used">---</td>'. "\n";
-        		print '	<td class="free">---</td>'. "\n";
+        		print '	<td class="used hidden-xs hidden-sm">---</td>'. "\n";
+        		print '	<td class="free hidden-xs hidden-sm">---</td>'. "\n";
         	}
         }
         else {
         	print '<td>---</td>'. "\n";
-        	print '<td class="free">---</td>'. "\n";
-        	print '<td class="used">---</td>'. "\n";
-        	print '<td class="free">---</td>';
+        	print '<td>---</td>'. "\n";
+        	print '<td class="used hidden-xs hidden-sm">---</td>'. "\n";
+        	print '<td class="free hidden-xs hidden-sm">---</td>';
         }
     
         # custom
         if(sizeof($custom) > 0) {
 	   		foreach($custom as $field) {
-	    		if($change == "change") { print "	<td>".$vlan[$field['name']]."</td>"; }
-	    		else					{ print "	<td></td>";}
+	    		if($change == "change") { print "	<td class='hidden-xs hidden-sm hidden-md'>".$vlan[$field['name']]."</td>"; }
+	    		else					{ print "	<td class='hidden-xs hidden-sm hidden-md'></td>";}
 	    	}
 	    }    
 	    print '</tr>' . "\n";

@@ -17,7 +17,7 @@ $custom = getCustomFields('switches');
 
 <h4><?php print _('Device management'); ?></h4>
 <hr>
-<button class='btn btn-small editSwitch' data-action='add'   data-switchid='' style='margin-bottom:10px;'><i class='icon-gray icon-plus'></i> <?php print _('Add device'); ?></button>
+<button class='btn btn-sm btn-default editSwitch' data-action='add'   data-switchid='' style='margin-bottom:10px;'><i class='fa fa-plus'></i> <?php print _('Add device'); ?></button>
 
 <?php
 /* first check if they exist! */
@@ -86,8 +86,8 @@ else {
 	
 	print '	<td class="actions">'. "\n";
 	print "	<div class='btn-group'>";
-	print "		<button class='btn btn-small editSwitch' data-action='edit'   data-switchid='$switchDetails[id]'><i class='icon-gray icon-pencil'></i></button>";
-	print "		<button class='btn btn-small editSwitch' data-action='delete' data-switchid='$switchDetails[id]'><i class='icon-gray icon-remove'></i></button>";
+	print "		<button class='btn btn-xs btn-default editSwitch' data-action='edit'   data-switchid='$switchDetails[id]'><i class='fa fa-pencil'></i></button>";
+	print "		<button class='btn btn-xs btn-default editSwitch' data-action='delete' data-switchid='$switchDetails[id]'><i class='fa fa-times'></i></button>";
 	print "	</div>";
 	print '	</td>'. "\n";
 	

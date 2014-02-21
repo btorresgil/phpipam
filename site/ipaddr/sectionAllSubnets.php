@@ -58,13 +58,13 @@ if($permission != "0") {
 		print "	<th>"._('Description')."</th>";
 		print "	<th>"._('VLAN')."</th>";
 		if($settings['enableVRF'] == 1) {
-		print "	<th>"._('VRF')."</th>";
+		print "	<th class='hidden-xs hidden-sm'>"._('VRF')."</th>";
 		}
-		print "	<th>"._('Requests')."</th>";
-		print "	<th>"._('Hosts check')."</th>";
+		print "	<th class='hidden-xs hidden-sm'>"._('Requests')."</th>";
+		print "	<th class='hidden-xs hidden-sm'>"._('Hosts check')."</th>";
 		if(sizeof($custom) > 0) {
 			foreach($custom as $field) {
-				print "	<th>$field[name]</th>";
+				print "	<th class='hidden-xs hidden-sm'>$field[name]</th>";
 			}
 		}
 		print "	<th class='actions' style='width:140px;white-space:nowrap;'></th>";
@@ -72,7 +72,7 @@ if($permission != "0") {
 	
 		# no subnets
 		if(sizeof($subnets) == 0) {
-			print "<tr><td colspan='$colCount'><div class='alert alert-warn'>"._('Section has no subnets')."!</div></td></tr>";
+			print "<tr><td colspan='$colCount'><div class='alert alert-warning'>"._('Section has no subnets')."!</div></td></tr>";
 		}	
 		else {
 			# subnets
@@ -86,6 +86,6 @@ if($permission != "0") {
 	print "</table>";
 }
 else {
-	print "<div class='alert alert-error'>"._("You do not have permission to access this network")."!</div>";
+	print "<div class='alert alert-danger'>"._("You do not have permission to access this network")."!</div>";
 }
 ?>

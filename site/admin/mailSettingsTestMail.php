@@ -1,4 +1,4 @@
-<?php
+	<?php
 
 /**
  *	Mail settings
@@ -88,7 +88,7 @@ elseif($settings['mtype']=="smtp") {
 }
 # wrong type
 else {
-	die("<div class='alert alert-error'>"._("Invalid mail server type")."</div>");
+	die("<div class='alert alert alert-danger'>"._("Invalid mail server type")."</div>");
 }
 
 ?>

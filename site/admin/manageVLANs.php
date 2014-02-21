@@ -18,7 +18,7 @@ $custom = getCustomFields('vlans');
 <hr><br>
 
 <!-- add new -->
-<button class="btn btn-small editVLAN" data-action="add" data-vlanid="" style="margin-bottom:10px;"><i class="icon-gray icon-plus"></i> <?php print _('Add VLAN'); ?></button>
+<button class="btn btn-sm btn-default editVLAN" data-action="add" data-vlanid="" style="margin-bottom:10px;"><i class="fa fa-plus"></i> <?php print _('Add VLAN'); ?></button>
 
 <?php
 /* first check if they exist! */
@@ -63,8 +63,8 @@ else {
 	
 	print "	<td class='actions'>";
 	print "	<div class='btn-group'>";
-	print "		<button class='btn btn-small editVLAN' data-action='edit'   data-vlanid='$vlan[vlanId]'><i class='icon-gray icon-pencil'></i></button>";
-	print "		<button class='btn btn-small editVLAN' data-action='delete' data-vlanid='$vlan[vlanId]'><i class='icon-gray icon-remove'></i></button>";
+	print "		<button class='btn btn-xs btn-default editVLAN' data-action='edit'   data-vlanid='$vlan[vlanId]'><i class='fa fa-pencil'></i></button>";
+	print "		<button class='btn btn-xs btn-default editVLAN' data-action='delete' data-vlanid='$vlan[vlanId]'><i class='fa fa-times'></i></button>";
 	print "	</div>";
 	print "	</td>";	
 	print '</tr>'. "\n";

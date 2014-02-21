@@ -29,11 +29,11 @@ if(sizeof($favs) == 0 || !isset($favs[0])) {
 	print "</blockquote>";
 }
 else {
-	print "<table class='table table-condensed table-hover table-top'>";
+	print "<table class='table table-condensed table-hover table-top favs'>";
 	
 	# headers
 	print "<tr>";
-	print "	<th>"._('Subnet')."</th>";
+	print "	<th>"._('Object')."</th>";
 	print "	<th>"._('Description')."</th>";
 	print "	<th>"._('Section')."</th>";
 	print "	<th>"._('VLAN')."</th>";
@@ -49,14 +49,19 @@ else {
 			print "<tr class='favSubnet-$f[subnetId]'>";
 			
 			if($f['isFolder']==1) {
-				print "	<td><a href='folder/$f[sectionId]/$f[subnetId]/'><i class='icon-folder-close icon-gray'></i> $f[description]</a></td>";
+				print "	<td><a href='folder/$f[sectionId]/$f[subnetId]/'><i class='fa fa-sfolder fa-folder'></i> $f[description]</a></td>";
 			}
 			else {
-				print "	<td><a href='subnets/$f[sectionId]/$f[subnetId]/'>".transform2long($f['subnet'])."/$f[mask]</a></td>";		
+				//leaf?
+				if(sizeof(getAllSlaveSubnetsBySubnetId ($f['subnetId']))>0) {
+				print "	<td><a href='subnets/$f[sectionId]/$f[subnetId]/'><i class='fa fa-sfolder fa-folder-o'></i> ".transform2long($f['subnet'])."/$f[mask]</a></td>";		
+				} else {
+				print "	<td><a href='subnets/$f[sectionId]/$f[subnetId]/'><i class='fa fa-sfolder fa-sitemap' ></i> ".transform2long($f['subnet'])."/$f[mask]</a></td>";							
+				}
 			}
 			print "	<td>$f[description]</td>";
-			print "	<td>$f[section]</td>";
-			if(strlen($f['vlanId'])>0) {
+			print "	<td><a href='subnets/$f[sectionId]/'>$f[section]</a></td>";
+			if(strlen($f['vlanId'])>0 && $f['vlanId']!=0) {
 			# get vlan info
 			$vlan = getVlanById($f['vlanId']);
 			print "	<td>$vlan[number]</td>";
@@ -65,7 +70,7 @@ else {
 			}
 			
 			# remove
-			print "	<td><a class='btn btn-small editFavourite' data-subnetId='$f[subnetId]' data-action='remove' data-from='widget'><i class='icon-star favourite-$f[subnetId]' rel='tooltip' title='"._('Click to remove from favourites')."'></i></a></td>";
+			print "	<td><a class='btn btn-xs btn-default editFavourite favourite-$f[subnetId]' data-subnetId='$f[subnetId]' data-action='remove' data-from='widget' rel='tooltip' data-placement='left' title='"._('Click to remove from favourites')."'><i class='fa fa-star'></i></a></td>";
 		
 			print "</tr>";
 	

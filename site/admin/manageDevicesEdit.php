@@ -37,7 +37,7 @@ else 								{ $readonly = ""; }
 	<tr>
 		<td><?php print _('Hostname'); ?></td>
 		<td>
-			<input type="text" name="hostname" placeholder="<?php print _('Hostname'); ?>" value="<?php if(isset($switch['hostname'])) print $switch['hostname']; ?>" <?php print $readonly; ?>>
+			<input type="text" name="hostname" class="form-control input-sm" placeholder="<?php print _('Hostname'); ?>" value="<?php if(isset($switch['hostname'])) print $switch['hostname']; ?>" <?php print $readonly; ?>>
 		</td>
 	</tr>
 
@@ -45,7 +45,7 @@ else 								{ $readonly = ""; }
 	<tr>
 		<td><?php print _('IP address'); ?></td>
 		<td>
-			<input type="text" name="ip_addr" placeholder="<?php print _('IP address'); ?>" value="<?php if(isset($switch['ip_addr'])) print $switch['ip_addr']; ?>" <?php print $readonly; ?>>
+			<input type="text" name="ip_addr" class="form-control input-sm" placeholder="<?php print _('IP address'); ?>" value="<?php if(isset($switch['ip_addr'])) print $switch['ip_addr']; ?>" <?php print $readonly; ?>>
 		</td>
 	</tr>
 
@@ -53,7 +53,7 @@ else 								{ $readonly = ""; }
 	<tr>
 		<td><?php print _('Device type'); ?></td>
 		<td>
-			<select name="type">
+			<select name="type" class="form-control input-sm input-w-auto">
 			<?php
 			$types = getSwitchTypes();
 			foreach($types as $key=>$name) {
@@ -69,7 +69,7 @@ else 								{ $readonly = ""; }
 	<tr>
 		<td><?php print _('Vendor'); ?></td>
 		<td>
-			<input type="text" name="vendor" placeholder="<?php print _('Vendor'); ?>" value="<?php if(isset($switch['vendor'])) print $switch['vendor']; ?>" <?php print $readonly; ?>>
+			<input type="text" name="vendor" class="form-control input-sm" placeholder="<?php print _('Vendor'); ?>" value="<?php if(isset($switch['vendor'])) print $switch['vendor']; ?>" <?php print $readonly; ?>>
 		</td>
 	</tr>
 
@@ -77,7 +77,7 @@ else 								{ $readonly = ""; }
 	<tr>
 		<td><?php print _('Model'); ?></td>
 		<td>
-			<input type="text" name="model" placeholder="<?php print _('Model'); ?>" value="<?php if(isset($switch['model'])) print $switch['model']; ?>" <?php print $readonly; ?>>
+			<input type="text" name="model" class="form-control input-sm" placeholder="<?php print _('Model'); ?>" value="<?php if(isset($switch['model'])) print $switch['model']; ?>" <?php print $readonly; ?>>
 		</td>
 	</tr>
 
@@ -85,7 +85,7 @@ else 								{ $readonly = ""; }
 	<tr>
 		<td><?php print _('SW version'); ?></td>
 		<td>
-			<input type="text" name="version" placeholder="<?php print _('Software version'); ?>" value="<?php if(isset($switch['version'])) print $switch['version']; ?>" <?php print $readonly; ?>>
+			<input type="text" name="version" class="form-control input-sm" placeholder="<?php print _('Software version'); ?>" value="<?php if(isset($switch['version'])) print $switch['version']; ?>" <?php print $readonly; ?>>
 		</td>
 	</tr>
 
@@ -93,7 +93,7 @@ else 								{ $readonly = ""; }
 	<tr>
 		<td><?php print _('Description'); ?></td>
 		<td>
-			<textarea name="description" placeholder="<?php print _('Description'); ?>" <?php print $readonly; ?>><?php if(isset($switch['description'])) print $switch['description']; ?></textarea>
+			<textarea name="description" class="form-control input-sm" placeholder="<?php print _('Description'); ?>" <?php print $readonly; ?>><?php if(isset($switch['description'])) print $switch['description']; ?></textarea>
 			<?php
 			if( ($_POST['action'] == "edit") || ($_POST['action'] == "delete") ) {
 				print '<input type="hidden" name="switchId" value="'. $_POST['switchId'] .'">'. "\n";
@@ -118,7 +118,7 @@ else 								{ $readonly = ""; }
 			print "<tr>";
 			print "	<td>$field[name]</td>";
 			print "	<td>";
-			print "		<input type='text' name='$field[nameNew]' value='".$switch[$field['name']]."' $readonly>";
+			print "		<input type='text' class='form-control input-sm' name='$field[nameNew]' value='".$switch[$field['name']]."' $readonly>";
 			print "	</td>";
 			print "</tr>";
 		}
@@ -145,8 +145,8 @@ else 								{ $readonly = ""; }
 		$switchSections = reformatSwitchSections($switch['sections']);
 		
 		foreach($sections as $section) {
-			if(in_array($section['id'], $switchSections)) 	{ print '<input type="checkbox" name="section-'. $section['id'] .'" value="on" checked> '. $section['name'] .'<br>'. "\n"; }
-			else 											{ print '<input type="checkbox" name="section-'. $section['id'] .'" value="on"> '. $section['name'] .'<br>'. "\n"; }
+			if(in_array($section['id'], $switchSections)) 	{ print '<div class="checkbox" style="margin:0px;"><input type="checkbox" name="section-'. $section['id'] .'" value="on" checked> '. $section['name'] .'</div>'. "\n"; }
+			else 											{ print '<div class="checkbox" style="margin:0px;"><input type="checkbox" name="section-'. $section['id'] .'" value="on">'. $section['name'] .'</span></div>'. "\n"; }
 		}
 		?>
 		</td>
@@ -160,8 +160,8 @@ else 								{ $readonly = ""; }
 <!-- footer -->
 <div class="pFooter">
 	<div class="btn-group">
-		<button class="btn btn-small hidePopups"><?php print _('Cancel'); ?></button>
-		<button class="btn btn-small <?php if($_POST['action']=="delete") { print "btn-danger"; } else { print "btn-success"; } ?>" id="editSwitchsubmit"><i class="icon-white <?php if($_POST['action']=="add") { print "icon-plus"; } else if ($_POST['action']=="delete") { print "icon-trash"; } else { print "icon-ok"; } ?>"></i> <?php print ucwords(_($_POST['action'])); ?></button>
+		<button class="btn btn-sm btn-default hidePopups"><?php print _('Cancel'); ?></button>
+		<button class="btn btn-sm btn-default <?php if($_POST['action']=="delete") { print "btn-danger"; } else { print "btn-success"; } ?>" id="editSwitchsubmit"><i class="fa <?php if($_POST['action']=="add") { print "fa-plus"; } else if ($_POST['action']=="delete") { print "fa-trash-o"; } else { print "fa-check"; } ?>"></i> <?php print ucwords(_($_POST['action'])); ?></button>
 	</div>
 
 	<!-- result -->

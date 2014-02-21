@@ -33,7 +33,7 @@ else {
 
 /* die if errors otherwise execute */
 if(sizeof($errors) != 0) {
-	print '<div class="alert alert-error">'._('Please correct the following errors').':'. "\n";
+	print '<div class="alert alert alert-danger">'._('Please correct the following errors').':'. "\n";
 	print '<ul>'. "\n";
 	foreach($errors as $error) {
 		print '<li style="text-align:left">'. $error .'</li>'. "\n";
@@ -42,7 +42,7 @@ if(sizeof($errors) != 0) {
 	print '</div>'. "\n";
 }
 else {
-	if(!updateCustomField($_POST)) 	{ print '<div class="alert alert-error"  >'._("Failed to $_POST[action] field").'!</div>';}
+	if(!updateCustomField($_POST)) 	{ print '<div class="alert alert alert-danger"  >'._("Failed to $_POST[action] field").'!</div>';}
 	else 							{ print '<div class="alert alert-success">'._("Field $_POST[action] success").'!</div>';}
 }
 

@@ -15,16 +15,16 @@ $subnetDetails = getSubnetDetailsById ($_REQUEST['subnetId']);
 
 # permissions
 $permission = checkSubnetPermission ($_REQUEST['subnetId']);
-if($permission == "0")	{ die("<div class='alert alert-error'>"._('You do not have permission to access this network')."!</div>"); }
+if($permission == "0")	{ die("<div class='alert alert-danger'>"._('You do not have permission to access this network')."!</div>"); }
 
 # header
 print "<h4>"._('Subnet')." - "._('Changelog')."</h4><hr>";
 
 # back
 if($subnetDetails['isFolder']==1) {
-	print "<a class='btn btn-small' href='folder/$_REQUEST[section]/$_REQUEST[subnetId]/'><i class='icon-chevron-left'></i> "._('Back to subnet')."</a>";
+	print "<a class='btn btn-sm btn-default' href='folder/$_REQUEST[section]/$_REQUEST[subnetId]/'><i class='fa fa-gray fa-chevron-left'></i> "._('Back to subnet')."</a>";
 } else {
-	print "<a class='btn btn-small' href='subnets/$_REQUEST[section]/$_REQUEST[subnetId]/'><i class='icon-chevron-left'></i> "._('Back to subnet')."</a>";
+	print "<a class='btn btn-sm btn-default' href='subnets/$_REQUEST[section]/$_REQUEST[subnetId]/'><i class='fa fa-gray fa-chevron-left'></i> "._('Back to subnet')."</a>";
 }
 
 

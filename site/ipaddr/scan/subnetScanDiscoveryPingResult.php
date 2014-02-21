@@ -12,7 +12,7 @@ isUserAuthenticated(true);
 
 /* verify that user has write permissions for subnet */
 $subnetPerm = checkSubnetPermission ($_REQUEST['subnetId']);
-if($subnetPerm < 2) 		{ die('<div class="alert alert-error">'._('You do not have permissions to modify hosts in this subnet').'!</div>'); }
+if($subnetPerm < 2) 		{ die('<div class="alert alert-danger">'._('You do not have permissions to modify hosts in this subnet').'!</div>'); }
 
 # verify post
 CheckReferrer();
@@ -35,6 +35,6 @@ if(sizeof($res)>0) {
 }
 # error
 else {
-	print "<div class='alert alert-error'>"._("Error")."</div>";
+	print "<div class='alert alert-danger'>"._("Error")."</div>";
 }
 ?>

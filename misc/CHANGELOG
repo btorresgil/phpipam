@@ -1,4 +1,4 @@
-== 0.97.008
+== 0.98.001
 	
 	New features:
 	----------------------------
@@ -6,9 +6,13 @@
 	+ IP address changelog, subnet and section changelogs with full changelog under tools;
 	+ Favourite subnets for quick access;
 	+ Adding subnets from free space with automatic mask provided;
+	+ Automatic database validity check after upgrading and automatic field/table fix under administration;
 
 	Enhancements:
 	----------------------------
+	+ Bootstrap 3;
+	+ UI enhancements;
+	+ Improved views based on browser width;
 	+ Widget order can now be set;
 	+ Widgets can be reordered (dragged) directly on dashboard;
 	+ Subnet can now be splitted to max 256 new subnets (16 before);

@@ -27,15 +27,15 @@ if(sizeof($favs) == 0 || !isset($favs[0])) {
 	print "</blockquote>";
 }
 else {
-	print "<table class='table table-condensed table-hover table-top'>";
+	print "<table class='table table-condensed table-striped table-hover table-top favs'>";
 	
 	# headers
 	print "<tr>";
-	print "	<th>"._('Subnet')."</th>";
+	print "	<th>"._('Object')."</th>";
 	print "	<th>"._('Description')."</th>";
 	print "	<th>"._('Section')."</th>";
-	print "	<th>"._('VLAN')."</th>";
-	print "	<th>"._('Used')."</th>";
+	print "	<th class='hidden-xs hidden-sm'>"._('VLAN')."</th>";
+	print "	<th class='hidden-xs hidden-sm'>"._('Used')."</th>";
 	print "	<th style='width:5px;'></th>";
 	print "</tr>";
 	
@@ -46,10 +46,16 @@ else {
 			print "<tr class='favSubnet-$f[subnetId]'>";
 			
 			if($f['isFolder']==1) {
-				print "	<td><a href='folder/$f[sectionId]/$f[subnetId]/'><i class='icon-folder-close icon-gray'></i> $f[description]</a></td>";
+				print "	<td><a href='folder/$f[sectionId]/$f[subnetId]/'><i class='fa fa-folder fa-sfolder'></i> $f[description]</a></td>";
 			}
 			else {
-				print "	<td><a href='subnets/$f[sectionId]/$f[subnetId]/'>".transform2long($f['subnet'])."/$f[mask]</a></td>";		
+				//master?
+				if(sizeof(getAllSlaveSubnetsBySubnetId ($f['subnetId']))>0) {
+				print "	<td><a href='subnets/$f[sectionId]/$f[subnetId]/'><i class='fa fa-sfolder fa-folder-o'></i>".transform2long($f['subnet'])."/$f[mask]</a></td>";	
+				}
+				else {
+				print "	<td><a href='subnets/$f[sectionId]/$f[subnetId]/'><i class='fa fa-sfolder fa-sitemap' ></i> ".transform2long($f['subnet'])."/$f[mask]</a></td>";	
+				}	
 			}
 			
 			print "	<td>$f[description]</td>";
@@ -57,9 +63,9 @@ else {
 			if(strlen($f['vlanId'])>0) {
 			# get vlan info
 			$vlan = getVlanById($f['vlanId']);
-			print "	<td>$vlan[number]</td>";
+			print "	<td class='hidden-xs hidden-sm'>$vlan[number]</td>";
 			} else {
-			print "	<td>/</td>";
+			print "	<td class='hidden-xs hidden-sm'>/</td>";
 			}
 			
 			# used
@@ -69,20 +75,20 @@ else {
 			else 														 	{ $masterSubnet = false; }
 	
 			if($f['isFolder']==1) {
-				print  '<td></td>';
+				print  '<td class="hidden-xs hidden-sm"></td>';
 			}
 			elseif( (!$masterSubnet) || (!subnetContainsSlaves($f['subnetId']))) {
 	    		$ipCount = countIpAddressesBySubnetId ($f['subnetId']);
 	    		$calculate = calculateSubnetDetails ( gmp_strval($ipCount), $f['mask'], $f['subnet'] );
 	
-	    		print ' <td class="used">'. reformatNumber($calculate['used']) .'/'. reformatNumber($calculate['maxhosts']) .' ('.reformatNumber($calculate['freehosts_percent']) .' %)</td>';
+	    		print ' <td class="used hidden-xs hidden-sm">'. reformatNumber($calculate['used']) .'/'. reformatNumber($calculate['maxhosts']) .' ('.reformatNumber($calculate['freehosts_percent']) .' %)</td>';
 	    	}
 	    	else {
-				print '<td></td>'. "\n";
+				print '<td class="hidden-xs hidden-sm"></td>'. "\n";
 			}	
 			
 			# remove
-			print "	<td><a class='btn btn-small editFavourite' data-subnetId='$f[subnetId]' data-action='remove' data-from='widget'><i class='icon-star favourite-$f[subnetId]' rel='tooltip' title='"._('Click to remove from favourites')."'></i></a></td>";
+			print "	<td><a class='btn btn-xs btn-default editFavourite' data-subnetId='$f[subnetId]' data-action='remove' data-from='widget'><i class='fa fa-star favourite-$f[subnetId]' rel='tooltip' title='"._('Click to remove from favourites')."'></i></a></td>";
 		
 			print "</tr>";
 		}

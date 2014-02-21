@@ -161,7 +161,7 @@ $(document).on('click','.add-new-widget',function() {
 $(document).on('click', "i.remove-widget", function() {
 	$(this).parent().parent().fadeOut('fast').remove();
 });
-//add new widget form popu
+//add new widget form popup
 $(document).on('click', '#sortablePopup li a.widget-add', function() {
 	var wid   = $(this).attr('id');
 	var wsize = $(this).attr('data-size');
@@ -201,19 +201,32 @@ $('.icon-folder-close,.icon-folder-show, .icon-search').tooltip( {
     placement:"bottom"
 });
 // show submenus
-$('ul#subnets').on("click", ".icon-folder-close", function() {
+$('ul#subnets').on("click", ".fa-folder-close-o", function() {
     //change icon
-    $(this).removeClass('icon-folder-close').addClass('icon-folder-open');
+    $(this).removeClass('fa-folder-close-o').addClass('fa-folder-open-o');
+    //find next submenu and hide it
+    $(this).nextAll('.submenu').slideDown('fast');
+});
+$('ul#subnets').on("click", ".fa-folder", function() {
+    //change icon
+    $(this).removeClass('fa-folder').addClass('fa-folder-open');
     //find next submenu and hide it
     $(this).nextAll('.submenu').slideDown('fast');
 });
 // hide submenus
-$('ul#subnets').on("click", "i.icon-folder-open", function() {
+$('ul#subnets').on("click", ".fa-folder-open-o", function() {
     //change icon
-    $(this).removeClass('icon-folder-open').addClass('icon-folder-close');
+    $(this).removeClass('fa-folder-open-o').addClass('fa-folder-close-o');
     //find next submenu and hide it
     $(this).nextAll('.submenu').slideUp('fast');
 });
+$('ul#subnets').on("click", ".fa-folder-open", function() {
+    //change icon
+    $(this).removeClass('fa-folder-open').addClass('fa-folder');
+    //find next submenu and hide it
+    $(this).nextAll('.submenu').slideUp('fast');
+});
+
 
 //hide subnets list
 $('#hideSubnets').click(function() {
@@ -229,18 +242,20 @@ $('#expandfolders').click(function() {
     var action = $(this).attr('data-action');
     //open
     if(action == 'close') {
-        $('.subnets ul#subnets li.folder > i').removeClass('icon-folder-close').addClass('icon-folder-open');
+        $('.subnets ul#subnets li.folder > i').removeClass('fa-folder-close-o').addClass('fa-folder-open-o');
+        $('.subnets ul#subnets li.folderF > i').removeClass('fa-folder').addClass('fa-folder-open');
         $('.subnets ul#subnets ul.submenu').removeClass('submenu-close').addClass('submenu-open').slideDown('fast');
         $(this).attr('data-action','open');
         createCookie('expandfolders','1','365');
-        $(this).removeClass('icon-resize-full').addClass('icon-resize-small');
+        $(this).removeClass('fa-expand').addClass('fa-compress');
     }
     else {
-        $('.subnets ul#subnets li.folder > i').addClass('icon-folder-close').removeClass('icon-folder-open');
+        $('.subnets ul#subnets li.folder > i').addClass('fa-folder-close-o').removeClass('fa-folder-open-o');
+        $('.subnets ul#subnets li.folderF > i').addClass('fa-folder').removeClass('fa-folder-open');
         $('.subnets ul#subnets ul.submenu').addClass('submenu-close').removeClass('submenu-open').slideUp('fast');
         $(this).attr('data-action','close');
         createCookie('expandfolders','0','365');
-        $(this).removeClass('icon-resize-small').addClass('icon-resize-full');
+        $(this).removeClass('fa-compress').addClass('fa-expand');
     }
 });
 
@@ -313,7 +328,7 @@ $(document).on("click", "button#editIPAddressSubmit", function() {
         $('div.addnew_check').html(data);
         $('div.addnew_check').slideDown('fast');
         //reload after 2 seconds if succeeded!
-        if(data.search("error") == -1)   { setTimeout(function (){window.location.reload();}, 1500); }
+        if(data.search("alert-danger") == -1)   { setTimeout(function (){window.location.reload();}, 1500); }
         else                             { hideSpinner(); }
     }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});
     return false;
@@ -355,7 +370,7 @@ $(document).on("click", "#mailIPAddressSubmit", function() {
         $('div.sendmail_check').html(data).slideDown('fast');
         //hide if success!
         //reload after 2 seconds if succeeded!
-        if(data.search("error") == -1)     { setTimeout(function (){hidePopups();}, 1500); }
+        if(data.search("alert-danger") == -1)     { setTimeout(function (){hidePopups();}, 1500); }
         else                             { hideSpinner(); }    
     }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});
     return false;
@@ -432,7 +447,7 @@ $(document).on('click', 'a#saveScanResults', function() {
         $('#subnetScanAddResult').html(data);
         //hide if success!
         //reload after 2 seconds if succeeded!
-        if(data.search("error") == -1)   { setTimeout(function (){window.location.reload();}, 1500); }
+        if(data.search("alert-danger") == -1)   { setTimeout(function (){window.location.reload();}, 1500); }
         else                             { hideSpinner(); }
     }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});
 	return false;
@@ -478,7 +493,7 @@ $(document).on("click", "input#csvImportYes", function() {
     $.post('site/admin/CSVimportSubmit.php', postData, function(data) {
         $('div.csvImportResult').html(data).slideDown('fast');
         //reload after 2 seconds if succeeded!
-        if(data.search("error") == -1)     { setTimeout(function (){window.location.reload();}, 1500); }
+        if(data.search("alert-danger") == -1)     { setTimeout(function (){window.location.reload();}, 1500); }
         else                             { hideSpinner(); }
     }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});
 });
@@ -534,16 +549,17 @@ $(document).on('click', 'a.editFavourite', function() {
 		}
 		//success - subnet - toggle star-empty
 		else if (data=='success') 				{ 
-			$('i.favourite-'+subnetId).toggleClass('icon-star-empty').toggleClass('icon-white'); 
+			$(this).toggleClass('btn-info'); 
+			$('a.favourite-'+subnetId+" i").toggleClass('fa-star-o'); 
 			$(item).toggleClass('btn-info');
 			//remove
 			if(action=="remove") {
-				$('i.favourite-'+subnetId).attr('data-original-title','Click to add to favourites');
+				$('a.favourite-'+subnetId).attr('data-original-title','Click to add to favourites');
 				$(item).attr('data-action','add');
 			}
 			//add
 			else {
-				$('i.favourite-'+subnetId).attr('data-original-title','Click to remove from favourites');
+				$('a.favourite-'+subnetId).attr('data-original-title','Click to remove from favourites');
 				$(item).attr('data-action','remove');				
 			}
 		}
@@ -636,6 +652,14 @@ $('form#ipCalc input.reset').click(function () {
 
 /* search */
 //submit form
+$('.searchSubmit').click(function () {
+    showSpinner();
+    var ip = $('.searchInput').val();
+    //update search page
+    window.location = "tools/search/" + ip;
+    return false;
+});
+//submit form
 $('form#search').submit(function () {
     showSpinner();
     var ip = $('form#search .search').val();
@@ -656,8 +680,8 @@ $('a#exportSearch').click(function() {
 $('table#switchMainTable button[id^="switch-"]').click(function() {
     var swid = $(this).attr('id');                    //get id
     // change icon to down
-    if( $('#content-'+swid).is(':visible') )     { $(this).children('i').removeClass('icon-chevron-down').addClass('icon-chevron-right'); }    //hide
-    else                                         { $(this).children('i').removeClass('icon-chevron-right').addClass('icon-chevron-down'); }    //show
+    if( $('#content-'+swid).is(':visible') )     { $(this).children('i').removeClass('fa-chevron-down').addClass('fa-chevron-right'); }    //hide
+    else                                         { $(this).children('i').removeClass('fa-chevron-right').addClass('fa-chevron-down'); }    //show
     //show content
     $('table#switchMainTable tbody#content-'+swid).slideToggle('fast');
 });
@@ -719,7 +743,7 @@ $('#settings').submit(function() {
     $.post('site/admin/settingsEdit.php', settings, function(data) {
         $('div.settingsEdit').html(data).slideDown('fast');
         //reload after 1 second if all is ok!
-        if(data.search("error") == -1)   { setTimeout(function (){window.location.reload();}, 1000); }
+        if(data.search("alert-danger") == -1)   { setTimeout(function (){window.location.reload();}, 1000); }
         else                             { hideSpinner(); }
     }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});
     return false;
@@ -733,7 +757,7 @@ $('#mailsettings').submit(function() {
     $.post('site/admin/mailSettingsEdit.php', settings, function(data) {
         $('div.settingsMailEdit').html(data).slideDown('fast');
         //reload after 1 second if all is ok!
-        if(data.search("error") == -1)   { setTimeout(function (){window.location.reload();}, 1000); }
+        if(data.search("alert-danger") == -1)   { setTimeout(function (){window.location.reload();}, 1000); }
         else                             { hideSpinner(); }
     }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});
     return false;
@@ -783,7 +807,7 @@ $(document).on("click", "#editUserSubmit", function() {
     $.post('site/admin/usersEditResult.php', loginData, function(data) {
         $('div.usersEditResult').html(data).show();
         //reload after 2 seconds if succeeded!
-        if(data.search("error") == -1)     { setTimeout(function (){window.location.reload();}, 1500); }
+        if(data.search("alert-danger") == -1)     { setTimeout(function (){window.location.reload();}, 1500); }
         else                             { hideSpinner(); }
     }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});
     return false;
@@ -861,7 +885,7 @@ $(document).on("click", "#editGroupSubmit", function() {
     $.post('site/admin/groupEditResult.php', loginData, function(data) {
         $('div.groupEditResult').html(data).show();
         //reload after 2 seconds if succeeded!
-        if(data.search("error") == -1)     { setTimeout(function (){window.location.reload();}, 1500); }
+        if(data.search("alert-danger") == -1)     { setTimeout(function (){window.location.reload();}, 1500); }
         else                             	{ hideSpinner(); }
     }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});    
     return false;
@@ -886,7 +910,7 @@ $(document).on("click", "#groupAddUsersSubmit", function() {
     $.post('site/admin/groupAddUsersResult.php', users, function(data) {
         $('div.groupAddUsersResult').html(data).show();
         //reload after 2 seconds if succeeded!
-        if(data.search("error") == -1)     { setTimeout(function (){window.location.reload();}, 1500); }
+        if(data.search("alert-danger") == -1)     { setTimeout(function (){window.location.reload();}, 1500); }
         else                             	{ hideSpinner(); }
     }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});	
 	return false;
@@ -911,7 +935,7 @@ $(document).on("click", "#groupRemoveUsersSubmit", function() {
     $.post('site/admin/groupRemoveUsersResult.php', users, function(data) {
         $('div.groupRemoveUsersResult').html(data).show();
         //reload after 2 seconds if succeeded!
-        if(data.search("error") == -1)     { setTimeout(function (){window.location.reload();}, 1500); }
+        if(data.search("alert-danger") == -1)     { setTimeout(function (){window.location.reload();}, 1500); }
         else                             	{ hideSpinner(); }
     }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});	
 	return false;
@@ -950,7 +974,7 @@ $('#instructionsForm').submit(function () {
     showSpinner();
     $.post('site/admin/instructionsResult.php', {instructions:instructions}, function(data) {
         $('div.instructionsResult').html(data).fadeIn('fast');
-        if(data.search("error") == -1)     	{ $('div.instructionsResult').delay(2000).fadeOut('slow'); hideSpinner(); }
+        if(data.search("alert-danger") == -1)     	{ $('div.instructionsResult').delay(2000).fadeOut('slow'); hideSpinner(); }
         else                             	{ hideSpinner(); }      
     }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});
     return false;
@@ -1055,7 +1079,7 @@ $(document).on("click", "#editSectionSubmit", function() {
         $('div.sectionEditResult').html(data).slideDown('fast');
 
         //reload after 2 seconds if succeeded!
-        if(data.search("error") == -1)   { setTimeout(function (){window.location.reload();}, 1500); }
+        if(data.search("alert-danger") == -1)   { setTimeout(function (){window.location.reload();}, 1500); }
         else                             { hideSpinner(); hideSpinner(); }
     }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});
     return false;
@@ -1086,7 +1110,7 @@ $(document).on("click", "#sectionOrderSubmit", function() {
 		$('.sectionOrderResult').html(data).fadeIn('fast');
 		
         //reload after 2 seconds if succeeded!
-        if(data.search("error") == -1)	{ setTimeout(function (){window.location.reload();}, 1500); }
+        if(data.search("alert-danger") == -1)	{ setTimeout(function (){window.location.reload();}, 1500); }
         else                            { hideSpinner(); hideSpinner(); }
         
     }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});
@@ -1101,8 +1125,8 @@ $('table#manageSubnets button[id^="subnet-"]').click(function() {
     showSpinner();
     var swid = $(this).attr('id');                    //get id
     // change icon to down
-    if( $('#content-'+swid).is(':visible') )     { $(this).children('i').removeClass('icon-chevron-down').addClass('icon-chevron-right'); }    //hide
-    else                                         { $(this).children('i').removeClass('icon-chevron-right').addClass('icon-chevron-down'); }    //show
+    if( $('#content-'+swid).is(':visible') )     { $(this).children('i').removeClass('fa-angle-down').addClass('fa-angle-right'); }    //hide
+    else                                         { $(this).children('i').removeClass('fa-angle-right').addClass('fa-angle-down'); }    //show
     //show content
     $('table#manageSubnets tbody#content-'+swid).slideToggle('fast');
     hideSpinner();
@@ -1111,18 +1135,18 @@ $('table#manageSubnets button[id^="subnet-"]').click(function() {
 $('#toggleAllSwitches').click(function() {
     showSpinner();
     // show
-    if( $(this).children().hasClass('icon-resize-full') ) {
-        $(this).children().removeClass('icon-resize-full').addClass('icon-resize-small');            //change icon
-        $('table#manageSubnets i.icon-chevron-right').removeClass('icon-chevron-right').addClass('icon-chevron-down');    //change section chevrons
-        $('table#manageSubnets tbody[id^="content-subnet-"]').show();                                //show content
-        createCookie('showSubnets',1,30);                                                            //save cookie
+    if( $(this).children().hasClass('fa-compress') ) {
+        $(this).children().removeClass('fa-compress').addClass('fa-expand');            //change icon
+        $('table#manageSubnets i.fa-angle-down').removeClass('fa-angle-down').addClass('fa-angle-right');    //change section chevrons
+        $('table#manageSubnets tbody[id^="content-subnet-"]').hide();                                //show content
+        createCookie('showSubnets',0,30);                                                            //save cookie
     }
     //hide
     else {
-        $(this).children().removeClass('icon-resize-small').addClass('icon-resize-full');
-        $('table#manageSubnets tbody[id^="content-subnet-"]').hide();    
-        $('table#manageSubnets i.icon-chevron-down').removeClass('icon-chevron-down').addClass('icon-chevron-right');    //change section chevrons    
-        createCookie('showSubnets',0,30);                                                            //save cookie
+        $(this).children().removeClass('fa-expand').addClass('fa-compress');
+        $('table#manageSubnets tbody[id^="content-subnet-"]').show();    
+        $('table#manageSubnets i.fa-angle-right').removeClass('fa-angle-right').addClass('fa-angle-down');    //change section chevrons    
+        createCookie('showSubnets',1,30);                                                            //save cookie
     }
     hideSpinner();
 });
@@ -1163,7 +1187,7 @@ $(document).on("click", "button#subnetResizeSubmit", function() {
 	$.post("site/admin/manageSubnetResizeSave.php", resize, function(data) {
 		$('div.subnetResizeResult').html(data);
         //reload after 2 seconds if succeeded!
-        if(data.search("error") == -1)   { setTimeout(function (){window.location.reload();}, 1500); }
+        if(data.search("alert-danger") == -1)   { setTimeout(function (){window.location.reload();}, 1500); }
         else                             { hideSpinner(); hideSpinner(); }
     }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});
 	return false;
@@ -1175,7 +1199,7 @@ $(document).on("click", "button#subnetSplitSubmit", function() {
 	$.post("site/admin/manageSubnetSplitSave.php", split, function(data) {
 		$('div.subnetSplitResult').html(data);
         //reload after 2 seconds if succeeded!
-        if(data.search("error") == -1)   { setTimeout(function (){window.location.reload();}, 1500); }
+        if(data.search("alert-danger") == -1)   { setTimeout(function (){window.location.reload();}, 1500); }
         else                             { hideSpinner(); hideSpinner(); }
     }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});
 	return false;
@@ -1187,7 +1211,7 @@ $(document).on("click", "button#subnetTruncateSubmit", function() {
 	$.post("site/admin/manageSubnetTruncateSave.php", {subnetId:subnetId}, function(data) {
 		$('div.subnetTruncateResult').html(data);
         //reload after 2 seconds if succeeded!
-        if(data.search("error") == -1)   { setTimeout(function (){window.location.reload();}, 1500); }
+        if(data.search("alert-danger") == -1)   { setTimeout(function (){window.location.reload();}, 1500); }
         else                             { hideSpinner(); hideSpinner(); }
     }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});
 	return false;
@@ -1207,7 +1231,7 @@ $(document).on("click", ".editSubnetSubmit", function() {
         $('div.manageSubnetEditResult').html(data).slideDown('fast');
         
         //reload after 2 seconds if all is ok!
-        if(data.search("error") == -1) {
+        if(data.search("alert-danger") == -1) {
             showSpinner();
             var sectionId;
             var subnetId;
@@ -1273,7 +1297,7 @@ $(document).on("click", ".editSubnetPermissionsSubmit", function() {
 	$.post('site/admin/manageSubnetPermissionsSubmit.php', perms, function(data) {
 		$('.editSubnetPermissionsResult').html(data);
         //reload after 2 seconds if succeeded!
-        if(data.search("error") == -1)   { setTimeout(function (){window.location.reload();}, 1500); }
+        if(data.search("alert-danger") == -1)   { setTimeout(function (){window.location.reload();}, 1500); }
         else                             { hideSpinner(); hideSpinner(); }
     }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});
 	return false;
@@ -1361,7 +1385,7 @@ $(document).on("click", ".vlanManagementEditFromSubnetButton", function() {
     $.post('site/admin/manageVLANEditResult.php', postData, function(data) {
         $('div.vlanManagementEditFromSubnetResult').html(data).show();
         // ok
-        if(data.search("error") == -1) {
+        if(data.search("alert-danger") == -1) {
             var vlanId	  = $('#vlanidforonthefly').html();
             $.post('site/admin/manageSubnetEditPrintVlanDropdown.php', {vlanId:vlanId} , function(data) {
                 $('.editSubnetDetails td#vlanDropdown').html(data);
@@ -1408,7 +1432,7 @@ $(document).on("click", ".editFolderSubmit", function() {
 	$.post('site/admin/manageFolderEditSubmit.php', postData, function(data) {
 		$('.manageFolderEditResult').html(data);
         //reload after 2 seconds if succeeded!
-        if(data.search("error") == -1)   { setTimeout(function (){window.location.reload();}, 1500); }
+        if(data.search("alert-danger") == -1)   { setTimeout(function (){window.location.reload();}, 1500); }
         else                             { hideSpinner(); hideSpinner(); }
     }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});	
 	return false;
@@ -1422,7 +1446,7 @@ $(document).on("click", ".editFolderSubmitDelete", function() {
 	$.post('site/admin/manageFolderEditSubmit.php', postData, function(data) {
 		$('.manageFolderEditResult').html(data);
         //reload after 2 seconds if succeeded!
-        if(data.search("error") == -1)   { setTimeout(function (){window.location.reload();}, 1500); }
+        if(data.search("alert-danger") == -1)   { setTimeout(function (){window.location.reload();}, 1500); }
         else                             { hideSpinner(); }
     }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});	
 	return false;
@@ -1452,7 +1476,7 @@ $(document).on("click", "#editSwitchsubmit", function() {
         $('div.switchManagementEditResult').html(data).slideDown('fast');
 
         //reload after 2 seconds if succeeded!
-        if(data.search("error") == -1)     { setTimeout(function (){window.location.reload();}, 1500); }
+        if(data.search("alert-danger") == -1)     { setTimeout(function (){window.location.reload();}, 1500); }
         else                             { hideSpinner(); hideSpinner();
         }
     }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});
@@ -1481,7 +1505,7 @@ $(document).on("click", "#editVLANsubmit", function() {
     $.post('site/admin/manageVLANEditResult.php', vlandata, function(data) {
         $('div.vlanManagementEditResult').html(data).slideDown('fast');
         //reload after 2 seconds if succeeded!
-        if(data.search("error") == -1)     { setTimeout(function (){window.location.reload();}, 1500); }
+        if(data.search("alert-danger") == -1)     { setTimeout(function (){window.location.reload();}, 1500); }
         else                               { hideSpinner(); }
     }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});
     return false;
@@ -1510,7 +1534,7 @@ $(document).on("click", "#editVRF", function() {
     $.post('site/admin/manageVRFEditResult.php', vrfdata, function(data) {
         $('div.vrfManagementEditResult').html(data).slideDown('fast');
         //reload after 2 seconds if succeeded!
-        if(data.search("error") == -1)     { setTimeout(function (){window.location.reload();}, 1500); }
+        if(data.search("alert-danger") == -1)     { setTimeout(function (){window.location.reload();}, 1500); }
         else                             { hideSpinner(); }
     }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});
     return false;
@@ -1539,7 +1563,7 @@ $(document).on("click", "button.manageRequest", function() {
     $.post('site/admin/manageRequestResult.php', postData, function(data) {
         $('div.manageRequestResult').html(data);
         //reload after 2 seconds if succeeded!
-        if(data.search("error") == -1)     { setTimeout(function (){window.location.reload();}, 1500); }
+        if(data.search("alert-danger") == -1)     { setTimeout(function (){window.location.reload();}, 1500); }
         else                             { hideSpinner(); }
     }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});
     return false;
@@ -1571,7 +1595,7 @@ $(document).on("submit", "form#asImport", function() {
     $.post('site/admin/ripeImportResult.php', importData, function(data) {
         $('div.ripeImportResult').html(data).slideDown('fast');
         //hide after 2 seconds
-        if(data.search("error") == -1)     { $('table.asImport').delay(1000).fadeOut('fast'); hideSpinner(); }
+        if(data.search("alert-danger") == -1)     { $('table.asImport').delay(1000).fadeOut('fast'); hideSpinner(); }
         else                             { hideSpinner(); }
     }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});
     return false;
@@ -1586,7 +1610,7 @@ $('button#filterIPSave').click(function() {
     $.post('site/admin/filterIPFieldsResult.php', addata, function(data) {
         $('div.filterIPResult').html(data).slideDown('fast');
         //reload after 2 seconds if succeeded!
-        if(data.search("error") == -1)     { $('div.filterIPResult').delay(2000).fadeOut('slow');    hideSpinner(); }
+        if(data.search("alert-danger") == -1)     { $('div.filterIPResult').delay(2000).fadeOut('slow');    hideSpinner(); }
         else                             { hideSpinner(); }
     }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});
     return false;
@@ -1618,7 +1642,7 @@ $(document).on("click", "#editcustomSubmit", function() {
     $.post('site/admin/customFieldsEditResult.php', field, function(data) {
         $('div.customEditResult').html(data).slideDown('fast');
         //reload after 2 seconds if succeeded!
-        if(data.search("error") == -1)   { setTimeout(function (){window.location.reload();}, 1500); }
+        if(data.search("alert-danger") == -1)   { setTimeout(function (){window.location.reload();}, 1500); }
         else                             { hideSpinner(); }
     }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});
     return false;
@@ -1632,7 +1656,7 @@ $('table.customIP button.down').click(function() {
     $.post('site/admin/customFieldsOrder.php', {current:current, next:next, table:table}, function(data) {
         $('div.'+table+'-order-result').html(data).slideDown('fast');
         //reload after 2 seconds if succeeded!
-        if(data.search("error") == -1)     { setTimeout(function (){window.location.reload();}, 1000); }
+        if(data.search("alert-danger") == -1)     { setTimeout(function (){window.location.reload();}, 1000); }
         else                             { hideSpinner(); }
     }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});
     return false;
@@ -1665,7 +1689,7 @@ $(document).on("click", "#langEditSubmit", function() {
     $.post('site/admin/languageEditResult.php', ldata, function(data) {
         $('div.langEditResult').html(data).slideDown('fast');
         //reload after 2 seconds if succeeded!
-        if(data.search("error") == -1)     	{ setTimeout(function (){window.location.reload();}, 1500); }
+        if(data.search("alert-danger") == -1)     	{ setTimeout(function (){window.location.reload();}, 1500); }
         else                             	{ hideSpinner(); }
     }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});
     return false;
@@ -1693,7 +1717,7 @@ $(document).on("click", "#widgetEditSubmit", function() {
     $.post('site/admin/widgetEditResult.php', ldata, function(data) {
         $('div.widgetEditResult').html(data).slideDown('fast');
         //reload after 2 seconds if succeeded!
-        if(data.search("error") == -1)     	{ setTimeout(function (){window.location.reload();}, 1500); }
+        if(data.search("alert-danger") == -1)     	{ setTimeout(function (){window.location.reload();}, 1500); }
         else                             	{ hideSpinner(); }
     }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});
     return false;
@@ -1722,7 +1746,7 @@ $(document).on("click", "#apiEditSubmit", function() {
     $.post('site/admin/apiEditResult.php', apidata, function(data) {
         $('div.apiEditResult').html(data).slideDown('fast');
         //reload after 2 seconds if succeeded!
-        if(data.search("error") == -1)     	{ setTimeout(function (){window.location.reload();}, 1500); }
+        if(data.search("alert-danger") == -1)     	{ setTimeout(function (){window.location.reload();}, 1500); }
         else                             	{ hideSpinner(); }
     }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});
     return false;
@@ -1776,6 +1800,22 @@ $('button#hostfileDump').click(function () {
     $("div.dl").remove();    //remove old innerDiv
     $('div.exportDIV').append("<div style='display:none' class='dl'><iframe src='site/admin/exportGenerateHostDump.php'></iframe></div>");
     hideSpinner();
+});
+
+
+
+
+/*	Fix database
+***********************/
+$(document).on('click', '.btn-tablefix', function() {
+	var tableid = $(this).attr('data-tableid');
+	var fieldid = $(this).attr('data-fieldid');
+	var type 	= $(this).attr('data-type');
+    $.post('site/admin/verifyDatabaseFix.php', {tableid:tableid, fieldid:fieldid, type:type}, function(data) {
+        $('div#fix-result-'+tableid+fieldid).html(data).fadeIn('fast');
+        hideSpinner();
+    }).fail(function(xhr, textStatus, errorThrown) { showError(xhr.statusText);});
+    return false;
 });
 
 

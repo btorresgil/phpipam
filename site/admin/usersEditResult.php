@@ -43,10 +43,10 @@ else if ($userModDetails['action'] == "delete") {
 
 	//cannot delete admin user
 	if($userModDetails['username']=="Admin" ) {
-		die('<div class="alert alert-error">'._('Admin user cannot be deleted').'!</div>');
+		die('<div class="alert alert-danger">'._('Admin user cannot be deleted').'!</div>');
 	}	
 	else {
-	    if (!deleteUserById($userModDetails['userId'], $userModDetails['username'])) { print '<div class="alert alert-error">'._('Cannot delete user').' '. $userModDetails['username'] .'!</div>'; }
+	    if (!deleteUserById($userModDetails['userId'], $userModDetails['username'])) { print '<div class="alert alert-danger">'._('Cannot delete user').' '. $userModDetails['username'] .'!</div>'; }
 	    else 																		 { print '<div class="alert alert-success">'._('User deleted successfully').'!</div>'; }
 	    //stop script execution
 	    die();	
@@ -87,7 +87,7 @@ else {
  * If no errors are present add / edit user
  */
 if (sizeof($errors) != 0) {
-    print '<div class="alert alert-error">';
+    print '<div class="alert alert-danger">';
     foreach ($errors as $error) {
         print $error .'<br>';
     }

@@ -16,7 +16,7 @@ CheckReferrer();
 $user_old = getActiveUserDetails();
 
 /* save widgets */
-if (!setUserDashWidgets ($user_old['id'], $_POST['widgets'])) 	{ die('<div class="alert alert-error alert-absolute">'._('Error updating').'!</div>'); }
+if (!setUserDashWidgets ($user_old['id'], $_POST['widgets'])) 	{ die('<div class="alert alert-danger alert-absolute">'._('Error updating').'!</div>'); }
 else 															{ print '<div class="alert alert-success alert-absolute">'._('Account updated successfully').'!</div>'; }
 
 ?>

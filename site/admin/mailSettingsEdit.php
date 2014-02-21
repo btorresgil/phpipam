@@ -14,6 +14,6 @@ checkAdmin(false);
 $settings = $_POST;
 
 /* Update mail settings */
-if(!updateMailSettings($settings)) 	{ die('<div class="alert alert-error">'._('Cannot update settings').'!</div>'); }
+if(!updateMailSettings($settings)) 	{ die('<div class="alert alert alert-danger">'._('Cannot update settings').'!</div>'); }
 else 								{ print '<div class="alert alert-success">'._('Settings updated successfully').'!</div>';}
 ?>

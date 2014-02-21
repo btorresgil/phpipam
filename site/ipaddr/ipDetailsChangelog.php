@@ -12,7 +12,7 @@ $clogs = getChangelogEntries("ip_addr", $_REQUEST['ipaddrid']);
 
 # permissions
 $permission = checkSubnetPermission ($_REQUEST['subnetId']);
-if($permission == "0")	{ die("<div class='alert alert-error'>"._('You do not have permission to access this network')."!</div>"); }
+if($permission == "0")	{ die("<div class='alert alert-danger'>"._('You do not have permission to access this network')."!</div>"); }
 
 # header
 print "<h4 style='margin-top:30px;'>"._('Changelog')."</h4><hr>";

@@ -31,7 +31,7 @@ if(sizeof($clogs)==0) {
 else {
 
 	# printout
-	print "<table class='table table-hover table-top table-condensed'>";
+	print "<table class='table changelog table-hover table-top table-condensed'>";
 
 	# headers
 	print "<tr>";

@@ -12,16 +12,16 @@ isUserAuthenticated(true);
 
 /* verify that user has write permissions for subnet */
 $subnetPerm = checkSubnetPermission ($_REQUEST['subnetId']);
-if($subnetPerm < 2) 			{ die('<div class="alert alert-error">'._('You do not have permissions to modify hosts in this subnet').'!</div>'); }
+if($subnetPerm < 2) 			{ die('<div class="alert alert-danger">'._('You do not have permissions to modify hosts in this subnet').'!</div>'); }
 
 # get ports
-if(strlen($_POST['port'])==0) 	{ die('<div class="alert alert-error">'._('Please enter ports to scan').'!</div>'); }
+if(strlen($_POST['port'])==0) 	{ die('<div class="alert alert-danger">'._('Please enter ports to scan').'!</div>'); }
 
 //verify ports
 $pcheck = explode(";", str_replace(",",";",$_POST['port']));
 foreach($pcheck as $p) {
 	if(!is_numeric($p)) {
-		die("<div class='alert alert-error'>"._("Invalid port")." ($p)</div>");
+		die("<div class='alert alert-danger'>"._("Invalid port")." ($p)</div>");
 	}
 }
 $_POST['port'] = str_replace(",",";",$_POST['port']);
@@ -54,7 +54,7 @@ if($ip) {
 	
 	# get php exec path
 	if(!$phpPath = getPHPExecutableFromPath()) {
-		die('<div class="alert alert-error">Cannot access php executable!</div>');
+		die('<div class="alert alert-danger">Cannot access php executable!</div>');
 	}
 	# set script
 	$script = dirname(__FILE__) . '/../../../functions/scan/scanIPAddressesTelnetScript.php';
@@ -67,7 +67,7 @@ if($ip) {
 	
 	# die of error
 	if($retval != 0) {
-		die("<div class='alert alert-error'>Error executing scan! Error code - $retval</div>");
+		die("<div class='alert alert-danger'>Error executing scan! Error code - $retval</div>");
 	}
 			
 	# format result - alive
@@ -89,7 +89,7 @@ if(sizeof($alive)==0) {
 	print "<div class='alert alert-info'>"._("No alive host found")."!</div>";
 	# errors?
 	if(isset($serr) && sizeof(@$serr)>0) {
-		print "<div class='alert alert-error'>"._("Errors occured during scan")."! (".sizeof($serr)." errors)</div>";
+		print "<div class='alert alert-danger'>"._("Errors occured during scan")."! (".sizeof($serr)." errors)</div>";
 	}
 }
 # found alive
@@ -129,15 +129,15 @@ else {
 		print "<td>$allports</td>";
 		//description
 		print "<td>";
-		print "	<input type='text' name='description$m'>";
+		print "	<input type='text' class='form-control input-sm' name='description$m'>";
 		print "	<input type='hidden' name='ip$m' value=".transform2long($ip).">";
 		print "</td>";
 		//hostname
 		print "<td>";
-		print "	<input type='text' name='dns_name$m' value='".@$dns."'>";
+		print "	<input type='text' class='form-control input-sm' name='dns_name$m' value='".@$dns."'>";
 		print "</td>";
 		//remove button
-		print 	"<td><a href='' class='btn btn-mini btn-danger resultRemove' data-target='result$m'><i class='icon-white icon-remove'></i></a></td>";
+		print 	"<td><a href='' class='btn btn-xs btn-danger resultRemove' data-target='result$m'><i class='fa fa-times'></i></a></td>";
 		print "</tr>";
 		
 		$m++;
@@ -153,7 +153,7 @@ else {
 	//submit
 	print "<tr>";
 	print "	<td colspan='4'>";
-	print "		<a href='' class='btn btn-small btn-success pull-right' id='saveScanResults' data-script='".$_REQUEST['pingType']."' data-subnetId='".$_REQUEST['subnetId']."'><i class='icon-white icon-plus'></i> "._("Add discovered hosts")."</a>";
+	print "		<a href='' class='btn btn-sm btn-success pull-right' id='saveScanResults' data-script='".$_REQUEST['pingType']."' data-subnetId='".$_REQUEST['subnetId']."'><i class='fa fa-plus'></i> "._("Add discovered hosts")."</a>";
 	print "	</td>";
 	print "</tr>";
 	

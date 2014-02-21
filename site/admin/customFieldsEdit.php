@@ -41,7 +41,7 @@ $fieldval = getFullFieldData($_POST['table'], $_POST['fieldName']);
 	<tr>
 		<td><?php print _('Name'); ?></td>
 		<td>	
-			<input type="text" name="name" value="<?php print $_POST['fieldName']; ?>" placeholder="<?php print _('Select field name'); ?>" <?php if($_POST['action'] == "delete") { print 'readonly'; } ?>>
+			<input type="text" name="name" class="form-control input-sm" value="<?php print $_POST['fieldName']; ?>" placeholder="<?php print _('Select field name'); ?>" <?php if($_POST['action'] == "delete") { print 'readonly'; } ?>>
 			
 			<input type="hidden" name="oldname" value="<?php print $_POST['oldname']; ?>">
 			<input type="hidden" name="action" value="<?php print $_POST['action']; ?>">
@@ -53,7 +53,7 @@ $fieldval = getFullFieldData($_POST['table'], $_POST['fieldName']);
 	<tr>
 		<td><?php print _('Description'); ?></td>
 		<td>	
-			<input type="text" name="Comment" value="<?php print @$fieldval['Comment']; ?>" placeholder="<?php print _('Enter comment for users'); ?>" <?php if($_POST['action'] == "delete") { print 'readonly'; } ?>>
+			<input type="text" name="Comment" class="form-control input-sm" value="<?php print @$fieldval['Comment']; ?>" placeholder="<?php print _('Enter comment for users'); ?>" <?php if($_POST['action'] == "delete") { print 'readonly'; } ?>>
 		</td>
 	</tr>
 	
@@ -73,8 +73,8 @@ $fieldval = getFullFieldData($_POST['table'], $_POST['fieldName']);
 <!-- footer -->
 <div class="pFooter">
 	<div class="btn-group">
-		<button class="btn btn-small hidePopups"><?php print _('Close'); ?></button>
-		<button class="btn btn-small <?php if($_POST['action']=="delete") { print "btn-danger"; } else { print "btn-success";} ?>" id="editcustomSubmit"><i class="icon-white <?php if($_POST['action']=="add") { print "icon-plus"; } else if ($_POST['action']=="delete") { print "icon-trash"; } else { print "icon-ok"; } ?>"></i> <?php print ucwords(_($_POST['action'])); ?></button>
+		<button class="btn btn-sm btn-default hidePopups"><?php print _('Close'); ?></button>
+		<button class="btn btn-sm btn-default <?php if($_POST['action']=="delete") { print "btn-danger"; } else { print "btn-success";} ?>" id="editcustomSubmit"><i class="fa <?php if($_POST['action']=="add") { print "fa-plus"; } else if ($_POST['action']=="delete") { print "fa-trash-o"; } else { print "fa-check"; } ?>"></i> <?php print ucwords(_($_POST['action'])); ?></button>
 	</div>
 	<!-- result -->
 	<div class="customEditResult"></div>
