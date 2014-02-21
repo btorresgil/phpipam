@@ -1,4 +1,4 @@
-version - 0.11
+version - 0.10
 
 	+ status - available, trash (preveri kako)
 	+ salting passwords
@@ -6,6 +6,11 @@ version - 0.11
 	+ custom device fields
 	
 	+ fix pingcheck script
+	+ check for pingpath in administration
+	+ subnets last child background
+	
+	+ delete confirmation
+	+ Nev version notification
 		
 
 features for next releases:

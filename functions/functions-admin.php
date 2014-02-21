@@ -1890,8 +1890,14 @@ function importCSVline ($line, $subnetId)
 	$query  = "insert into ipaddresses ";
 	$query .= "(`subnetId`, `ip_addr`, `state`, `description`, `dns_name`, `mac`, `owner`, `switch`, `port`, `note` $import[fieldName] ) ";
 	$query .= "values ";
-	$query .= "('$subnetId','".Transform2decimal( $line[0] )."', '$line[1]','$line[2]','$line[3]','$line[4]','$line[5]','$line[6]','$switch[id]','$line[8]' $import[fieldValue]);";
-		
+	$query .= "('$subnetId','".Transform2decimal( $line[0] )."', '$line[1]','$line[2]','$line[3]','$line[4]','$line[5]','$line[6]','$line[7]','$line[8]' $import[fieldValue]);";
+	
+/*
+	print "<pre>";
+	print_r($line);
+	die('alert alert-danger');
+*/
+	
 	/* set log details */
 	$log = prepareLogFromArray ($line);
 
@@ -2041,7 +2047,7 @@ function getCustomFields($table)
 		unset($res['id'], $res['username'], $res['password'], $res['groups'], $res['role'], $res['real_name'], $res['email'], $res['domainUser'], $res['lang'],$res['editDate'],$res['widgets'],$res['favourite_subnets']);
 	}
 	elseif($table == "switches") {
-		unset($res['id'], $res['hostname'], $res['ip_addr'], $res['type'], $res['vendor'], $res['model'], $res['version'], $res['description'], $res['sections'],$res['editDate']);
+		unset($res['id'], $res['hostname'], $res['ip_addr'], $res['type'], $res['vendor'], $res['model'], $res['version'], $res['description'], $res['sections'], $res['editDate']);
 	}
 	elseif($table == "subnets") {
 		unset($res['id'], $res['subnet'], $res['mask'], $res['sectionId'], $res['description'], $res['masterSubnetId']);
@@ -2050,7 +2056,7 @@ function getCustomFields($table)
 	}
 	elseif($table == "ipaddresses") {
 		unset($res['id'], $res['subnetId'], $res['ip_addr'], $res['description'], $res['dns_name'], $res['switch']);
-		unset($res['port'], $res['mac'], $res['owner'], $res['state'], $res['note'], $res['lastSeen'], $res['excludePing'], $res['EditDate']);		
+		unset($res['port'], $res['mac'], $res['owner'], $res['state'], $res['note'], $res['lastSeen'], $res['excludePing'], $res['editDate']);		
 	}
 	elseif($table == "vlans") {
 		unset($res['vlanId'], $res['name'], $res['number'], $res['description'],$res['editDate']);		
@@ -2065,46 +2071,8 @@ function getCustomFields($table)
  */
 function getCustomFieldsNumArr($table)
 {
-    global $db;                                                                      # get variables from config file
-    $database = new database($db['host'], $db['user'], $db['pass'], $db['name']); 
-    
-    /* first update request */
-    $query    = "show full columns from `$table`;";
-
-    /* execute */
-    try { $fields = $database->getArray( $query ); }
-    catch (Exception $e) { 
-        $error =  $e->getMessage(); 
-        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
-        return false;
-    } 
-  
-	/* return Field values only */
-	foreach($fields as $field) {
-		$res[$field['Field']]['name'] = $field['Field'];
-		$res[$field['Field']]['type'] = $field['Type'];
-	}
-	
-	/* unset standard fields */
-	if($table == "users") {
-		unset($res['id'], $res['username'], $res['password'], $res['groups'], $res['role'], $res['real_name'], $res['email'], $res['domainUser'], $res['lang'],$res['editDate'],$res['widgets']);
-	}
-	elseif($table == "switches") {
-		unset($res['id'], $res['hostname'], $res['ip_addr'], $res['type'], $res['vendor'], $res['model'], $res['version'], $res['description'], $res['sections'],$res['editDate']);
-	}
-	elseif($table == "subnets") {
-		unset($res['id'], $res['subnet'], $res['mask'], $res['sectionId'], $res['description'], $res['masterSubnetId']);
-		unset($res['vrfId'], $res['allowRequests'], $res['adminLock'], $res['vlanId'], $res['showName'],$res['permissions'],$res['editDate']);
-		unset($res['pingSubnet'], $res['isFolder']);
-	}
-	elseif($table == "ipaddresses") {
-		unset($res['id'], $res['subnetId'], $res['ip_addr'], $res['description'], $res['dns_name'], $res['switch']);
-		unset($res['port'], $res['mac'], $res['owner'], $res['state'], $res['note'], $res['lastSeen'], $res['excludePing'], $res['EditDate']);		
-	}
-	elseif($table == "vlans") {
-		unset($res['vlanId'], $res['name'], $res['number'], $res['description'],$res['editDate']);		
-	}
-		
+ 	$res = getCustomFields($table);
+ 		
 	/* reindex */
 	foreach($res as $line) {
 		$out[] = $line['name'];

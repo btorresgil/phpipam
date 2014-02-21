@@ -1,4 +1,4 @@
-== 0.98.002
+== 0.98.003
 	
 	New features:
 	----------------------------
@@ -46,6 +46,7 @@
 	+ Fixed apostophe in IP address description throws SQL error for scan results and XLS import;
 	+ Fixed requester email gets cut if longer than 32 chars;
 	+ Fixed admin folder edit appearing as subnet;
+	+ Fixed missing device/port in import;
 
 == 0.9
 
