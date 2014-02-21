@@ -55,6 +55,7 @@ $subnet = getSubnetDetailsById($_POST['subnetId']);
 	}
 
 	# print each group
+	if($groups) {
 	foreach($groups as $g) {
 		print "<tr>";
 		print "	<td>$g[g_name]</td>";
@@ -76,6 +77,11 @@ $subnet = getSubnetDetailsById($_POST['subnetId']);
 		
 		print "	</td>";
 		print "</tr>";
+	}
+	} else {
+		print "<tr>";
+		print "	<td colspan='2'><span class='alert alert-info'>"._('No groups available')."</span></td>";
+		print "</tr>";		
 	}
 	?>
      

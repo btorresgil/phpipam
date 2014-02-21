@@ -151,7 +151,8 @@ $section = getSectionDetailsById ($_POST['sectionId']);
 		# print for each group
 		$groups = getAllGroups();
 		$m = 0;
-		
+			
+		if($groups) {
 		foreach($groups as $g) {
 			# structure
 			print "<tr>";
@@ -179,6 +180,12 @@ $section = getSectionDetailsById ($_POST['sectionId']);
 			print "</tr>";			
 			
 			$m++;
+		}
+		} else {
+			print "<tr>";
+			print "<td>"._('Permissions')."</td>";
+			print "<td><div class='alert alert-info'>"._('No groups available')."</div></td>";
+			print "</tr>";
 		}
 		?>
 		

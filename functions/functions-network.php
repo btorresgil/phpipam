@@ -2860,12 +2860,18 @@ function pingHost ($ip, $count="1", $timeout = 1, $exit=false)
 	global $settings;
 	$pathPing = $settings['scanPingPath'];
 	
+	//verify ping path
+	if(!file_exists($pathPing)) {
+		$retval = 1000;
+	}
+	else {
 	// timeout is set differenylt on FreeBSD (-W in ms), on Linux (-W sec) and win (-I)
 	// so if you must add flag manually here after $count
 	
 	//set and execute
 	$cmd = "$pathPing -c $count -n $ip 1>/dev/null 2>&1";
-    exec($cmd, $output, $retval);
+    exec($cmd, $output, $retval);	
+	}
     
     //exit codes
     //	0 = online
@@ -2950,6 +2956,8 @@ function explainPingExit($code)
 		case 74:	$cName = "EX_IOERR";		break;
 		case 75:	$cName = "EX_TEMPFAIL";		break;
 		case 77:	$cName = "EX_NOPERM";		break;
+		
+		case 1000: 	$cName = "Invalid ping path"; break;
 	}
 	return $cName;
 }

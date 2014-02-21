@@ -4,6 +4,8 @@ version - 0.11
 	+ salting passwords
 	
 	+ custom device fields
+	
+	+ fix pingcheck script
 		
 
 features for next releases:

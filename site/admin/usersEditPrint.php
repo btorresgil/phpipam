@@ -188,7 +188,7 @@ else {
 		$ugroups = json_decode($user['groups'], true);
 		$ugroups = parseUserGroupsIds($ugroups);
 		
-		if(sizeof($groups) > 0) {
+		if($groups) {
 			foreach($groups as $g) {
 				# empty fix
 				if(sizeof($ugroups) > 0) {	
@@ -201,7 +201,7 @@ else {
 			}
 		}
 		else {
-			print _("No groups configured");
+			print "<div class='alert alert-info'>"._("No groups configured")."</div>";
 		}
 		
 		?>
