@@ -791,6 +791,9 @@ ul#subnets li.leaf.active i {
 	vertical-align: middle;
 	padding: 3px;
 }
+.table.ipaddresses td.narrow {
+	width: 1px;
+}
 .table.ipaddresses th.btn-actions,
 .table.ipaddresses td.btn-actions {
 /* 	width: 1px; */

@@ -44,9 +44,9 @@ else {
 isUserAuthenticated ();
 
 /* get all selected fields for IP print */
-$setFieldsTemp = getSelectedIPaddrFields();
+$setFields = getSelectedIPaddrFields();
 /* format them to array! */
-$setFields = explode(";", $setFieldsTemp);
+$setFields = explode(";", $setFields);
 
 /**
  * Get all ip addresses in subnet and subnet details!
@@ -62,15 +62,26 @@ if(sizeof($SubnetDetails) == 0) { die('<div class="alert alert-danger">'._('Subn
 /* get all selected fields */
 $myFields = getCustomFields('ipaddresses');
 $myFieldsSize = sizeof($myFields);
-	
+
+/* set size of selected fields */
+$selFieldsSize = sizeof($setFields);
+if(in_array('state', $setFields)) 	{ $selFieldsSize--; }
+
+/* fix for 0 */
+if($selFieldsSize==1 && strlen($setFields[0])==0) {
+	$selFieldsSize = 0;
+}
+
 /* set colspan */
-$colspan['unused'] = sizeof($setFields) + $myFieldsSize;
-$colspan['ipaddr'] = sizeof($setFields) + $myFieldsSize + 4;
-$colspan['dhcp']   = sizeof($setFields) + $myFieldsSize - 2;
+$colspan['empty']  = $selFieldsSize + $myFieldsSize +4;
+$colspan['unused'] = $selFieldsSize + $myFieldsSize +3;
+$colspan['dhcp']   = $selFieldsSize + $myFieldsSize;
 
 /* 
 if result not empty use first IP address in subnet to identify type 
 else use subnet
+
+we must count if we have some custom fields, if not remove from colspan!
 */
 $type = IdentifyAddress( $SubnetDetails['subnet'] );
 
@@ -86,9 +97,10 @@ foreach($myFields as $field) {
 	# unset if value == 0
 	if($sizeMyFields[$field['name']] == 0) {
 		unset($myFields[$field['name']]);
-		
-		$colspan['dhcp']--;							//dhcp span -1
+
+		$colspan['empty']--;
 		$colspan['unused']--;						//unused  span -1
+		$colspan['dhcp']--;							//dhcp span -1
 	}
 }
 
@@ -98,7 +110,6 @@ if($settings['dhcpCompress']==1) {
 	// compress DHCP ranges
 	$ipaddresses = compressDHCPranges ($ipaddresses);
 }
-
 
 /* For page repeats */
 $m = 1;
@@ -124,7 +135,6 @@ elseif(!is_numeric($_REQUEST['sPage']))							{ $_REQUEST['sPage'] = str_replace
 <?php if($sizeIP  > $pageLimit) { print " (<span class='stran'>"._('Page')." $_REQUEST[sPage]/$repeats</span>)"; }  ?>
 <?php
 # next / previous
-$colspanStran['unused'] = $colspan['unused']+1;
 if($sizeIP  > $pageLimit) { ?>
 <div class='btn-toolbar pull-right'>
 	<div class="btn-group">
@@ -171,10 +181,10 @@ if($sizeIP  > $pageLimit) {
 										  print "<th class='s_ipaddr'><a href='' data-id='ip_addr|$sort[directionNext]' class='sort' data-subnetId='$SubnetDetails[id]' rel='tooltip' data-container='body' title='"._('Sort by IP address')."'>"._('IP address')." "; if($sort['field'] == "ip_addr") 	print $icon;  print "</a></th>";
 	# hostname - mandatory
 										  print "<th><a href='' data-id='dns_name|$sort[directionNext]' class='sort' data-subnetId='$SubnetDetails[id]' rel='tooltip' data-container='body'  title='"._('Sort by hostname')."'				>"._('Hostname')." "; 	if($sort['field'] == "dns_name") 	print $icon;  print "</a></th>";
-	# MAC address	
-	if(in_array('mac', $setFields)) 	{ print "<th></th>"; }
 	# Description - mandatory
 										  print "<th><a href='' data-id='description|$sort[directionNext]' class='sort' data-subnetId='$SubnetDetails[id]' rel='tooltip' data-container='body'  title='"._('Sort by description')."'			>"._('Description')." "; if($sort['field'] == "description") print $icon;  print "</a></th>";
+	# MAC address	
+	if(in_array('mac', $setFields)) 	{ print "<th></th>"; }
 	# note
 	if(in_array('note', $setFields)) 	{ print "<th></th>"; }	
 	# switch
@@ -208,7 +218,7 @@ $statuses = explode(";", $settings['pingStatus']);
 # if no IP is configured only display free subnet!
 if (sizeof($ipaddresses) == 0) {
     $unused = FindUnusedIpAddresses ( Transform2decimal($SubnetParsed['network']), Transform2decimal($SubnetParsed['broadcast']), $type, 1, "networkempty", $SubnetDetails['mask'] );
-    print '<tr class="th"><td></td><td colspan="'. $colspan['unused'] .'" class="unused">'. $unused['ip'] . ' (' . reformatNumber ($unused['hosts']) .')</td><td colspan=2></td></tr>'. "\n";
+    print '<tr class="th"><td colspan="'. $colspan['empty'] .'" class="unused">'. $unused['ip'] . ' (' . reformatNumber ($unused['hosts']) .')</td></tr>'. "\n";
 }
 # print IP address
 else {
@@ -249,7 +259,7 @@ else {
 			    if ( $unused && ($sort['field'] == 'ip_addr') && $sort['direction'] == "asc" ) { 
 	        		print "<tr class='th'>";
 	        		print "	<td></td>";
-	        		print "	<td colspan='$colspan[ipaddr]' class='unused'>$unused[ip] ($unused[hosts])</td>";
+	        		print "	<td colspan='$colspan[unused]' class='unused'>$unused[ip] ($unused[hosts])</td>";
 	        		print "</tr>"; 
 	        	}
 	
@@ -270,9 +280,9 @@ else {
 				    print 		Transform2long( $ipaddress[$n]['ip_addr']).' - '.Transform2long( $ipaddress[$n]['stopIP'])." (".$ipaddress[$n]['numHosts'].")";
 				    print 		reformatIPState($ipaddress[$n]['state']);
 				    print "	</td>";
-	        		print "	<td>"._("DHCP range")."</td>";
-	        		print "	<td></td>";
+					print "	<td>"._("DHCP range")."</td>";
 	        		print "	<td>".$ipaddress[$n]['description']."</td>";
+	        		if($colspan['dhcp']!=0) 
 	        		print "	<td colspan='$colspan[dhcp]' class='unused'></td>";
 				    // tr ends after!
 
@@ -318,20 +328,22 @@ else {
 						$dnsResolved['class'] = "";
 						$dnsResolved['name']  = $ipaddress[$n]['dns_name'];
 					}														  print "<td class='$dnsResolved[class] hostname'>$dnsResolved[name]</td>";  		
-		
-					# Print mac address icon!
-					if(in_array('mac', $setFields)) {
-						if(!empty($ipaddress[$n]['mac'])) 					{ print "<td class='mac'><i class='info fa fa-gray fa-sitemap' rel='tooltip' data-container='body' title='"._('MAC').": ".$ipaddress[$n]['mac']."'></i></td>"; }
-						else 												{ print "<td class='mac'></td>"; }
-					}
 				
 					# print description - mandatory
 		        													  		  print "<td class='description'>".$ipaddress[$n]['description']."</td>";	
 				
+		
+					# Print mac address icon!
+					if(in_array('mac', $setFields)) {
+						if(!empty($ipaddress[$n]['mac'])) 					{ print "<td class='narrow'><i class='info fa fa-gray fa-sitemap' rel='tooltip' data-container='body' title='"._('MAC').": ".$ipaddress[$n]['mac']."'></i></td>"; }
+						else 												{ print "<td class='narrow'></td>"; }
+					}
+
+
 		       		# print info button for hover
 		       		if(in_array('note', $setFields)) {
-		        		if(!empty($ipaddress[$n]['note'])) 					{ print "<td><i class='fa fa-gray fa-comment-o' rel='tooltip' data-container='body' data-html='true' title='".str_replace("\n", "<br>",$ipaddress[$n]['note'])."'></td>"; }
-		        		else 												{ print "<td></td>"; }
+		        		if(!empty($ipaddress[$n]['note'])) 					{ print "<td class='narrow'><i class='fa fa-gray fa-comment-o' rel='tooltip' data-container='body' data-html='true' title='".str_replace("\n", "<br>",$ipaddress[$n]['note'])."'></td>"; }
+		        		else 												{ print "<td class='narrow'></td>"; }
 		        	}
 			
 		        	# print switch
@@ -423,7 +435,6 @@ else {
 
 <?php
 # next / previous
-$colspanStran['unused'] = $colspan['unused']+1;
 if($sizeIP  > $pageLimit) { ?>
 <hr>
 <div class='btn-toolbar pull-right'>
