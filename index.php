@@ -106,7 +106,11 @@ else								 		{ $url = "http://$_SERVER[SERVER_NAME]".BASE; }
 <div class="wrapper">
 
 <!-- jQuery error -->
-<div class="jqueryError">jQuery error!<div class="jqueryErrorText"></div><br><a href="" class="btn btn-sm btn-default" id="hideError" style="margin-top:10px;">Hide</a></div>
+<div class="jqueryError">
+	<div class='alert alert-danger' style="width:400px;margin:auto">jQuery error!</div>
+	<div class="jqueryErrorText"></div><br>
+	<a href="" class="btn btn-sm btn-default" id="hideError" style="margin-top:0px;">Hide</a>
+</div>
 
 <!-- Popups -->
 <div id="popupOverlay"></div>
