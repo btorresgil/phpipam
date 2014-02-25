@@ -202,7 +202,12 @@ $langs = getLanguages ();
 <!-- Ping path -->
 <tr>
 	<td class="title"><?php print _('Ping path'); ?></td>
-	<td>
+	<?php
+	//verify that ping file exists!
+	if(!file_exists($settings['scanPingPath']))	{ $class="danger"; }
+	else										{ $class=""; }
+	?>
+	<td class="<?php print $class; ?>">
 		<input type="text" class="form-control input-sm" name="scanPingPath" value="<?php print $settings['scanPingPath']; ?>">
 	</td>
 	<td class="info2">

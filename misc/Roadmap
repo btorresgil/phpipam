@@ -6,7 +6,6 @@ version - 0.10
 	+ custom device fields
 	
 	+ fix pingcheck script
-	+ check for pingpath in administration
 	+ subnets last child background
 	
 	+ delete confirmation

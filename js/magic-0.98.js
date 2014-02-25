@@ -651,8 +651,16 @@ $('form#ipCalc input.reset').click(function () {
 
 
 /* search */
-//submit form
+//submit form - topmenu
 $('.searchSubmit').click(function () {
+    showSpinner();
+    var ip = $('.searchInput').val();
+    //update search page
+    window.location = "tools/search/" + ip;
+    return false;
+});
+//submit form - topmenu
+$('form#userMenuSearch').submit(function () {
     showSpinner();
     var ip = $('.searchInput').val();
     //update search page

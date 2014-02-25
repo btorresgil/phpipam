@@ -703,9 +703,8 @@ ul#subnets li.active {
 	text-align: left;
 	padding-left: 3px;
 	
-	background: red;
 
-	background: #F1FAFE;
+	background-color: #F1FAFE;
 
 	border-top: 1px solid #DAE3EA;
 	border-bottom: 1px solid  #DAE3EA;

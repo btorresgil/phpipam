@@ -14,10 +14,13 @@ $userDetails = getActiveUserDetails ();
 <div class="container-fluid">
 
 	<div class="input-group" id="searchForm">
+		<form id="userMenuSearch">
 		<input type="text" class="form-control searchInput input-sm" name='ip' placeholder='<?php print _('Search string'); ?>' type='text' value='<?php print $_REQUEST['ip']; ?>'>
+		</form>
 		<span class="input-group-btn">
         	<button class="btn btn-default btn-sm searchSubmit" type="button"><?php print _('Search'); ?></button>
 		</span>
+	
 	</div>
 
 	<!-- settings -->
