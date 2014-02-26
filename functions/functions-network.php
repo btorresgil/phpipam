@@ -2855,7 +2855,7 @@ function getIPaddressesBySwitchName ( $name )
 /**
  * Ping host
  */
-function pingHost ($ip, $count="1", $timeout = 1, $exit=false)
+function pingHost ($ip, $count=1, $timeout = 1, $exit=false)
 {
 	global $settings;
 	$pathPing = $settings['scanPingPath'];

@@ -67,7 +67,7 @@ $settings = getallSettings();
 		}
 	}
 	else {
-		print "<tr><td colspan='4'><div class='alert alert-warning alert-nomargin'>"._("No Apps available")."!</div></td></tr>";
+		print "<tr><td colspan='4'><div class='alert alert-info alert-nomargin'>"._("No Apps available")."!</div></td></tr>";
 	}
 	
 	?>
@@ -102,5 +102,5 @@ $settings = getallSettings();
 	<pre><?php print file_get_contents(dirname(__FILE__) . '/../../api/README'); ?></pre>
 
 <?php } else { ?>
-<div class="alert alert-warning"><?php print _('Please enable API module under server management'); ?></div>
+<div class="alert alert-info"><?php print _('Please enable API module under server management'); ?></div>
 <?php } ?>

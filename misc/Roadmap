@@ -1,11 +1,10 @@
-version - 0.10
+version - 1.1
 
 	+ status - available, trash (preveri kako)
 	+ salting passwords
 	
 	+ custom device fields
 	
-	+ fix pingcheck script
 	+ subnets last child background
 	
 	+ delete confirmation

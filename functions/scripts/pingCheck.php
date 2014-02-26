@@ -101,7 +101,7 @@ else {
 
 				//start new thread
 	            $threads[$z] = new Thread( 'pingHost' );
-	            $threads[$z]->start( Transform2long($addresses[$z]['ip_addr']), $count, true );
+	            $threads[$z]->start( Transform2long($addresses[$z]['ip_addr']), $count, $timeout, true );
 	            $z++;				//next index
 			}
         }
@@ -114,7 +114,7 @@ else {
                 	$exitCode = $thread->getExitCode();
 					
                 	//online, check diff
-                	if($exitCode == 0) {
+                	if($exitCode == "0") {
 	                	//update IP status
 						@updateLastSeen($addresses[$index]['id']);
 						//set new seen

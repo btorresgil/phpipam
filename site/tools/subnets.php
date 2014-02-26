@@ -61,7 +61,7 @@ foreach ($sections as $section) {
 
 		# no subnets
 		if(sizeof($subnets) == 0) {
-			print "<tr><td colspan='$colSpan'><div class='alert alert-warning'>"._('Section has no subnets')."!</div></td></tr>";
+			print "<tr><td colspan='$colSpan'><div class='alert alert-info'>"._('Section has no subnets')."!</div></td></tr>";
 		}	
 		else {
 			$subnetPrint = printToolsSubnets($subnets, $custom);

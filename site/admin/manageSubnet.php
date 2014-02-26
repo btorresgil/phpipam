@@ -93,7 +93,7 @@ if(sizeof($sections) > 0) {
 
 		# no subnets
 		if(sizeof($subnets) == 0) {
-			print "<tr><td colspan='$colCount'><div class='alert alert-warning'>"._('Section has no subnets')."!</div></td></tr>";
+			print "<tr><td colspan='$colCount'><div class='alert alert-info'>"._('Section has no subnets')."!</div></td></tr>";
 		}	
 		else {
 			# subnets
