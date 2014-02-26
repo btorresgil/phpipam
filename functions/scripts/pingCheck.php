@@ -112,8 +112,9 @@ else {
                 if( ! $thread->isAlive() ) {
                 	//get exit code
                 	$exitCode = $thread->getExitCode();
+					
                 	//online, check diff
-                	if($exitCode == "0") {
+                	if($exitCode == 0) {
 	                	//update IP status
 						@updateLastSeen($addresses[$index]['id']);
 						//set new seen

@@ -19,7 +19,7 @@ print "<hr>";
 
 
 /* for each VRF check which subnet has it configured */
-if(!$vrfs) { print "<div class='alert alert-warning'>"._('No VRFs configured')."!</div>"; }
+if(!$vrfs) { print "<div class='alert alert-info'>"._('No VRFs configured')."!</div>"; }
 else {
 	# print table
 	print "<table id='vrf' class='table table-striped table-condensed table-top'>";

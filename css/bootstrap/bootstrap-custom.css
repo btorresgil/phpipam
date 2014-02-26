@@ -823,6 +823,8 @@ ul#subnets li.leaf.active i {
 	
 	border-bottom: none;
 	border-right: 1px solid #dddddd;
+	
+	font-weight: bold;
 }
 .ipaddress_subnet th,
 .ipaddress_subnet td {
@@ -1114,11 +1116,6 @@ table#switchMainTable button {
 	margin-right: 10px;
 }
 
-table#vrf td .alert {
-	padding-top: 0px;
-	padding-bottom: 0px;
-	margin: 0px;
-}
 
 table#hosts tr.same td {
 	border: none;
@@ -1259,6 +1256,9 @@ table#manageSubnets td:last-child() {
 table#manageSubnets tr.subnet-title th {
 	border-top: none;
 	padding-top: 10px;
+}
+table#manageSubnets div.alert {
+	margin-bottom: 0px;
 }
 table.editSubnetDetails td:nth-child(1) {
 	white-space: nowrap;

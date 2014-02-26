@@ -1,4 +1,4 @@
-== 0.98.003
+== 0.98.007
 	
 	New features:
 	----------------------------
@@ -22,6 +22,7 @@
 	+ Mail settings can now be set on gui (localhost / smtp);
 	+ Popup windows are now draggable;
 	+ VLAN adding in the fly enhancements;
+	+ Master section now shows all subnets in subsections;
 	
 	+ Favourite subnets widget;
 	+ IP requests widget;
