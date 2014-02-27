@@ -224,7 +224,7 @@ foreach ($result as $ip) {
 	if(in_array('switch', $setFields)) {
 		if(strlen($ip['switch'])>0 && $ip['switch']!=0) {
 			# get switch
-			$switch = getSwitchDetailsById($ip['switch']);
+			$switch = getDeviceDetailsById($ip['switch']);
 			$ip['switch'] = $switch['hostname'];
 		}
 	$worksheet->write($lineCount, $x, $ip['switch']);						$x++;

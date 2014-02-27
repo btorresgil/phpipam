@@ -1139,3 +1139,16 @@ magstr ""
 #: site/sections.php
 msgid "Database errors detected"
 msgstr ""
+
+
+### 0.99.002 ###
+
+#: site/tools/devicesPrint.php
+msgid "Show all hosts"
+msgstr ""
+
+msgid "No hosts belonging to this device"
+msgstr ""
+
+msgid "Sort by vendor"
+msgstr ""

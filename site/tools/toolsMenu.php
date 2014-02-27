@@ -1,14 +1,14 @@
 <?php
 
 /**
- * Script to display switches
+ * Script to display menu
  *
  */
 
 /* verify that user is authenticated! */
 isUserAuthenticated ();
 
-/* get all unique switches */
+/* get settings */
 $settings = getAllSettings();
 
 /* get all selected fields for IP print */

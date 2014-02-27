@@ -149,7 +149,7 @@ function verifySwitchByName ($hostname)
     global $db;                                                                      # get variables from config file
     /* set check query and get result */
     $database = new database ($db['host'], $db['user'], $db['pass'], $db['name']);
-    $query = 'select * from `switches` where `hostname` = "'. $hostname .'";';
+    $query = 'select * from `devices` where `hostname` = "'. $hostname .'";';
 
     /* execute */
     try { $role = $database->getRow( $query ); }
@@ -168,40 +168,14 @@ function verifySwitchByName ($hostname)
 
 
 /**
- * Verify that switch exists
+ * Get device details by ID
  */
-function verifySwitchById ($id)
+function getDeviceById ($deviceid)
 {
     global $db;                                                                      # get variables from config file
     /* set check query and get result */
     $database = new database ($db['host'], $db['user'], $db['pass'], $db['name']);
-    $query = 'select * from `switches` where `id` = "'. $id .'";';
-
-    /* execute */
-    try { $role = $database->getRow( $query ); }
-    catch (Exception $e) { 
-        $error =  $e->getMessage(); 
-        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
-        return false;
-    } 
-
-    /* close database connection */
-    $database->close();
-    
-    /* return true */
-    return true;
-}
-
-
-/**
- * Get Switch details by ID
- */
-function getSwitchById ($switchId)
-{
-    global $db;                                                                      # get variables from config file
-    /* set check query and get result */
-    $database = new database ($db['host'], $db['user'], $db['pass'], $db['name']);
-    $query = 'select * from `switches` where `id` = "'. $switchId .' limit 1";';
+    $query = "SELECT * from `devices` LEFT JOIN `deviceTypes` ON `devices`.`type` = `deviceTypes`.`tid` where `devices`.`id` = '$deviceid' limit 1;";
     
     /* execute */
     try { $switch = $database->getArray( $query ); }
@@ -2840,6 +2814,31 @@ function getIPaddressesBySwitchName ( $name )
 }
 
 
+/**
+ * count all avaialble devices
+ */
+function countIPaddressesBySwitchId ( $id ) 
+{
+    global $db;                                                                      # get variables from config file
+    $database    = new database($db['host'], $db['user'], $db['pass'], $db['name']); 
+    
+    /* get all vlans, descriptions and subnets */
+    if(is_null($id))	{ $query = 'SELECT count(*) as `count` FROM `ipaddresses` where `switch` IS NULL or `switch` = 0;'; }
+	else				{ $query = 'SELECT count(*) as `count` FROM `ipaddresses` where `switch` = "'. $id .'";'; }
+
+    /* execute */
+    try { $ip = $database->getArray( $query ); }
+    catch (Exception $e) { 
+        $error =  $e->getMessage(); 
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
+        return false;
+    }   
+    
+    /* return vlans */
+    return $ip[0]['count'];
+}
+
+
 
 
 
@@ -3284,9 +3283,9 @@ function writeChangelog($ctype, $action, $result, $old, $new)
 					//device change
 					elseif($k == 'switch') {
 						if($old[$k] == 0)			{ $old[$k] = "None"; }
-						elseif($old[$k] != "NULL") 	{ $dev = getSwitchDetailsById($old[$k]);	$old[$k] = $dev['hostname']; }					
+						elseif($old[$k] != "NULL") 	{ $dev = getDeviceDetailsById($old[$k]);	$old[$k] = $dev['hostname']; }					
 						if($v == 0)					{ $v = "None"; }
-						if($v 	 	!= "NULL")		{ $dev = getSwitchDetailsById($v);			$v 		 = $dev['hostname'];  }
+						if($v 	 	!= "NULL")		{ $dev = getDeviceDetailsById($v);			$v 		 = $dev['hostname'];  }
 					}
 					//vlan
 					elseif($k == 'vlanId') {

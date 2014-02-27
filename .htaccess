@@ -67,8 +67,8 @@ RewriteRule ^tools/changelog/(.*)/(.*)/$ index.php?page=tools&toolsId=changelog&
 RewriteRule ^tools/changelog/(.*)/$ index.php?page=tools&toolsId=changelog&climit=$1 [L]
 # search override
 RewriteRule ^tools/search/(.*)$ index.php?page=tools&toolsId=search&ip=$1 [L]
-# hosts override
-RewriteRule ^tools/hosts/(.*)$ index.php?page=tools&toolsId=hosts&hostname=$1 [L]
+# devices override
+RewriteRule ^tools/devices/hosts/(.*)$ index.php?page=tools&toolsId=devices&deviceid=$1 [L]
 # tools
 RewriteRule ^tools/(.*)/$ index.php?page=tools&toolsId=$1 [L]
 RewriteRule ^tools/$ index.php?page=tools&toolsId=showAll [L]

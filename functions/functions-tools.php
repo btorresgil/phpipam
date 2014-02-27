@@ -1054,20 +1054,21 @@ function acceptIPrequest($request)
 
 
 
-/* @switch functions ------------------- */
+/* @device functions ------------------- */
 
 
 
 /**
  * Get all unique devices
  */
-function getAllUniqueSwitches () 
+function getAllUniqueDevices ($orderby = "hostname", $direction = "asc") 
 {
     global $db;                                                                      # get variables from config file
     $database    = new database($db['host'], $db['user'], $db['pass'], $db['name']); 
     
     /* get all vlans, descriptions and subnets */
-    $query   = 'SELECT `hostname`,`id`,`sections` FROM `switches` order by `hostname` ASC;';
+    $query   = "select * from `devices` as `d`, `deviceTypes` as `t` where `d`.`type` = `t`.`tid` order by `d`.`$orderby` $direction;";
+    $query   = "SELECT * from `devices` LEFT JOIN `deviceTypes` ON `devices`.`type` = `deviceTypes`.`tid` order by `devices`.`$orderby` $direction;";	
 
     /* execute */
     try { $devices = $database->getArray( $query ); }
@@ -1083,43 +1084,43 @@ function getAllUniqueSwitches ()
 
 
 /**
- * Get switch details by hostname
+ * Get all unique devices - filter
  */
-function getSwitchDetailsByHostname($hostname) 
+function getAllUniqueDevicesFilter ($field, $search, $orderby = "hostname", $direction = "asc") 
 {
     global $db;                                                                      # get variables from config file
-    $database    = new database($db['host'], $db['user'], $db['pass'], $db['name']); 
+    $database    = new database($db['host'], $db['user'], $db['pass'], $db['name']);     
     
-    /* get all vlans, descriptions and subnets */
-    $query = 'SELECT * FROM `switches` where `hostname` = "'. $hostname .'" limit 1;';
+    /*query */
+    if($field == "type")	{ $query   = "select * from `devices` as `d`, `deviceTypes` as `t` where `d`.`type` = `t`.`tid` and `t`.`tname` like '%$search%' order by `d`.`$orderby` $direction;"; }
+    else 					{ $query   = "select * from `devices` as `d`, `deviceTypes` as `t` where `d`.`type` = `t`.`tid` and `d`.`$field` like '%$search%' order by `d`.`$orderby` $direction;"; }
 
     /* execute */
-    try { $ip = $database->getArray( $query ); }
+    try { $devices = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
         print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
     } 
     
-    /* return details */
-    if($ip) { return $ip[0]; }
-    else 	{ return false; }
+    /* return unique devices */
+    return $devices;
 }
 
 
 /**
- * Get switch details by id
+ * Get device details by id
  */
-function getSwitchDetailsById($id) 
+function getDeviceDetailsById($id) 
 {
     global $db;                                                                      # get variables from config file
     $database    = new database($db['host'], $db['user'], $db['pass'], $db['name']); 
     
     /* get all vlans, descriptions and subnets */
-    $query = 'SELECT * FROM `switches` where `id` = "'. $id .'";';
+    $query = 'SELECT * FROM `devices` where `id` = "'. $id .'";';
 
     /* execute */
-    try { $switch = $database->getArray( $query ); }
+    try { $device = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
         print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
@@ -1127,9 +1128,59 @@ function getSwitchDetailsById($id)
     }  
     
     /* return details */
-    if($switch) { return $switch[0]; }
+    if($device) { return $device[0]; }
     else 		{ return false; }
 }
+
+
+/**
+ * Get all device types
+ */
+function getAllDeviceTypes () 
+{
+    global $db;                                                                      # get variables from config file
+    $database    = new database($db['host'], $db['user'], $db['pass'], $db['name']); 
+    
+    /* get all vlans, descriptions and subnets */
+    $query   = "select * from `deviceTypes`;";
+
+    /* execute */
+    try { $devices = $database->getArray( $query ); }
+    catch (Exception $e) { 
+        $error =  $e->getMessage(); 
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
+        return false;
+    } 
+    
+    /* return unique devices */
+    return $devices;
+}
+
+
+/**
+ * Get type details by id
+ */
+function getTypeDetailsById($id) 
+{
+    global $db;                                                                      # get variables from config file
+    $database    = new database($db['host'], $db['user'], $db['pass'], $db['name']); 
+    
+    /* get all vlans, descriptions and subnets */
+    $query = 'SELECT * FROM `deviceTypes` where `tid` = '. $id .';';
+
+    /* execute */
+    try { $device = $database->getArray( $query ); }
+    catch (Exception $e) { 
+        $error =  $e->getMessage(); 
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
+        return false;
+    }  
+    
+    /* return details */
+    if($device) { return $device[0]; }
+    else 		{ return false; }
+}
+
 
 
 
@@ -1173,15 +1224,38 @@ function fetchInstructions ()
 function getLatestPHPIPAMversion() 
 {
 	/* fetch page */
-	$handle = fopen("http://phpipam.net/phpipamversion.php", "r");
-	while (!feof($handle)) {
-		$version = fgets($handle);		
+	$handle = @fopen("http://phpipam.net/phpipamversion.php", "r");
+	if($handle) {
+		while (!feof($handle)) {
+			$version = fgets($handle);		
+		}
+		fclose($handle);
 	}
-	fclose($handle);
 	
 	/* return version */
 	if(is_numeric($version)) 	{ return $version; }
 	else 						{ return false; }
+}
+
+
+/**
+ *	update version check time
+ */
+function updatePHPIPAMversionCheckTime()
+{
+    global $db;                                                                      # get variables from config file
+    $database    = new database($db['host'], $db['user'], $db['pass'], $db['name']);     
+	$query 		 = "update `settings` set `vcheckDate` = '".date("Y-m-d H:i:s")."';";
+	
+
+    /* execute */
+    try { $database->executeQuery($query); }
+    catch (Exception $e) {
+    	$error =  $e->getMessage();
+	}
+
+    /* return result */
+    return true;
 }
 
 

@@ -7,6 +7,9 @@
 /* verify that user is authenticated! */
 isUserAuthenticated ();
 
+/* check if admin */
+if(checkAdmin())	{ $admin = true; }
+
 /* get all VLANs and subnet descriptions */
 $vlans = getAllVlans (true);
 
@@ -15,7 +18,11 @@ $custom = getCustomFields('vlans');
 
 # title
 print "<h4>"._('Available VLANs:')."</h4>";
-print "<hr><br>";
+print "<hr>";
+
+if($admin) {
+	print "<a class='btn btn-sm btn-default' href='administration/manageVLANs/' data-action='add'  data-switchid='' style='margin-bottom:10px;'><i class='fa fa-pencil'></i> ". _('Manage')."</a>";
+}
 
 # table
 print "<table id='vlans' class='table table-striped table-condensed table-top'>";

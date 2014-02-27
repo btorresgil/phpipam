@@ -118,11 +118,11 @@ $myFieldsSize = sizeof($myFields);
 				<option disabled><?php print _('Select device'); ?>:</option>
 				<option value="" selected><?php print _('None'); ?></option>
 				<?php
-				$switches = getAllUniqueSwitches();
+				$devices = getAllUniqueDevices();
 		
-				foreach($switches as $switch) {
-					if($switch['id'] == $details['switch']) { print '<option value="'. $switch['id'] .'" selected>'. $switch['hostname'] .'</option>'. "\n"; }
-					else 									{ print '<option value="'. $switch['id'] .'">'. $switch['hostname'] .'</option>'. "\n";			 }
+				foreach($devices as $device) {
+					if($device['id'] == $details['switch']) { print '<option value="'. $device['id'] .'" selected>'. $device['hostname'] .'</option>'. "\n"; }
+					else 									{ print '<option value="'. $device['id'] .'">'. $device['hostname'] .'</option>'. "\n";			 }
 				}
 				?>
 			</select>

@@ -1208,6 +1208,20 @@ function setUpdateSectionQuery ($update)
             $query .= "delete from `ipaddresses` where `subnetId` = '$subnet[id]';"."\n";
             }
         }
+        
+        # if it has subsections delete all subsections and subnets/ip addresses
+        if(sizeof($subsections = getAllSubSections($sectionId))>0) {
+	    	foreach($subsections as $ss) {
+		    	$query .= "delete from `sections` where `id` = '$ss[id]';"."\n";
+		    	$query .= "delete from `subnets` where `sectionId` = '$ss[id]';"."\n";
+		    	$ssubnets = fetchSubnets ( $ss['id'] );
+				if (sizeof($ssubnets) != 0) {
+		            foreach ($ssubnets as $subnet) {
+		            $query .= "delete from `ipaddresses` where `subnetId` = '$subnet[id]';"."\n";
+		            }
+		        }
+	    	}
+        }
     }
     
     /* return query */
@@ -1270,22 +1284,22 @@ function parseSectionPermissions($permissions)
 
 
 
-/* @switch functions ---------------- */
+/* @device functions ---------------- */
 
 
 /**
- * Update switch details
+ * Update device details
  */
-function updateSwitchDetails($switch)
+function updateDeviceDetails($device)
 {
     global $db;                                                                      # get variables from config file
     $database = new database($db['host'], $db['user'], $db['pass'], $db['name']); 
     
     /* set querry based on action */
-    if($switch['action'] == "add") {
+    if($device['action'] == "add") {
 
         # custom fields
-        $myFields = getCustomFields('switches');
+        $myFields = getCustomFields('devices');
         $myFieldsInsert['query']  = '';
         $myFieldsInsert['values'] = '';
 	
@@ -1293,61 +1307,102 @@ function updateSwitchDetails($switch)
 			/* set inserts for custom */
 			foreach($myFields as $myField) {			
 				$myFieldsInsert['query']  .= ', `'. $myField['name'] .'`';
-				$myFieldsInsert['values'] .= ", '". $switch[$myField['name']] . "'";
+				$myFieldsInsert['values'] .= ", '". $device[$myField['name']] . "'";
 			}
 		}
 
-    	$query  = 'insert into `switches` '. "\n";
+    	$query  = 'insert into `devices` '. "\n";
     	$query .= '(`hostname`,`ip_addr`, `type`, `vendor`,`model`,`version`,`description`,`sections` '.$myFieldsInsert['query'].') values '. "\n";
-   		$query .= '("'. $switch['hostname'] .'", "'. $switch['ip_addr'] .'", "'.$switch['type'].'", "'. $switch['vendor'] .'", '. "\n";
-   		$query .= ' "'. $switch['model'] .'", "'. $switch['version'] .'", "'. $switch['description'] .'", "'. $switch['sections'] .'" '. $myFieldsInsert['values'] .');'. "\n";
+   		$query .= '("'. $device['hostname'] .'", "'. $device['ip_addr'] .'", "'.$device['type'].'", "'. $device['vendor'] .'", '. "\n";
+   		$query .= ' "'. $device['model'] .'", "'. $device['version'] .'", "'. $device['description'] .'", "'. $device['sections'] .'" '. $myFieldsInsert['values'] .');'. "\n";
     }
-    else if($switch['action'] == "edit") {
+    else if($device['action'] == "edit") {
 
        # custom fields
-        $myFields = getCustomFields('switches');
+        $myFields = getCustomFields('devices');
         $myFieldsInsert['query']  = '';
 	
         if(sizeof($myFields) > 0) {
 			/* set inserts for custom */
 			foreach($myFields as $myField) {			
-				$myFieldsInsert['query']  .= ', `'. $myField['name'] .'` = "'.$switch[$myField['name']].'" ';
+				$myFieldsInsert['query']  .= ', `'. $myField['name'] .'` = "'.$device[$myField['name']].'" ';
 			}
 		}
 
-    	$query  = 'update `switches` set '. "\n";    
-    	$query .= '`hostname` = "'. $switch['hostname'] .'", `ip_addr` = "'. $switch['ip_addr'] .'", `type` = "'. $switch['type'] .'", `vendor` = "'. $switch['vendor'] .'", '. "\n";    
-    	$query .= '`model` = "'. $switch['model'] .'", `version` = "'. $switch['version'] .'", `description` = "'. $switch['description'] .'", '. "\n";    
-    	$query .= '`sections` = "'. $switch['sections'] .'" '. "\n"; 
+    	$query  = 'update `devices` set '. "\n";    
+    	$query .= '`hostname` = "'. $device['hostname'] .'", `ip_addr` = "'. $device['ip_addr'] .'", `type` = "'. $device['type'] .'", `vendor` = "'. $device['vendor'] .'", '. "\n";    
+    	$query .= '`model` = "'. $device['model'] .'", `version` = "'. $device['version'] .'", `description` = "'. $device['description'] .'", '. "\n";    
+    	$query .= '`sections` = "'. $device['sections'] .'" '. "\n"; 
     	$query .= $myFieldsInsert['query']; 
-    	$query .= 'where `id` = "'. $switch['switchId'] .'";'. "\n";    
+    	$query .= 'where `id` = "'. $device['switchId'] .'";'. "\n";    
     }
-    else if($switch['action'] == "delete") {
-    	$query  = 'delete from `switches` where id = "'. $switch['switchId'] .'";'. "\n";
+    else if($device['action'] == "delete") {
+    	$query  = 'delete from `devices` where id = "'. $device['switchId'] .'";'. "\n";
     }
 
     /* prepare log */ 
-    $log = prepareLogFromArray ($switch);
+    $log = prepareLogFromArray ($device);
     
     /* execute */
     try { $res = $database->executeQuery( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
-       	updateLogTable ('Switch ' . $switch['action'] .' failed ('. $switch['hostname'] . ')'.$error, $log, 2);
+       	updateLogTable ('Device ' . $device['action'] .' failed ('. $device['hostname'] . ')'.$error, $log, 2);
     	return false;
     } 
     
     /* success */
-    updateLogTable ('Switch ' . $switch['action'] .' success ('. $switch['hostname'] . ')', $log, 0);
+    updateLogTable ('Device ' . $device['action'] .' success ('. $device['hostname'] . ')', $log, 0);
     return true;
 }
 
 
 /**
- * reformat sections for switches!
+ * Update device details
+ */
+function updateDevicetypeDetails($device)
+{
+    global $db;                                                                      # get variables from config file
+    $database = new database($db['host'], $db['user'], $db['pass'], $db['name']); 
+    
+    /* set querry based on action */
+    if($device['action'] == "add") 			{ $query  = "insert into `deviceTypes` (`tname`,`tdescription`) values ('$device[tname]', '$device[tdescription]');"; }
+    else if($device['action'] == "edit") 	{ $query  = "update `deviceTypes` set `tname` = '$device[tname]', `tdescription` = '$device[tdescription]' where `tid` = $device[tid]"; }
+    else if($device['action'] == "delete") 	{ $query  = "delete from `deviceTypes` where `tid` = $device[tid];"; }
+
+    /* prepare log */ 
+    $log = prepareLogFromArray ($device);
+    
+    /* execute */
+    try { $res = $database->executeQuery( $query ); }
+    catch (Exception $e) { 
+        $error =  $e->getMessage(); 
+        print $error;
+       	updateLogTable ("Device $device[action] failed ($device[tname]) $error", $log, 2);
+    	return false;
+    } 
+    
+    /* if delete we need to null type in devices! */
+    if($device['action'] == "delete") {
+	    $query = "update `devices` set `type` = NULL where `type` = $device[tid];";
+	    try { $res = $database->executeQuery( $query ); }
+	    catch (Exception $e) { 
+	        $error =  $e->getMessage(); 
+	    	print "<div class='alert alert-danger'>$e</div>";;
+	    }
+    }
+    
+    /* success */
+    updateLogTable ("Device $device[action] success ($device[tname])", $log, 0);
+    return true;
+}
+
+
+/**
+ * reformat sections for devices!
  *		sections are separated with ;
  */
-function reformatSwitchSections ($sections) {
+function reformatDeviceSections ($sections) {
 
 	if(sizeof($sections != 0)) {
 	
@@ -1375,64 +1430,52 @@ function reformatSwitchSections ($sections) {
 
 
 /**
- * Update IP address list when switch hostname changes
+ * get switch type
  */
-function updateIPaddressesOnSwitchChange($old, $new) 
+function getDeviceTypes() 
 {
     global $db;                                                                      # get variables from config file
     $database = new database($db['host'], $db['user'], $db['pass'], $db['name']); 
-    
-    /* get all vlans, descriptions and subnets */
-    $query = 'update `ipaddresses` set `switch` = "'. $new .'" where `switch` = "'. $old .'";';
-     
+	
+	$query = "select * from `deviceTypes`;";
+
     /* execute */
-    try { $switch = $database->executeQuery( $query ); }
+    try { $devices = $database->getArray( $query ); }
     catch (Exception $e) { 
         $error =  $e->getMessage(); 
         print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
         return false;
+    } 
+    
+    /* rekey */
+    foreach($devices as $d) {
+	    $devices2[$d['tid']] = _("$d[tname]"); 
     }
     
-    /* return success */
-    return true;
-}
-
-
-/**
- * get switch type
- */
-function getSwitchTypes() 
-{
-	$res[0] = _("Switch");
-	$res[1] = _("Router");
-	$res[2] = _("Firewall");
-	$res[3] = _("Hub");
-	$res[4] = _("Wireless");
-	$res[5] = _("Database");
-	$res[6] = _("Workstation");
-	$res[7] = _("Laptop");
-	$res[8] = _("Other");
-
-	return $res;
+    /* return unique devices */
+    return $devices2;
 }
 
 
 /**
  * Transfor switch type
  */
-function TransformSwitchType($type) 
+function TransformDeviceType($type) 
 {
-	switch($type) {
-		case "0":	$res = _("Switch");		break;
-		case "1":	$res = _("Router");		break;
-		case "2":	$res = _("Firewall");	break;
-		case "3":	$res = _("Hub");		break;
-		case "4":	$res = _("Wireless");	break;
-		case "5":	$res = _("Database");	break;
-		case "6":	$res = _("Workstation");break;
-		case "7":	$res = _("Other");		break;
-	}	
-	return $res;
+    global $db;                                                                      # get variables from config file
+    $database = new database($db['host'], $db['user'], $db['pass'], $db['name']); 
+	
+	$query = "select * from `deviceTypes` where `tid` = $type;";
+
+    /* execute */
+    try { $devices = $database->getArray( $query ); }
+    catch (Exception $e) { 
+        $error =  $e->getMessage(); 
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
+        return false;
+    } 
+    
+    return $devices[0]['tname'];
 }
 
 
@@ -2046,7 +2089,7 @@ function getCustomFields($table)
 	if($table == "users") {
 		unset($res['id'], $res['username'], $res['password'], $res['groups'], $res['role'], $res['real_name'], $res['email'], $res['domainUser'], $res['lang'],$res['editDate'],$res['widgets'],$res['favourite_subnets']);
 	}
-	elseif($table == "switches") {
+	elseif($table == "devices") {
 		unset($res['id'], $res['hostname'], $res['ip_addr'], $res['type'], $res['vendor'], $res['model'], $res['version'], $res['description'], $res['sections'], $res['editDate']);
 	}
 	elseif($table == "subnets") {
@@ -2260,7 +2303,7 @@ function modifyAPI($api)
 function verifyDatabase()
 {
 	/* required tables */
-	$reqTables = array("instructions", "ipaddresses", "logs", "requests", "sections", "settings", "settingsDomain", "subnets", "switches", "users", "vrf", "vlans", "widgets", "changelog", "userGroups", "lang", "api", "settingsMail");
+	$reqTables = array("instructions", "ipaddresses", "logs", "requests", "sections", "settings", "settingsDomain", "subnets", "devices", "deviceTypes", "users", "vrf", "vlans", "widgets", "changelog", "userGroups", "lang", "api", "settingsMail");
 	
 	/* required fields for each table */
 	$fields['instructions']   = array("instructions");
@@ -2268,10 +2311,11 @@ function verifyDatabase()
 	$fields['logs']			  = array("severity", "date", "username", "ipaddr", "command", "details");
 	$fields['requests']		  = array("subnetId", "ip_addr", "description", "dns_name", "owner", "requester", "comment", "processed", "accepted", "adminComment");
 	$fields['sections']		  = array("name", "description", "permissions", "strictMode", "subnetOrdering", "order", "showVLAN", "showVRF", "masterSection");
-	$fields['settings']		  = array("siteTitle", "siteAdminName", "siteAdminMail", "siteDomain", "siteURL", "domainAuth", "showTooltips", "enableIPrequests", "enableVRF", "enableDNSresolving", "version", "dbverified", "donate", "IPfilter", "printLimit", "visualLimit", "vlanDuplicate", "subnetOrdering", "pingStatus", "defaultLang", "api", "dhcpCompress", "enableChangelog", "scanPingPath", "scanMaxThreads");
+	$fields['settings']		  = array("siteTitle", "siteAdminName", "siteAdminMail", "siteDomain", "siteURL", "domainAuth", "showTooltips", "enableIPrequests", "enableVRF", "enableDNSresolving", "version", "dbverified", "donate", "IPfilter", "printLimit", "visualLimit", "vlanDuplicate", "subnetOrdering", "pingStatus", "defaultLang", "api", "editDate", "vcheckDate", "dhcpCompress", "enableChangelog", "scanPingPath", "scanMaxThreads");
 	$fields['settingsDomain'] = array("account_suffix", "base_dn", "domain_controllers", "use_ssl", "use_tls", "ad_port", "adminUsername", "adminPassword");
 	$fields['subnets'] 		  = array("subnet", "mask", "sectionId", "description", "masterSubnetId", "vrfId", "allowRequests", "vlanId", "showName", "permissions", "pingSubnet", "isFolder");
-	$fields['switches'] 	  = array("hostname", "ip_addr", "type", "vendor", "model", "version", "description", "sections");
+	$fields['devices'] 	  	  = array("hostname", "ip_addr", "type", "vendor", "model", "version", "description", "sections");
+	$fields['deviceTypes'] 	  = array("tid", "tname", "tdescription");
 	$fields['users'] 	  	  = array("username", "password", "groups", "role", "real_name", "email", "domainUser", "lang", "widgets", "favourite_subnets");
 	$fields['vrf'] 	  	  	  = array("vrfId","name", "rd", "description");
 	$fields['vlans']   	  	  = array("vlanId", "name", "number", "description");

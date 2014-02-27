@@ -131,7 +131,7 @@ if(sizeof($ip)>1) {
 	print "	<th>"._('Switch')."</th>";
 	if(strlen($ip['switch'])>0) {
 		# get switch
-		$switch = getSwitchById ($ip['switch']);
+		$switch = getDeviceById ($ip['switch']);
 		if(strlen($switch['description'])==0) $switch['description'] = "";
 		else								  $switch['description'] = "($switch[description])";
 		print "	<td>$switch[hostname] $switch[description]</td>";	

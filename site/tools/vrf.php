@@ -9,6 +9,9 @@
 /* verify that user is authenticated! */
 isUserAuthenticated ();
 
+/* check if admin */
+if(checkAdmin())	{ $admin = true; }
+
 /* get all VLANs and subnet descriptions */
 $vrfs = getAllVRFs ();
 
@@ -16,7 +19,9 @@ $vrfs = getAllVRFs ();
 /* title */
 print "<h4>"._('Available VRFs and belonging subnets')."</h4>";
 print "<hr>";
-
+if($admin) {
+	print "<a class='btn btn-sm btn-default' href='administration/manageVRF/' data-action='add'  data-switchid=''><i class='fa fa-pencil'></i> ". _('Manage')."</a>";
+}
 
 /* for each VRF check which subnet has it configured */
 if(!$vrfs) { print "<div class='alert alert-info'>"._('No VRFs configured')."!</div>"; }

@@ -114,7 +114,7 @@ DROP TABLE IF EXISTS `sections`;
 
 CREATE TABLE `sections` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(20) NOT NULL DEFAULT '',
+  `name` varchar(128) NOT NULL DEFAULT '',
   `description` text,
   `masterSection` INT(11)  NULL  DEFAULT '0',
   `permissions` varchar(1024) DEFAULT NULL,
@@ -170,6 +170,7 @@ CREATE TABLE `settings` (
   `pingStatus` VARCHAR(12)  NOT NULL  DEFAULT '1800;3600',
   `defaultLang` INT(3)  NULL  DEFAULT NULL,
   `editDate` TIMESTAMP  NULL  ON UPDATE CURRENT_TIMESTAMP,
+  `vcheckDate` DATETIME  NULL  DEFAULT NULL ,
   `dhcpCompress` BOOL  NOT NULL  DEFAULT '0',
   `api` BINARY  NOT NULL  DEFAULT '0',
   `enableChangelog` TINYINT(1)  NOT NULL  DEFAULT '1',
@@ -292,12 +293,12 @@ VALUES
 UNLOCK TABLES;
 
 
-# Dump of table switches
+# Dump of table devices
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `switches`;
+DROP TABLE IF EXISTS `devices`;
 
-CREATE TABLE `switches` (
+CREATE TABLE `devices` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `hostname` varchar(32) DEFAULT NULL,
   `ip_addr` varchar(100) DEFAULT NULL,
@@ -312,15 +313,15 @@ CREATE TABLE `switches` (
   KEY `hostname` (`hostname`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-LOCK TABLES `switches` WRITE;
-/*!40000 ALTER TABLE `switches` DISABLE KEYS */;
+LOCK TABLES `devices` WRITE;
+/*!40000 ALTER TABLE `devices` DISABLE KEYS */;
 
-INSERT INTO `switches` (`id`, `hostname`, `ip_addr`, `type`, `vendor`, `model`, `version`, `description`, `sections`)
+INSERT INTO `devices` (`id`, `hostname`, `ip_addr`, `type`, `vendor`, `model`, `version`, `description`, `sections`)
 VALUES
 	(1,'CoreSwitch','10.10.10.254',0,'Cisco','c6500','','','1;2;3'),
 	(2,'Wifi-1','10.10.20.245',4,'Cisco','','','','1');
 
-/*!40000 ALTER TABLE `switches` ENABLE KEYS */;
+/*!40000 ALTER TABLE `devices` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
@@ -516,6 +517,34 @@ VALUES
 
 
 
+# Dump of table deviceTypes
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `deviceTypes`;
+
+CREATE TABLE `deviceTypes` (
+  `tid` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `tname` varchar(128) DEFAULT NULL,
+  `tdescription` varchar(128) DEFAULT NULL,
+  PRIMARY KEY (`tid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+INSERT INTO `deviceTypes` (`tid`, `tname`, `tdescription`)
+VALUES
+	(1, 'Switch', 'Switch'),
+	(2, 'Router', 'Router'),
+	(3, 'Firewall', 'Firewall'),
+	(4, 'Hub', 'Hub'),
+	(5, 'Wireless', 'Wireless'),
+	(6, 'Database', 'Database'),
+	(7, 'Workstation', 'Workstation'),
+	(8, 'Laptop', 'Laptop'),
+	(9, 'Other', 'Other');
+
+
+
+
+
 # update version
 # ------------------------------------------------------------
-UPDATE `settings` set `version` = '0.98';
+UPDATE `settings` set `version` = '0.99';

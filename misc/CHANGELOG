@@ -1,4 +1,4 @@
-== 0.98.008
+== 0.99.001
 	
 	New features:
 	----------------------------
@@ -7,6 +7,7 @@
 	+ Favourite subnets for quick access;
 	+ Adding subnets from free space with automatic mask provided;
 	+ Automatic database validity check after upgrading and automatic field/table fix under administration;
+	+ Automatic weekly check for new phpipam version;
 
 	Enhancements:
 	----------------------------
@@ -23,6 +24,8 @@
 	+ Popup windows are now draggable;
 	+ VLAN adding in the fly enhancements;
 	+ Master section now shows all subnets in subsections;
+	+ Tools > devices redone;
+	+ DeviceTypes can now be edited/set/added;
 	
 	+ Favourite subnets widget;
 	+ IP requests widget;
@@ -48,6 +51,7 @@
 	+ Fixed requester email gets cut if longer than 32 chars;
 	+ Fixed admin folder edit appearing as subnet;
 	+ Fixed missing device/port in import;
+	+ Fixed master section delete did not delete subsections and belonging subnets/ips;
 
 == 0.9
 

@@ -349,7 +349,7 @@ else {
 		        	# print switch
 		        	if(in_array('switch', $setFields)) 					{ 
 			        	# get switch details
-			        	$switch = getSwitchById ($ipaddress[$n]['switch']);
+			        	$switch = getDeviceById ($ipaddress[$n]['switch']);
 																		  print "<td class='hidden-xs hidden-sm hidden-md'>".$switch['hostname']."</td>";
 																		}
 				

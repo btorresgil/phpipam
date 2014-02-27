@@ -8,20 +8,23 @@
 if (!checkAdmin()) die('');
 
 /* get current devices */
-$switches = getAllUniqueSwitches();
+$devices = getAllUniqueDevices();
 
 /* get custom fields */
-$custom = getCustomFields('switches');
+$custom = getCustomFields('devices');
 
 ?>
 
 <h4><?php print _('Device management'); ?></h4>
 <hr>
-<button class='btn btn-sm btn-default editSwitch' data-action='add'   data-switchid='' style='margin-bottom:10px;'><i class='fa fa-plus'></i> <?php print _('Add device'); ?></button>
+<div class="btn-group">
+	<button class='btn btn-sm btn-default editSwitch' data-action='add'   data-switchid='' style='margin-bottom:10px;'><i class='fa fa-plus'></i> <?php print _('Add device'); ?></button>
+	<a href="administration/manageDeviceTypes/" class="btn btn-sm btn-default"><i class="fa fa-tablet"></i> <?php print _('Manage device types'); ?></a>
+</div>
 
 <?php
 /* first check if they exist! */
-if(sizeof($switches) == 0) {
+if(sizeof($devices) == 0) {
 	print '	<div class="alert alert-warn alert-absolute">'._('No devices configured').'!</div>'. "\n";
 }
 /* Print them out */
@@ -44,28 +47,25 @@ else {
 			print "<th>$field[name]</th>";
 		}
 	}
-	print '	<th></th>';
+	print '	<th class="actions"></th>';
 	print '</tr>';
 
-	foreach ($switches as $switch) {
-
-	//get switch details
-	$switchDetails = getSwitchDetailsByHostname($switch['hostname']);
+	foreach ($devices as $device) {
 	
 	//print details
 	print '<tr>'. "\n";
 	
-	print '	<td>'. $switchDetails['hostname'] .'</td>'. "\n";
-	print '	<td>'. $switchDetails['ip_addr'] .'</td>'. "\n";
-	print '	<td>'. TransformSwitchType($switchDetails['type']) .'</td>'. "\n";
-	print '	<td>'. $switchDetails['vendor'] .'</td>'. "\n";
-	print '	<td>'. $switchDetails['model'] .'</td>'. "\n";
-	print '	<td>'. $switchDetails['version'] .'</td>'. "\n";
-	print '	<td class="description">'. $switchDetails['description'] .'</td>'. "\n";
+	print '	<td>'. $device['hostname'] .'</td>'. "\n";
+	print '	<td>'. $device['ip_addr'] .'</td>'. "\n";
+	print '	<td>'. $device['tname'] .'</td>'. "\n";
+	print '	<td>'. $device['vendor'] .'</td>'. "\n";
+	print '	<td>'. $$device['model'] .'</td>'. "\n";
+	print '	<td>'. $$device['version'] .'</td>'. "\n";
+	print '	<td class="description">'. $$device['description'] .'</td>'. "\n";
 	
 	//sections
 	print '	<td class="sections">';
-		$temp = explode(";",$switchDetails['sections']);
+		$temp = explode(";",$device['sections']);
 		if( (sizeof($temp) > 0) && (!empty($temp[0])) ) {
 		foreach($temp as $line) {
 			$section = getSectionDetailsById($line);
@@ -80,14 +80,14 @@ else {
 	//custom
 	if(sizeof($custom) > 0) {
 		foreach($custom as $field) {
-			print "<td>".$switchDetails[$field['name']]."</td>";
+			print "<td>".$device[$field['name']]."</td>";
 		}
 	}
 	
 	print '	<td class="actions">'. "\n";
 	print "	<div class='btn-group'>";
-	print "		<button class='btn btn-xs btn-default editSwitch' data-action='edit'   data-switchid='$switchDetails[id]'><i class='fa fa-pencil'></i></button>";
-	print "		<button class='btn btn-xs btn-default editSwitch' data-action='delete' data-switchid='$switchDetails[id]'><i class='fa fa-times'></i></button>";
+	print "		<button class='btn btn-xs btn-default editSwitch' data-action='edit'   data-switchid='$device[id]'><i class='fa fa-pencil'></i></button>";
+	print "		<button class='btn btn-xs btn-default editSwitch' data-action='delete' data-switchid='$device[id]'><i class='fa fa-times'></i></button>";
 	print "	</div>";
 	print '	</td>'. "\n";
 	

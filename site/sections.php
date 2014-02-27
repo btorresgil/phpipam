@@ -286,6 +286,30 @@ $setFields = explode(";", $setFieldsTemp);
 			<a href="administration/manageRequests/" rel='tooltip' class="icon-li btn-info" data-placement='bottom' title="<?php print $requestNum." "._('requests')." "._('for IP address waiting for your approval'); ?>"><i class='fa fa-envelope-o' style="padding-right:2px;"></i><sup><?php print $requestNum; ?></sup></a>
 		</li>
 		<?php } ?>
+		
+		<?php
+		//check for new version periodically, 1x/week
+		$now = date("Y-m-d H:i:s");
+		if( checkAdmin(false) && (strtotime($now) - strtotime($settings['vcheckDate'])) > 604800 ) {
+			//check for new version
+			if(!$version = getLatestPHPIPAMversion()) {
+				//we failed, so NW is not ok. update time anyway to avoid future failures
+				updatePHPIPAMversionCheckTime();
+			}
+			else {
+				//new
+				if ($settings['version'] < $version) {						
+					print "<li>";
+					print "	<a href='administration/versionCheck/' class='icon-li btn-warning' rel='tooltip' data-placement='bottom' title='"._('New version available')."'><i class='fa fa-bullhorn'></i><sup>$version</sup></a>";
+					print "</li>";	
+				}	
+				//nothing new
+				else {
+					updatePHPIPAMversionCheckTime();
+				}
+			}		
+		}
+		?>
 
 	</ul>
 

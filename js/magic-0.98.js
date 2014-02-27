@@ -681,18 +681,6 @@ $('a#exportSearch').click(function() {
     return false;
 });
 
-
-/* switches */
-$('table#switchMainTable button[id^="switch-"]').click(function() {
-    var swid = $(this).attr('id');                    //get id
-    // change icon to down
-    if( $('#content-'+swid).is(':visible') )     { $(this).children('i').removeClass('fa-chevron-down').addClass('fa-chevron-right'); }    //hide
-    else                                         { $(this).children('i').removeClass('fa-chevron-right').addClass('fa-chevron-down'); }    //show
-    //show content
-    $('table#switchMainTable tbody#content-'+swid).slideToggle('fast');
-});
-
-
 /* hosts */
 $('#hosts').submit(function() {
     showSpinner();
@@ -731,6 +719,32 @@ $('form#cform').submit(function () {
     return false;
 });
 
+
+/*    sort device address list
+*********************************************************/
+$(document).on("click", "table#switchManagement th a.sort", function() {
+    showSpinner();
+    
+    $(this).tooltip('hide');                            //hide tooltips fix for ajax-load
+    
+    var direction = $(this).attr('data-id');            //sort direction
+    
+    $.post('site/tools/devicesPrint.php', {direction:direction}, function(data) {
+        $('div.devicePrintHolder').html(data);
+        hideSpinner();
+    }).fail(function(jqxhr, textStatus, errorThrown) { showError(jqxhr.statusText + "<br>Status: " + textStatus + "<br>Error: "+errorThrown); });
+    return false;
+});
+/* device filter */
+$(document).on('submit', "#deviceFilter", function() {
+	var searchData = $(this).serialize();	
+    $.post('site/tools/devicesPrint.php', searchData, function(data) {
+        $('div.devicePrintHolder').html(data);
+        hideSpinner();
+    }).fail(function(jqxhr, textStatus, errorThrown) { showError(jqxhr.statusText + "<br>Status: " + textStatus + "<br>Error: "+errorThrown); });
+    
+    return false;
+});
 
 
 
@@ -1490,7 +1504,7 @@ $(document).on("click", ".editFolderSubmitDelete", function() {
 
 
 
-/*    Switches
+/*    devices
 ********************************/
 //open form
 $('.editSwitch').click(function() {
@@ -1510,6 +1524,32 @@ $(document).on("click", "#editSwitchsubmit", function() {
     var switchdata = $('form#switchManagementEdit').serialize();
     $.post('site/admin/manageDevicesEditResult.php', switchdata, function(data) {
         $('div.switchManagementEditResult').html(data).slideDown('fast');
+
+        //reload after 2 seconds if succeeded!
+        if(data.search("alert-danger") == -1)     { setTimeout(function (){window.location.reload();}, 1500); }
+        else                             { hideSpinner(); hideSpinner();
+        }
+    }).fail(function(jqxhr, textStatus, errorThrown) { showError(jqxhr.statusText + "<br>Status: " + textStatus + "<br>Error: "+errorThrown); });
+    return false;
+});
+//open form
+$('.editDevType').click(function() {
+    showSpinner();
+    var tid 	= $(this).attr('data-tid');
+    var action  = $(this).attr('data-action');
+    $.post('site/admin/manageDeviceTypeEdit.php', {tid:tid, action:action}, function(data) {
+        $('div.popup_w400').html(data);
+        showPopup('popup_w400');
+        hideSpinner();
+    }).fail(function(jqxhr, textStatus, errorThrown) { showError(jqxhr.statusText + "<br>Status: " + textStatus + "<br>Error: "+errorThrown); });
+    return false;    
+});
+//Edit switch result
+$(document).on("click", "#editDevTypeSubmit", function() {
+    showSpinner();
+    var switchdata = $('form#devTypeEdit').serialize();
+    $.post('site/admin/manageDeviceTypeEditResult.php', switchdata, function(data) {
+        $('div.devTypeEditResult').html(data).slideDown('fast');
 
         //reload after 2 seconds if succeeded!
         if(data.search("alert-danger") == -1)     { setTimeout(function (){window.location.reload();}, 1500); }

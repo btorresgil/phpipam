@@ -79,38 +79,44 @@ if($permission != "0") {
 			
 			$colspan = 6 + sizeof($custom);
 			if($settings['enableVRF'] == 1) { $colspan++; }
-			
-			if(sizeof($subsections)>0) {
-				# subnets
-				foreach($subsections as $ss) {
-					$slavesubnets = fetchSubnets($ss['id']);
-					if(sizeof($slavesubnets)>0) {
-						# headers
-						print "<tr>";
-						print "	<th colspan='$colspan'>"._('Available subnets in subsection')." $ss[name]:</th>";
-						print "</tr>";
-						
-						# subnets
-						$subnets3 = printSubnets($slavesubnets, true, $settings['enableVRF'], $custom);
-						print $subnets3;
-					}
-					else {
-						print "<tr>";
-						print "	<th colspan='$colspan'>"._('Available subnets in subsection')." $ss[name]:</th>";
-						print "</tr>";	
-						
-						print "<tr>";
-						print "	<td colspan='$colspan'><div class='alert alert-info'>"._('Section has no subnets')."!</div></td>";
-						print "</tr>";			
-					}
-				}				
-			} 
 		}	
 		else {
 			# subnets
 			$subnets2 = printSubnets($subnets, true, $settings['enableVRF'], $custom);
 			print $subnets2;				
 		}
+
+		# subsection subnets
+		if(sizeof($subsections)>0) {
+
+			$colspan = 6 + sizeof($custom);
+			if($settings['enableVRF'] == 1) { $colspan++; }
+			
+			# subnets
+			foreach($subsections as $ss) {
+				$slavesubnets = fetchSubnets($ss['id']);
+				if(sizeof($slavesubnets)>0) {
+					# headers
+					print "<tr>";
+					print "	<th colspan='$colspan'>"._('Available subnets in subsection')." $ss[name]:</th>";
+					print "</tr>";
+					
+					# subnets
+					$subnets3 = printSubnets($slavesubnets, true, $settings['enableVRF'], $custom);
+					print $subnets3;
+				}
+				else {
+					print "<tr>";
+					print "	<th colspan='$colspan'>"._('Available subnets in subsection')." $ss[name]:</th>";
+					print "</tr>";	
+					
+					print "<tr>";
+					print "	<td colspan='$colspan'><div class='alert alert-info'>"._('Section has no subnets')."!</div></td>";
+					print "</tr>";			
+				}
+			}				
+		} 
+
 		print "</tbody>";
 		$m++;
 	

@@ -90,7 +90,7 @@ select, input[type="file"] {
 	vertical-align: middle !important;
 }
 .table td.actions {
-	text-align: right;
+	text-align: right !important;
 	padding-right: 0px !important;
 	width: auto;
 }
@@ -421,6 +421,7 @@ nav.navbar#menu-navbar {
 .navbar#menu-navbar ul.icon-ul li:hover a,
 .navbar#menu-navbar ul.icon-ul li a.btn-info,
 .navbar#menu-navbar ul.icon-ul li a.btn-danger,
+.navbar#menu-navbar ul.icon-ul li a.btn-warning,
 .navbar#menu-navbar ul.icon-ul li a.btn-success,
 .navbar#menu-navbar ul.icon-ul li.active a {
 	-webkit-border-radius: 3px !important;
@@ -432,6 +433,9 @@ nav.navbar#menu-navbar {
 }
 .navbar#menu-navbar ul.icon-ul li a.btn-success:hover {
 	background: #5cb85c;
+}
+.navbar#menu-navbar ul.icon-ul li a.btn-warning:hover {
+	background: #f0ad4e;
 }
 .navbar#menu-navbar ul.icon-ul li ul li {
 	width: auto;
@@ -1257,6 +1261,7 @@ table#manageSubnets tr.subnet-title th {
 	border-top: none;
 	padding-top: 10px;
 }
+.table div.alert,
 table#manageSubnets div.alert {
 	margin-bottom: 0px;
 }
@@ -1280,6 +1285,9 @@ table.editSubnetDetails td.hr {
 table.editSubnetDetails td.middle {
 	vertical-align: middle;
 	white-space: nowrap;
+}
+table#switchManagement tr.unspecified td {
+	border-top: double #ddd;
 }
 
 table#manageSection {

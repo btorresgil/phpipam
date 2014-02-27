@@ -4,7 +4,7 @@
 # miha petkovsek <miha.petkovsek@gmail.com>, 2013.
 #
 
-# "Project-Id-Version: 0.98.001\n"
+# "Project-Id-Version: 0.99.001\n"
 # "Report-Msgid-Bugs-To: Miha Petkovsek <miha.petkovsek@gmail.com>\n"
 # "POT-Creation-Date: 2013-04-02 14:33+0200\n"
 # "PO-Revision-Date: 2013-06-28 14:33+0200\n"
@@ -4668,3 +4668,13 @@ msgstr "Polje popravljeno"
 #: site/sections.php
 msgid "Database errors detected"
 msgstr "Zaznane so napake v podatkovni bazi"
+
+#: site/tools/devicesPrint.php
+msgid "Show all hosts"
+msgstr "Prikaži vse IPje"
+
+msgid "No hosts belonging to this device"
+msgstr "Noben IP ne pripada tej napravi"
+
+msgid "Sort by vendor"
+msgstr "Sortiraj po proizvajalcu"

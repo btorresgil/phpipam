@@ -22,7 +22,7 @@ $device['version'] 		= htmlentities($device['version'], ENT_COMPAT | ENT_HTML401
 $device['description'] 	= htmlentities($device['description'], ENT_COMPAT | ENT_HTML401, "UTF-8");	# prevent XSS
 
 
-/* available switches */
+/* available devices */
 foreach($device as $key=>$line) {
 	if (strlen(strstr($key,"section-"))>0) {
 		$key2 = str_replace("section-", "", $key);
@@ -45,7 +45,7 @@ if($device['hostname'] == "") {
 if(($device['action'] == "edit") || ($device['action'] == "delete") ) {
 	
 	# get old switch name
-	$oldHostname = getSwitchDetailsById($device['switchId']);
+	$oldHostname = getDeviceDetailsById($device['switchId']);
 	$oldHostname = $oldHostname['hostname'];
 
 	# if delete new hostname = ""
@@ -55,7 +55,7 @@ if(($device['action'] == "edit") || ($device['action'] == "delete") ) {
 }
 
 //custom
-$myFields = getCustomFields('switches');
+$myFields = getCustomFields('devices');
 if(sizeof($myFields) > 0) {
 	foreach($myFields as $myField) {
 		# replace possible ___ back to spaces!
@@ -66,7 +66,7 @@ if(sizeof($myFields) > 0) {
 }
 
 /* update details */
-if(!updateSwitchDetails($device)) {
+if(!updateDeviceDetails($device)) {
 	print('<div class="alert alert alert-danger">'._("Failed to $device[action] device").'!</div>');
 }
 else {

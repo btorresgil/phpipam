@@ -4,7 +4,7 @@
 # miha petkovsek <miha.petkovsek@gmail.com>, 2013.
 #
 
-# "Project-Id-Version: 0.98.001\n"
+# "Project-Id-Version: 0.99.001\n"
 # "Report-Msgid-Bugs-To: Miha Petkovsek <miha.petkovsek@gmail.com>\n"
 # "POT-Creation-Date: 2013-04-02 14:33+0200\n"
 # "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
@@ -4620,4 +4620,14 @@ msgstr ""
 
 #: site/sections.php
 msgid "Database errors detected"
+msgstr ""
+
+#: site/tools/devicesPrint.php
+msgid "Show all hosts"
+msgstr ""
+
+msgid "No hosts belonging to this device"
+msgstr ""
+
+msgid "Sort by vendor"
 msgstr ""

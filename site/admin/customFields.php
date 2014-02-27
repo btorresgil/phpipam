@@ -32,10 +32,10 @@ $cFields['users']['title'] 			= "Custom User fields";
 $cFields['users']['tooltip'] 		= "Add new custom User field";
 
 /* custom devices */
-$cFields['switches'] 				= getCustomFields('switches');
-$cFieldsNum['switches']				= getCustomFieldsNumArr('switches');
-$cFields['switches']['title'] 		= "Custom device fields";
-$cFields['switches']['tooltip'] 	= "Add new custom device field";
+$cFields['devices'] 				= getCustomFields('devices');
+$cFieldsNum['devices']				= getCustomFieldsNumArr('devices');
+$cFields['devices']['title'] 		= "Custom device fields";
+$cFields['devices']['tooltip'] 		= "Add new custom device field";
 
 
 ?>
@@ -108,8 +108,8 @@ $cFields['switches']['tooltip'] 	= "Add new custom device field";
 				#actions
 				print "<td class='actions'>";
 				print "	<div class='btn-group'>";
-				print "		<button class='btn btn-sm btn-default edit-custom-field' data-action='edit'   data-fieldname='$f[name]' data-table='$table'><i class='fa fa-pencil'></i></button>";
-				print "		<button class='btn btn-sm btn-default edit-custom-field' data-action='delete' data-fieldname='$f[name]' data-table='$table'><i class='fa fa-times'></i></button>";
+				print "		<button class='btn btn-xs btn-default edit-custom-field' data-action='edit'   data-fieldname='$f[name]' data-table='$table'><i class='fa fa-pencil'></i></button>";
+				print "		<button class='btn btn-xs btn-default edit-custom-field' data-action='delete' data-fieldname='$f[name]' data-table='$table'><i class='fa fa-times'></i></button>";
 				print "	</div>";
 		
 				# warning for older versions

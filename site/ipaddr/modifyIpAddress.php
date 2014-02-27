@@ -202,15 +202,15 @@ $myFieldsSize = sizeof($myFields);
 		print '<select name="switch" class="ip_addr form-control input-sm input-w-auto" '.$delete.'>'. "\n";
 		print '<option disabled>'._('Select device').':</option>'. "\n";
 		print '<option value="" selected>'._('None').'</option>'. "\n";
-		$switches = getAllUniqueSwitches();
+		$devices = getAllUniqueDevices();
 		
-		foreach($switches as $switch) {
+		foreach($devices as $device) {
 			//check if permitted in this section!
-			$sections=explode(";", $switch['sections']);
+			$sections=explode(";", $device['sections']);
 			if(in_array($subnet2['sectionId'], $sections)) {
 			//if same
-			if($switch['id'] == $details['switch']) { print '<option value="'. $switch['id'] .'" selected>'. $switch['hostname'] .'</option>'. "\n"; }
-			else 									{ print '<option value="'. $switch['id'] .'">'. $switch['hostname'] .'</option>'. "\n";			 }
+			if($device['id'] == $details['switch']) { print '<option value="'. $device['id'] .'" selected>'. $device['hostname'] .'</option>'. "\n"; }
+			else 									{ print '<option value="'. $device['id'] .'">'. $device['hostname'] .'</option>'. "\n";			 }
 			}
 		}
 		print '</select>'. "\n";

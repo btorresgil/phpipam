@@ -60,7 +60,7 @@ $content .= '&bull; '._('VLAN').': ' . "\t\t" 	 . $subnet['vlan'] . "\n";
 # Switch
 if(!empty($ip['switch'])) {
 	# get device by id
-	$device = getSwitchDetailsById($ip['switch']);
+	$device = getDeviceDetailsById($ip['switch']);
 	$content .= "&bull; "._('Device').":\t\t"		 . $device['hostname'] . "\n";
 }
 # port

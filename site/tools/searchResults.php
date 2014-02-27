@@ -190,7 +190,7 @@ if(sizeof($result) > 0) {
 			if(in_array('switch', $setFields)) 										{ 
 				if(strlen($line['switch'])>0 && $line['switch']!=0) {
 					# get switch
-					$switch = getSwitchDetailsById($line['switch']);
+					$switch = getDeviceDetailsById($line['switch']);
 					$line['switch'] = $switch['hostname'];
 				}
 				
