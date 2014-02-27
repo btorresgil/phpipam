@@ -238,7 +238,7 @@ if(sizeof($ip)>1) {
 			print "		<a class='				   btn btn-default btn-xs disabled' href='#'>																<i class='fa fa-gray fa-retweet'> </i></a>"; 
 			print "		<a class='				   btn btn-default btn-xs disabled' href='#'>																<i class='fa fa-gray fa-search'></i></a>";
 			print "		<a class='				   btn btn-default btn-xs disabled' href='#'>																<i class='fa fa-gray fa-envelope'></i></a>";
-			print "		<a class='delete_ipaddress btn btn-default btn-xs disabled' rel='tooltip' data-container='body' title='"._('Delete IP address (disabled)')."'>			<i class='fa fa-gray fa-remove'>  </i></a>";				
+			print "		<a class='delete_ipaddress btn btn-default btn-xs disabled' rel='tooltip' data-container='body' title='"._('Delete IP address (disabled)')."'>			<i class='fa fa-gray fa-times'>  </i></a>";				
 		}
 		else 
 		{
@@ -246,7 +246,7 @@ if(sizeof($ip)>1) {
 			print "		<a class='				   btn btn-default btn-xs disabled'  data-id='".$ip['id']."' href='#' rel='tooltip' data-container='body' title='"._('Check avalibility')."'>		<i class='fa fa-gray fa-retweet'>  </i></a>";
 			print "		<a class='search_ipaddress btn btn-default btn-xs         "; if(strlen($dnsResolved['name']) == 0) { print "disabled"; } print "' href='tools/search/$dnsResolved[name]' "; if(strlen($dnsResolved['name']) != 0) { print "rel='tooltip' data-container='body' title='"._('Search same hostnames in db')."'"; } print ">	<i class='fa fa-gray fa-search'></i></a>";
 			print "		<a class='mail_ipaddress   btn btn-default btn-xs          ' href='#' data-id='".$ip['id']."' rel='tooltip' data-container='body' title='"._('Send mail notification')."'>		<i class='fa fa-gray fa-envelope'></i></a>";
-			print "		<a class='delete_ipaddress btn btn-default btn-xs disabled' rel='tooltip' data-container='body' title='"._('Delete IP address (disabled)')."'>				<i class='fa fa-gray fa-remove'>  </i></a>";				
+			print "		<a class='delete_ipaddress btn btn-default btn-xs disabled' rel='tooltip' data-container='body' title='"._('Delete IP address (disabled)')."'>				<i class='fa fa-gray fa-times'>  </i></a>";				
 		}
 	}
 	print "	</div>";

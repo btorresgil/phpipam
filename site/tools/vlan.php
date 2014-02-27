@@ -8,7 +8,7 @@
 isUserAuthenticated ();
 
 /* check if admin */
-if(checkAdmin())	{ $admin = true; }
+if(checkAdmin(false))	{ $admin = true; }
 
 /* get all VLANs and subnet descriptions */
 $vlans = getAllVlans (true);

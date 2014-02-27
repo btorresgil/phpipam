@@ -4,6 +4,11 @@ version - 1.1
 	+ salting passwords
 	
 	+ delete confirmation
+	
+	+ link to change password for new users in emails
+	+ search also covers sections
+	
+	+ Mark subnet as full
 			
 
 features for next releases:

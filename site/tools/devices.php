@@ -10,7 +10,7 @@
 isUserAuthenticated ();
 
 /* check if admin */
-if(checkAdmin())	{ $admin = true; }
+if(checkAdmin(false))	{ $admin = true; }
 
 # title
 print "<h4>"._('List of network devices')."</h4>";

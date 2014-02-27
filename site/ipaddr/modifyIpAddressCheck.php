@@ -83,9 +83,11 @@ if(isset($_REQUEST['action-visual'])) {
 }
 
 //detect proper hostname
+/*
 if(strlen($_POST['dns_name'])>0 && !validateHostname($_REQUEST['dns_name'])) {
 	die('<div class="alert alert-danger">'._('Invalid hostname').'!</div>');
 }
+*/
 
 
 //no strict checks - for range networks and /31, /32
