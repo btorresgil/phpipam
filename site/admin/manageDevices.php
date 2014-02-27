@@ -59,9 +59,9 @@ else {
 	print '	<td>'. $device['ip_addr'] .'</td>'. "\n";
 	print '	<td>'. $device['tname'] .'</td>'. "\n";
 	print '	<td>'. $device['vendor'] .'</td>'. "\n";
-	print '	<td>'. $$device['model'] .'</td>'. "\n";
-	print '	<td>'. $$device['version'] .'</td>'. "\n";
-	print '	<td class="description">'. $$device['description'] .'</td>'. "\n";
+	print '	<td>'. $device['model'] .'</td>'. "\n";
+	print '	<td>'. $device['version'] .'</td>'. "\n";
+	print '	<td class="description">'. $device['description'] .'</td>'. "\n";
 	
 	//sections
 	print '	<td class="sections">';
