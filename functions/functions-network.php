@@ -2322,6 +2322,33 @@ function getIpAddrDetailsById ($id)
 }
 
 
+/**
+ * Get IP address details by IP and subnet
+ */
+function getIpAddrDetailsByIPandSubnet ($ip, $subnetId) 
+{
+    global $db;                                                                      # get variables from config file
+    /* set query, open db connection and fetch results */
+    $query    = "select * from `ipaddresses` where `ip_addr` = '$ip' and `subnetId` = $subnetId limit 1;";
+    $database = new database($db['host'], $db['user'], $db['pass'], $db['name']);  
+
+    /* execute */
+    try { $details = $database->getArray( $query ); }
+    catch (Exception $e) { 
+        $error =  $e->getMessage(); 
+        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
+        return false;
+    } 
+    
+    //we only fetch 1 field
+    $details  = $details[0];
+	   
+    /* return result */
+    return($details);
+}
+
+
+
 
 /**
  * verify ip address from edit / add
@@ -2864,12 +2891,14 @@ function pingHost ($ip, $count=1, $timeout = 1, $exit=false)
 		$retval = 1000;
 	}
 	else {
-	// timeout is set differenylt on FreeBSD (-W in ms), on Linux (-W sec) and win (-I)
-	// so if you must add flag manually here after $count
+		//set ping command based on OS type
+		if(PHP_OS == "FreeBSD" || PHP_OS == "NetBSD" || PHP_OS == "OpenBSD")	{ $cmd = "$pathPing -c $count -W ".($timeout*1000)." $ip 1>/dev/null 2>&1"; }
+		elseif(PHP_OS == "Linux")												{ $cmd = "$pathPing -c $count -w $timeout $ip 1>/dev/null 2>&1"; }
+		elseif(PHP_OS == "WIN32" || PHP_OS == "Windows" || PHP_OS == "WINNT")	{ $cmd = "$pathPing -n $count -I ".($timeout*1000)." $ip 1>/dev/null 2>&1"; }
+		else																	{ $cmd = "$pathPing -c $count -n $ip 1>/dev/null 2>&1"; }
 	
-	//set and execute
-	$cmd = "$pathPing -c $count -n $ip 1>/dev/null 2>&1";
-    exec($cmd, $output, $retval);	
+		//set and execute;
+	    exec($cmd, $output, $retval);	
 	}
     
     //exit codes

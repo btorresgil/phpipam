@@ -118,7 +118,7 @@ function readCookie(name) {
 
 /* draggeable elements */
 $(function() {
-	$( ".popup" ).draggable();
+	$(".popup").draggable({ handle: ".pHeader" });
 });
 
 
@@ -420,9 +420,11 @@ $(document).on('click','#subnetScanSubmit', function() {
 	showSpinner();
 	var subnetId = $(this).attr('data-subnetId');
 	var pingType = $('select[name=scanType]').find(":selected").val();
+	if($('input[name=debug]').is(':checked'))	{ var debug = 1; }
+	else										{ var debug = 0; }
 	var port     = $('input[name=telnetports]').val();
 	$('#alert-scan').slideUp('fast');
-	$.post('site/ipaddr/scan/subnetScan'+pingType+".php", {subnetId:subnetId, pingType:pingType, port:port}, function(data) {
+	$.post('site/ipaddr/scan/subnetScan'+pingType+".php", {subnetId:subnetId, pingType:pingType, debug:debug, port:port}, function(data) {
         $('#subnetScanResult').html(data);
 		hideSpinner();
     }).fail(function(jqxhr, textStatus, errorThrown) { showError(jqxhr.statusText + "<br>Status: " + textStatus + "<br>Error: "+errorThrown); });

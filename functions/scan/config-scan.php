@@ -7,7 +7,6 @@
  */
 
 //general configs
-$scanMaxHosts 	= 128;							// maximum number of scans per once
 $scanDNSresolve = true;							// try to resolve DNS name
 $scanIPv6 		= false;						// not yet
 

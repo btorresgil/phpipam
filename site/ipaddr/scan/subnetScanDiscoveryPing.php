@@ -20,58 +20,41 @@ CheckReferrer();
 # get subnet details
 $subnet = getSubnetDetailsById ($_POST['subnetId']);
 
-# get all existing IP addresses
-$addresses = getIpAddressesBySubnetId ($_POST['subnetId']);
-
-# set start and end IP address
-$calc = calculateSubnetDetailsNew ( $subnet['subnet'], $subnet['mask'], 0, 0, 0, 0 );
-$max = $calc['maxhosts'];
-
-# loop and get all IP addresses for ping
-for($m=1; $m<=$max;$m++) {
-	// create array of IP addresses (if they do not already exist!)
-	if (!checkDuplicate (transform2long($subnet['subnet']+$m), $_POST['subnetId'])) {
-		$ip[] = $subnet['subnet']+$m;
-	}
+# get php exec path
+if(!$phpPath = getPHPExecutableFromPath()) {
+	die('<div class="alert alert-danger">Cannot access php executable!</div>');
 }
+# set script
+$script = dirname(__FILE__) . '/../../../functions/scan/scanIPAddressesScript.php';
 
-# check if any hits are present
-if($ip) {
-	# create 1 line for $argv
-	$ip = implode(";", $ip);
+# invoke CLI with threading support
+$cmd = "$phpPath $script 'discovery' '".transform2long($subnet['subnet'])."/$subnet[mask]' '$_POST[subnetId]'";
+
+# save result to $output
+exec($cmd, $output, $retval);
+
+# die of error
+if($retval != 0) {
+	print "<div class='alert alert-danger'>Error executing scan! Error code - $retval</div>";
 	
-	# get php exec path
-	if(!$phpPath = getPHPExecutableFromPath()) {
-		die('<div class="alert alert-danger">Cannot access php executable!</div>');
-	}
-	# set script
-	$script = dirname(__FILE__) . '/../../../functions/scan/scanIPAddressesScript.php';
-	
-	# invoke CLI with threading support
-	$cmd = "$phpPath $script '$ip'";
-	
-	# save result to $output
-	exec($cmd, $output, $retval);
-	
-	# die of error
-	if($retval != 0) {
-		die("<div class='alert alert-danger'>Error executing scan! Error code - $retval</div>");
-	}
-			
-	# format result - alive
-	$result = json_decode(trim($output[0]), true);
-	$alive = $result['alive'];
-	$dead  = @$result['dead'];
-	$serr  = @$result['error'];
-	
-	# if not numeric means error, print it!
-	if(!is_numeric($alive[0]))	{
-		$error = $alive[0];
+	if($_POST['debug']==1) {
+	print "<pre>";
+	print_r($output);
+	print "</pre>";		
 	}
 	
-	#verify that pign path is correct
-	if(!file_exists($pathPing)) { $pingError = true; }
+	die();
 }
+		
+# format result - alive
+$result = json_decode(trim($output[0]), true);
+$alive = @$result['alive'];
+$dead  = @$result['dead'];
+$serr  = @$result['error'];
+$error = @$result['errors'];
+
+#verify that pign path is correct
+if(!file_exists($pathPing)) { $pingError = true; }
 
 ?>
 
@@ -156,5 +139,14 @@ else {
 	
 	print "</table>";
 	print "</form>";
+}
+
+
+# debug?
+if($_POST['debug']==1) {
+	print "<hr>";
+	print "<pre>";
+	print_r($result);
+	print "</pre>";
 }
 ?>

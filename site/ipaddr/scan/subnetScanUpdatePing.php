@@ -23,84 +23,57 @@ $subnet = getSubnetDetailsById ($_POST['subnetId']);
 # get all existing IP addresses
 $addresses = getIpAddressesBySubnetId ($_POST['subnetId']);
 
-# rekey - replace array key with IP address, needed for future matchung
-foreach($addresses as $k=>$a) {
-	$aout[$a['ip_addr']] = $a;
+
+# get php exec path
+if(!$phpPath = getPHPExecutableFromPath()) {
+	die('<div class="alert alert-danger">Cannot access php executable!</div>');
 }
-$addresses = $aout;
+# set script
+$script = dirname(__FILE__) . '/../../../functions/scan/scanIPAddressesScript.php';
 
-# exclude those marked as don't ping
-$n=0;
-$excluded = array();
-foreach($addresses as $m=>$ipaddr) {
-	if($ipaddr['excludePing']=="1") {
-		//set result
-		$ipa = $ipaddr['ip_addr'];
-		$excluded[$ipa]['ip_addr'] = $ipaddr['ip_addr'];
-		$excluded[$ipa]['code'] = 100;
-		$excluded[$ipa]['status'] = "Excluded from check";
+# invoke CLI with threading support
+$cmd = "$phpPath $script 'update' '".transform2long($subnet['subnet'])."/$subnet[mask]' '$_POST[subnetId]'";
+
+# save result to $output
+exec($cmd, $output, $retval);
 	
-		//remove
-		//unset($addresses[$m]);
-		//next
-		$n++;
-	}	
-	# create ip's from ip array for ones that need to be checked
-	else {
-		$ip[] = $ipaddr['ip_addr'];
-	}
+# die of error
+if($retval != 0) {
+	die("<div class='alert alert-danger'>Error executing scan! Error code - $retval</div>");
 }
-
-
-# check if any ips are present and scan
-if($ip) {
-	# create 1 line for $argv
-	$ip = implode(";", $ip);
-	
-	# get php exec path
-	if(!$phpPath = getPHPExecutableFromPath()) {
-		die('<div class="alert alert-danger">Cannot access php executable!</div>');
-	}
-	# set script
-	$script = dirname(__FILE__) . '/../../../functions/scan/scanIPAddressesScript.php';
-	
-	# invoke CLI with threading support
-	$cmd = "$phpPath $script '$ip'";
-	
-	# save result to $output
-	exec($cmd, $output, $retval);
 		
-	# die of error
-	if($retval != 0) {
-		die("<div class='alert alert-danger'>Error executing scan! Error code - $retval</div>");
-	}
-			
-	# format result - alive
-	$result = json_decode(trim($output[0]), true);
-		
-	# if not numeric means error, print it!
-	if(!is_numeric($result[0]))	{
-		$error = $result[0];
-	}
-}
+# format result - alive
+$result = json_decode(trim($output[0]), true);
 
 # recode to same array with statuses 
 $m=0;
 foreach($result as $k=>$r) {
 
 	foreach($r as $ip) {
+		# get details
+		$ipdet = getIpAddrDetailsByIPandSubnet ($ip, $_POST['subnetId']);
+
 		# format output
-		$res[$ip]['ip_addr'] = $ip;
+		$res[$ip]['ip_addr'] 	 = $ip;
+		$res[$ip]['description'] = $ipdet['description'];
+		$res[$ip]['dns_name'] 	 = $ipdet['dns_name'];
 		
 		//online
 		if($k=="alive")	{ 
 			$res[$ip]['status'] = "Online";			
 			$res[$ip]['code']=0; 
+			//update alive time
+			@updateLastSeen($ipdet['id']);
 		}		
 		//offline
 		elseif($k=="dead")	{ 
 			$res[$ip]['status'] = "Offline";			
 			$res[$ip]['code']=1; 
+		}
+		//excluded
+		elseif($k=="excluded")	{ 
+			$res[$ip]['status'] = "Excluded form check";			
+			$res[$ip]['code']=100; 
 		}
 		else { 
 			$res[$ip]['status'] = "Error";
@@ -109,11 +82,9 @@ foreach($result as $k=>$r) {
 		$m++;
 	}
 }
-# add skipped
-$res = $res + $excluded;
 
-# order by IP address
-ksort($res);
+#  errors
+$error = @$result['errors'];
 ?>
 
 
@@ -121,11 +92,18 @@ ksort($res);
 <hr>
 
 <?php
+# error?
+if(isset($error)) {
+	print "<div class='alert alert-danger'><strong>"._("Error").": </strong>$error</div>";
+}
 //empty
-if(!isset($res)) {
+elseif(!isset($res)) {
 	print "<div class='alert alert-info'>"._('Subnet is empty')."</div>";
 }
 else {
+	# order by IP address
+	ksort($res);
+
 	//table
 	print "<table class='table table-condensed table-top'>";
 	
@@ -142,13 +120,13 @@ else {
 		//set class
 		if($r['code']==0)		{ $class='success'; }
 		elseif($r['code']==100)	{ $class='warning'; }		
-		else					{ $class='error'; }
+		else					{ $class='danger'; }
 	
 		print "<tr class='$class'>";
 		print "	<td>".transform2long($r['ip_addr'])."</td>";
-		print "	<td>".$addresses[$r['ip_addr']]['description']."</td>";
+		print "	<td>".$r['description']."</td>";
 		print "	<td>"._("$r[status]")."</td>";
-		print "	<td>".$addresses[$r['ip_addr']]['dns_name']."</td>";
+		print "	<td>".$r['dns_name']."</td>";
 
 		print "</tr>";
 	}

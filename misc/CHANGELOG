@@ -1,4 +1,4 @@
-== 0.99.001
+== 0.99.002
 	
 	New features:
 	----------------------------
@@ -26,6 +26,7 @@
 	+ Master section now shows all subnets in subsections;
 	+ Tools > devices redone;
 	+ DeviceTypes can now be edited/set/added;
+	+ Ping subnet enhancements;
 	
 	+ Favourite subnets widget;
 	+ IP requests widget;
@@ -52,6 +53,7 @@
 	+ Fixed admin folder edit appearing as subnet;
 	+ Fixed missing device/port in import;
 	+ Fixed master section delete did not delete subsections and belonging subnets/ips;
+	+ Fixed online status was not updated when running Ping status scans;
 
 == 0.9
 

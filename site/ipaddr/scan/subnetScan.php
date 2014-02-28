@@ -24,7 +24,7 @@ $subnet = getSubnetDetailsById ($_POST['subnetId']);
 if ( IdentifyAddress( $subnet['subnet'] ) == "IPv6") { die('<div class="pHeader">Error</div><div class="alert alert-danger">'._('IPv6 scanning is not supported').'!</div><div class="pFooter"><button class="btn btn-sm btn-default hidePopups">'._('Cancel').'</button></div>'); }
 
 # get all IP addresses
-$ip_addr = getIpAddressesBySubnetId ($_POST['subnetId']) ;
+$ip_addr = getIpAddressesBySubnetId ($_POST['subnetId']);
 ?>
 
 
@@ -53,7 +53,6 @@ $ip_addr = getIpAddressesBySubnetId ($_POST['subnetId']) ;
 		    		<option value="DiscoveryPing">Ping <?php print _('scan');?></option>
 		    		<option value="DiscoveryTelnet">Telnet <?php print _('scan');?></option>
 <!-- 		    		<option value="DiscoveryNmap">NMap <?php print _('scan');?></option> -->
-<!-- 		    		<option value="DiscoverySnmp">SNMP <?php print _('scan');?></option> -->
 	    		</optgroup>
     			<!-- Status update scans -->
 	    		<optgroup label="<?php print _('Status update scans');?>">
@@ -74,12 +73,20 @@ $ip_addr = getIpAddressesBySubnetId ($_POST['subnetId']) ;
     	</td>
     </tr>
     </tbody>
+    
+    <tbody style="border:0px;">
+    <tr>
+    	<td><?php print _('Debug');?></td>	
+    	<td>
+    		<input type="checkbox" name="debug">
+    	</td>
+    </tr>
+    </tbody>
         
     </table>
 
     <!-- warning -->
     <div class="alert alert-warning alert-block" id="alert-scan">
-    <?php print _('You can set parameters for scan under functions/scan/config-scan.php'); ?>!<br>
     &middot; <?php print _('Discovery scans discover new hosts');?><br>
     &middot; <?php print _('Status update scans update alive status for whole subnet');?><br>
     </div>
