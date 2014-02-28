@@ -67,14 +67,15 @@ if($scanType=="discovery") {
 	
 	// remove already existing
 	foreach($addresses as $a) {
-
-		if($key = array_search($a['ip_addr'], $ip)) {
-			unset($ip[$key]);
+		$key = array_search($a['ip_addr'], $ip);
+		if($key!==false) {
+			unset($ip[$key]);	
 		}
 	}
 	
 	//reindex array for pinging
 	$ip = array_values($ip);
+
 }
 /* status update */
 elseif($scanType=="update") {
