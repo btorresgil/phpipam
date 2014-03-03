@@ -87,7 +87,7 @@ foreach($outFile as $k=>$line) {
 		else														{ $lineArr[1] = 1; }
 		
 		// reformat device
-		$devices = getAllUniqueSwitches ();
+		$devices = getAllUniqueDevices ();
 		foreach($devices as $d) {
 			if($d['hostname']==$lineArr[6])	{ $lineArr[6] = $d['id']; }
 		}
