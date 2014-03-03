@@ -3153,7 +3153,7 @@ function IdentifyAddress( $subnet )
  *	$ctype = 'ip_addr','subnet','section'
  *	$coid = objectId from ctype definition
  */
-function getChangelogEntries($ctype, $coid, $long = false)
+function getChangelogEntries($ctype, $coid, $long = false, $limit = 50)
 {
     /* set query, open db connection and fetch results */
     global $db;                                                                      # get variables from config file
@@ -3168,12 +3168,12 @@ function getChangelogEntries($ctype, $coid, $long = false)
 	    $query = "select * 
 					from `changelog` as `c`, `users` as `u`, `$ctypeTable` as `o`
 					where `c`.`cuser` = `u`.`id` and `c`.`coid`=`o`.`id`
-					and `c`.`coid` = '$coid' and `c`.`ctype` = '$ctype' order by `c`.`cid` desc;";   
+					and `c`.`coid` = '$coid' and `c`.`ctype` = '$ctype' order by `c`.`cid` desc limit $limit;";   
 	} else {
 	    $query = "select * 
 					from `changelog` as `c`, `users` as `u`
 					where `c`.`cuser` = `u`.`id`
-					and `c`.`coid` = '$coid' and `c`.`ctype` = '$ctype' order by `c`.`cid` desc;";          
+					and `c`.`coid` = '$coid' and `c`.`ctype` = '$ctype' order by `c`.`cid` desc limit $limit;";          
 	}
 	
     # execute
@@ -3186,6 +3186,112 @@ function getChangelogEntries($ctype, $coid, $long = false)
     
     # return result
     return $res;
+}
+
+
+
+/**
+ *	Get changelog entries for all slave subnets
+ */
+function getSubnetSlaveChangelogEntries($subnetId, $limit = 50)
+{
+    /* set query, open db connection and fetch results */
+    global $db;                                                                      # get variables from config file
+    $database = new database($db['host'], $db['user'], $db['pass'], $db['name']); 
+    
+    // get all slave subnets
+    global $removeSlaves;
+	getAllSlaves ($subnetId);
+	$key = array_search($subnetId, $removeSlaves);
+	unset($removeSlaves[$key]); 
+	$removeSlaves = array_unique($removeSlaves);
+    
+    //if some
+    if(sizeof($removeSlaves) > 0) {
+	    # query
+	    $query  = "select 
+					`u`.`real_name`,`o`.`sectionId`,`o`.`subnet`,`o`.`mask`,`o`.`description`,`o`.`id`,`c`.`caction`,`c`.`cresult`,`c`.`cdate`,`c`.`cdiff`  from `changelog` as `c`, `users` as `u`, `subnets` as `o` 
+					where `c`.`cuser` = `u`.`id` and `c`.`coid`=`o`.`id`
+					and (";
+		foreach($removeSlaves as $snet) {
+		$query .= "`c`.`coid` = '$snet' or ";	
+		}
+		$query  = substr($query, 0, -3);
+		$query .= ") and `c`.`ctype` = 'subnet' order by `c`.`cid` desc limit $limit;";    
+				
+	    # execute
+	    try { $res = $database->getArray( $query ); }
+	    catch (Exception $e) { 
+	        $error =  $e->getMessage(); 
+	        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
+	        return false;
+	    } 
+	    
+	    # return result
+	    return $res;
+    }
+	else {
+		return false;
+	}
+}
+
+
+/**
+ *	Get changelog entries for all IP addresses in subnet
+ */
+function getSubnetIPChangelogEntries($subnetId, $limit = 50)
+{
+    /* set query, open db connection and fetch results */
+    global $db;                                                                      # get variables from config file
+    $database = new database($db['host'], $db['user'], $db['pass'], $db['name']); 
+    
+    // get all slave subnets
+    global $removeSlaves;
+	getAllSlaves ($subnetId);
+	$removeSlaves = array_unique($removeSlaves);
+    
+    // get all hosts and their ID's
+    $ips  = array();
+    if(sizeof($removeSlaves)>0) {
+	    foreach($removeSlaves as $sid) {
+	    	$stemp = getIpAddressesBySubnetId ($sid);
+	    	
+	    	if(sizeof($stemp)>0) {
+		    	foreach($stemp as $ipline) {
+					$ips[] = $ipline['id'];   
+		    	}
+	    	}
+	    }
+    }
+    
+    //if some
+    if(sizeof($ips) > 0) {
+	    # query
+	    $query  = "select 
+	    			`u`.`real_name`,`o`.`id`,`o`.`ip_addr`,`o`.`description`,`o`.`id`,`o`.`subnetId`,`c`.`caction`,`c`.`cresult`,`c`.`cdate`,`c`.`cdiff` 
+					from `changelog` as `c`, `users` as `u`, `ipaddresses` as `o` 
+					where `c`.`cuser` = `u`.`id` and `c`.`coid`=`o`.`id` 
+					and (";
+		foreach($ips as $ip) {
+		$query .= "`c`.`coid` = '$ip' or ";	
+		}
+		$query  = substr($query, 0, -3);
+		$query .= ") and `c`.`ctype` = 'ip_addr' order by `c`.`cid` desc limit $limit;";        
+		
+	    # execute
+	    try { $res = $database->getArray( $query ); }
+	    catch (Exception $e) { 
+	        $error =  $e->getMessage(); 
+	        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
+	        return false;
+	    } 
+	    
+	    # return result
+	    return $res;
+    }
+	else {
+		return false;
+	}
 }
 
 
