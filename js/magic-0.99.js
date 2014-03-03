@@ -1493,8 +1493,9 @@ $(document).on("click", ".editFolderSubmit", function() {
 $(document).on("click", ".editFolderSubmitDelete", function() {
 	showSpinner();
     var subnetId  = $(this).attr('data-subnetId');
+    var description  = $('form#editFolderDetails #field-description').val();
     //format posted values
-    var postData     = "subnetId="+subnetId+"&action=delete";
+    var postData     = "subnetId="+subnetId+"&description="+description+"&action=delete";
 	$.post('site/admin/manageFolderEditSubmit.php', postData, function(data) {
 		$('.manageFolderEditResult').html(data);
         //reload after 2 seconds if succeeded!

@@ -49,7 +49,6 @@ if(sizeof($myFields) > 0) {
 /* sanitize description */
 $_POST['description'] = htmlentities($_POST['description'], ENT_COMPAT | ENT_HTML401, "UTF-8");	//prevent XSS
 
-
 /* Set permissions for add! */
 if($_POST['action'] == "add") {
 	# root

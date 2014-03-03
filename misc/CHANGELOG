@@ -1,4 +1,4 @@
-== 0.99.002
+== 0.99.006
 	
 	New features:
 	----------------------------
@@ -54,6 +54,7 @@
 	+ Fixed missing device/port in import;
 	+ Fixed master section delete did not delete subsections and belonging subnets/ips;
 	+ Fixed online status was not updated when running Ping status scans;
+	+ Fixed Folder name not appearing when deleting folder;
 
 == 0.9
 

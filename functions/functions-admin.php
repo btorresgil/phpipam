@@ -695,8 +695,13 @@ function modifySubnetDetails ($subnetDetails, $lastId = false)
 		writeChangelog('subnet', $subnetDetails['action'], 'success', $old, $subnetDetails);
 	}
     
-    # success
-    updateLogTable ('Subnet ('. $subnetDetails['description'] .') '. $subnetDetails['action'] .' ok', $log, 1);		# write success log
+    // success
+    if($_POST['isFolder']==false)	{
+    updateLogTable ('Subnet '.$subnetDetails['subnet'].' ('. $subnetDetails['description'] .') '. $subnetDetails['action'] .' ok', $log, 1);		# write success log
+    } else {
+    updateLogTable ('Folder '.$subnetDetails['subnet'].' ('. $subnetDetails['description'] .') '. $subnetDetails['action'] .' ok', $log, 1);		# write success log	    
+    }
+    // result
     if(!$lastId) { return true; }
     else		 { return $updateId; }
 }
