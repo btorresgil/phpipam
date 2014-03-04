@@ -24,10 +24,6 @@ features for next releases:
 			SNMP router table fetching
 			NMAP scan
 			Telnet scan
-						
-		+ Get next available subnet by providing mask;
-		
-		+ Create multiple networks with same bitmasks (when adding new);
 		
 		+ Subnets import with vlan information;
 				
