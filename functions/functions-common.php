@@ -712,64 +712,6 @@ function checkSubnetPermission ($subnetId)
 
 
 
-
-/* @autocomplete functions ---------- */
-
-
-/**
- *	Get all users for autocomplete
- */
-function getUniqueUsers ()
-{
-    global $db;                                                                      # get variables from config file
-    $database    = new database($db['host'], $db['user'], $db['pass'], $db['name']);     
-
-	/* execute query */
-    $query    	= 'select distinct owner from ipaddresses;';  
- 
-    /* execute */
-    try { $users = $database->getArray( $query ); }
-    catch (Exception $e) { 
-        $error =  $e->getMessage(); 
-        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
-        return false;
-    } 
-    
-    /* return result */
-    return $users;
-}
-
-
-/**
- *	Get unique hostnames for host search
- */
-function getUniqueHosts ()
-{
-    global $db;                                                                      # get variables from config file
-    $database    = new database($db['host'], $db['user'], $db['pass'], $db['name']);     
-
-	/* execute query */
-    $query    	= 'select distinct dns_name from `ipaddresses` order by `dns_name` desc;';  
-
-    /* execute */
-    try { $hosts = $database->getArray( $query ); }
-    catch (Exception $e) { 
-        $error =  $e->getMessage(); 
-        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
-        return false;
-    }  
-    
-    /* return result */
-    return $hosts;
-}
-
-
-
-
-
-
-
-
 /* @general functions ---------- */
 
 
@@ -846,16 +788,6 @@ function getAllMailSettings()
 	else {
 		return false;
 	}
-}
-
-
-/**
- * Get SVN version
- */
-function getSVNversion() {
-	$revision = shell_exec('svnversion');
-	if($svnversion == "exported") {$svnversion = "";}
-	return $revision;
 }
 
 
@@ -971,38 +903,6 @@ function getPHPExecutableFromPath()
 	}	
 	
 	return FALSE; // not found
-}
-
-
-/**
- *	Sanitize user's input
- */
-function cleanInput($input) {
- 
-	$search = array(
-		'@<script[^>]*?>.*?</script>@si',   // Strip out javascript
-		'@<[\/\!]*?[^<>]*?>@si',            // Strip out HTML tags
-		'@<style[^>]*?>.*?</style>@siU',    // Strip style tags properly
-		'@<![\s\S]*?--[ \t\n\r]*>@'         // Strip multi-line comments
-	);
- 
-    $output = preg_replace($search, '', $input);
-    return $output;
-}
-function sanitize($input) {
-
-	if (is_array($input)) {
-	    foreach($input as $var=>$val) {
-	        $output[$var] = sanitize($val);
-	    }
-	}
-	else {
-	    if (get_magic_quotes_gpc()) {
-	        $input = stripslashes($input);
-	    }
-	    $input  = cleanInput($input);
-	}
-	return $output;
 }
 
 

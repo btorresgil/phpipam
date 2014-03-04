@@ -20,37 +20,6 @@ else{
 }
 
 
-/**
- *	Sanitize user's input
- */
-function cleanInput($input) {
- 
-	$search = array(
-		'@<script[^>]*?>.*?</script>@si',   // Strip out javascript
-		'@<[\/\!]*?[^<>]*?>@si',            // Strip out HTML tags
-		'@<style[^>]*?>.*?</style>@siU',    // Strip style tags properly
-		'@<![\s\S]*?--[ \t\n\r]*>@'         // Strip multi-line comments
-	);
- 
-    $output = preg_replace($search, '', $input);
-    return $output;
-}
-function sanitize($input) {
-
-	if (is_array($input)) {
-	    foreach($input as $var=>$val) {
-	        $output[$var] = sanitize($val);
-	    }
-	}
-	else {
-	    if (get_magic_quotes_gpc()) {
-	        $input = stripslashes($input);
-	    }
-	    $input  = cleanInput($input);
-	}
-	return $output;
-}
-
 
 /**
  * Update log table
@@ -705,7 +674,7 @@ function installDatabase($root)
 	    
     /* return true, if some errors occured script already died! */
     sleep(1);
-   	updateLogTable ('Database installed successfully!', "version 0.9 installed", 1);
+   	updateLogTable ('Database installed successfully!', "version 1.0 installed", 1);
    	return true;
 }
 
