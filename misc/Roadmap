@@ -23,7 +23,6 @@ features for next releases:
 		+ Scan subnet for alive hosts and import
 			SNMP router table fetching
 			NMAP scan
-			Telnet scan
 		
 		+ Subnets import with vlan information;
 				

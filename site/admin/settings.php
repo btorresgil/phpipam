@@ -244,17 +244,6 @@ $langs = getLanguages ();
 	</td>
 </tr>
 
-<!-- Tooltips -->
-<tr>
-	<td class="title"><?php print _('Tooltips'); ?></td>
-	<td>
-		<input type="checkbox" value="1" name="showTooltips" <?php if($settings['showTooltips'] == 1) print 'checked'; ?>>
-	</td>
-	<td class="info2">
-		<?php print _('Enable or disable tooltips'); ?>
-	</td>
-</tr>
-
 <!-- Disable donation field -->
 <tr>
 	<td class="title"><?php print _('Hide donation button'); ?></td>
