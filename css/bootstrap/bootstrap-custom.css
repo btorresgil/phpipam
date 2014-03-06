@@ -757,6 +757,11 @@ ul#subnets li.leaf.active i {
 
 
 /* @IP addresses and subnet details ---------- */
+.table.ipaddresses tbody tr:hover td,
+.table.slaves tbody tr:hover td,
+.table-striped tbody tr:hover td {
+	background: rgba(225,225,225,0.3) !important;
+}
 .table.ipaddresses tbody tr:nth-child(even) td,
 .table.slaves tbody tr:nth-child(even) td,
 .table-striped tbody tr:nth-child(even) td {
@@ -767,11 +772,9 @@ ul#subnets li.leaf.active i {
 .table-striped tbody tr:nth-child(even):hover td {
 	background: rgba(225,225,225,0.01);
 }
-.table.ipaddresses tbody tr:nth-child(even):hover td,
-.table.slaves tbody tr:nth-child(even):hover td,
-.table-striped tbody tr:nth-child(even):hover td {
-/* 	background: #F9F9F9 !important; */
-}
+
+
+
 .table.ipaddresses th,
 .table.slaves th,
 .table-striped th {
