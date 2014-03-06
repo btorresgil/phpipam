@@ -6,6 +6,7 @@
 
 /* required functions */
 require_once('../../../functions/functions.php'); 
+require_once( dirname(__FILE__) . '/../../../functions/scan/config-scan.php');
 
 /* verify that user is logged in */
 isUserAuthenticated(true);

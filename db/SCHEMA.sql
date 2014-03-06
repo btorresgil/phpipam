@@ -181,9 +181,9 @@ CREATE TABLE `settings` (
 LOCK TABLES `settings` WRITE;
 /*!40000 ALTER TABLE `settings` DISABLE KEYS */;
 
-INSERT INTO `settings` (`id`, `siteTitle`, `siteAdminName`, `siteAdminMail`, `siteDomain`, `siteURL`, `domainAuth`, `enableIPrequests`, `enableVRF`, `enableDNSresolving`, `version`, `donate`, `IPfilter`, `printLimit`, `vlanDuplicate`, `subnetOrdering`, `visualLimit`, `htmlMail`)
+INSERT INTO `settings` (`id`, `siteTitle`, `siteAdminName`, `siteAdminMail`, `siteDomain`, `siteURL`, `domainAuth`, `enableIPrequests`, `enableVRF`, `enableDNSresolving`, `version`, `donate`, `IPfilter`, `printLimit`, `vlanDuplicate`, `subnetOrdering`, `visualLimit`)
 VALUES
-	(1, 'phpipam IP address management', 'Sysadmin', 'admin@domain.local', 'domain.local', 'http://yourpublicurl.com', 0, 1, 1, 0, '0.9', 0, 'mac;owner;state;switch;note', 50, 1, 'subnet,asc', 24);
+	(1, 'phpipam IP address management', 'Sysadmin', 'admin@domain.local', 'domain.local', 'http://yourpublicurl.com', 0, 0, 0, 0, '1.0', 0, 'mac;owner;state;switch;note', 50, 1, 'subnet,asc', 24);
 	
 /*!40000 ALTER TABLE `settings` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -238,7 +238,7 @@ CREATE TABLE `settingsMail` (
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 LOCK TABLES `settingsMail` WRITE;
-/*!40000 ALTER TABLE `settingsDomain` DISABLE KEYS */;
+/*!40000 ALTER TABLE `settingsMail` DISABLE KEYS */;
 
 INSERT INTO `settingsMail` (`id`, `mtype`, `mauth`)
 VALUES

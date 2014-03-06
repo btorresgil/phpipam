@@ -4,6 +4,7 @@
 require_once( dirname(__FILE__) . '/../functions.php' );
 require_once( dirname(__FILE__) . '/Thread.php');
 require_once( dirname(__FILE__) . '/../functions-mail.php');
+require_once( dirname(__FILE__) . '/../scan/config-scan.php');
 
 /*
 set cronjob:

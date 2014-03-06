@@ -9,6 +9,7 @@ if($sapi_type != "cli") { die(); }
 // include required scripts
 require_once( dirname(__FILE__) . '/../functions.php' );
 require_once( dirname(__FILE__) . '/../scripts/Thread.php');
+require_once( dirname(__FILE__) . '/config-scan.php');
 
 // no error reporting!
 ini_set('display_errors', 1);

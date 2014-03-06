@@ -10,7 +10,7 @@ require( dirname(__FILE__) . '/../functions/dbfunctions.php' );
 /**
  * php debugging on/off - ignore notices
  */
-if ($debugging == 0) {
+if ($debugging == false) {
   	ini_set('display_errors', 1);
     error_reporting(E_ERROR | E_WARNING);
 }

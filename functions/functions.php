@@ -42,7 +42,7 @@ if(isset($_SESSION['ipamlanguage'])) {
 /* set latest version */
 define("VERSION", "0.99");									//version changes if database structure changes
 /* set latest revision */
-define("REVISION", "010");									//revision always changes, verision only if database structure changes
+define("REVISION", "011");									//revision always changes, verision only if database structure changes
 /* set last possible upgrade */
 define("LAST_POSSIBLE", "0.9");								//minimum required version to be able to upgrade
 
@@ -61,8 +61,5 @@ include_once('functions-admin.php');
 
 /* @upgrade functions ------------------- */
 include_once('functions-upgrade.php');
-
-/* @scan configs ------------------------ */
-require_once('scan/config-scan.php');
 
 ?>
