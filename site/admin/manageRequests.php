@@ -30,19 +30,26 @@ $allActiveRequests = getAllActiveIPrequests();
 
 <?php 
 	# print requests
-	foreach($allActiveRequests as $request) {
+	foreach($allActiveRequests as $k=>$request) {
 	
-	//get subnet details
-	$subnet = getSubnetDetailsById ($request['subnetId']);
+		//get subnet details
+		$subnet = getSubnetDetailsById ($request['subnetId']);
 	
-	print '<tr>'. "\n";
-	print "	<td><button class='btn btn-xs btn-default' data-requestid='$request[id]'><i class='fa fa-pencil'></i> "._('Process')."</button></td>";
-	print '	<td>'. Transform2long($subnet['subnet']) .'/'. $subnet['mask'] .' ('. $subnet['description'] .')</td>'. "\n";
-	print '	<td>'. $request['dns_name'] .'</td>'. "\n";
-	print '	<td>'. $request['description'] .'</td>'. "\n";
-	print '	<td>'. $request['requester'] .'</td>'. "\n";
-	print '	<td>'. $request['comment'] .'</td>'. "\n";
-	print '</tr>'. "\n";
+		//valid
+		if(sizeof($subnet)>0) {	
+			print '<tr>'. "\n";
+			print "	<td><button class='btn btn-xs btn-default' data-requestid='$request[id]'><i class='fa fa-pencil'></i> "._('Process')."</button></td>";
+			print '	<td>'. Transform2long($subnet['subnet']) .'/'. $subnet['mask'] .' ('. $subnet['description'] .')</td>'. "\n";
+			print '	<td>'. $request['dns_name'] .'</td>'. "\n";
+			print '	<td>'. $request['description'] .'</td>'. "\n";
+			print '	<td>'. $request['requester'] .'</td>'. "\n";
+			print '	<td>'. $request['comment'] .'</td>'. "\n";
+			print '</tr>'. "\n";
+		}
+		//unset
+		else {
+			unset($allActiveRequests[$k]);
+		}
 	}
 ?>
 
