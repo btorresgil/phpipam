@@ -398,21 +398,21 @@ function sendIPResultEmail($request)
 	$request['comment'] = str_replace("<br>", "\r\n", $request['comment']);
 	$request['adminComment'] = str_replace("<br>", "\r\n", $request['adminComment']);
 	
-	$mail['content']  = $mail['headerAlt'];
-	$mail['content'] .= "$subject"."\r\n------------------------------\r\n\r\n";
-	$mail['content'] .= _("Section").":  $section[name] ($section[description])\r\n";
-	$mail['content'] .= _("Subnet").":  $subnet2\r\n";
+	$mail['contentAlt']  = $mail['headerAlt'];
+	$mail['contentAlt'] .= "$subject"."\r\n------------------------------\r\n\r\n";
+	$mail['contentAlt'] .= _("Section").":  $section[name] ($section[description])\r\n";
+	$mail['contentAlt'] .= _("Subnet").":  $subnet2\r\n";
 	if($request['action'] == "accept") {
-	$mail['content'] .= _("Assigned IP address").":  ". Transform2long($request['ip_addr']) ."\r\n";
+	$mail['contentAlt'] .= _("Assigned IP address").":  ". Transform2long($request['ip_addr']) ."\r\n";
 	}
-	$mail['content'] .= _("Description").":  $request[description]\r\n";
-	$mail['content'] .= _("Hostname").":  $request[dns_name]\r\n";
-	$mail['content'] .= _("Owner").":  $request[owner]\r\n";
-	$mail['content'] .= _("Requested by").":  $request[requester]\r\n";
-	$mail['content'] .= _("Comment (request)").":  $request[comment]\r\n";	
-	$mail['content'] .= _("Admin accept/reject comment").":  $request[adminComment]\r\n";	
-	$mail['content'] .= "\r\nSent by user ".$mail['sender']['real_name']." at ".date('Y/m/d H:i');
-	$mail['content'] .= $mail['footerAlt'];		
+	$mail['contentAlt'] .= _("Description").":  $request[description]\r\n";
+	$mail['contentAlt'] .= _("Hostname").":  $request[dns_name]\r\n";
+	$mail['contentAlt'] .= _("Owner").":  $request[owner]\r\n";
+	$mail['contentAlt'] .= _("Requested by").":  $request[requester]\r\n";
+	$mail['contentAlt'] .= _("Comment (request)").":  $request[comment]\r\n";	
+	$mail['contentAlt'] .= _("Admin accept/reject comment").":  $request[adminComment]\r\n";	
+	$mail['contentAlt'] .= "\r\nSent by user ".$mail['sender']['real_name']." at ".date('Y/m/d H:i');
+	$mail['contentAlt'] .= $mail['footerAlt'];		
 	
 
 	# set mail parameters
