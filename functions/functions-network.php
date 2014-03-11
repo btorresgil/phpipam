@@ -3491,10 +3491,12 @@ function writeChangelog($ctype, $action, $result, $old, $new)
 			$groups = getAllGroups();
 			$groups = rekeyGroups($groups);
 					
-			# reformat:
+			# reformat
+			if($new['permissions_change']!="null") {
 			$newp = json_decode($new['permissions_change']);
 			foreach($newp as $k=>$p) {
 				$log['[Permissions]'] .= "<br>". $groups[$k]['g_name'] ." : ".parsePermissions($p);
+			}
 			}
 	
 		}
