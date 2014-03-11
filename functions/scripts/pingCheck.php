@@ -157,8 +157,6 @@ else {
 	}
 }
 
-print_r($stateDiff);
-
 //all done, mail diff?
 if(sizeof($stateDiff)>0 && $email)
 {
