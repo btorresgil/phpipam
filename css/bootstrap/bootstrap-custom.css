@@ -173,7 +173,10 @@ ul.progressUl li {
 	color: #428bca;
 }
 .fa-gray {
-	color: #777;
+	color: #777 !important;
+}
+.fa-red {
+	color: #F59C99;
 }
 .fa-silver {
 	color: #aaa;
@@ -1022,6 +1025,7 @@ table.slaves tr.success td {
 
 .state {
 	margin-left: 7px;
+	cursor: default;
 }
 
 .toolbar-ip {

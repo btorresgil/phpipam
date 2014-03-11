@@ -65,21 +65,21 @@ function reformatIPState ($state, $active = false, $tooltip = true)
 	if($tooltip) {
 		switch ($state)
 		{
-			case "0": 			 return "<i class='icon-red  icon-tag state' rel='tooltip' title='"._("Not in use (Offline)")."'></i>"; break;
-			case "1" && $active: return "<i class='icon-green   icon-tag state' rel='tooltip' title='"._("Online")."'></i>"; 		break;
+			case "0": 			 return "<i class='fa-red  	fa fa-tag state' rel='tooltip' title='"._("Not in use (Offline)")."'></i>"; break;
+			case "1" && $active: return "<i class='fa-green fa fa-tag state' rel='tooltip' title='"._("Online")."'></i>"; 		break;
 			case "1": 			 return " "; 		break;
-			case "2": 			 return "<i class='icon-blue  icon-tag state' rel='tooltip' title='"._("Reserved")."'></i>"; break;
-			case "3": 			 return "<i class='icon-gray icon-tag state' rel='tooltip'  title='"._("DHCP")."'></i>"; break;
+			case "2": 			 return "<i class='fa-blue  fa fa-tag state' rel='tooltip' title='"._("Reserved")."'></i>"; break;
+			case "3": 			 return "<i class='fa-silver 	fa fa-tag state' rel='tooltip'  title='"._("DHCP")."'></i>"; break;
 			default: 			 return $state;
 		}			
 	} else {
 		switch ($state)
 		{
-			case "0": 			 return "<i class='icon-red  icon-tag state'></i>"; break;
-			case "1" && $active: return "<i class='icon-green   icon-tag state'></i>"; 		break;
+			case "0": 			 return "<i class='fa-red  fa fa-tag state'></i>"; break;
+			case "1" && $active: return "<i class='fa-green fa fa-tag state'></i>"; 		break;
 			case "1": 			 return " "; 		break;
-			case "2": 			 return "<i class='icon-blue  icon-tag state'></i>"; break;
-			case "3": 			 return "<i class='icon-gray icon-tag state'></i>"; break;
+			case "2": 			 return "<i class='fa-blue  fa fa-tag state'></i>"; break;
+			case "3": 			 return "<i class='fa-silver  fa fa-tag state'></i>"; break;
 			default: 			 return $state;
 		}	
 	}	

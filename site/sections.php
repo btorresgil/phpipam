@@ -132,7 +132,7 @@ $setFields = explode(";", $setFieldsTemp);
 		print "<ul class='nav navbar-nav navbar-right'>";
 		print "	<li class='dropdown administration'>";
 		# title
-		print "	<a class='dropdown-toggle btn-danger' data-toggle='dropdown' href='administration/' id='admin' rel='tooltip' data-placement='bottom' title='"._('Show Administration menu')."'><i class='icon-cog icon-white'></i> "._('Administration')." <b class='caret'></b></a>";
+		print "	<a class='dropdown-toggle btn-danger' data-toggle='dropdown' href='administration/' id='admin' rel='tooltip' data-placement='bottom' title='"._('Show Administration menu')."'><i class='fa fa-cog'></i> "._('Administration')." <b class='caret'></b></a>";
 		# dropdown
 		print "		<ul class='dropdown-menu admin'>";
 		

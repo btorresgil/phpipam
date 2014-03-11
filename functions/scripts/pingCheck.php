@@ -97,7 +97,7 @@ else {
         		//calculate diff since last alive
 				$tDiff = $sTime - strtotime($addresses[$z]['lastSeen']);
 				//set Old status
-				if($tDiff < $statuses[1])	{ $addresses[$z]['oldStatus'] = 0; }	//old online
+				if($tDiff <= $statuses[1])	{ $addresses[$z]['oldStatus'] = 0; }	//old online
 				else						{ $addresses[$z]['oldStatus'] = 2; }	//old offline        	
 
 				//start new thread
@@ -121,8 +121,7 @@ else {
 						//if old is offline than check for time diff
 						if($addresses[$index]['oldStatus']==2) {
 							//calculate diff since last alive
-							$sTimeH = time();
-							$tDiff2 = $sTimeH - strtotime($addresses[$index]['lastSeen']);
+							$tDiff2 = time() - strtotime($addresses[$index]['lastSeen']);
 							//set New status
 							if($tDiff2 >= $statuses[1])	{ 
 								$stateDiff[] = $addresses[$index];	 				//change to online 
@@ -137,8 +136,7 @@ else {
 						//if online before change
 						if($addresses[$index]['oldStatus']==0) {
 							//calculate diff since last alive
-							$sTimeH = time();
-							$tDiff2 = $sTimeH - strtotime($addresses[$index]['lastSeen']);	
+							$tDiff2 = time() - strtotime($addresses[$index]['lastSeen']);	
 							//set New status
 							if($tDiff2 >= $statuses[1])	{ 
 								$stateDiff[] = $addresses[$index];	 				//change to offline
@@ -153,7 +151,6 @@ else {
             }
             usleep(500);
         }
-
 	}
 }
 
