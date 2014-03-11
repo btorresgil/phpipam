@@ -35,7 +35,7 @@ function CheckReferrer()
  *
  */
 function isUserAuthenticated($die = true) 
-{
+{	
     /* open session and get username / pass */
 	if (!isset($_SESSION)) {  session_start(); }
     /* redirect if not authenticated */
@@ -43,8 +43,9 @@ function isUserAuthenticated($die = true)
     	# save requested page
     	$_SESSION['phpipamredirect'] = $_SERVER['HTTP_REFERER'];												//here we need referrer
     	
-    	if($_SERVER['SERVER_PORT'] == "443") { $url = "https://".$_SERVER['SERVER_NAME'].BASE; }
-    	else								 { $url = "http://".$_SERVER['SERVER_NAME'].BASE; }
+    	if($_SERVER['SERVER_PORT'] == "443") 	{ $url = "https://".$_SERVER['SERVER_NAME'].BASE; }
+    	elseif($_SERVER['SERVER_PORT']!="80")	{ $url = "http://".$_SERVER['SERVER_NAME'].":".$_SERVER['SERVER_PORT'].BASE; }
+    	else								 	{ $url = "http://".$_SERVER['SERVER_NAME'].BASE; }
     	# die
     	if($die) { die('<div class="alert alert-danger"><a href="'.$url.'login/">'._('Please login first').'!</a></div>'); }
     	else	 { die("<div class='pHeader'>"._('Error')."</div><div class='pContent'><div class='alert alert-danger'>"._('Please login first')."!</div></div><div class='pFooter'><a class='btn btn-sm btn-default' href='".$url."login/'>"._('Login')."</a>"); }
@@ -68,8 +69,9 @@ function isUserAuthenticatedNoAjax ()
     	# save requested page
     	$_SESSION['phpipamredirect'] = $_SERVER['SCRIPT_URI'];
     	
-    	if($_SERVER['SERVER_PORT'] == "443") { $url = "https://".$_SERVER['SERVER_NAME'].BASE; }
-    	else								 { $url = "http://".$_SERVER['SERVER_NAME'].BASE; }
+    	if($_SERVER['SERVER_PORT'] == "443") 	{ $url = "https://".$_SERVER['SERVER_NAME'].BASE; }
+    	elseif($_SERVER['SERVER_PORT']!="80")	{ $url = "http://".$_SERVER['SERVER_NAME'].":".$_SERVER['SERVER_PORT'].BASE; }
+    	else								 	{ $url = "http://".$_SERVER['SERVER_NAME'].BASE; }
     	# redirect
     	header("Location:".$url."login/");    
     }
@@ -95,8 +97,9 @@ function checkAdmin ($die = true, $startSession = true)
 
     /* Check connection */
     if ($database->connect_error) {
-    	if($_SERVER['SERVER_PORT'] == "443") { $url = "https://".$_SERVER['SERVER_NAME']; }
-    	else								 { $url = "http://".$_SERVER['SERVER_NAME']; }
+    	if($_SERVER['SERVER_PORT'] == "443") 	{ $url = "https://".$_SERVER['SERVER_NAME'].BASE; }
+    	elseif($_SERVER['SERVER_PORT']!="80")	{ $url = "http://".$_SERVER['SERVER_NAME'].":".$_SERVER['SERVER_PORT'].BASE; }
+    	else								 	{ $url = "http://".$_SERVER['SERVER_NAME'].BASE; }
     	# redirect
     	header("Location:".$url."login/");  
 	}
