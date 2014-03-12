@@ -57,6 +57,49 @@ $fieldval = getFullFieldData($_POST['table'], $_POST['fieldName']);
 		</td>
 	</tr>
 	
+	<!-- type -->
+	<tr>
+		<td><?php print _('Type'); ?></td>
+		<?php  
+		// define supported types
+		$mTypes = array("varchar"=>"varchar", "integer"=>"int", "boolean"=>"bool", "text"=>"text", "date"=>"date", "datetime"=>"datetime", "set"=>"set");
+		//reformat old type
+		$oldMType = strstr($fieldval['Type'], "(", true);
+		$oldMSize = str_replace(array("(",")"), "",strstr($fieldval['Type'], "(", false));
+		
+		//exceptions
+		if($fieldval['Type']=="text" || $fieldval['Type']=="date" || $fieldval['Type']=="datetime" || $fieldval['Type']=="set")	{ $oldMType = $fieldval['Type']; }
+		
+		?>
+		<td>
+			<select name="fieldType" class="input-sm input-w-auto form-control">
+			<?php
+			foreach($mTypes as $name=>$type) {
+				if($type==$oldMType)							{ print "<option value='$type' selected='selected'>$name</option>"; }
+				elseif($type=="bool" && $oldMType=="tinyint")	{ print "<option value='$type' selected='selected'>$name</option>"; }
+				else											{ print "<option value='$type'>$name</option>"; }
+			}
+			?>
+			</select>
+		</td>
+	</tr>
+	
+	<!-- size -->
+	<tr>
+		<td><?php print _('Size / Length'); ?></td>
+		<td>
+			<input type="text" name="fieldSize" class="form-control input-sm input-w-100" value="<?php print @$oldMSize; ?>" placeholder="<?php print _('Enter field length'); ?>" <?php if($_POST['action'] == "delete") { print 'readonly'; } ?>>
+		</td>
+	</tr>
+
+	<!-- Default -->
+	<tr>
+		<td><?php print _('Default value'); ?></td>
+		<td>
+			<input type="text" name="fieldDefault" class="form-control input-sm" value="<?php print @$fieldval['Default']; ?>" placeholder="<?php print _('Enter default value'); ?>" <?php if($_POST['action'] == "delete") { print 'readonly'; } ?>>
+		</td>
+	</tr>
+	
 	<!-- required -->
 	<tr>
 		<td><?php print _('Required field'); ?></td>

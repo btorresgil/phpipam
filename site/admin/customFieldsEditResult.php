@@ -28,8 +28,25 @@ else {
 
 	# only alphanumeric and _ are allowed
 	if(!preg_match('!^[\w_ ]*$!', $_POST['name'])) 							{ $errors[] = _('Only alphanumeric, spaces and underscore characters are allowed'); }
-}
+	
+	# db type validations
+	
+	//boolean
+	if($_POST['fieldType']=="bool")	{
+		if($_POST['fieldSize']!=0 && $_POST['fieldSize']!=1)				{ $errors[] = _('Boolean values can only be 0 or 1'); }
+		if($_POST['fieldDefault']!=0 && $_POST['fieldDefault']!=1)			{ $errors[] = _('Default boolean values can only be 0 or 1'); }
+	}
+	//varchar
+	elseif($_POST['fieldType']=="varchar") {
+		if(!is_numeric($_POST['fieldSize']))								{ $errors[] = _('Fieldsize must be numeric'); }
+		if($_POST['fieldSize']>256)											{ $errors[] = _('Varchar size limit is 256 characters'); }
+	}
+	//number
+	elseif($_POST['fieldType']=="int") {
+		if(!is_numeric($_POST['fieldSize']))								{ $errors[] = _('Interer values must be numeric'); }
 
+	}
+}
 
 /* die if errors otherwise execute */
 if(sizeof($errors) != 0) {

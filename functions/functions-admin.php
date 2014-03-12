@@ -727,9 +727,15 @@ function setModifySubnetDetailsQuery ($subnetDetails)
 	
         if(sizeof($myFields) > 0) {
 			/* set inserts for custom */
-			foreach($myFields as $myField) {			
-				$myFieldsInsert['query']  .= ', `'. $myField['name'] .'`';
-				$myFieldsInsert['values'] .= ", '". $subnetDetails[$myField['name']] . "'";
+			foreach($myFields as $myField) {
+				# empty?
+				if(strlen($subnetDetails[$myField['name']])==0) {	
+					$myFieldsInsert['query']  .= ', `'. $myField['name'] .'`';
+					$myFieldsInsert['values'] .= ", NULL";					
+				} else {
+					$myFieldsInsert['query']  .= ', `'. $myField['name'] .'`';
+					$myFieldsInsert['values'] .= ", '". $subnetDetails[$myField['name']] . "'";
+				}	
 			}
 		}
         
@@ -782,8 +788,12 @@ function setModifySubnetDetailsQuery ($subnetDetails)
 	
         if(sizeof($myFields) > 0) {
 			/* set inserts for custom */
-			foreach($myFields as $myField) {			
-				$myFieldsInsert['query']  .= ', `'. $myField['name'] .'` = "'.$subnetDetails[$myField['name']].'" ';
+			foreach($myFields as $myField) {
+				if(strlen($subnetDetails[$myField['name']])==0) {	
+					$myFieldsInsert['query']  .= ', `'. $myField['name'] .'` = NULL ';				
+				} else {
+					$myFieldsInsert['query']  .= ', `'. $myField['name'] .'` = "'.$subnetDetails[$myField['name']].'" ';					
+				}
 			}
 		}
 
@@ -2087,6 +2097,7 @@ function getCustomFields($table)
 		$res[$field['Field']]['type'] 	 = $field['Type'];
 		$res[$field['Field']]['Comment'] = $field['Comment'];
 		$res[$field['Field']]['Null'] 	 = $field['Null'];
+		$res[$field['Field']]['Default'] = $field['Default'];
 	}
 	
 	/* unset standard fields */
@@ -2137,12 +2148,25 @@ function updateCustomField($field)
     global $db;                                                                      # get variables from config file
     $database = new database($db['host'], $db['user'], $db['pass'], $db['name']); 
     
+    /* set db type values */
+    if($field['fieldType']=="bool" || $field['fieldType']=="text" || $field['fieldType']=="date" || $field['fieldType']=="datetime") 	
+    																{ $field['ftype'] = "$field[fieldType]"; }
+    else															{ $field['ftype'] = "$field[fieldType]($field[fieldSize])"; }
+    
+    //default null
+    if(strlen($field['fieldDefault'])==0)	{ $field['fieldDefault'] = "NULL"; }
+    else									{ $field['fieldDefault'] = "'$field[fieldDefault]'"; }
+    
+    //character?
+    if($field['fieldType']=="varchar" || $field['fieldType']=="text" || $field['fieldType']=="set")	{ $charset = "CHARACTER SET utf8"; }
+    else																							{ $charset = ""; }
+    
     /* update request */
     if($field['action']=="delete") 								{ $query  = "ALTER TABLE `$field[table]` DROP `$field[name]`;"; }
-    else if ($field['action']=="edit"&&@$field['NULL']=="NO") 	{ $query  = "ALTER TABLE `$field[table]` CHANGE COLUMN `$field[oldname]` `$field[name]` VARCHAR(256) CHARACTER SET utf8 NOT NULL COMMENT '$field[Comment]';"; }
-    else if ($field['action']=="edit") 							{ $query  = "ALTER TABLE `$field[table]` CHANGE COLUMN `$field[oldname]` `$field[name]` VARCHAR(256) CHARACTER SET utf8 DEFAULT NULL COMMENT '$field[Comment]';"; }
-    else if ($field['action']=="add"&&@$field['NULL']=="NO") 	{ $query  = "ALTER TABLE `$field[table]` ADD COLUMN 	`$field[name]` 					 VARCHAR(256) CHARACTER SET utf8 NOT NULL COMMENT '$field[Comment]';"; }
-    else 														{ $query  = "ALTER TABLE `$field[table]` ADD COLUMN 	`$field[name]` 					 VARCHAR(256) CHARACTER SET utf8 DEFAULT NULL COMMENT '$field[Comment]';"; }
+    else if ($field['action']=="edit"&&@$field['NULL']=="NO") 	{ $query  = "ALTER TABLE `$field[table]` CHANGE COLUMN `$field[oldname]` `$field[name]` $field[ftype] $charset DEFAULT $field[fieldDefault] NOT NULL COMMENT '$field[Comment]';"; }
+    else if ($field['action']=="edit") 							{ $query  = "ALTER TABLE `$field[table]` CHANGE COLUMN `$field[oldname]` `$field[name]` $field[ftype] $charset DEFAULT $field[fieldDefault] COMMENT '$field[Comment]';"; }
+    else if ($field['action']=="add"&&@$field['NULL']=="NO") 	{ $query  = "ALTER TABLE `$field[table]` ADD COLUMN 	`$field[name]` 					$field[ftype] $charset DEFAULT $field[fieldDefault] NOT NULL COMMENT '$field[Comment]';"; }
+    else 														{ $query  = "ALTER TABLE `$field[table]` ADD COLUMN 	`$field[name]` 					$field[ftype] $charset DEFAULT $field[fieldDefault] NULL COMMENT '$field[Comment]';"; }
     
     /* prepare log */ 
     $log = prepareLogFromArray ($field);

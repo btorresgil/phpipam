@@ -141,7 +141,19 @@ if($permission == "0")	{ die("<div class='alert alert-danger'>"._('You do not ha
 				$SubnetDetails[$key] = str_replace("\n", "<br>",$SubnetDetails[$key]);
 				print "<tr>";
 				print "	<th>$key</th>";
-				print "	<td>$SubnetDetails[$key]</td>";
+				print "	<td>";
+				
+				//booleans
+				if($field['type']=="tinyint(1)")	{
+					if($SubnetDetails[$key] == "0")		{ print _("No"); }
+					elseif($SubnetDetails[$key] == "1")	{ print _("Yes"); }
+				} 
+				else {
+					print $SubnetDetails[$key];
+					
+				}
+
+				print "	</td>";
 				print "</tr>";
 				}
 			}

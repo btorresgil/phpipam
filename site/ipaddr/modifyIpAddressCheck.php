@@ -50,6 +50,13 @@ if(sizeof($myFields) > 0) {
 		$myField['nameTest']      = str_replace(" ", "___", $myField['name']);
 		
 		if(isset($_POST[$myField['nameTest']])) { $ip[$myField['name']] = $_POST[$myField['nameTest']];}
+
+		//booleans can be only 0 and 1!
+		if($myField['type']=="tinyint(1)") {
+			if($ip[$myField['name']]>1) {
+				$ip[$myField['name']] = "";
+			}
+		}
 				
 		//not null!
 		if($myField['Null']=="NO" && strlen($ip[$myField['name']])==0 && !checkAdmin(false,false)) {

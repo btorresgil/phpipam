@@ -1,4 +1,4 @@
-== 0.99.006
+== 0.99.015
 	
 	New features:
 	----------------------------
@@ -27,6 +27,9 @@
 	+ Tools > devices redone;
 	+ DeviceTypes can now be edited/set/added;
 	+ Ping subnet enhancements;
+	+ Custom field types are now defineable (int/varchar/date/datetime/text/bool/set);
+	+ Date and timepicker popups if type = date/datetime;
+	+ For `set` custom fields dropdown is presented that users can pick;
 	
 	+ Favourite subnets widget;
 	+ IP requests widget;

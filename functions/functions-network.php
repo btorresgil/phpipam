@@ -2165,9 +2165,15 @@ function SetInsertQuery( $ip )
 	
 	if(sizeof($myFields) > 0) {
 		/* set inserts for custom */
-		foreach($myFields as $myField) {			
-			$myFieldsInsert['query']  .= ', `'. $myField['name'] .'`';
-			$myFieldsInsert['values'] .= ", '". $ip[$myField['name']] . "'";
+		foreach($myFields as $myField) {	
+			# empty?
+			if(strlen($ip[$myField['name']])==0) {
+				$myFieldsInsert['query']  .= ', `'. $myField['name'] .'`';
+				$myFieldsInsert['values'] .= ", NULL";				
+			} else {
+				$myFieldsInsert['query']  .= ', `'. $myField['name'] .'`';
+				$myFieldsInsert['values'] .= ", '". $ip[$myField['name']] . "'";
+			}	
 		}
 	}
 
@@ -2177,9 +2183,9 @@ function SetInsertQuery( $ip )
 		$query  = "insert into `ipaddresses` ";
 		$query .= "(`subnetId`,`description`,`ip_addr`, `dns_name`,`mac`, `owner`, `state`, `switch`, `port`, `note`, `excludePing` ". $myFieldsInsert['query'] .") ";
 		$query .= "values ";
-		$query .= "('". $ip['subnetId'] ."', '". $ip['description'] ."', '". Transform2decimal( $ip['ip_addr'] ) ."', ". "\n"; 
-		$query .= " '". $ip['dns_name'] ."', '". $ip['mac'] ."', '". $ip['owner'] ."', '". $ip['state'] ."', ". "\n";
-		$query .= " '". $ip['switch'] ."', '". $ip['port'] ."', '". $ip['note'] ."', '". @$ip['excludePing'] ."' ". $myFieldsInsert['values'] .");";
+		$query .= "('$ip[subnetId]', '$ip[description]', '". Transform2decimal( $ip['ip_addr'] ) ."', ". "\n"; 
+		$query .= " '$ip[dns_name]', '$ip[mac]', '$ip[owner]', '$ip[state]', ". "\n";
+		$query .= " '$ip[switch]', '$ip[port]', '$ip[note]', '". @$ip['excludePing'] ."' ". $myFieldsInsert['values'] .");";
 	}
 	/* edit multiple */
 	elseif( ($ip['action'] == "edit") && ($ip['type'] == "series") ) 
@@ -2197,7 +2203,11 @@ function SetInsertQuery( $ip )
 		
 		# custom!
 		foreach($myFields as $myField) {
-		$query .= "`". $myField['name'] ."` = '". $ip[$myField['name']] ."',";
+			if(strlen($ip[$myField['name']])==0) {
+				$query .= "`". $myField['name'] ."` = NULL,";		
+			} else {
+				$query .= "`". $myField['name'] ."` = '". $ip[$myField['name']] ."',";			
+			}
 		}
 		
 		$query .= "`note` = '". $ip['note'] ."' ";
@@ -2211,7 +2221,11 @@ function SetInsertQuery( $ip )
 		
 		#custom!
 		foreach($myFields as $myField) {
-		$query .= "`". $myField['name'] ."` = '". $ip[$myField['name']] ."',";
+			if(strlen($ip[$myField['name']])==0) {
+				$query .= "`". $myField['name'] ."` = NULL,";
+			} else {
+				$query .= "`". $myField['name'] ."` = '". $ip[$myField['name']] ."',";				
+			}
 		}
 		
 		$query .= "`owner` = '". $ip['owner'] ."' , `state` = '". $ip['state'] ."', `switch` = '". $ip['switch'] ."', ". "\n"; 

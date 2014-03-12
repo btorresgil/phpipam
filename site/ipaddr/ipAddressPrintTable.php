@@ -361,7 +361,25 @@ else {
 				
 					# print custom fields 
 					if(sizeof($myFields) > 0) {
-						foreach($myFields as $myField) 					{ print "<td class='customField hidden-xs hidden-sm hidden-md'>".$ipaddress[$n][$myField['name']]."</td>"; }
+						foreach($myFields as $myField) 					{ 
+							print "<td class='customField hidden-xs hidden-sm hidden-md'>";
+						
+							//booleans
+							if($myField['type']=="tinyint(1)")	{
+								if($ipaddress[$n][$myField['name']] == "0")		{ print _("No"); }
+								elseif($ipaddress[$n][$myField['name']] == "1")	{ print _("Yes"); }
+							} 
+							//text
+							elseif($myField['type']=="text") {
+								if(strlen($ipaddress[$n][$myField['name']])>0)	{ print "<i class='fa fa-gray fa-comment' rel='tooltip' data-container='body' data-html='true' title='".str_replace("\n", "<br>", $ipaddress[$n][$myField['name']])."'>"; }
+								else											{ print ""; }
+							}
+							else {
+								print $ipaddress[$n][$myField['name']];
+								
+							}
+							print "</td>"; 
+						}
 					}				    
 			    }
 			    

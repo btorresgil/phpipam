@@ -141,6 +141,13 @@ if(sizeof($myFields) > 0) {
 		
 		if(isset($_POST[$myField['nameTest']])) { $_POST[$myField['name']] = $_POST[$myField['nameTest']];}
 		
+		//booleans can be only 0 and 1!
+		if($myField['type']=="tinyint(1)") {
+			if($_POST[$myField['name']]>1) {
+				$_POST[$myField['name']] = "";
+			}
+		}
+		
 		//not empty
 		if($myField['Null']=="NO" && strlen($_POST[$myField['name']])==0 && !checkAdmin(false)) {
 			$errors[] = "Field \"$myField[name]\" cannot be empty!";
