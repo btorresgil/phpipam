@@ -17,7 +17,7 @@ $device = $_POST;
 $device['hostname'] 	= htmlentities($device['hostname'], ENT_COMPAT | ENT_HTML401, "UTF-8");		# prevent XSS
 $device['ip_addr'] 		= htmlentities($device['ip_addr'], ENT_COMPAT | ENT_HTML401, "UTF-8");		# prevent XSS
 $device['vendor'] 		= htmlentities($device['vendor'], ENT_COMPAT | ENT_HTML401, "UTF-8");		# prevent XSS
-$device['model'] 		= htmlentities($device['model'], ENT_COMPAT | ENT_HTML401, "UTF-8");			# prevent XSS
+$device['model'] 		= htmlentities($device['model'], ENT_COMPAT | ENT_HTML401, "UTF-8");		# prevent XSS
 $device['version'] 		= htmlentities($device['version'], ENT_COMPAT | ENT_HTML401, "UTF-8");		# prevent XSS
 $device['description'] 	= htmlentities($device['description'], ENT_COMPAT | ENT_HTML401, "UTF-8");	# prevent XSS
 
