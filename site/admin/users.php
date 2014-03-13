@@ -106,7 +106,25 @@ foreach ($users as $user)
 	# custom
 	if(sizeof($custom) > 0) {
 		foreach($custom as $field) {
-			print "<td>".$user[$field['name']]."</td>";
+			print "<td>";
+
+			//booleans
+			if($field['type']=="tinyint(1)")	{
+				if($user[$field['name']] == "0")		{ print _("No"); }
+				elseif($user[$field['name']] == "1")	{ print _("Yes"); }
+			} 
+			//text
+			elseif($field['type']=="text") {
+				if(strlen($user[$field['name']])>0)		{ print "<i class='fa fa-gray fa-comment' rel='tooltip' data-container='body' data-html='true' title='".str_replace("\n", "<br>", $user[$field['name']])."'>"; }
+				else									{ print ""; }
+			}
+			else {
+				print $user[$field['name']];
+				
+			}
+			
+			print "</td>";
+
 		}
 	}
 	

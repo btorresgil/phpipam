@@ -29,7 +29,7 @@
 	+ Ping subnet enhancements;
 	+ Custom field types are now defineable (int/varchar/date/datetime/text/bool/set);
 	+ Date and timepicker popups if type = date/datetime;
-	+ For `set` custom fields dropdown is presented that users can pick;
+	+ For `set` and boolean custom fields dropdown is presented that users can pick;
 	
 	+ Favourite subnets widget;
 	+ IP requests widget;

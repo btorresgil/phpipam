@@ -62,6 +62,19 @@ if(sizeof($myFields) > 0) {
 		$myField['nameTest']      = str_replace(" ", "___", $myField['name']);
 		
 		if(isset($_POST[$myField['nameTest']])) { $device[$myField['name']] = $device[$myField['nameTest']];}
+
+		//booleans can be only 0 and 1!
+		if($myField['type']=="tinyint(1)") {
+			if($device[$myField['name']]>1) {
+				$device[$myField['name']] = "";
+			}
+		}
+				
+		//not null!
+		if($myField['Null']=="NO" && strlen($device[$myField['name']])==0 && !checkAdmin(false,false)) {
+			die('<div class="alert alert-danger">"'.$myField['name'].'" can not be empty!</div>');
+		}
+
 	}
 }
 

@@ -552,7 +552,25 @@ function printToolsSubnets( $subnets, $custom )
 				//custom
 				if(sizeof($custom) > 0) {
 			   		foreach($custom as $field) {
-			    		$html[] =  "	<td class='hidden-xs hidden-sm hidden-md'>".$option['value'][$field['name']]."</td>"; 
+			   			
+			   			$html[] =  "<td class='hidden-xs hidden-sm hidden-md'>"; 
+			   			
+			   			//booleans
+						if($field['type']=="tinyint(1)")	{
+							if($option['value'][$field['name']] == "0")			{ $html[] = _("No"); }
+							elseif($option['value'][$field['name']] == "1")		{ $html[] = _("Yes"); }
+						} 
+						//text
+						elseif($field['type']=="text") {
+							if(strlen($option['value'][$field['name']])>0)		{ $html[] = "<i class='fa fa-gray fa-comment' rel='tooltip' data-container='body' data-html='true' title='".str_replace("\n", "<br>", $option['value'][$field['name']])."'>"; }
+							else												{ $html[] = ""; }
+						}
+						else {
+							$html[] = $option['value'][$field['name']];
+							
+						}
+			   			
+			   			$html[] =  "</td>"; 
 			    	}
 			    }
 				

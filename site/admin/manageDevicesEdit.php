@@ -22,6 +22,12 @@ if ($_POST['action'] == "delete") 	{ $readonly = "readonly"; }
 else 								{ $readonly = ""; }
 ?>
 
+<script type="text/javascript">
+$(document).ready(function(){
+     if ($("[rel=tooltip]").length) { $("[rel=tooltip]").tooltip(); }
+});
+</script>
+
 
 <!-- header -->
 <div class="pHeader"><?php print ucwords(_("$_POST[action]")); ?> <?php print _('device'); ?></div>
@@ -110,18 +116,89 @@ else 								{ $readonly = ""; }
 		print '	<td colspan="2"><hr></td>';
 		print '</tr>';
 
-		foreach($custom as $field) {
-		
-			# replace spaces
-		    $field['nameNew'] = str_replace(" ", "___", $field['name']);
+		# count datepickers
+		$timeP = 0;
 			
-			print "<tr>";
-			print "	<td>$field[name]</td>";
-			print "	<td>";
-			print "		<input type='text' class='form-control input-sm' name='$field[nameNew]' value='".$device[$field['name']]."' $readonly>";
-			print "	</td>";
-			print "</tr>";
+		# all my fields
+		foreach($custom as $myField) {
+			# replace spaces with |
+			$myField['nameNew'] = str_replace(" ", "___", $myField['name']);
+			
+			# required
+			if($myField['Null']=="NO")	{ $required = "*"; }
+			else						{ $required = ""; }
+			
+			print '<tr>'. "\n";
+			print '	<td>'. $myField['name'] .' '.$required.'</td>'. "\n";
+			print '	<td>'. "\n";
+			
+			//set type
+			if(substr($myField['type'], 0,3) == "set") {
+				//parse values
+				$tmp = explode(",", str_replace(array("set(", ")", "'"), "", $myField['type']));
+				//null
+				if($myField['Null']!="NO") { array_unshift($tmp, ""); }
+								
+				print "<select name='$myField[nameNew]' class='form-control input-sm input-w-auto' rel='tooltip' data-placement='right' title='$myField[Comment]'>";
+				foreach($tmp as $v) {
+					if($v==$device[$myField['name']])	{ print "<option value='$v' selected='selected'>$v</option>"; }
+					else								{ print "<option value='$v'>$v</option>"; }
+				}
+				print "</select>";
+			}
+			//date and time picker
+			elseif($myField['type'] == "date" || $myField['type'] == "datetime") {
+				// just for first
+				if($timeP==0) {
+					print '<link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap-datetimepicker.min.css">';
+					print '<script type="text/javascript" src="js/bootstrap-datetimepicker.min.js"></script>';
+					print '<script type="text/javascript">';
+					print '$(document).ready(function() {';
+					//date only
+					print '	$(".datepicker").datetimepicker( {pickDate: true, pickTime: false, pickSeconds: false });';
+					//date + time
+					print '	$(".datetimepicker").datetimepicker( { pickDate: true, pickTime: true } );';
+
+					print '})';
+					print '</script>';
+				}
+				$timeP++;
+				
+				//set size
+				if($myField['type'] == "date")	{ $size = 10; $class='datepicker';		$format = "yyyy-MM-dd"; }
+				else							{ $size = 19; $class='datetimepicker';	$format = "yyyy-MM-dd"; }
+								
+				//field
+				if(!isset($device[$myField['name']]))	{ print ' <input type="text" class="'.$class.' form-control input-sm input-w-auto" data-format="'.$format.'" name="'. $myField['nameNew'] .'" maxlength="'.$size.'" '.$delete.' rel="tooltip" data-placement="right" title="'.$myField['Comment'].'">'. "\n"; }
+				else									{ print ' <input type="text" class="'.$class.' form-control input-sm input-w-auto" data-format="'.$format.'" name="'. $myField['nameNew'] .'" maxlength="'.$size.'" value="'. $device[$myField['name']]. '" '.$delete.' rel="tooltip" data-placement="right" title="'.$myField['Comment'].'">'. "\n"; } 
+			}	
+			//boolean
+			elseif($myField['type'] == "tinyint(1)") {
+				print "<select name='$myField[nameNew]' class='form-control input-sm input-w-auto' rel='tooltip' data-placement='right' title='$myField[Comment]'>";
+				$tmp = array(0=>"No",1=>"Yes");
+				//null
+				if($myField['Null']!="NO") { $tmp[2] = ""; }
+				
+				foreach($tmp as $k=>$v) {
+					if(strlen($device[$myField['name']])==0 && $k==2)	{ print "<option value='$k' selected='selected'>"._($v)."</option>"; }
+					elseif($k==$device[$myField['name']])				{ print "<option value='$k' selected='selected'>"._($v)."</option>"; }
+					else												{ print "<option value='$k'>"._($v)."</option>"; }
+				}
+				print "</select>";
+			}	
+			//text
+			elseif($myField['type'] == "text") {
+				print ' <textarea class="form-control input-sm" name="'. $myField['nameNew'] .'" placeholder="'. $myField['name'] .'" '.$delete.' rowspan=3 rel="tooltip" data-placement="right" title="'.$myField['Comment'].'">'. $device[$myField['name']]. '</textarea>'. "\n";
+			}	
+			//default - input field
+			else {
+				print ' <input type="text" class="ip_addr form-control input-sm" name="'. $myField['nameNew'] .'" placeholder="'. $myField['name'] .'" value="'. $device[$myField['name']]. '" size="30" '.$delete.' rel="tooltip" data-placement="right" title="'.$myField['Comment'].'">'. "\n"; 
+			}
+						
+			print '	</td>'. "\n";
+			print '</tr>'. "\n";		
 		}
+
 	}
 	
 	?>

@@ -98,9 +98,15 @@ function updateUserById ($userModDetails) {
 	
         if(sizeof($myFields) > 0) {
 			/* set inserts for custom */
-			foreach($myFields as $myField) {			
-				$myFieldsInsert['query']  .= ', `'. $myField['name'] .'`';
-				$myFieldsInsert['values'] .= ", '". $userModDetails[$myField['name']] . "'";
+			foreach($myFields as $myField) {
+				# empty?
+				if(strlen($userModDetailsip[$myField['name']])==0) {	
+					$myFieldsInsert['query']  .= ', `'. $myField['name'] .'`';
+					$myFieldsInsert['values'] .= ", NULL";
+				} else {
+					$myFieldsInsert['query']  .= ', `'. $myField['name'] .'`';
+					$myFieldsInsert['values'] .= ", '". $userModDetails[$myField['name']] . "'";
+				}
 			}
 		}
     
@@ -117,7 +123,11 @@ function updateUserById ($userModDetails) {
         if(sizeof($myFields) > 0) {
 			/* set inserts for custom */
 			foreach($myFields as $myField) {			
-				$myFieldsInsert['query']  .= ', `'. $myField['name'] .'` = \''.$userModDetails[$myField['name']].'\' ';
+				if(strlen($userModDetails[$myField['name']])==0) {
+					$myFieldsInsert['query']  .= ', `'. $myField['name'] .'` = NULL ';
+				} else {
+					$myFieldsInsert['query']  .= ', `'. $myField['name'] .'` = \''.$userModDetails[$myField['name']].'\' ';
+				}
 			}
 		}
 
@@ -1320,9 +1330,15 @@ function updateDeviceDetails($device)
 	
         if(sizeof($myFields) > 0) {
 			/* set inserts for custom */
-			foreach($myFields as $myField) {			
-				$myFieldsInsert['query']  .= ', `'. $myField['name'] .'`';
-				$myFieldsInsert['values'] .= ", '". $device[$myField['name']] . "'";
+			foreach($myFields as $myField) {	
+				# empty?
+				if(strlen($ip[$myField['name']])==0) {		
+					$myFieldsInsert['query']  .= ', `'. $myField['name'] .'`';
+					$myFieldsInsert['values'] .= ", NULL";
+				} else {
+					$myFieldsInsert['query']  .= ', `'. $myField['name'] .'`';
+					$myFieldsInsert['values'] .= ", '". $device[$myField['name']] . "'";	
+				}
 			}
 		}
 
@@ -1339,8 +1355,12 @@ function updateDeviceDetails($device)
 	
         if(sizeof($myFields) > 0) {
 			/* set inserts for custom */
-			foreach($myFields as $myField) {			
-				$myFieldsInsert['query']  .= ', `'. $myField['name'] .'` = "'.$device[$myField['name']].'" ';
+			foreach($myFields as $myField) {		
+				if(strlen($device[$myField['name']])==0) { 
+					$myFieldsInsert['query']  .= ', `'. $myField['name'] .'` = NULL ';				
+				} else {
+					$myFieldsInsert['query']  .= ', `'. $myField['name'] .'` = "'.$device[$myField['name']].'" ';					
+				}
 			}
 		}
 
@@ -1660,9 +1680,15 @@ function updateVLANDetails($vlan, $lastId = false)
 	
         if(sizeof($myFields) > 0) {
 			/* set inserts for custom */
-			foreach($myFields as $myField) {			
-				$myFieldsInsert['query']  .= ', `'. $myField['name'] .'`';
-				$myFieldsInsert['values'] .= ", '". $vlan[$myField['name']] . "'";
+			foreach($myFields as $myField) {	
+				# empty?
+				if(strlen($vlan[$myField['name']])==0) {		
+					$myFieldsInsert['query']  .= ', `'. $myField['name'] .'`';
+					$myFieldsInsert['values'] .= ", NULL";
+				} else {
+					$myFieldsInsert['query']  .= ', `'. $myField['name'] .'`';
+					$myFieldsInsert['values'] .= ", '". $vlan[$myField['name']] . "'";
+				}
 			}
 		}
     
@@ -1679,8 +1705,12 @@ function updateVLANDetails($vlan, $lastId = false)
 	
         if(sizeof($myFields) > 0) {
 			/* set inserts for custom */
-			foreach($myFields as $myField) {			
-				$myFieldsInsert['query']  .= ', `'. $myField['name'] .'` = "'.$vlan[$myField['name']].'" ';
+			foreach($myFields as $myField) {
+				if(strlen($vlan[$myField['name']])==0) {
+					$myFieldsInsert['query']  .= ', `'. $myField['name'] .'` = NULL ';				
+				} else {
+					$myFieldsInsert['query']  .= ', `'. $myField['name'] .'` = "'.$vlan[$myField['name']].'" ';					
+				}		
 			}
 		}
     
