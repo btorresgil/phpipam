@@ -3,12 +3,24 @@ version - 1.1
 	+ status - available, trash (preveri kako)
 	+ salting passwords
 	
+	+ new user creating send link to set password
+	
 	+ delete confirmation
 	
 	+ link to change password for new users in emails
 	+ search also covers sections
 	
 	+ Mark subnet as full
+	
+	+ Option in administration to not display free range
+		https://sourceforge.net/p/phpipam/feature-requests/204/
+	
+	+ Fix breaks in comment / custom fields
+	+ Fix ordering of custom fields defaults to varchar 256;
+	+ Fix IP ordering breaks editing;
+	
+	+ Extend API
+	+ Update languages
 			
 
 features for next releases:

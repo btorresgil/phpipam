@@ -2,6 +2,9 @@
 # phpipam update instructions
 #
 
+phpIPAM supports upgrading only to 1 older release, for example only version >= 0.8 can be upgraded to 0.9.
+
+
 It is recommended that you backup the old phpipam database before you upgrade to new version (change username and pass to ones in config.php):
 	/usr/bin/mysqldump -u ipv6 -pipv6admin phpipam > <my_backup_dir>/phpipam_<version>_migration_backup.db
 

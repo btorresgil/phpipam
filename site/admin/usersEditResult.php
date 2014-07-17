@@ -10,7 +10,7 @@ require_once('../../functions/functions.php');
 /* verify that user is admin */
 checkAdmin();
  
- 
+
 /**
  * First get posted variables
  */
