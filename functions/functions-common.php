@@ -243,21 +243,28 @@ function getUserDetailsById ($id)
  */
 function getUserDetailsByName ($username)
 {
-    global $db;                                                                      # get variables from config file
-    /* set query, open db connection and fetch results */
-    $query    = 'select * from users where username LIKE BINARY "'. $username .'";';
-    $database = new database($db['host'], $db['user'], $db['pass'], $db['name']);  
-
-    /* execute */
-    try { $details = $database->getArray( $query ); }
-    catch (Exception $e) { 
-        $error =  $e->getMessage(); 
-        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
-        return false;
-    } 
-    
-    /* return results */
-    return($details[0]);
+	# check if already set
+	global $userDetails;
+	if(isset($userDetails)) {
+		return $userDetails;
+	} 
+	else {
+	    global $db;                                                                      # get variables from config file
+	    /* set query, open db connection and fetch results */
+	    $query    = 'select * from users where username LIKE BINARY "'. $username .'";';
+	    $database = new database($db['host'], $db['user'], $db['pass'], $db['name']);  
+	
+	    /* execute */
+	    try { $details = $database->getArray( $query ); }
+	    catch (Exception $e) { 
+	        $error =  $e->getMessage(); 
+	        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
+	        return false;
+	    } 
+	    
+	    /* return results */
+	    return($details[0]);		
+	}
 }
 
 /**
@@ -610,7 +617,9 @@ function checkSectionPermission ($sectionId)
     else									{ $username = $_SESSION['ipamusername']; }
     
 	# get all user groups
-	$user = getUserDetailsByName ($username);
+	global $userDetails;
+	if(!isset($userDetails)) 	{ $user = getUserDetailsByName ($username); }
+	else						{ $user = $userDetails; }
 	$groups = json_decode($user['groups']);
 	
 	# if user is admin then return 3, otherwise check
@@ -653,7 +662,9 @@ function checkSubnetPermission ($subnetId)
     else									{ $username = $_SESSION['ipamusername']; }
     
 	# get all user groups
-	$user = getUserDetailsByName ($username);
+	global $userDetails;
+	if(!isset($userDetails)) 	{ $user = getUserDetailsByName ($username); }
+	else						{ $user = $userDetails; }
 	$groups = json_decode($user['groups']);
 	
 	# if user is admin then return 3, otherwise check
@@ -723,35 +734,44 @@ function checkSubnetPermission ($subnetId)
  */
 function getAllSettings()
 {
-    global $db;                                                                      # get variables from config file
-    $database    = new database($db['host'], $db['user'], $db['pass']); 
-
-    /* first check if table settings exists */
-    $query    = 'SELECT COUNT(*) AS count FROM information_schema.tables WHERE table_schema = "'. $db['name'] .'" AND table_name = "settings";';
-
-    /* execute */
-    try { $count = $database->getArray( $query ); }
-    catch (Exception $e) { 
-        $error =  $e->getMessage(); 
-        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
-        return false;
-    } 
-  
-	/* return true if it exists */
-	if($count[0]['count'] == 1) {
-	
-		/* select database */
-		$database->selectDatabase($db['name']);
-	
-	    /* first update request */
-	    $query    = 'select * from settings where id = 1';
-	    $settings = $database->getArray($query); 
-  
-		/* return settings */
-		return($settings[0]);
-	}
+	global $settings;
+	# check if it already exists
+	if(isset($settings)) {
+		return $settings;
+	} 
 	else {
-		return false;
+
+	    global $db;                                                                      # get variables from config file
+	    $database    = new database($db['host'], $db['user'], $db['pass']); 
+	
+	    /* first check if table settings exists */
+	    $query    = 'SELECT COUNT(*) AS count FROM information_schema.tables WHERE table_schema = "'. $db['name'] .'" AND table_name = "settings";';
+	
+	    /* execute */
+	    try { $count = $database->getArray( $query ); }
+	    catch (Exception $e) { 
+	        $error =  $e->getMessage(); 
+	        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
+	        return false;
+	    } 
+	  
+		/* return true if it exists */
+		if($count[0]['count'] == 1) {
+		
+			/* select database */
+			$database->selectDatabase($db['name']);
+		
+		    /* first update request */
+		    $query    = 'select * from settings where id = 1';
+		    $settings = $database->getArray($query); 
+	  
+			/* return settings */
+			return($settings[0]);
+		}
+		else {
+			return false;
+		}
+		
 	}
 }
 
@@ -1553,6 +1573,36 @@ function printBreadcrumbs ($req)
 			print "</ul>";
 		}
 	}
+}
+
+
+
+
+
+
+
+
+
+/* @cache functions */
+
+/**
+ * Check if object already cached
+ */
+function checkCache($type, $objectID)
+{
+	global $cache;
+	if(isset($cache[$type][$objectID])) { return $cache[$type][$objectID]; }
+	else								{ return false; }
+}
+
+
+/**
+ * Save to cache
+ */
+function writeCache($type, $objectID, $value) 
+{
+	global $cache;
+	$cache[$type][$objectID] = $value;
 }
 
 

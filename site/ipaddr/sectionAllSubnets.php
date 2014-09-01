@@ -13,7 +13,6 @@ $custom = getCustomFields('subnets');
 /* get all site settings */
 $settings = getAllSettings();
 
-
 # title
 print "<h4>"._('Available subnets')."</h4>";
 

@@ -11,6 +11,8 @@ ini_set('display_errors', 1);
 if (!$debugging) { error_reporting(E_ERROR ^ E_WARNING); }
 else			 { error_reporting(E_ALL ^ E_NOTICE); }
 
+/* set caching array to store vlans, sections etc */
+$cache = array();
 
 /**
  * Translations
@@ -42,7 +44,7 @@ if(isset($_SESSION['ipamlanguage'])) {
 /* set latest version */
 define("VERSION", "1.0");									//version changes if database structure changes
 /* set latest revision */
-define("REVISION", "001");									//revision always changes, verision only if database structure changes
+define("REVISION", "002");									//revision always changes, verision only if database structure changes
 /* set last possible upgrade */
 define("LAST_POSSIBLE", "0.9");								//minimum required version to be able to upgrade
 

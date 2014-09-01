@@ -2050,21 +2050,31 @@ function getIPaddrFields()
  */
 function getSelectedIPaddrFields()
 {
-    global $db;                                                                      # get variables from config file
-    $database = new database($db['host'], $db['user'], $db['pass'], $db['name']); 
-    
-    /* first update request */
-    $query    = 'select IPfilter from `settings`;';
-
-    /* execute */
-    try { $fields = $database->getArray( $query ); }
-    catch (Exception $e) { 
-        $error =  $e->getMessage(); 
-        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
-        return false;
-    } 
+	global $settings;
+	# we only need it if it is not already set!
+	if(!isset($settings)) {
 	
-	return $fields[0]['IPfilter'];
+	    global $db;                                                                      # get variables from config file
+	    $database = new database($db['host'], $db['user'], $db['pass'], $db['name']); 
+	    
+	    /* first update request */
+	    $query    = 'select IPfilter from `settings`;';
+	
+	    /* execute */
+	    try { $fields = $database->getArray( $query ); }
+	    catch (Exception $e) { 
+	        $error =  $e->getMessage(); 
+	        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
+	        return false;
+	    } 
+		
+		return $fields[0]['IPfilter'];		
+	}
+	else {
+		return $settings['IPfilter'];
+	}
+	
+	return $settings['IPfilter'];
 }
 
 

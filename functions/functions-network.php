@@ -172,25 +172,39 @@ function verifySwitchByName ($hostname)
  */
 function getDeviceById ($deviceid)
 {
-    global $db;                                                                      # get variables from config file
-    /* set check query and get result */
-    $database = new database ($db['host'], $db['user'], $db['pass'], $db['name']);
-    $query = "SELECT * from `devices` LEFT JOIN `deviceTypes` ON `devices`.`type` = `deviceTypes`.`tid` where `devices`.`id` = '$deviceid' limit 1;";
-    
-    /* execute */
-    try { $switch = $database->getArray( $query ); }
-    catch (Exception $e) { 
-        $error =  $e->getMessage(); 
-        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
-        return false;
-    } 
+	# null or 0
+	if($deviceid==0 || $deviceid==null)	{
+		return false;
+	}
+	# check if already in cache
+	elseif($vtmp = checkCache("device", $deviceid)) {
+		return $vtmp;
+	}
+	# query
+	else {
 
-    /* close database connection */
-    $database->close();
-    
-    /* return true, else false */
-    if (!$switch) 	{ return false; }
-    else 			{ return $switch[0]; }
+		# query
+	    global $db;                                                                      # get variables from config file
+	    /* set check query and get result */
+	    $database = new database ($db['host'], $db['user'], $db['pass'], $db['name']);
+	    $query = "SELECT * from `devices` LEFT JOIN `deviceTypes` ON `devices`.`type` = `deviceTypes`.`tid` where `devices`.`id` = '$deviceid' limit 1;";
+	    
+	    /* execute */
+	    try { $switch = $database->getArray( $query ); }
+	    catch (Exception $e) { 
+	        $error =  $e->getMessage(); 
+	        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
+	        return false;
+	    } 
+	
+	    /* close database connection */
+	    $database->close();
+	    
+	    /* return true, else false */
+	    if (!$switch) 	{ return false; }
+	    else 			{ writeCache("device", $deviceid, $switch[0]); return $switch[0]; }
+	
+	}
 }
 
 
@@ -343,22 +357,34 @@ function getVLANbyNumber ($number)
  */
 function getVLANbyId ($id) 
 {
-    global $db;                                                                      # get variables from config file
-    $database    = new database($db['host'], $db['user'], $db['pass'], $db['name']);     
-	/* execute query */
-	$query = 'select * from `vlans` where `vlanId` = "'. $id .'";';
-    
-    /* execute */
-    try { $vlan = $database->getArray( $query ); }
-    catch (Exception $e) { 
-        $error =  $e->getMessage(); 
-        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
-        return false;
-    } 
-   	
-   	/* return false if none, else list */
-	if(sizeof($vlan) == 0) 	{ return false; }
-	else 					{ return $vlan[0]; }
+	# null or 0
+	if($id==0 || $id==null)	{
+		return false;
+	}
+	# check if already in cache
+	elseif($vtmp = checkCache("vlan", $id)) {
+		return $vtmp;
+	}
+	else {
+
+	    global $db;                                                                      # get variables from config file
+	    $database    = new database($db['host'], $db['user'], $db['pass'], $db['name']);     
+		/* execute query */
+		$query = 'select * from `vlans` where `vlanId` = "'. $id .'";';
+	    
+	    /* execute */
+	    try { $vlan = $database->getArray( $query ); }
+	    catch (Exception $e) { 
+	        $error =  $e->getMessage(); 
+	        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
+	        return false;
+	    } 
+	   	
+	   	/* return false if none, else list */
+		if(sizeof($vlan) == 0) 	{ return false; }
+		else 					{ writeCache("vlan", $id, $vlan[0]);	return $vlan[0]; }
+	
+	}
 }
 
 
@@ -402,22 +428,35 @@ function getAllVRFs ()
  */
 function getVRFDetailsById ($vrfId)
 {
-    global $db;                                                                      # get variables from config file
-    $database    = new database($db['host'], $db['user'], $db['pass'], $db['name']);     
-	/* execute query */
-	$query = 'select * from `vrf` where `vrfId` = "'. $vrfId .'";';
-    
-    /* execute */
-    try { $vrf = $database->getArray( $query ); }
-    catch (Exception $e) { 
-        $error =  $e->getMessage(); 
-        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
-        return false;
-    } 
-   	
-   	/* return false if none, else list */
-	if(sizeof($vrf) == 0) 	{ return false; }
-	else 					{ return $vrf[0]; }
+	# null or 0
+	if($vrfId==0 || $vrfId==null)	{
+		return false;
+	}
+	# check if already in cache
+	elseif($vtmp = checkCache("vrf", $vrfId)) {
+		return $vtmp;
+	}
+	# check
+	else {
+
+	    global $db;                                                                      # get variables from config file
+	    $database    = new database($db['host'], $db['user'], $db['pass'], $db['name']);     
+		/* execute query */
+		$query = 'select * from `vrf` where `vrfId` = "'. $vrfId .'";';
+	    
+	    /* execute */
+	    try { $vrf = $database->getArray( $query ); }
+	    catch (Exception $e) { 
+	        $error =  $e->getMessage(); 
+	        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
+	        return false;
+	    } 
+	   	
+	   	/* return false if none, else list */
+		if(sizeof($vrf) == 0) 	{ return false; }
+		else 					{ writeCache("vrf", $vrfId, $vrf[0]);	return $vrf[0]; }
+	
+	}
 }
 
 
@@ -1033,22 +1072,34 @@ function getSubnetDetails ($subnetId)
  */
 function getSubnetDetailsById ($id)
 {
-    global $db;                                                                      # get variables from config file 
-    /* set query, open db connection and fetch results */
-    $query         = 'select * from `subnets` where `id` = "'. $id .'";';
-    $database      = new database($db['host'], $db['user'], $db['pass'], $db['name']);
-
-    /* execute */
-    try { $SubnetDetails = $database->getArray( $query ); }
-    catch (Exception $e) { 
-        $error =  $e->getMessage(); 
-        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
-        return false;
-    } 
-    $database->close();
-
-    /* return subnet details - only 1st field! We cannot do getRow because we need associative array */
-    if(sizeof($SubnetDetails) > 0) { return($SubnetDetails[0]); }
+	# check if already in cache
+	if($vtmp = checkCache("subnet", $id)) {
+		return $vtmp;
+	}
+	# query
+	else {
+	
+	    global $db;                                                                      # get variables from config file 
+	    /* set query, open db connection and fetch results */
+	    $query         = 'select * from `subnets` where `id` = "'. $id .'";';
+	    $database      = new database($db['host'], $db['user'], $db['pass'], $db['name']);
+	
+	    /* execute */
+	    try { $SubnetDetails = $database->getArray( $query ); }
+	    catch (Exception $e) { 
+	        $error =  $e->getMessage(); 
+	        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
+	        return false;
+	    } 
+	    $database->close();
+	
+	    /* return subnet details - only 1st field! We cannot do getRow because we need associative array */
+	    if(sizeof($SubnetDetails) > 0) { 
+	    	writeCache('subnet', $id, $SubnetDetails[0]);
+	    	return($SubnetDetails[0]); 
+	    }
+    	
+	}
 }
 
 
@@ -1621,23 +1672,7 @@ function printDropdownMenuBySection($sectionId, $subnetMasterId = "0")
  */
 function subnetGetVLANdetailsById($vlanId)
 {
-    global $db;                                                                      # get variables from config file
-    $database    = new database($db['host'], $db['user'], $db['pass'], $db['name']); 
-    
-    /* first update request */
-    $query    = 'select * from `vlans` where `vlanId` = "'. $vlanId .'";';
-
-    /* execute */
-    try { $vlan = $database->getArray( $query ); }
-    catch (Exception $e) { 
-        $error =  $e->getMessage(); 
-        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
-        return false;
-    }   
-  
-	/* return vlan details if exists */
-	if(sizeof($vlan) != 0) 	{ return $vlan[0]; }	
-	else 					{ return false; }
+	return getVLANbyId($vlanId);
 }
 
 

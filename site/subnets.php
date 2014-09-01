@@ -24,7 +24,7 @@ if ( (!is_numeric($sectionId)) && ($sectionId != "Administration") ) {
  */
 if ($sectionId == 'Administration')
 {
-    /* Print all Admin actions af user is admin :) */
+    /* Print all Admin actions if user is admin :) */
     if (!checkAdmin()) {
         print '<div class="alert alert-danger">'._('Sorry, must be admin').'!</div>';
     }
@@ -63,7 +63,7 @@ else
 
 	/* print Subnets */
 	
-    # get section name
+    # get section details
     $sectionName = getSectionDetailsById ($sectionId);
     
     # verify permissions

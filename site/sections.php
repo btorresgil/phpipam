@@ -32,10 +32,8 @@ isUserAuthenticated ();
 /* fetch result */
 $sections = fetchSections ();
 
-/* get all selected fields for IP print */
-$setFieldsTemp = getSelectedIPaddrFields();
-/* format them to array! */
-$setFields = explode(";", $setFieldsTemp);
+/* set selected fields for IP print, get them to array */
+$setFields = explode(";", $settings['IPfilter']);
 
 ?>
 

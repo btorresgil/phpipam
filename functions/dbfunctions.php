@@ -75,6 +75,13 @@ class database extends mysqli
 	 */
 	function getArray( $query , $assoc = true ) 
 	{	
+		/* save query */
+/*
+		$tmpfile = fopen("/tmp/phpipam_queries.txt", "a") or die("Unable to open file!");
+		fwrite($tmpfile, "$query \n");
+		fclose($tmpfile);
+*/
+		
 		/* execute query */
 		$result = parent::query($query);
 	

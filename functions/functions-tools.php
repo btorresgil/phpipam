@@ -1085,7 +1085,6 @@ function getAllUniqueDevices ($orderby = "hostname", $direction = "asc")
     $database    = new database($db['host'], $db['user'], $db['pass'], $db['name']); 
     
     /* get all vlans, descriptions and subnets */
-    $query   = "select * from `devices` as `d`, `deviceTypes` as `t` where `d`.`type` = `t`.`tid` order by `d`.`$orderby` $direction;";
     $query   = "SELECT * from `devices` LEFT JOIN `deviceTypes` ON `devices`.`type` = `deviceTypes`.`tid` order by `devices`.`$orderby` $direction;";	
 
     /* execute */
