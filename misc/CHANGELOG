@@ -1,4 +1,4 @@
-== 1.01.004
+== 1.01.005
 
 	Enhancements:
 	----------------------------
@@ -13,6 +13,7 @@
 	--------	
 	+ Fixed top 10 widgets not escaping strings;
 	+ Fixed section parent can be set to self that caused section to disapear;
+	+ Fixed username instead of password being sent to smtp server;
 
 == 1.0
 	

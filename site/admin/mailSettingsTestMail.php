@@ -64,7 +64,7 @@ elseif($settings['mtype']=="smtp") {
 		if($settings['mauth']=="yes") {
 			$pmail->SMTPAuth = true;
 			$pmail->Username = $settings['muser'];
-			$pmail->Username = $settings['mpass'];
+			$pmail->Password = $settings['mpass'];
 		} else {
 			$pmail->SMTPAuth = false;	
 		}
