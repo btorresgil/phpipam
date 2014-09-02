@@ -867,20 +867,32 @@ function isIPalreadyRequested($ip)
  */
 function countRequestedIPaddresses()
 {
-    global $db;                                                                      # get variables from config file
-    /* set query, open db connection and fetch results */
-    $query    = 'select count(*) from requests where `processed` = 0;';
-    $database = new database($db['host'], $db['user'], $db['pass'], $db['name']);  
- 
-    /* execute */
-    try { $details = $database->getArray( $query ); }
-    catch (Exception $e) { 
-        $error =  $e->getMessage(); 
-        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
-        return false;
-    } 
-    
-    return $details[0]['count(*)'];
+	# check if already in cache
+	if($vtmp = checkCache("openrequests", 0)) {
+		return $vtmp;
+	}
+	# query
+	else {
+
+	    global $db;                                                                      # get variables from config file
+	    /* set query, open db connection and fetch results */
+	    $query    = 'select count(*) from requests where `processed` = 0;';
+	    $database = new database($db['host'], $db['user'], $db['pass'], $db['name']);  
+	 
+	    /* execute */
+	    try { $details = $database->getArray( $query ); }
+	    catch (Exception $e) { 
+	        $error =  $e->getMessage(); 
+	        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
+	        return false;
+	    } 
+	    
+	    # save to cche
+	    writeCache("openrequests", 0, $details[0]['count(*)']);
+	    # return
+	    return $details[0]['count(*)'];
+	
+	}
 }
 
 

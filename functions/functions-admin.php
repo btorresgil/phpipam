@@ -340,22 +340,29 @@ function rekeyGroups($groups)
  */
 function getGroupById($id) 
 {
-    global $db;                                                                      # get variables from config file
-    $database    = new database($db['host'], $db['user'], $db['pass'], $db['name']);     
-
-	/* execute query */
-	$query = "select * from `userGroups` where `g_id`= '$id';";
-    
-   	/* get group */
-    try { $group = $database->getArray( $query ); }
-    catch (Exception $e) { 
-        $error =  $e->getMessage(); 
-        die("<div class='alert alert-danger'>"._('Error').": $error</div>");
-    }
-   	
-   	/* return false if none, else list */
-	if(sizeof($group) == 0) { return false; }
-	else					{ return $group[0]; }
+	# check if already in cache
+	if($vtmp = checkCache("group", $id)) {
+		return $vtmp;
+	}
+	# query
+	else {
+	    global $db;                                                                      # get variables from config file
+	    $database    = new database($db['host'], $db['user'], $db['pass'], $db['name']);     
+	
+		/* execute query */
+		$query = "select * from `userGroups` where `g_id`= '$id';";
+	    
+	   	/* get group */
+	    try { $group = $database->getArray( $query ); }
+	    catch (Exception $e) { 
+	        $error =  $e->getMessage(); 
+	        die("<div class='alert alert-danger'>"._('Error').": $error</div>");
+	    }
+	   	
+	   	/* return false if none, else list */
+		if(sizeof($group) == 0) { return false; }
+		else					{ writeCache("group", $id, $group[0]); return $group[0]; }
+	}
 }
  
 

@@ -220,21 +220,33 @@ function getAllAdminUsers ()
  */
 function getUserDetailsById ($id)
 {
-    global $db;                                                                      # get variables from config file
-    /* set query, open db connection and fetch results */
-    $query    = 'select * from users where id = "'. $id .'";';
-    $database = new database($db['host'], $db['user'], $db['pass'], $db['name']);  
+	# check if already in cache
+	if($user = checkCache("user", $id)) {
+		return $user;
+	}
+	# query
+	else {
 
-    /* execute */
-    try { $details = $database->getArray( $query ); }
-    catch (Exception $e) { 
-        $error =  $e->getMessage(); 
-        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
-        return false;
-    } 
-    
-    /* return results */
-    return($details[0]);
+	    global $db;                                                                      # get variables from config file
+	    /* set query, open db connection and fetch results */
+	    $query    = 'select * from users where id = "'. $id .'";';
+	    $database = new database($db['host'], $db['user'], $db['pass'], $db['name']);  
+	
+	    /* execute */
+	    try { $details = $database->getArray( $query ); }
+	    catch (Exception $e) { 
+	        $error =  $e->getMessage(); 
+	        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
+	        return false;
+	    } 
+	    
+	    # save cache - id and name
+	    writeCache("user", $id, $details[0]);
+	    writeCache("user", $details[0]['username'], $details[0]);
+	    
+	    /* return results */
+	    return($details[0]);
+	}
 }
 
 
@@ -243,11 +255,11 @@ function getUserDetailsById ($id)
  */
 function getUserDetailsByName ($username)
 {
-	# check if already set
-	global $userDetails;
-	if(isset($userDetails)) {
-		return $userDetails;
-	} 
+	# check if already in cache
+	if($user = checkCache("user", $username)) {
+		return $user;
+	}
+	# query
 	else {
 	    global $db;                                                                      # get variables from config file
 	    /* set query, open db connection and fetch results */
@@ -261,6 +273,10 @@ function getUserDetailsByName ($username)
 	        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
 	        return false;
 	    } 
+
+	    # save cache - id and name
+	    writeCache("user", $details[0]['id'], $details[0]);
+	    writeCache("user", $username, $details[0]);
 	    
 	    /* return results */
 	    return($details[0]);		
@@ -318,21 +334,30 @@ function getLanguages ()
  */
 function getLangById ($id)
 {
-    global $db;                                                                      # get variables from config file
-    /* set query, open db connection and fetch results */
-    $query    = 'select * from `lang` where `l_id` = "'.$id.'";';
-    $database = new database($db['host'], $db['user'], $db['pass'], $db['name']);  
+	# check cache
+	if($vtmp = checkCache("lang", $id)) {
+		return $vtmp;
+	}
+	else {
 
-    /* execute */
-    try { $details = $database->getArray( $query ); }
-    catch (Exception $e) { 
-        $error =  $e->getMessage(); 
-        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
-        return false;
-    } 
-    
-    /* return results */
-    return($details[0]);
+	    global $db;                                                                      # get variables from config file
+	    /* set query, open db connection and fetch results */
+	    $query    = 'select * from `lang` where `l_id` = "'.$id.'";';
+	    $database = new database($db['host'], $db['user'], $db['pass'], $db['name']);  
+	
+	    /* execute */
+	    try { $details = $database->getArray( $query ); }
+	    catch (Exception $e) { 
+	        $error =  $e->getMessage(); 
+	        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
+	        return false;
+	    } 
+	    
+	    # save cache
+	    writeCache("lang", $id, $details[0]);
+	    /* return results */
+	    return($details[0]);
+	}
 }
 
 
@@ -1432,39 +1457,51 @@ $removeSlaves = array();
 
 function getAllSlaves ($subnetId, $multi = false) 
 {
-	global $removeSlaves;
-	$end = false;			# breaks while
-	
-	$removeSlaves[] = $subnetId;		# first
+	# check cache
+	if($vtmp = checkCache("allslaves", $subnetId."_$multi")) {
+		return $vtmp;
+	}
+	else {
 
-	# db
-	global $db;                                                                      # get variables from config file
-	$database    = new database($db['host'], $db['user'], $db['pass'], $db['name']); 
+		global $removeSlaves;
+		$end = false;			# breaks while
+		
+		$removeSlaves[] = $subnetId;		# first
 	
-	while($end == false) {
+		# db
+		global $db;                                                                      # get variables from config file
+		$database    = new database($db['host'], $db['user'], $db['pass'], $db['name']); 
 		
-		/* get all immediate slaves */
-		$query = "select * from `subnets` where `masterSubnetId` = '$subnetId' order by `id` asc; ";    
-		/* execute query */
-		try { $slaves2 = $database->getArray( $query ); }
-		catch (Exception $e) { 
-        	$error =  $e->getMessage(); 
-        	print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
-        	return false;
-        }
-		
-		# we have more slaves
-		if(sizeof($slaves2) != 0) {
-			# recursive
-			foreach($slaves2 as $slave) {
-				$removeSlaves[] = $slave['id'];
-				getAllSlaves ($slave['id']);
+		while($end == false) {
+			
+			/* get all immediate slaves */
+			$query = "select * from `subnets` where `masterSubnetId` = '$subnetId' order by `id` asc; ";    
+			/* execute query */
+			try { $slaves2 = $database->getArray( $query ); }
+			catch (Exception $e) { 
+	        	$error =  $e->getMessage(); 
+	        	print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
+	        	return false;
+	        }
+			
+			# we have more slaves
+			if(sizeof($slaves2) != 0) {
+				# recursive
+				foreach($slaves2 as $slave) {
+					$removeSlaves[] = $slave['id'];
+					getAllSlaves ($slave['id']);
+					$end = true;
+				}
+			}
+			# no more slaves
+			else {
 				$end = true;
 			}
 		}
-		# no more slaves
-		else {
-			$end = true;
+		
+		# save cache
+		if(sizeof($removeSlaves)>0) {
+			writeCache("allslaves", $subnetId."_$multi", $removeSlaves);
 		}
 	}
 }

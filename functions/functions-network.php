@@ -618,22 +618,33 @@ function getNumberOfSections ()
  */
 function getSectionDetailsById ($id)
 {
-    global $db;                                                                      # get variables from config file
-    /* set query, open db connection and fetch results */
-    $query 	  = 'select * from sections where id = "'. $id .'";';
-    $database = new database($db['host'], $db['user'], $db['pass'], $db['name']);
-
-    /* execute */
-    try { $subnets = $database->getArray( $query ); }
-    catch (Exception $e) { 
-        $error =  $e->getMessage(); 
-        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
-        return false;
-    } 
-    $database->close();
-
-    /* return section */
-    if(sizeof($subnets) > 0)	{ return($subnets[0]); }
+	# null or 0
+	if($id==0 || $id==null)	{
+		return false;
+	}
+	# check if already in cache
+	elseif($vtmp = checkCache("section", $id)) {
+		return $vtmp;
+	}
+	# query
+	else {
+	    global $db;                                                                      # get variables from config file
+	    /* set query, open db connection and fetch results */
+	    $query 	  = 'select * from sections where id = "'. $id .'";';
+	    $database = new database($db['host'], $db['user'], $db['pass'], $db['name']);
+	
+	    /* execute */
+	    try { $section = $database->getArray( $query ); }
+	    catch (Exception $e) { 
+	        $error =  $e->getMessage(); 
+	        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
+	        return false;
+	    } 
+	    $database->close();
+	
+	    /* return section */
+	    if(sizeof($section) > 0)	{ writeCache("section", $id, $section[0]); return($section[0]); }
+    }
 }
 
 
@@ -642,22 +653,34 @@ function getSectionDetailsById ($id)
  */
 function getSectionDetailsByName ($name)
 {
-    global $db;                                                                      # get variables from config file
-    /* set query, open db connection and fetch results */
-    $query 	  = 'select * from sections where `name` = "'. $name .'";';
-    $database = new database($db['host'], $db['user'], $db['pass'], $db['name']);
-
-    /* execute */
-    try { $subnets = $database->getArray( $query ); }
-    catch (Exception $e) { 
-        $error =  $e->getMessage(); 
-        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
-        return false;
-    } 
-    $database->close();
-
-    /* return subnets array */
-    return($subnets[0]);
+	# null or 0
+	if($name==0 || strlen($name)==0)	{
+		return false;
+	}
+	# check if already in cache
+	elseif($vtmp = checkCache("section", $name)) {
+		return $vtmp;
+	}
+	# query
+	else {
+	    global $db;                                                                      # get variables from config file
+	    /* set query, open db connection and fetch results */
+	    $query 	  = 'select * from sections where `name` = "'. $name .'";';
+	    $database = new database($db['host'], $db['user'], $db['pass'], $db['name']);
+	
+	    /* execute */
+	    try { $subnets = $database->getArray( $query ); }
+	    catch (Exception $e) { 
+	        $error =  $e->getMessage(); 
+	        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
+	        return false;
+	    } 
+	    $database->close();
+	
+		writeCache("section", $name, $subnets[0]);
+	    /* return subnets array */
+	    return($subnets[0]);
+    }
 }
 
 
@@ -679,6 +702,13 @@ function getAllSubSections($sectionId)
         return false;
     } 
     $database->close();
+    
+    /* cache them */
+	if(sizeof($sections)>0) {
+		foreach($sections as $s) {
+			writeCache("section", $s['id'], $s);
+		}
+	}
 
     /* return subnets array */
     return($sections);
@@ -818,46 +848,69 @@ function fetchMasterSubnets ($sectionId)
  */
 function getAllSlaveSubnetsBySubnetId ($subnetId)
 {
-    global $db;                                                                      # get variables from config file
-    # set query, open db connection and fetch results
-    $query 	  = 'select * from subnets where `masterSubnetId` = "'. $subnetId .'" ORDER BY subnet ASC;';
-    $database = new database($db['host'], $db['user'], $db['pass'], $db['name']);
+	# check cache
+	if($vtmp = checkCache("ipaddressSlaves", $subnetId)) {
+		return $vtmp;
+	}
+	else {
+	    global $db;                                                                      # get variables from config file
+	    # set query, open db connection and fetch results
+	    $query 	  = 'select * from subnets where `masterSubnetId` = "'. $subnetId .'" ORDER BY subnet ASC;';
+	    $database = new database($db['host'], $db['user'], $db['pass'], $db['name']);
+	
+	    /* execute */
+	    try { $subnets = $database->getArray( $query ); }
+	    catch (Exception $e) { 
+	        $error =  $e->getMessage(); 
+	        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
+	        return false;
+	    } 
+	    $database->close();
 
-    /* execute */
-    try { $subnets = $database->getArray( $query ); }
-    catch (Exception $e) { 
-        $error =  $e->getMessage(); 
-        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
-        return false;
-    } 
-    $database->close();
-
-    # return subnets array
-    return($subnets);
+		# save cache
+		if(sizeof($subnets)>0) {
+			writeCache("ipaddressSlaves", $subnetId, $subnets);
+		}
+	
+	    # return subnets array
+	    return($subnets);
+    }
 }
 
 
 /**
- * Get all ip addresses in requested subnet bt provided Id
+ * Get all ip addresses in requested subnet by provided Id
  */
 function getIpAddressesBySubnetId ($subnetId) 
 {
-    global $db;                                                                      # get variables from config file
-    /* set query, open db connection and fetch results */
-    $query       = 'select * from `ipaddresses` where subnetId = "'. $subnetId .'" order by `ip_addr` ASC;';
-    $database    = new database($db['host'], $db['user'], $db['pass'], $db['name']);
-    
-    /* execute */
-    try { $ipaddresses = $database->getArray( $query ); }
-    catch (Exception $e) { 
-        $error =  $e->getMessage(); 
-        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
-        return false;
-    } 
-    $database->close();
-
-    /* return ip address array */
-    return($ipaddresses);       
+	# check cache
+	if($vtmp = checkCache("ipaddresses", $subnetId)) {
+		return $vtmp;
+	}
+	else {
+	
+	    global $db;                                                                      # get variables from config file
+	    /* set query, open db connection and fetch results */
+	    $query       = 'select * from `ipaddresses` where subnetId = "'. $subnetId .'" order by `ip_addr` ASC;';
+	    $database    = new database($db['host'], $db['user'], $db['pass'], $db['name']);
+	    
+	    /* execute */
+	    try { $ipaddresses = $database->getArray( $query ); }
+	    catch (Exception $e) { 
+	        $error =  $e->getMessage(); 
+	        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
+	        return false;
+	    } 
+	    $database->close();
+	
+		# save cache
+		if(sizeof($ipaddresses)>0) {
+			writeCache("ipaddresses", $subnetId, $ipaddresses);
+		}
+	
+	    /* return ip address array */
+	    return($ipaddresses);  
+    }     
 }
 
 
@@ -866,22 +919,34 @@ function getIpAddressesBySubnetId ($subnetId)
  */
 function getIpAddressesBySubnetIdSort ($subnetId, $fieldName, $direction) 
 {
-    global $db;                                                                      # get variables from config file  
-    /* set query, open db connection and fetch results */
-    $query       = 'select * from `ipaddresses` where subnetId = "'. $subnetId .'" order by `'. $fieldName .'` '. $direction .';';
-    $database    = new database($db['host'], $db['user'], $db['pass'], $db['name']);
-    
-    /* execute */
-    try { $ipaddresses = $database->getArray( $query ); }
-    catch (Exception $e) { 
-        $error =  $e->getMessage(); 
-        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
-        return false;
-    } 
-    $database->close();
+	# check cache
+	if($vtmp = checkCache("ip_sorted", $subnetId."_$fieldName"."_$direction")) {
+		return $vtmp;
+	}
+	else {
+	
+	    global $db;                                                                      # get variables from config file  
+	    /* set query, open db connection and fetch results */
+	    $query       = 'select * from `ipaddresses` where subnetId = "'. $subnetId .'" order by `'. $fieldName .'` '. $direction .';';
+	    $database    = new database($db['host'], $db['user'], $db['pass'], $db['name']);
+	    
+	    /* execute */
+	    try { $ipaddresses = $database->getArray( $query ); }
+	    catch (Exception $e) { 
+	        $error =  $e->getMessage(); 
+	        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
+	        return false;
+	    } 
+	    $database->close();
 
-    /* return ip address array */
-    return($ipaddresses);       
+		# save cache
+		if(sizeof($ipaddresses)>0) {
+			writeCache("ip_sorted", $subnetId."_$fieldName"."_$direction", $ipaddresses);
+		}
+	
+	    /* return ip address array */
+	    return($ipaddresses);     
+    }  
 }
 
 
@@ -890,34 +955,47 @@ function getIpAddressesBySubnetIdSort ($subnetId, $fieldName, $direction)
  */
 function getIpAddressesBySubnetIdslavesSort ($subnetId, $fieldName = "subnetId", $direction = "asc") 
 {
-    global $db;                                                                      # get variables from config file
-    /* get ALL slave subnets, then remove all subnets and IP addresses */
-    global $removeSlaves;
-    getAllSlaves ($subnetId);
-    $removeSlaves = array_unique($removeSlaves);
-    
-    /* set query, open db connection and fetch results */
-    $query       = 'select * from `ipaddresses` where subnetId = "" ';
-    foreach($removeSlaves as $subnetId2) {
-    	if($subnetId2 != $subnetId) {					# ignore orphaned
-	    $query  .= " or `subnetId` = '$subnetId2' ";
-	    }
-    }
-   
-    $query      .= 'order by `'. $fieldName .'` '. $direction .';';
-    $database    = new database($db['host'], $db['user'], $db['pass'], $db['name']);
-    
-    /* execute */
-    try { $ipaddresses = $database->getArray( $query ); }
-    catch (Exception $e) { 
-        $error =  $e->getMessage(); 
-        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
-        return false;
-    } 
-    $database->close();
 
-    /* return ip address array */
-    return($ipaddresses);       
+	# check cache
+	if($vtmp = checkCache("ip_slaves_sorted", $subnetId."_$fieldName"."_$direction")) {
+		return $vtmp;
+	}
+	else {
+
+	    global $db;                                                                      # get variables from config file
+	    /* get ALL slave subnets, then remove all subnets and IP addresses */
+	    global $removeSlaves;
+	    getAllSlaves ($subnetId);
+	    $removeSlaves = array_unique($removeSlaves);
+	    
+	    /* set query, open db connection and fetch results */
+	    $query       = 'select * from `ipaddresses` where subnetId = "" ';
+	    foreach($removeSlaves as $subnetId2) {
+	    	if($subnetId2 != $subnetId) {					# ignore orphaned
+		    $query  .= " or `subnetId` = '$subnetId2' ";
+		    }
+	    }
+	   
+	    $query      .= 'order by `'. $fieldName .'` '. $direction .';';
+	    $database    = new database($db['host'], $db['user'], $db['pass'], $db['name']);
+	    
+	    /* execute */
+	    try { $ipaddresses = $database->getArray( $query ); }
+	    catch (Exception $e) { 
+	        $error =  $e->getMessage(); 
+	        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
+	        return false;
+	    } 
+	    $database->close();
+
+		# save cache
+		if(sizeof($ipaddresses)>0) {
+			writeCache("ip_slaves_sorted", $subnetId."_$fieldName"."_$direction", $ipaddresses);
+		}
+	
+	    /* return ip address array */
+	    return($ipaddresses);  
+    }     
 }
 
 
@@ -925,20 +1003,8 @@ function getIpAddressesBySubnetIdslavesSort ($subnetId, $fieldName = "subnetId",
  * Get all ip addresses in requested subnet by provided Id for visual display
  */
 function getIpAddressesForVisual ($subnetId) 
-{
-    global $db;                                                                      # get variables from config file
-    /* set query, open db connection and fetch results */
-    $query       = 'select * from `ipaddresses` where `subnetId` = "'. $subnetId .'" order by `ip_addr` ASC;';
-    $database    = new database($db['host'], $db['user'], $db['pass'], $db['name']);
-    
-    /* execute */
-    try { $ipaddresses = $database->getArray( $query ); }
-    catch (Exception $e) { 
-        $error =  $e->getMessage(); 
-        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
-        return false;
-    } 
-    $database->close();
+{	
+	$ipaddresses = getIpAddressesBySubnetId ($subnetId);
     
     /* reformat array */
     foreach($ipaddresses as $ip) {
@@ -1021,7 +1087,7 @@ function countIpAddressesBySubnetId ($subnetId)
 {
     global $db;                                                                      # get variables from config file
     /* set query, open db connection and fetch results */
-    $query       = 'select count(*) from ipaddresses where subnetId = "'. $subnetId .'" order by subnetId ASC;';
+    $query       = 'select count(*) from ipaddresses where `subnetId` = "'. $subnetId .'" order by subnetId ASC;';
     $database    = new database($db['host'], $db['user'], $db['pass'], $db['name']);
 
     /* execute */
@@ -1072,8 +1138,12 @@ function getSubnetDetails ($subnetId)
  */
 function getSubnetDetailsById ($id)
 {
+	# for changelog
+	if($id=="subnetId") {
+		return false;
+	}
 	# check if already in cache
-	if($vtmp = checkCache("subnet", $id)) {
+	elseif($vtmp = checkCache("subnet", $id)) {
 		return $vtmp;
 	}
 	# query
@@ -1348,22 +1418,34 @@ function verifyNestedSubnetOverlapping ($sectionId, $subnetNew, $vrfId, $masterS
  */
 function subnetContainsSlaves($subnetId)
 {
-    global $db;                                                                      # get variables from config file
-    $database    = new database($db['host'], $db['user'], $db['pass'], $db['name']); 
-    
-    /* get all ip addresses in subnet */
-    $query 		  = 'SELECT count(*) from subnets where `masterSubnetId` = "'. $subnetId .'";';    
+	# we need new temp variable for empties
+	$subnetIdtmp = $subnetId;
+	if(strlen($subnetIdtmp)==0)	{ $subnetIdtmp="root"; }
+	# check if already in cache
+	if($vtmp = checkCache("subnetcontainsslaves", $subnetIdtmp)) {
+		return $vtmp;
+	}
+	# query
+	else {
 
-    /* execute */
-    try { $slaveSubnets = $database->getArray( $query ); }
-    catch (Exception $e) { 
-        $error =  $e->getMessage(); 
-        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
-        return false;
-    }    
+	    global $db;                                                                      # get variables from config file
+	    $database    = new database($db['host'], $db['user'], $db['pass'], $db['name']); 
+	    
+	    /* get all ip addresses in subnet */
+	    $query 		  = 'SELECT count(*) from `subnets` where `masterSubnetId` = "'. $subnetId .'";';    
 	
-	if($slaveSubnets[0]['count(*)']) { return true; }
-	else 							 { return false; }
+	    /* execute */
+	    try { $slaveSubnets = $database->getArray( $query ); }
+	    catch (Exception $e) { 
+	        $error =  $e->getMessage(); 
+	        print ("<div class='alert alert-danger'>"._('Error').": $error</div>");
+	        return false;
+	    }
+		
+		if($slaveSubnets[0]['count(*)']) { writeCache("subnetcontainsslaves", $subnetIdtmp, true);	return true; }
+		else 							 { writeCache("subnetcontainsslaves", $subnetIdtmp, false);	return false; }
+	
+	}
 }
 
 
