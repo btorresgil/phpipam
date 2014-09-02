@@ -83,11 +83,11 @@ $(function () {
 			
 					# odd/even if more than 5 items
 					if(sizeof($subnetHost) > 5) {
-						if ($m&1) 	{ print "['|<br>$subnet[description]', $subnet[percentage], '$subnet[descriptionLong] ($subnet[subnet]/$subnet[mask])'],";	}
-						else		{ print "['$subnet[description]', $subnet[percentage], '$subnet[descriptionLong] ($subnet[subnet]/$subnet[mask])'],";	}
+						if ($m&1) 	{ print "['|<br>" . addslashes($subnet[description]) . "', $subnet[percentage], '" . addslashes($subnet[descriptionLong]) . " ($subnet[subnet]/$subnet[mask])'],";	}
+						else		{ print "['" . addslashes($subnet[description]) . "', $subnet[percentage], '" . addslashes($subnet[descriptionLong]) . " ($subnet[subnet]/$subnet[mask])'],";	}
 					}
 					else {
-									{ print "['$subnet[description]', $subnet[percentage], '$subnet[descriptionLong] ($subnet[subnet]/$subnet[mask])'],";	}			
+									{ print "['" . addslashes($subnet[description]) . "', $subnet[percentage], '" . addslashes($subnet[descriptionLong]) . " ($subnet[subnet]/$subnet[mask])'],";	}			
 					}	
 					$m++;
 				}
