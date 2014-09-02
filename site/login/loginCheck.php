@@ -18,6 +18,9 @@ if( !empty($_POST['ipamusername']) && !empty($_POST['ipampassword']) )  {
 	// sanitize inputs
 	//$_POST['ipamusername'] = sanitize($_POST['ipamusername']);	
 
+	# initialize array
+	$ipampassword = array();
+
 	$ipamusername = $_POST['ipamusername'];
 	$ipampassword['raw'] = $_POST['ipampassword'];
 	$ipampassword['md5'] = md5($_POST['ipampassword']);

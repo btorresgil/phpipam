@@ -47,39 +47,41 @@ $result = json_decode(trim($output[0]), true);
 
 # recode to same array with statuses 
 $m=0;
-foreach($result as $k=>$r) {
-
-	foreach($r as $ip) {
-		# get details
-		$ipdet = getIpAddrDetailsByIPandSubnet ($ip, $_POST['subnetId']);
-
-		# format output
-		$res[$ip]['ip_addr'] 	 = $ip;
-		$res[$ip]['description'] = $ipdet['description'];
-		$res[$ip]['dns_name'] 	 = $ipdet['dns_name'];
-		
-		//online
-		if($k=="alive")	{ 
-			$res[$ip]['status'] = "Online";			
-			$res[$ip]['code']=0; 
-			//update alive time
-			@updateLastSeen($ipdet['id']);
-		}		
-		//offline
-		elseif($k=="dead")	{ 
-			$res[$ip]['status'] = "Offline";			
-			$res[$ip]['code']=1; 
+if(sizeof($result)>0) {
+	foreach($result as $k=>$r) {
+	
+		foreach($r as $ip) {
+			# get details
+			$ipdet = getIpAddrDetailsByIPandSubnet ($ip, $_POST['subnetId']);
+	
+			# format output
+			$res[$ip]['ip_addr'] 	 = $ip;
+			$res[$ip]['description'] = $ipdet['description'];
+			$res[$ip]['dns_name'] 	 = $ipdet['dns_name'];
+			
+			//online
+			if($k=="alive")	{ 
+				$res[$ip]['status'] = "Online";			
+				$res[$ip]['code']=0; 
+				//update alive time
+				@updateLastSeen($ipdet['id']);
+			}		
+			//offline
+			elseif($k=="dead")	{ 
+				$res[$ip]['status'] = "Offline";			
+				$res[$ip]['code']=1; 
+			}
+			//excluded
+			elseif($k=="excluded")	{ 
+				$res[$ip]['status'] = "Excluded form check";			
+				$res[$ip]['code']=100; 
+			}
+			else { 
+				$res[$ip]['status'] = "Error";
+				$res[$ip]['code']=2; 
+			}			
+			$m++;
 		}
-		//excluded
-		elseif($k=="excluded")	{ 
-			$res[$ip]['status'] = "Excluded form check";			
-			$res[$ip]['code']=100; 
-		}
-		else { 
-			$res[$ip]['status'] = "Error";
-			$res[$ip]['code']=2; 
-		}			
-		$m++;
 	}
 }
 
