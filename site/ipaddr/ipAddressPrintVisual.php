@@ -14,10 +14,19 @@ if(sizeof($slaves) == 0 && $type == 0 && $SubnetDetails['mask']!="31" && $Subnet
 	# get max hosts
 	$max = MaxHosts($SubnetDetails['mask'], $type);
 	$max = $SubnetDetails['subnet'] + $max;
-	# set start
-	$start = gmp_strval(gmp_add($SubnetDetails['subnet'],1));
+
+	# set start and stop values
+	$section = getSectionDetailsById($_GET['section']);
+	# strict mode?
+	if($section['strictMode']==1) {
+		$start = gmp_strval(gmp_add($SubnetDetails['subnet'],1));	
+		$stop  = $max;	
+	} else {
+		$start = $SubnetDetails['subnet'];
+		$stop  = gmp_strval(gmp_add($max,1));
+	}
 	
-	for($m=$start; $m<=$max; $m=gmp_strval(gmp_add($m,1))) {
+	for($m=$start; $m<=$stop; $m=gmp_strval(gmp_add($m,1))) {
 		# already exists
 		if (array_key_exists((string)$m, $ipVisual)) {
 		

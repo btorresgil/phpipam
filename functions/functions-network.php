@@ -3647,7 +3647,6 @@ function writeChangelog($ctype, $action, $result, $old, $new)
 			try {  $database->executeQuery( $query ); }
 			catch (Exception $e) { 
 		    	$error =  $e->getMessage(); 
-		    	print $error;
 				return true;
 			}
 			return true;	

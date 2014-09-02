@@ -1,4 +1,4 @@
-== 1.01.006
+== 1.01.007
 
 	Enhancements:
 	----------------------------
@@ -15,6 +15,7 @@
 	+ Fixed section parent can be set to self that caused section to disapear;
 	+ Fixed username instead of password being sent to smtp server;
 	+ Fixed IE search bug with workaround;
+	+ Fixed subnet and bcast not showing on strict mode disabled;
 
 == 1.0
 	

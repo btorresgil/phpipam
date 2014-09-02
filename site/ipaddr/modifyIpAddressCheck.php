@@ -34,14 +34,14 @@ else 									{ $ip['mac'] = ""; }
 if ( !empty($_REQUEST['owner']) ) 		{ $ip['owner'] = htmlentities($_REQUEST['owner'], ENT_COMPAT | ENT_HTML401, "UTF-8"); }		//prevent XSS
 else 									{ $ip['owner'] = ""; }
 //switch
-if ( !empty($_REQUEST['switch']) ) 		{ $ip['switch'] = htmlentities($_REQUEST['switch'], ENT_COMPAT | ENT_HTML401, "UTF-8"); }	//prevent XSS
-else 									{ $ip['switch'] = ""; }
+$ip['switch'] = @$_REQUEST['switch'];
 //port
 if ( !empty($_REQUEST['port']) ) 		{ $ip['port'] = htmlentities($_REQUEST['port'], ENT_COMPAT | ENT_HTML401, "UTF-8"); }		//prevent XSS
 else 									{ $ip['port'] = ""; }
 //note
 if ( !empty($_REQUEST['note']) ) 		{ $ip['note'] = htmlentities($_REQUEST['note'], ENT_COMPAT | ENT_HTML401, "UTF-8"); }		//prevent XSS
 else 									{ $ip['note'] = ""; }
+
 //custom
 $myFields = getCustomFields('ipaddresses');
 if(sizeof($myFields) > 0) {
