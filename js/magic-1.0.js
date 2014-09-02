@@ -655,8 +655,16 @@ $('form#ipCalc input.reset').click(function () {
 $('.searchSubmit').click(function () {
     showSpinner();
     var ip = $('.searchInput').val();
-    //update search page
-    window.location = "tools/search/" + ip;
+
+    //lets try to detect IEto set location
+    var ua = window.navigator.userAgent;
+    var msie = ua.indexOf("MSIE ");
+
+    //IE
+    if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) 	{ var base = $('.iebase').html(); } 
+    else 																{ var base = ""; } 
+    //go to search page
+	window.location = base + "tools/search/" + ip;
     return false;
 });
 //submit form - topmenu

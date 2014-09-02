@@ -1,4 +1,4 @@
-== 1.01.005
+== 1.01.006
 
 	Enhancements:
 	----------------------------
@@ -14,6 +14,7 @@
 	+ Fixed top 10 widgets not escaping strings;
 	+ Fixed section parent can be set to self that caused section to disapear;
 	+ Fixed username instead of password being sent to smtp server;
+	+ Fixed IE search bug with workaround;
 
 == 1.0
 	

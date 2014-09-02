@@ -78,8 +78,8 @@ else								 		{ $url = "http://$_SERVER[SERVER_NAME]".BASE; }
 	<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
 	<script type="text/javascript" src="js/jclock.jquery.js"></script>
 	<script type="text/javascript" src="js/login.js"></script>
-	<script type="text/javascript" src="js/magic-1.0.min.js"></script>
-<!-- 	<script type="text/javascript" src="js/magic-1.0.js"></script> -->
+<!-- 	<script type="text/javascript" src="js/magic-1.0.min.js"></script> -->
+	<script type="text/javascript" src="js/magic-1.0.js"></script>
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/jquery-ui-1.10.4.custom.min.js"></script>
 	<script type="text/javascript">
@@ -231,6 +231,9 @@ else								 		{ $url = "http://$_SERVER[SERVER_NAME]".BASE; }
       	
 </div>
 </div>
+
+<!-- Base for IE -->
+<div class="iebase hidden"><?php print BASE; ?></div>
 
 <!-- pusher -->
 <div class="pusher"></div>
