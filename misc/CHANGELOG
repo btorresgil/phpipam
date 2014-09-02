@@ -1,4 +1,4 @@
-== 1.01.001
+== 1.01.004
 
 	Enhancements:
 	----------------------------
@@ -12,6 +12,7 @@
 	Bugfixes:
 	--------	
 	+ Fixed top 10 widgets not escaping strings;
+	+ Fixed section parent can be set to self that caused section to disapear;
 
 == 1.0
 	
